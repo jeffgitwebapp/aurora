@@ -1,6 +1,11 @@
+import time
+
 import pytest
 from fastapi.testclient import TestClient
 
+from aurora_backend.contexts.conversation.features.send_message.router import (
+    RESPONSE_DELAY_SECONDS,
+)
 from aurora_backend.main import app
 
 client = TestClient(app)
@@ -28,6 +33,16 @@ def test_missing_message_field_is_rejected() -> None:
     response = client.post(ENDPOINT, json={})
 
     assert response.status_code == 422
+
+
+def test_valid_message_response_is_delayed() -> None:
+    started_at = time.monotonic()
+
+    response = client.post(ENDPOINT, json={"message": "Olá"})
+
+    elapsed = time.monotonic() - started_at
+    assert response.status_code == 200
+    assert elapsed >= RESPONSE_DELAY_SECONDS
 
 
 def test_get_is_not_allowed() -> None:
