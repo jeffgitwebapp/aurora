@@ -1,0 +1,23 @@
+# Python / uv
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Logs e variáveis de ambiente
+*.log
+.env
+.env.*
+
+# Não ignorar lockfiles
+!backend/uv.lock
+!frontend/package-lock.json
+

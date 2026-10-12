@@ -1,0 +1,518 @@
+<mxfile host="app.diagrams.net" version="21.0.0">
+
+  <diagram name="1 - Casos de Uso" id="p1">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="p1t1" value="&lt;b&gt;Projeto Aurora — Visão 1: Casos de Uso (+1)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=22;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="450" y="30" width="760" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1t2" value="Plataforma de psicoeducação e informação sobre violência psicológica (PWA + LLM com RAG)" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=13;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="450" y="72" width="760" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1b" value="Plataforma Aurora" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#1B2A4A;strokeWidth=2;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="350" y="150" width="1040" height="900" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1a1" value="Usuária" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#1B2A4A;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="400" width="50" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1a2" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#1B2A4A;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="840" width="50" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1a3" value="Provedor de LLM&lt;br&gt;(externo)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#5B8FB9;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="290" width="50" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1u1" value="RF01&lt;br&gt;&lt;b&gt;Relatar Situação de Violência&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="420" y="230" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u2" value="RF02&lt;br&gt;&lt;b&gt;Consultar Conteúdo Psicoeducativo&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="420" y="350" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u3" value="RF03&lt;br&gt;&lt;b&gt;Realizar Triagem de Risco&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=12;fontColor=#5E3D00;" vertex="1" parent="1">
+          <mxGeometry x="420" y="470" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u4" value="RF04&lt;br&gt;&lt;b&gt;Obter Encaminhamento Priorizado&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=12;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="420" y="590" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u5" value="RF06&lt;br&gt;&lt;b&gt;Acionar Saída Rápida&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=12;fontColor=#6B0000;" vertex="1" parent="1">
+          <mxGeometry x="420" y="710" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u6" value="RF05&lt;br&gt;&lt;b&gt;Atualizar Catálogo de Serviços&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="420" y="880" width="280" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1u7" value="&lt;b&gt;Aplicar Guardrails de Escopo&lt;/b&gt;&lt;br&gt;(RF10)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=12;fontColor=#5E3D00;" vertex="1" parent="1">
+          <mxGeometry x="890" y="230" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u8" value="&lt;b&gt;Recuperar Fonte Citável&lt;/b&gt;&lt;br&gt;(RAG)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="890" y="350" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u9" value="&lt;b&gt;Classificar Urgência,&lt;br&gt;Necessidade e Localização&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=12;fontColor=#5E3D00;" vertex="1" parent="1">
+          <mxGeometry x="890" y="470" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u10" value="&lt;b&gt;Aplicar Hierarquia Jurídica&lt;/b&gt;&lt;br&gt;(público formal antes de voluntário)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=12;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="890" y="590" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u11" value="&lt;b&gt;Exibir Sugestão Prioritária&lt;br&gt;de Emergência&lt;/b&gt;&lt;br&gt;(p95 ≤ 500 ms, sem LLM)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=12;fontColor=#6B0000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="890" y="710" width="280" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1u12" value="&lt;b&gt;Versionar Base de Conhecimento&lt;/b&gt;&lt;br&gt;(sem downtime)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="890" y="880" width="280" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1e1" style="endArrow=none;html=1;strokeColor=#1B2A4A;" edge="1" source="p1a1" target="p1u1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e2" style="endArrow=none;html=1;strokeColor=#1B2A4A;" edge="1" source="p1a1" target="p1u2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e3" style="endArrow=none;html=1;strokeColor=#1B2A4A;" edge="1" source="p1a1" target="p1u3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e4" style="endArrow=none;html=1;strokeColor=#1B2A4A;" edge="1" source="p1a1" target="p1u4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e5" style="endArrow=none;html=1;strokeColor=#CC0000;" edge="1" source="p1a1" target="p1u5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e6" style="endArrow=none;html=1;strokeColor=#1B2A4A;" edge="1" source="p1a2" target="p1u6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="p1e7" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#5B8FB9;fontSize=11;" edge="1" source="p1u2" target="p1u8" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e8" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#D6A040;fontSize=11;" edge="1" source="p1u2" target="p1u7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e9" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#D6A040;fontSize=11;" edge="1" source="p1u3" target="p1u9" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e10" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt; [risco agudo]" style="endArrow=open;dashed=1;html=1;strokeColor=#CC0000;fontSize=11;fontStyle=1" edge="1" source="p1u11" target="p1u3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e11" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#5B9E72;fontSize=11;" edge="1" source="p1u4" target="p1u10" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e12" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#AAAAAA;fontSize=11;" edge="1" source="p1u6" target="p1u12" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p1e13" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#5B8FB9;fontSize=11;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" source="p1u1" target="p1u7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="p1e14" value="HTTPS" style="endArrow=none;html=1;strokeColor=#5B8FB9;fontSize=11;" edge="1" source="p1u8" target="p1a3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="p1note" value="&lt;b&gt;Por que não há atores &amp;quot;Rede de Proteção&amp;quot; nem &amp;quot;Sistemas de Emergência&amp;quot;&lt;/b&gt;&lt;br&gt;&lt;br&gt;DEAM, CREAS, CRAS, Defensoria, 190, 180, 188 e 192 &lt;b&gt;não são atores nem sistemas externos&lt;/b&gt;: não trocam dados com o Aurora e não iniciam nenhuma interação.&lt;br&gt;&lt;br&gt;São &lt;b&gt;registros do Catálogo de Serviços&lt;/b&gt; — dados que o sistema exibe. Procurar o serviço é ação da própria usuária, por meios próprios, fora da fronteira do sistema." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;fillColor=#F5F5F5;strokeColor=#999999;dashed=1;fontSize=12;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="560" width="190" height="330" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1leg" value="&lt;b&gt;Legenda&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#5B8FB9&quot;&gt;■&lt;/font&gt; Conteúdo / RAG (RNF04)&lt;br&gt;&lt;font color=&quot;#D6A040&quot;&gt;■&lt;/font&gt; Triagem e guardrails (RNF03/RNF06)&lt;br&gt;&lt;font color=&quot;#5B9E72&quot;&gt;■&lt;/font&gt; Encaminhamento (RNF03/RNF05)&lt;br&gt;&lt;font color=&quot;#CC0000&quot;&gt;■&lt;/font&gt; Caminho crítico de segurança (RNF07)&lt;br&gt;&lt;font color=&quot;#AAAAAA&quot;&gt;■&lt;/font&gt; Administração (RNF02/RNF05)" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fillColor=#FFFFFF;strokeColor=#AAAAAA;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1000" width="330" height="140" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="2 - Visão Lógica" id="p2">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="p2t1" value="&lt;b&gt;Projeto Aurora — Visão 2: Lógica (pacotes)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=22;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="450" y="25" width="760" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2t2" value="Arquitetura Hexagonal (Portas e Adaptadores) — o domínio não conhece infraestrutura nem provedor de LLM" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=13;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="450" y="65" width="760" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p2c1" value="presentation  —  Camada de Apresentação" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#5B8FB9;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="100" y="110" width="1450" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c1a" value="&lt;b&gt;PWAShell&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ camuflagem()&lt;br&gt;+ saidaRapida()&lt;br&gt;+ registrarServiceWorker()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c1">
+          <mxGeometry x="40" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c1b" value="&lt;b&gt;ChatController&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ enviarRelato(texto)&lt;br&gt;+ receberStream()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c1">
+          <mxGeometry x="320" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c1c" value="&lt;b&gt;EncaminhamentoController&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ listarOpcoes(uf, necessidade)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c1">
+          <mxGeometry x="600" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c1d" value="&lt;b&gt;EmergenciaController&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ exibirSugestaoEmergencia()  «offline-first»&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c1">
+          <mxGeometry x="880" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c1e" value="&lt;b&gt;AdminController&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ salvarServico()&lt;br&gt;+ publicarVersao()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c1">
+          <mxGeometry x="1160" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p2c2" value="application  —  Casos de Uso / Serviços de Aplicação" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#5B8FB9;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="100" y="300" width="1450" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c2a" value="&lt;b&gt;RelatoService&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ registrarRelatoVolatil()&lt;br&gt;RF01 / RNF01&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c2">
+          <mxGeometry x="40" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c2b" value="&lt;b&gt;PsicoeducacaoService&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ responderComFontes()&lt;br&gt;RF02 / RNF04&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c2">
+          <mxGeometry x="320" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c2c" value="&lt;b&gt;TriagemService&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ classificarRisco(relato)&lt;br&gt;RF03 / RNF03&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c2">
+          <mxGeometry x="600" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c2d" value="&lt;b&gt;EncaminhamentoService&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ priorizarServicos()&lt;br&gt;RF04 / RNF03&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c2">
+          <mxGeometry x="880" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c2e" value="&lt;b&gt;CatalogoService&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ versionarServico()&lt;br&gt;RF05 / RNF05&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c2">
+          <mxGeometry x="1160" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p2c3" value="domain  —  Núcleo de Domínio (sem dependências externas)" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#1B2A4A;strokeWidth=2;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="100" y="490" width="1450" height="270" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3a" value="&lt;b&gt;Relato&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;- texto: String&lt;br&gt;- idSessao: UUID volátil&lt;br&gt;- uf, municipio&lt;br&gt;« sem PII »&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B2A4A;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="40" y="50" width="250" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3b" value="&lt;b&gt;ClassificacaoRisco&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;- urgencia: Enum&lt;br&gt;- necessidade: Enum&lt;br&gt;- localizacao&lt;br&gt;+ ehAguda(): boolean&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B2A4A;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="320" y="50" width="250" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3c" value="&lt;b&gt;Cenario&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;- codigo (1..19)&lt;br&gt;- descricao&lt;br&gt;+ servicosElegiveis()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B2A4A;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="600" y="50" width="250" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3d" value="&lt;b&gt;Servico&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;- nome, natureza, canal&lt;br&gt;- abrangencia, horario&lt;br&gt;- versao&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B2A4A;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="880" y="50" width="250" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3e" value="&lt;b&gt;FonteCitavel&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;- titulo, orgao, ano&lt;br&gt;- referencia/URL&lt;br&gt;- versaoDocumento&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B2A4A;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="1160" y="50" width="250" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3f" value="&lt;b&gt;RegraHierarquiaJuridica&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ ordenar(servicos): List&lt;br&gt;público formal &amp;gt; especializado &amp;gt; OSC &amp;gt; voluntário&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="180" y="165" width="330" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3g" value="&lt;b&gt;PoliticaGuardrail&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;+ validar(resposta): Veredito&lt;br&gt;bloqueia diagnóstico, parecer jurídico e decisão pela usuária&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c3">
+          <mxGeometry x="560" y="165" width="330" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c3h" value="&lt;b&gt;«port» PortaLLM / PortaBaseVetorial / PortaCatalogo&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;interfaces de saída definidas pelo domínio&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;dashed=1;" vertex="1" parent="p2c3">
+          <mxGeometry x="940" y="165" width="400" height="85" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p2c4" value="infrastructure  —  Adaptadores (implementam as portas)" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#9673A6;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="100" y="800" width="1450" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c4a" value="&lt;b&gt;LLMAdapter&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;implements PortaLLM&lt;br&gt;streaming SSE&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c4">
+          <mxGeometry x="40" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c4b" value="&lt;b&gt;VectorStoreRepository&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;implements PortaBaseVetorial&lt;br&gt;índice HNSW + alias swap&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c4">
+          <mxGeometry x="320" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c4c" value="&lt;b&gt;CatalogoRepository&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;implements PortaCatalogo&lt;br&gt;PostgreSQL versionado&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c4">
+          <mxGeometry x="600" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c4d" value="&lt;b&gt;CacheAdapter&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Redis — respostas frequentes&lt;br&gt;invalidação por versão&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c4">
+          <mxGeometry x="880" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2c4e" value="&lt;b&gt;TelemetriaAnonimaAdapter&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;métricas agregadas&lt;br&gt;« nunca registra o relato »&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontSize=12;" vertex="1" parent="p2c4">
+          <mxGeometry x="1160" y="45" width="250" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p2d1" value="depende de" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="p2c1" target="p2c2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p2d2" value="depende de" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="p2c2" target="p2c3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p2d3" value="&amp;lt;&amp;lt;realize&amp;gt;&amp;gt;  (inversão de dependência)" style="endArrow=block;endFill=0;dashed=1;html=1;strokeColor=#9673A6;fontSize=11;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" source="p2c4" target="p2c3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="p2n1" value="&lt;b&gt;Princípio arquitetural:&lt;/b&gt; as setas de dependência apontam sempre &lt;b&gt;para dentro&lt;/b&gt;, em direção ao domínio. A infraestrutura implementa portas definidas pelo domínio (RNF05 — trocar o provedor de LLM não altera o núcleo). Nenhuma classe de domínio possui atributo de identificação pessoal (RNF01)." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;spacingLeft=12;fillColor=#FFFFFF;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="990" width="1450" height="70" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="3 - Visão de Processos" id="p3">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="p3t1" value="&lt;b&gt;Projeto Aurora — Visão 3: Processos (diagrama de sequência)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=22;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="380" y="20" width="900" height="36" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3t2" value="Cenário crítico: relato → triagem concorrente → sugestão prioritária de emergência ou resposta psicoeducativa com encaminhamento" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=13;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="380" y="56" width="900" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p3h1" value=":Usuária (PWA)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=#1B2A4A;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1"><mxGeometry x="30" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h2" value=":API Gateway / BFF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="1"><mxGeometry x="230" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h3" value=":Orquestrador de Conversa" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="1"><mxGeometry x="430" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h4" value=":Classificador Determinístico" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=12;" vertex="1" parent="1"><mxGeometry x="630" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h5" value=":Motor RAG" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1"><mxGeometry x="830" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h6" value=":Guardrails de Escopo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1030" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h7" value=":Catálogo de Serviços" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1230" y="100" width="180" height="46" as="geometry"/></mxCell>
+        <mxCell id="p3h8" value=":Provedor de LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="1"><mxGeometry x="1430" y="100" width="180" height="46" as="geometry"/></mxCell>
+
+        <mxCell id="p3l1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="120" y="146" as="sourcePoint"/><mxPoint x="120" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l2" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="320" y="146" as="sourcePoint"/><mxPoint x="320" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l3" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="146" as="sourcePoint"/><mxPoint x="520" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l4" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="720" y="146" as="sourcePoint"/><mxPoint x="720" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l5" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="920" y="146" as="sourcePoint"/><mxPoint x="920" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l6" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1120" y="146" as="sourcePoint"/><mxPoint x="1120" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l7" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1320" y="146" as="sourcePoint"/><mxPoint x="1320" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3l8" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1520" y="146" as="sourcePoint"/><mxPoint x="1520" y="1050" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="p3m1" value="1. enviarRelato(texto)   « HTTPS / TLS 1.3, sem PII »" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#1B2A4A;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="120" y="185" as="sourcePoint"/><mxPoint x="320" y="185" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m2" value="2. processarRelato(idSessaoVolatil)" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#1B2A4A;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="320" y="225" as="sourcePoint"/><mxPoint x="520" y="225" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="p3f1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#5B8FB9;dashed=0;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="470" y="255" width="510" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3f1l" value="par  [triagem concorrente]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="470" y="255" width="170" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3m3" value="3. avaliarSinaisAgudos(texto)   « regras + palavras-âncora »" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#CC0000;fontSize=11;fontStyle=1" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="310" as="sourcePoint"/><mxPoint x="720" y="310" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m4" value="4. classificarSemantico(texto) → necessidade, localização" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#6C8EBF;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="355" as="sourcePoint"/><mxPoint x="920" y="355" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m5" value="5. nivelUrgencia   « precedência sobre o classificador semântico »" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#CC0000;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="720" y="405" as="sourcePoint"/><mxPoint x="520" y="405" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="p3f2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1B2A4A;strokeWidth=2;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="70" y="460" width="1490" height="340" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3f2l" value="alt  [risco agudo detectado]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="70" y="460" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3m6" value="6. obterServicosEmergencia(uf)   « consulta ao catálogo, sem LLM »" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#CC0000;fontSize=11;fontStyle=1" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="520" as="sourcePoint"/><mxPoint x="1320" y="520" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m7" value="7. serviços de emergência elegíveis (dados do catálogo)" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#CC0000;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1320" y="562" as="sourcePoint"/><mxPoint x="520" y="562" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m8" value="8. exibe a sugestão prioritária de emergência   « RNF03: 100% dos casos · RNF07: p95 ≤ 500 ms »" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#CC0000;strokeWidth=2;fontSize=11;fontStyle=1" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="606" as="sourcePoint"/><mxPoint x="120" y="606" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="p3sep" style="endArrow=none;dashed=1;html=1;strokeColor=#1B2A4A;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="70" y="640" as="sourcePoint"/><mxPoint x="1560" y="640" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3sepl" value="[sem risco agudo]" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=#FFFFFF;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="646" width="160" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p3m9" value="9. recuperarFontes(consulta, top-k)   « índice HNSW, limiar de similaridade »" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#6C8EBF;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="695" as="sourcePoint"/><mxPoint x="920" y="695" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m10" value="10. gerarResposta(prompt + trechos recuperados)" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#9673A6;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="920" y="735" as="sourcePoint"/><mxPoint x="1520" y="735" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m11" value="11. stream de tokens (SSE)   « RNF07: 1º token ≤ 1,5 s »" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#9673A6;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1520" y="777" as="sourcePoint"/><mxPoint x="920" y="777" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="p3m12" value="12. validarEscopo(resposta)   « fail-closed: bloqueia diagnóstico e parecer jurídico »" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#D6A040;fontSize=11;fontStyle=1" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="920" y="840" as="sourcePoint"/><mxPoint x="1120" y="840" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m13" value="13. resposta aprovada + fontes citadas   « RNF04: ≥90% com fonte rastreável »" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#D6A040;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1120" y="882" as="sourcePoint"/><mxPoint x="520" y="882" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m14" value="14. buscarServicos(uf, municipio, necessidade)" style="endArrow=block;html=1;verticalAlign=bottom;strokeColor=#5B9E72;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="924" as="sourcePoint"/><mxPoint x="1320" y="924" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m15" value="15. serviços ordenados pela hierarquia jurídica (cache Redis)" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#5B9E72;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1320" y="966" as="sourcePoint"/><mxPoint x="520" y="966" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="p3m16" value="16. resposta psicoeducativa com citações + até 3 opções de encaminhamento   « RNF07: completa ≤ 3 s »" style="endArrow=open;dashed=1;html=1;verticalAlign=bottom;strokeColor=#1B2A4A;strokeWidth=2;fontSize=11;fontStyle=1" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="520" y="1010" as="sourcePoint"/><mxPoint x="120" y="1010" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="p3n1" value="&lt;b&gt;Concorrência:&lt;/b&gt; o classificador determinístico (regras) e o classificador semântico executam em paralelo. O resultado determinístico tem &lt;b&gt;precedência absoluta&lt;/b&gt; — prefere-se falso positivo a falso negativo em emergência (RNF03). &lt;b&gt;Assincronia:&lt;/b&gt; a resposta do LLM é entregue por streaming; a telemetria anônima é publicada em fila, fora do caminho crítico. &lt;b&gt;Falha do provedor de LLM:&lt;/b&gt; o fluxo degrada para conteúdo pré-renderizado e catálogo estático (RNF02)." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;spacingLeft=12;fillColor=#FFFFFF;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1070" width="1490" height="70" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="4 - Visão de Implementação" id="p4">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="p4t1" value="&lt;b&gt;Projeto Aurora — Visão 4: Implementação (diagrama de componentes)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=22;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="330" y="25" width="1000" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p4g1" value="Cliente  —  PWA (camuflagem, offline-first)" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#1B2A4A;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="90" y="90" width="1470" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4c1" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;App Shell" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p4g1"><mxGeometry x="40" y="50" width="250" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c2" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Módulo de Chat" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p4g1"><mxGeometry x="330" y="50" width="250" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c3" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Saída Rápida + Dummy PIN" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=12;" vertex="1" parent="p4g1"><mxGeometry x="620" y="50" width="250" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c4" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Service Worker&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;cache + sugestão de emergência offline&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=12;" vertex="1" parent="p4g1"><mxGeometry x="910" y="50" width="250" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c5" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Diário Local Criptografado&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;modo logado (opt-in)&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="p4g1"><mxGeometry x="1190" y="50" width="240" height="80" as="geometry"/></mxCell>
+
+        <mxCell id="p4g2" value="Borda  —  Entrada e proteção" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#5B8FB9;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="90" y="280" width="1470" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4c6" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;CDN / Distribuição estática" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p4g2"><mxGeometry x="40" y="45" width="280" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c7" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;API Gateway / BFF" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p4g2"><mxGeometry x="400" y="45" width="280" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c8" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;WAF + Rate Limiter" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p4g2"><mxGeometry x="760" y="45" width="280" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c9" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Sessão Anônima&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;token volátil, sem PII (RNF01)&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p4g2"><mxGeometry x="1120" y="45" width="310" height="75" as="geometry"/></mxCell>
+
+        <mxCell id="p4g3" value="Núcleo de Aplicação  —  serviços de domínio" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#1B2A4A;strokeWidth=2;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="90" y="460" width="1470" height="250" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4c10" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Orquestrador de Conversa" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="40" y="50" width="280" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c11" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Serviço de Triagem&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;urgência · necessidade · localização&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="400" y="50" width="280" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c12" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Motor RAG&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Retriever + Reranker + Generator&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="760" y="50" width="280" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c13" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Guardrails de Escopo&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;fail-closed (RNF06)&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="1120" y="50" width="310" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c14" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Classificador Determinístico de Emergência&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;regras, sem LLM (RNF03/RNF07)&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="40" y="150" width="340" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c15" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Serviço de Encaminhamento&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;hierarquia jurídica · 19 cenários&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="460" y="150" width="340" height="80" as="geometry"/></mxCell>
+        <mxCell id="p4c16" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Serviço de Catálogo&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;versionamento e publicação sem downtime&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=12;" vertex="1" parent="p4g3"><mxGeometry x="880" y="150" width="340" height="80" as="geometry"/></mxCell>
+
+        <mxCell id="p4g4" value="Dados e Infraestrutura" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#9673A6;fontSize=14;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="90" y="750" width="1470" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4c17" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;Base Vetorial&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;HNSW · alias swap&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p4g4"><mxGeometry x="40" y="45" width="250" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c18" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;Catálogo de Serviços&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;PostgreSQL versionado&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p4g4"><mxGeometry x="320" y="45" width="250" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c19" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;Cache de Respostas&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Redis&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p4g4"><mxGeometry x="600" y="45" width="250" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c20" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;Repositório de Documentos-Fonte&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;leis, cartilhas, artigos&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p4g4"><mxGeometry x="880" y="45" width="250" height="75" as="geometry"/></mxCell>
+        <mxCell id="p4c21" value="&lt;b&gt;«artifact»&lt;/b&gt;&lt;br&gt;Telemetria Anônima&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;métricas agregadas&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p4g4"><mxGeometry x="1160" y="45" width="270" height="75" as="geometry"/></mxCell>
+
+        <mxCell id="p4g5" value="Externo e Administração" style="swimlane;startSize=32;html=1;fillColor=#FAFAFA;strokeColor=#AAAAAA;fontSize=14;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="90" y="930" width="1470" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4c22" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Provedor de LLM (API externa)" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p4g5"><mxGeometry x="40" y="42" width="380" height="70" as="geometry"/></mxCell>
+        <mxCell id="p4c23" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Pipeline de Ingestão e Curadoria&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;chunking · embedding · revisão humana&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="p4g5"><mxGeometry x="500" y="42" width="420" height="70" as="geometry"/></mxCell>
+        <mxCell id="p4c24" value="&lt;b&gt;«component»&lt;/b&gt;&lt;br&gt;Painel Administrativo&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;RF05 · métricas não identificáveis&lt;/font&gt;" style="shape=component;align=left;spacingLeft=32;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="p4g5"><mxGeometry x="1000" y="42" width="430" height="70" as="geometry"/></mxCell>
+
+        <mxCell id="p4d1" value="HTTPS / SSE" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="p4g1" target="p4g2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p4d2" value="REST interno" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="p4g2" target="p4g3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p4d3" value="portas / adaptadores" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="p4g3" target="p4g4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p4d4" value="" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="p4g4" target="p4g5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="5 - Visão de Implantação" id="p5">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="p5t1" value="&lt;b&gt;Projeto Aurora — Visão 5: Implantação (AWS · região sa-east-1)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=22;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="380" y="20" width="900" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5t2" value="Multi-AZ para disponibilidade (RNF02) · dados em território nacional (RNF06/LGPD) · sem multi-região por restrição orçamentária (R1)" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=13;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="330" y="58" width="1000" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5n1" value="&lt;b&gt;«device»&lt;/b&gt;&lt;br&gt;Dispositivo da Usuária&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;navegador móvel / anônimo&lt;br&gt;PWA sem rastro de instalação&lt;/font&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#1B2A4A;strokeColor=#1B2A4A;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="240" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5n1a" value="&lt;b&gt;«artifact»&lt;/b&gt; aurora-pwa (bundle + service worker)" style="shape=note;whiteSpace=wrap;html=1;size=12;fillColor=#FFFFFF;strokeColor=#1B2A4A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="355" width="240" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5n2" value="&lt;b&gt;«device»&lt;/b&gt;&lt;br&gt;Estação do Administrador&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;acesso autenticado (MFA)&lt;/font&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontColor=#333333;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="790" width="240" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5aws" value="AWS  —  Região sa-east-1 (São Paulo)" style="swimlane;startSize=34;html=1;fillColor=#FAFAFA;strokeColor=#D6A040;strokeWidth=2;fontSize=15;fontStyle=1;fontColor=#5E3D00;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="130" width="1050" height="850" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5n3" value="&lt;b&gt;«node»&lt;/b&gt; CloudFront + S3&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;PWA estática · TLS 1.3 · WAF&lt;br&gt;RNF07: carga ≤ 2 s em 3G&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p5aws">
+          <mxGeometry x="40" y="55" width="290" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5n4" value="&lt;b&gt;«node»&lt;/b&gt; API Gateway&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;rate limiting · throttling&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p5aws">
+          <mxGeometry x="380" y="55" width="290" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5n5" value="&lt;b&gt;«node»&lt;/b&gt; Secrets Manager + IAM&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;chaves do provedor de LLM&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="p5aws">
+          <mxGeometry x="720" y="55" width="290" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5vpc" value="VPC  —  sub-redes privadas" style="swimlane;startSize=30;html=1;fillColor=#FFFFFF;strokeColor=#5B8FB9;fontSize=13;fontStyle=1;fontColor=#1B2A4A;dashed=1;" vertex="1" parent="p5aws">
+          <mxGeometry x="40" y="175" width="970" height="500" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5az1" value="Availability Zone A" style="swimlane;startSize=26;html=1;fillColor=#FAFAFA;strokeColor=#5B9E72;fontSize=12;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="p5vpc">
+          <mxGeometry x="30" y="45" width="440" height="190" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5az1a" value="&lt;b&gt;«node»&lt;/b&gt; ECS Fargate — Núcleo de Aplicação&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Orquestrador · Triagem · Motor RAG · Guardrails · Encaminhamento&lt;br&gt;auto scaling horizontal (RNF05)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;" vertex="1" parent="p5az1">
+          <mxGeometry x="20" y="35" width="400" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5az1b" value="&lt;b&gt;«artifact»&lt;/b&gt; aurora-core:{versão} (imagem Docker)" style="shape=note;whiteSpace=wrap;html=1;size=10;fillColor=#FFFFFF;strokeColor=#6C8EBF;fontSize=10;" vertex="1" parent="p5az1">
+          <mxGeometry x="20" y="120" width="400" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5az2" value="Availability Zone B" style="swimlane;startSize=26;html=1;fillColor=#FAFAFA;strokeColor=#5B9E72;fontSize=12;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="p5vpc">
+          <mxGeometry x="500" y="45" width="440" height="190" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5az2a" value="&lt;b&gt;«node»&lt;/b&gt; ECS Fargate — Núcleo de Aplicação (réplica)&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;rolling deploy · zero downtime na publicação do catálogo (RNF05)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;" vertex="1" parent="p5az2">
+          <mxGeometry x="20" y="35" width="400" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5az2b" value="&lt;b&gt;«node»&lt;/b&gt; Application Load Balancer&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;health checks · failover entre AZs (RNF02)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=11;" vertex="1" parent="p5az2">
+          <mxGeometry x="20" y="120" width="400" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5db1" value="&lt;b&gt;«node»&lt;/b&gt; RDS PostgreSQL (Multi-AZ)&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Catálogo de Serviços versionado&lt;br&gt;criptografia em repouso (KMS)&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=11;" vertex="1" parent="p5vpc">
+          <mxGeometry x="30" y="265" width="290" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5db2" value="&lt;b&gt;«node»&lt;/b&gt; OpenSearch Serverless&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Base vetorial (RAG) · índice HNSW&lt;br&gt;alias swap na reindexação (RNF04/RNF05)&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;" vertex="1" parent="p5vpc">
+          <mxGeometry x="350" y="265" width="290" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5db3" value="&lt;b&gt;«node»&lt;/b&gt; ElastiCache Redis&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;cache de respostas e catálogo&lt;br&gt;suporte às metas de RNF07&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=11;" vertex="1" parent="p5vpc">
+          <mxGeometry x="670" y="265" width="270" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5obs" value="&lt;b&gt;«node»&lt;/b&gt; CloudWatch + OpenTelemetry&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;métricas agregadas · logs SEM conteúdo de relato e SEM PII (RNF01/RNF06)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=11;" vertex="1" parent="p5vpc">
+          <mxGeometry x="30" y="400" width="910" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5s3" value="&lt;b&gt;«node»&lt;/b&gt; S3 — Documentos-fonte&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;leis, cartilhas oficiais, literatura científica · versionamento habilitado&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=12;" vertex="1" parent="p5aws">
+          <mxGeometry x="40" y="700" width="460" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5pipe" value="&lt;b&gt;«node»&lt;/b&gt; AWS Batch / Lambda — Pipeline de Ingestão&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;chunking · embedding · curadoria humana antes da publicação&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="p5aws">
+          <mxGeometry x="550" y="700" width="460" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5llm" value="&lt;b&gt;«node» (externo)&lt;/b&gt;&lt;br&gt;Provedor de LLM&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Amazon Bedrock ou API equivalente&lt;br&gt;acesso por adaptador isolado (RNF05)&lt;br&gt;degradação graciosa se indisponível (RNF02)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;strokeWidth=2;fontSize=12;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="430" width="130" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5c1" value="HTTPS / TLS 1.3" style="endArrow=block;html=1;strokeColor=#1B2A4A;fontSize=11;exitX=1;exitY=0.4;entryX=0;entryY=0.5;" edge="1" source="p5n1" target="p5n3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p5c2" value="HTTPS / SSE" style="endArrow=block;html=1;strokeColor=#1B2A4A;fontSize=11;exitX=1;exitY=0.8;entryX=0;entryY=0.5;" edge="1" source="p5n1" target="p5n4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p5c4" value="HTTPS + MFA" style="endArrow=block;html=1;strokeColor=#AAAAAA;fontSize=11;" edge="1" source="p5n2" target="p5pipe" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p5c5" value="HTTPS (streaming)" style="endArrow=block;html=1;strokeColor=#9673A6;strokeWidth=2;fontSize=11;dashed=1;" edge="1" source="p5az2a" target="p5llm" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="p5leg" value="&lt;b&gt;Decisões de implantação&lt;/b&gt;&lt;br&gt;&lt;br&gt;• &lt;b&gt;Multi-AZ, não multi-região&lt;/b&gt; — atende RNF02 (99,5%) dentro da restrição orçamentária R1.&lt;br&gt;• &lt;b&gt;Região sa-east-1&lt;/b&gt; — dados sensíveis mantidos em território nacional (RNF06 / LGPD).&lt;br&gt;• &lt;b&gt;Fargate em vez de EC2&lt;/b&gt; — elimina gestão de servidores; equipe acadêmica de tempo parcial (R3).&lt;br&gt;• &lt;b&gt;Sugestão de emergência sem LLM&lt;/b&gt; — conteúdo embarcado no service worker; permanece legível com a nuvem indisponível, desde que a usuária já tenha acessado antes (RNF02/RNF07).&lt;br&gt;• &lt;b&gt;Logs sem relato&lt;/b&gt; — CloudWatch recebe apenas métricas agregadas e não identificáveis (RNF01)." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;fillColor=#FFFFFF;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="1000" width="1050" height="140" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="5b - Implantação MVP" id="p6">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="p6t1" value="&lt;b&gt;Projeto Aurora — Visão 5b: Implantação MVP (mínimo utilizável)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=22;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="330" y="20" width="1000" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6t2" value="Topologia mínima para validação com usuárias reais (M3/M4). Relaxa deliberadamente RNF02, RNF05 e parte de RNF07 — preserva integralmente RNF01, RNF03, RNF04 e RNF06." style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=13;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="230" y="58" width="1200" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6dev" value="&lt;b&gt;«device»&lt;/b&gt;&lt;br&gt;Dispositivo da Usuária&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;navegador móvel / anônimo&lt;br&gt;PWA + service worker&lt;br&gt;« inalterado em relação à v1 »&lt;/font&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#1B2A4A;strokeColor=#1B2A4A;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="250" height="140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6adm" value="&lt;b&gt;«device»&lt;/b&gt;&lt;br&gt;Estação do Administrador&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;acesso ao /admin com MFA&lt;/font&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontColor=#333333;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="510" width="250" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6ing" value="&lt;b&gt;«artifact»&lt;/b&gt; Pipeline de ingestão manual&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;script CLI executado pelo administrador:&lt;br&gt;chunking → embedding → carga no pgvector.&lt;br&gt;Curadoria humana mantida (RNF04).&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#FFFFFF;strokeColor=#AAAAAA;fontSize=11;align=left;spacingLeft=8;verticalAlign=top;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="60" y="670" width="250" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6cloud" value="Provedor de nuvem — região sa-east-1  ·  ZONA DE DISPONIBILIDADE ÚNICA" style="swimlane;startSize=34;html=1;fillColor=#FAFAFA;strokeColor=#D6A040;strokeWidth=2;fontSize=15;fontStyle=1;fontColor=#5E3D00;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="150" width="900" height="630" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6cdn" value="&lt;b&gt;«node»&lt;/b&gt; Object Storage + CDN&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;PWA estática · TLS 1.3&lt;br&gt;camada gratuita suficiente para o MVP&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C8DFF0;strokeColor=#5B8FB9;fontSize=12;" vertex="1" parent="p6cloud">
+          <mxGeometry x="40" y="55" width="390" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6log" value="&lt;b&gt;«node»&lt;/b&gt; Logs gerenciados (nível básico)&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;sem conteúdo de relato e sem PII (RNF01 preservado)&lt;br&gt;sem tracing distribuído nem alertas automáticos&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F0F0;strokeColor=#AAAAAA;fontSize=12;" vertex="1" parent="p6cloud">
+          <mxGeometry x="470" y="55" width="390" height="85" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6app" value="&lt;b&gt;«node»&lt;/b&gt;  Container único — 1 instância (App Runner / ECS Fargate 1 task)" style="swimlane;startSize=32;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;strokeWidth=2;fontSize=13;fontStyle=1;fontColor=#1B2A4A;" vertex="1" parent="p6cloud">
+          <mxGeometry x="40" y="175" width="820" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6app1" value="&lt;b&gt;«artifact»&lt;/b&gt; aurora-mvp:{versão} — monólito modular&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Orquestrador de Conversa · Serviço de Triagem · Motor RAG&lt;br&gt;Serviço de Encaminhamento · Serviço de Catálogo · Painel /admin&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;spacingTop=6;" vertex="1" parent="p6app">
+          <mxGeometry x="20" y="45" width="390" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6app2" value="&lt;b&gt;«component»&lt;/b&gt; Classificador Determinístico + Guardrails&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;regras em processo, sem LLM · fail-closed&lt;br&gt;&lt;b&gt;RNF03 e RNF06 mantidos integralmente&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD7D7;strokeColor=#CC0000;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;spacingTop=6;" vertex="1" parent="p6app">
+          <mxGeometry x="430" y="45" width="370" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6app3" value="&lt;b&gt;Cache em memória do processo&lt;/b&gt; (substitui o Redis) — perdido a cada reinício.  ·  &lt;b&gt;Sem load balancer, sem réplica, sem auto scaling.&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D6A040;fontSize=11;" vertex="1" parent="p6app">
+          <mxGeometry x="20" y="140" width="780" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6db" value="&lt;b&gt;«node»&lt;/b&gt;  PostgreSQL gerenciado — instância única (db.t4g.micro), &lt;u&gt;sem Multi-AZ&lt;/u&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Catálogo de Serviços (versionado)  +  Base vetorial via extensão &lt;b&gt;pgvector&lt;/b&gt;  +  Documentos-fonte&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;um único banco substitui RDS Multi-AZ + OpenSearch + S3 · backup diário automático · criptografia em repouso&lt;/font&gt;&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#C8EDD5;strokeColor=#5B9E72;fontSize=12;" vertex="1" parent="p6cloud">
+          <mxGeometry x="40" y="410" width="820" height="140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6llm" value="&lt;b&gt;«node» (externo)&lt;/b&gt;&lt;br&gt;Provedor de LLM&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;API pay-per-use&lt;br&gt;acesso via adaptador isolado&lt;br&gt;(mesma porta da v1 — RNF05 estrutural preservado)&lt;br&gt;&lt;br&gt;&lt;b&gt;Ponto único de falha do caminho de conteúdo&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;strokeWidth=2;fontSize=12;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="330" width="220" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6c1" value="HTTPS / TLS 1.3" style="endArrow=block;html=1;strokeColor=#1B2A4A;fontSize=11;" edge="1" source="p6dev" target="p6cdn" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p6c2" value="HTTPS / SSE" style="endArrow=block;html=1;strokeColor=#1B2A4A;fontSize=11;" edge="1" source="p6dev" target="p6app" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p6c4" value="HTTPS + MFA  →  /admin" style="endArrow=block;html=1;strokeColor=#AAAAAA;fontSize=11;" edge="1" source="p6adm" target="p6app" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p6c5" value="carga direta" style="endArrow=block;html=1;strokeColor=#AAAAAA;dashed=1;fontSize=11;" edge="1" source="p6ing" target="p6db" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p6c6" value="HTTPS (streaming)" style="endArrow=block;html=1;strokeColor=#9673A6;strokeWidth=2;dashed=1;fontSize=11;" edge="1" source="p6app" target="p6llm" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="p6box1" value="&lt;b&gt;INEGOCIÁVEIS — mantidos integralmente no MVP&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;RNF01 Anonimato&lt;/b&gt; — zero PII. Não há banco de usuárias; logs sem relato. Custo zero de implementação: é ausência de funcionalidade.&lt;br&gt;&lt;b&gt;RNF03 Confiabilidade da triagem&lt;/b&gt; — classificador determinístico e exibição da sugestão de emergência em 100% dos casos. Roda em processo, não exige infraestrutura.&lt;br&gt;&lt;b&gt;RNF04 Rastreabilidade (RAG)&lt;/b&gt; — citação obrigatória mantida. Base menor em volume, mesma exigência de fonte.&lt;br&gt;&lt;b&gt;RNF06 Conformidade legal e ética&lt;/b&gt; — guardrails fail-closed. Sem eles não há permissão ética para colocar o sistema diante de uma usuária real." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=14;spacingTop=10;fillColor=#EAF7EF;strokeColor=#5B9E72;strokeWidth=2;fontSize=12;fontColor=#1B2A4A;" vertex="1" parent="1">
+          <mxGeometry x="60" y="830" width="760" height="290" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6box2" value="&lt;b&gt;RELAXADOS NO MVP — dívida arquitetural assumida&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;RNF02 Disponibilidade&lt;/b&gt; — de 99,5% multi-AZ para ~99% best-effort em AZ única. Deploy causa indisponibilidade de 1–2 min. &lt;i&gt;Mitigação parcial: sugestão de emergência e conteúdo essencial ficam offline no service worker — apenas para quem já acessou antes.&lt;/i&gt;&lt;br&gt;&lt;b&gt;RNF05 Atualização sem downtime&lt;/b&gt; — publicação do catálogo exige reinício do container. &lt;i&gt;Mitigação: janela combinada de madrugada; sem auto scaling — carga limitada por convite.&lt;/i&gt;&lt;br&gt;&lt;b&gt;RNF07 Desempenho (parcial)&lt;/b&gt; — resposta RAG completa sobe de ≤3 s para ≤5 s (pgvector sem reranker, cache volátil). &lt;i&gt;Exibição da sugestão de emergência e Saída Rápida permanecem ≤500 ms e ≤200 ms: rodam no cliente.&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=14;spacingTop=10;fillColor=#FFF4E6;strokeColor=#D6A040;strokeWidth=2;fontSize=12;fontColor=#5E3D00;" vertex="1" parent="1">
+          <mxGeometry x="840" y="830" width="760" height="290" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6crit" value="&lt;b&gt;Critério de saída do MVP → arquitetura alvo (aba 5):&lt;/b&gt; uso concorrente sustentado acima de 50 sessões, ou primeira parceria institucional formalizada, ou incidente de indisponibilidade em horário noturno." style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=middle;spacingLeft=14;fillColor=#FFFFFF;strokeColor=#1B2A4A;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="790" width="1200" height="30" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>
