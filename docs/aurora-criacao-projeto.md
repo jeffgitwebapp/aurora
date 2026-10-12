@@ -8,7 +8,7 @@
 Criar o projeto em:
 
 ```text
-C:\Users\jephe\OneDrive\Mestrado Eng. de Software\Disciplinas\Projeto Mestrado\src
+C:\Projetos\aurora\src
 ```
 
 O diretório `src` será a raiz do projeto Aurora e conterá `backend/` e `frontend/`. Ao final, ambos poderão ser iniciados localmente em processos separados, e a interface React enviará mensagens ao backend FastAPI.
@@ -138,7 +138,7 @@ npm --version
 2. Definir o destino e verificar seu estado:
 
 ```powershell
-$ProjectRoot = "C:\Users\jephe\OneDrive\Mestrado Eng. de Software\Disciplinas\Projeto Mestrado\src"
+$ProjectRoot = "C:\Projetos\aurora\src"
 Test-Path $ProjectRoot
 ```
 
@@ -219,7 +219,7 @@ npm run build
 ### Etapa 4 — Integração ponta a ponta local
 
 1. Criar `src/.gitignore` para ignorar ambientes Python, `__pycache__`, caches de teste/lint, `node_modules`, `dist`, arquivos `.env` e logs; não ignorar os lockfiles.
-2. Criar `src/README.md` contendo pré-requisitos, comandos abaixo, endpoint/contrato, estrutura resumida e limitações do protótipo. Não incluir segredos.
+2. Criar `README.md` contendo pré-requisitos, comandos abaixo, endpoint/contrato, estrutura resumida e limitações do protótipo. Não incluir segredos.
 3. Abrir um terminal PowerShell para o backend:
 
 ```powershell
@@ -254,7 +254,7 @@ Pré-requisitos: Python 3.12+, `uv`, Node.js LTS e `npm`.
 **Terminal 1 — backend**
 
 ```powershell
-Set-Location "C:\Users\jephe\OneDrive\Mestrado Eng. de Software\Disciplinas\Projeto Mestrado\src\backend"
+Set-Location "C:\Projetos\aurora\src\backend"
 uv sync
 uv run uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
@@ -262,7 +262,7 @@ uv run uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
 **Terminal 2 — frontend**
 
 ```powershell
-Set-Location "C:\Users\jephe\OneDrive\Mestrado Eng. de Software\Disciplinas\Projeto Mestrado\src\frontend"
+Set-Location "C:\Projetos\aurora\src\frontend"
 npm install
 npm run dev -- --host 127.0.0.1
 ```
@@ -271,7 +271,7 @@ Acessar `http://127.0.0.1:5173`. Documentação OpenAPI local do FastAPI ficará
 
 ## 8. Critérios de aceite da entrega
 
-- [ ] O projeto foi criado somente em `Projeto Mestrado/src/`, sem modificar documentos existentes.
+- [ ] O projeto foi criado em `aurora/src/`, sem modificar documentos existentes.
 - [ ] Existem somente o backend, o frontend e os arquivos listados neste plano; não há feature adicional.
 - [ ] Backend é Python/FastAPI, organizado como monólito modular com bounded context `Conversa` e slice `EnviarMensagem`.
 - [ ] Frontend é React/TypeScript/Vite, organizado em módulos da aplicação e da feature `chat`.
