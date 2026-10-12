@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef } from "react";
+
 import type { ChatMessage } from "../types";
 
 interface MessageListProps {
@@ -6,8 +8,21 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages, isLoading = false }: MessageListProps) {
+  const containerRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages, isLoading]);
+
   return (
-    <section className="message-list-container" aria-label="Histórico de mensagens">
+    <section
+      ref={containerRef}
+      className="message-list-container"
+      aria-label="Histórico de mensagens"
+    >
       {messages.length === 0 && !isLoading ? (
         <div className="message-list__empty">
           <p>Nenhuma mensagem nesta conversa.</p>
