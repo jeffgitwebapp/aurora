@@ -147,6 +147,14 @@ npm run dev -- --host 127.0.0.1
 > Remove-Item -Path "node_modules\.vite" -Recurse -Force -ErrorAction SilentlyContinue
 > npm run dev -- --host 127.0.0.1
 > ```
+>
+> **Erro `Port 5173 is already in use`:** já existe um processo escutando na porta usada pelo frontend. Antes de iniciar outro servidor, abra `http://127.0.0.1:5173` no navegador: o frontend pode já estar rodando. Se precisar reiniciá-lo, pare o servidor no terminal em que ele foi iniciado com `Ctrl+C`. Para identificar qual processo está usando a porta:
+> ```powershell
+> Get-NetTCPConnection -LocalPort 5173 -State Listen |
+>   Select-Object LocalAddress, LocalPort, OwningProcess
+> Get-Process -Id <PID>
+> ```
+> Se confirmar que é um processo antigo do frontend e não tiver acesso ao terminal original, encerre somente esse processo com `Stop-Process -Id <PID>`. Apagar `node_modules\.vite` ou executar `npm install` não libera uma porta ocupada.
 
 ---
 
@@ -162,6 +170,7 @@ npm run dev -- --host 127.0.0.1
   {"message": "mensagem enviada pela pessoa usuária"}
   ```
 - **Resposta para mensagem válida (200 OK):**
+  A API aguarda 10 segundos para simular o processamento antes de responder.
   ```http
   HTTP/1.1 200 OK
   Content-Type: application/json

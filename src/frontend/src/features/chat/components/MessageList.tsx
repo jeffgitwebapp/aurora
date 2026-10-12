@@ -8,7 +8,7 @@ interface MessageListProps {
 export function MessageList({ messages, isLoading = false }: MessageListProps) {
   return (
     <section className="message-list-container" aria-label="Histórico de mensagens">
-      {messages.length === 0 ? (
+      {messages.length === 0 && !isLoading ? (
         <div className="message-list__empty">
           <p>Nenhuma mensagem nesta conversa.</p>
           <p className="message-list__hint">
@@ -31,15 +31,22 @@ export function MessageList({ messages, isLoading = false }: MessageListProps) {
               </li>
             );
           })}
+          {isLoading && (
+            <li
+              className="message-item message-item--assistant message-item--typing"
+              role="status"
+              aria-label="Aurora está digitando"
+            >
+              <span className="message-item__sender">Aurora</span>
+              <span className="message-item__typing-dots" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            </li>
+          )}
         </ol>
-      )}
-
-      {isLoading && (
-        <div className="message-list__loading" role="status" aria-live="polite">
-          <span>Aguardando resposta do servidor...</span>
-        </div>
       )}
     </section>
   );
 }
-
