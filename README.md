@@ -117,7 +117,7 @@ Set-Location "src/backend"
 # Set-Location "C:\Projetos\aurora\src\backend"
 
 uv sync
-uv run uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
+uv run python -m uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 - **Endpoint local:** `http://127.0.0.1:8000/api/chat/messages`
@@ -194,13 +194,13 @@ A partir de `src/backend` (`Set-Location "C:\Projetos\aurora\src\backend"`):
 
 ```powershell
 # Execução da suíte de testes
-uv run pytest
+uv run python -m pytest
 
 # Verificação estática de código (linter)
-uv run ruff check .
+uv run python -m ruff check .
 
 # Verificação de formatação
-uv run ruff format --check .
+uv run python -m ruff format --check .
 
 # Compilação de bytecode
 uv run python -m compileall src
