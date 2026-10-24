@@ -172,6 +172,33 @@ npm run dev -- --host 127.0.0.1
 - O frontend encaminha as chamadas `/api/*` ao backend. No Docker, isso ocorre pela rede interna do Compose; localmente, o Vite encaminha para `127.0.0.1:8000`.
 - Nos dois modos Docker, as portas são publicadas somente em `127.0.0.1`.
 
+### Publicar na EC2 com GitHub Actions
+
+O workflow [deploy.yml](./.github/workflows/deploy.yml) testa o backend e compila o frontend em cada push para `develop` e em cada tag `v*`. Se os testes passarem, publica as imagens privadas `ghcr.io/jeffgitwebapp/aurora-backend` e `ghcr.io/jeffgitwebapp/aurora-frontend` no GHCR. Pushes para `develop` também implantam automaticamente a versão na EC2; tags de release publicam as imagens sem alterar o deploy contínuo.
+
+#### Preparar a instância Amazon Linux
+
+- Instale e inicie Docker Engine e o plugin Docker Compose v2.
+- Configure o Security Group para permitir HTTP TCP `80` de acordo com o público desejado. Restrinja SSH TCP `22`; runners hospedados pelo GitHub usam faixas de IP variáveis, então não abra SSH para `0.0.0.0/0` apenas para habilitar o deploy.
+- O usuário `ec2-user` precisa conseguir executar Docker por `sudo`.
+- O deploy publica HTTP sem TLS na porta 80. Antes de usar um domínio ou dados reais, configure HTTPS e revise os limites de segurança do protótipo. A API atual retorna uma resposta fixa e não é um serviço de atendimento.
+
+#### Cadastrar secrets no GitHub
+
+Crie o environment **`production`** em **Settings → Environments** e cadastre os valores abaixo em **Environment secrets** desse environment. O job de deploy do workflow usa `environment: production` para receber esses secrets:
+
+| Secret | Valor |
+|---|---|
+| `EC2_HOST` | `ec2-3-137-205-13.us-east-2.compute.amazonaws.com` |
+| `EC2_SSH_KEY` | Chave privada SSH autorizada para `ec2-user` |
+| `EC2_KNOWN_HOSTS` | Chave de host SSH da EC2, previamente verificada |
+| `GHCR_USERNAME` | Usuário GitHub que tem acesso de leitura aos pacotes |
+| `GHCR_READ_TOKEN` | Personal Access Token (classic) com escopo `read:packages` |
+
+Não coloque a chave SSH ou o token no repositório, no workflow ou em mensagens. Para obter a entrada de `EC2_KNOWN_HOSTS`, use `ssh-keyscan` e confirme a impressão digital da chave por um canal confiável antes de cadastrá-la. Se o SSH da instância não puder aceitar conexões dos runners do GitHub de forma restrita, use um runner com IP de saída fixo ou AWS Systems Manager em vez de abrir a porta 22 para a internet.
+
+Depois de adicionar os secrets, faça push para `develop`. Acompanhe o workflow em **Actions**; após a publicação, a aplicação ficará em `http://ec2-3-137-205-13.us-east-2.compute.amazonaws.com`. O Compose de produção publica apenas o frontend na porta 80 e mantém o backend acessível pela rede interna. O arquivo [`docker-compose.prod.yml`](./docker-compose.prod.yml) é separado do Compose local para preservar a execução de desenvolvimento.
+
 > [!TIP]
 > **Resolução de problema no Windows / OneDrive:**  
 > Caso o projeto seja clonado ou executado dentro de uma pasta sincronizada pelo OneDrive e o Vite apresente o erro `EPERM: operation not permitted, rmdir ...node_modules\.vite\deps`, isso ocorre pelo bloqueio temporário de arquivos pelo agente de sincronização. No diretório local padrão (`C:\Projetos\aurora`), esse bloqueio não ocorre. Se necessário em ambientes sincronizados, execute no terminal do frontend:
