@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef } from "react";
+
 import type { ChatMessage } from "../types";
 
 interface MessageListProps {
@@ -6,13 +8,29 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages, isLoading = false }: MessageListProps) {
+  const containerRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages, isLoading]);
+
   return (
-    <section className="message-list-container" aria-label="Histórico de mensagens">
+    <section
+      ref={containerRef}
+      className="message-list-container"
+      aria-label="Histórico de mensagens"
+    >
       {messages.length === 0 && !isLoading ? (
         <div className="message-list__empty">
-          <p>Nenhuma mensagem nesta conversa.</p>
+          <p className="message-list__welcome">
+            Conte com suas palavras o que está acontecendo. Não precisa usar os
+            termos certos, e você pode parar quando quiser.
+          </p>
           <p className="message-list__hint">
-            Envie uma mensagem abaixo para iniciar. O histórico não é salvo no navegador nem no servidor.
+            Você decide o que compartilhar.
           </p>
         </div>
       ) : (

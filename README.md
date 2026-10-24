@@ -104,41 +104,73 @@ python --version; uv --version; node --version; npm --version
 
 ---
 
-## 3. Como Executar Localmente
+## 3. Como Executar
 
-Abra **dois terminais distintos** (PowerShell ou Prompt de Comando) e mantenha-os em execução simultaneamente:
+Escolha uma das opções abaixo. As duas opções Docker iniciam o frontend e o backend; a opção local executa cada serviço em modo de desenvolvimento.
 
-### Terminal 1 — Backend (FastAPI)
+### Opção A — Docker Desktop
+
+1. Instale e abra o Docker Desktop.
+2. Em **Settings → Resources → WSL Integration**, habilite a distribuição Ubuntu caso use o backend WSL 2.
+3. Abra um PowerShell na raiz do repositório e inicie os serviços:
+
+   ```powershell
+   docker compose up --build -d
+   ```
+
+4. Acompanhe os containers no painel **Containers** do Docker Desktop. O projeto aparece como `aurora`, com os serviços `frontend` e `backend`.
+
+Para consultar logs e parar os serviços pelo terminal:
 
 ```powershell
-# A partir da raiz do repositório (C:\Projetos\aurora):
-Set-Location "src/backend"
-# Ou especificando o caminho absoluto:
-# Set-Location "C:\Projetos\aurora\src\backend"
-
-uv sync
-uv run uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
+docker compose logs -f
+docker compose down
 ```
 
-- **Endpoint local:** `http://127.0.0.1:8000/api/chat/messages`
-- **Documentação interativa OpenAPI / Swagger:** `http://127.0.0.1:8000/docs`
+### Opção B — Docker pelo WSL
 
----
-
-### Terminal 2 — Frontend (React + Vite)
+Use esta opção se o Docker CLI estiver instalado dentro de uma distribuição WSL, como no ambiente Ubuntu. No PowerShell do Windows, execute na raiz do repositório:
 
 ```powershell
-# A partir da raiz do repositório (C:\Projetos\aurora):
-Set-Location "src/frontend"
-# Ou especificando o caminho absoluto:
-# Set-Location "C:\Projetos\aurora\src\frontend"
+wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/c/Projetos/aurora && docker compose up --build -d'
+```
 
+Para acompanhar os logs ou parar os serviços:
+
+```powershell
+wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/c/Projetos/aurora && docker compose logs -f'
+wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/c/Projetos/aurora && docker compose down'
+```
+
+Se o repositório estiver em outro local ou a distribuição tiver outro nome, ajuste `Ubuntu` e `/mnt/c/Projetos/aurora` para os valores correspondentes.
+
+### Opção C — Execução local (sem Docker)
+
+Pré-requisitos: Python 3.12+, `uv`, Node.js LTS 20+ e npm 10+. Abra **dois terminais** e mantenha ambos em execução.
+
+No primeiro terminal, inicie o backend:
+
+```powershell
+Set-Location "C:\Projetos\aurora\src\backend"
+uv sync
+uv run python -m uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+No segundo terminal, inicie o frontend:
+
+```powershell
+Set-Location "C:\Projetos\aurora\src\frontend"
 npm install
 npm run dev -- --host 127.0.0.1
 ```
 
+### Endereços locais
+
 - **Interface web:** `http://127.0.0.1:5173`
-- O Vite encaminha automaticamente as chamadas `/api/*` para o backend em `http://127.0.0.1:8000`.
+- **API:** `http://127.0.0.1:8000/api/chat/messages`
+- **Documentação interativa OpenAPI / Swagger:** `http://127.0.0.1:8000/docs`
+- O frontend encaminha as chamadas `/api/*` ao backend. No Docker, isso ocorre pela rede interna do Compose; localmente, o Vite encaminha para `127.0.0.1:8000`.
+- Nos dois modos Docker, as portas são publicadas somente em `127.0.0.1`.
 
 > [!TIP]
 > **Resolução de problema no Windows / OneDrive:**  
@@ -194,13 +226,13 @@ A partir de `src/backend` (`Set-Location "C:\Projetos\aurora\src\backend"`):
 
 ```powershell
 # Execução da suíte de testes
-uv run pytest
+uv run python -m pytest
 
 # Verificação estática de código (linter)
-uv run ruff check .
+uv run python -m ruff check .
 
 # Verificação de formatação
-uv run ruff format --check .
+uv run python -m ruff format --check .
 
 # Compilação de bytecode
 uv run python -m compileall src
