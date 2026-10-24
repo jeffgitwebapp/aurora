@@ -25,9 +25,12 @@ export function MessageList({ messages, isLoading = false }: MessageListProps) {
     >
       {messages.length === 0 && !isLoading ? (
         <div className="message-list__empty">
-          <p>Nenhuma mensagem nesta conversa.</p>
+          <p className="message-list__welcome">
+            Conte com suas palavras o que está acontecendo. Não precisa usar os
+            termos certos, e você pode parar quando quiser.
+          </p>
           <p className="message-list__hint">
-            Envie uma mensagem abaixo para iniciar. O histórico não é salvo no navegador nem no servidor.
+            Você decide o que compartilhar.
           </p>
         </div>
       ) : (
