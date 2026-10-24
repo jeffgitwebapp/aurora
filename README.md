@@ -199,6 +199,8 @@ Não coloque a chave SSH ou o token no repositório, no workflow ou em mensagens
 
 Depois de adicionar os secrets, faça push para `develop`. Acompanhe o workflow em **Actions**; após a publicação, a aplicação ficará em `http://ec2-3-137-205-13.us-east-2.compute.amazonaws.com`. O Compose de produção publica apenas o frontend na porta 80 e mantém o backend acessível pela rede interna. O arquivo [`docker-compose.prod.yml`](./docker-compose.prod.yml) é separado do Compose local para preservar a execução de desenvolvimento.
 
+Para o passo a passo completo da instância, Docker/Compose, SSH, GHCR, secrets e publicação, consulte o [guia de deploy na EC2](./DEPLOY-EC2.md).
+
 > [!TIP]
 > **Resolução de problema no Windows / OneDrive:**  
 > Caso o projeto seja clonado ou executado dentro de uma pasta sincronizada pelo OneDrive e o Vite apresente o erro `EPERM: operation not permitted, rmdir ...node_modules\.vite\deps`, isso ocorre pelo bloqueio temporário de arquivos pelo agente de sincronização. No diretório local padrão (`C:\Projetos\aurora`), esse bloqueio não ocorre. Se necessário em ambientes sincronizados, execute no terminal do frontend:
