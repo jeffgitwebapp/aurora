@@ -18,12 +18,13 @@ export function ChatPage({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const initialMessageSent = useRef(false);
+  const nextMessageId = useRef(0);
 
   const handleSendMessage = async (text: string) => {
     setError(null);
 
     const userMessage: ChatMessage = {
-      id: crypto.randomUUID(),
+      id: `message-${nextMessageId.current++}`,
       role: "user",
       text,
     };
@@ -34,7 +35,7 @@ export function ChatPage({
     try {
       const replyText = await sendMessage(text);
       const assistantMessage: ChatMessage = {
-        id: crypto.randomUUID(),
+        id: `message-${nextMessageId.current++}`,
         role: "assistant",
         text: replyText,
       };
