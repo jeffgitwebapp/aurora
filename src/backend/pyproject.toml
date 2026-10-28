@@ -1,7 +1,7 @@
 [project]
 name = "aurora-backend"
 version = "0.1.0"
-description = "Aurora — backend de protótipo local (resposta fixa, sem persistência)."
+description = "Aurora — backend de protótipo local (texto simulado, sem persistência)."
 requires-python = ">=3.12"
 dependencies = [
     "fastapi",

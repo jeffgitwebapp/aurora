@@ -220,8 +220,9 @@ reinício automático (`unless-stopped`) para os serviços.
 
 - A aplicação está publicada em HTTP, sem TLS. Para uso com domínio ou dados
   reais, configure HTTPS e revise a arquitetura de segurança.
-- A API atual é um protótipo e retorna uma resposta fixa; não é um serviço real
-  de atendimento.
+- A API atual é um protótipo: retorna texto aleatório precedido pelo aviso
+  `ATENÇÃO ISSO NÃO É ACONSELHAMENTO, APENAS TEXTO SIMULADO`, sem analisar a
+  mensagem; não é aconselhamento nem um serviço real de atendimento.
 - O backend não publica sua porta diretamente na internet: ele é acessível
   pela rede interna do Compose através do proxy do frontend.
 - Proteja a chave SSH e o token do GHCR, rotacione-os se forem expostos e

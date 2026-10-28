@@ -40,7 +40,7 @@ aurora/
 │   │   │               └── send_message/ # Vertical Slice: EnviarMensagem
 │   │   │                   ├── router.py   # Adaptador de entrada HTTP
 │   │   │                   ├── schemas.py  # Contratos Pydantic de entrada e saída
-│   │   │                   └── handler.py  # Lógica de negócio / resposta fixa
+│   │   │                   └── handler.py  # Lógica de negócio / texto simulado
 │   │   └── tests/
 │   │       └── test_send_message.py    # Suíte de testes automatizados
 │   └── frontend/                       # React 19 + TypeScript + Vite
@@ -181,7 +181,7 @@ O workflow [deploy.yml](./.github/workflows/deploy.yml) testa o backend e compil
 - Instale e inicie Docker Engine e o plugin Docker Compose v2.
 - Configure o Security Group para permitir HTTP TCP `80` de acordo com o público desejado. Restrinja SSH TCP `22`; runners hospedados pelo GitHub usam faixas de IP variáveis, então não abra SSH para `0.0.0.0/0` apenas para habilitar o deploy.
 - O usuário `ec2-user` precisa conseguir executar Docker por `sudo`.
-- O deploy publica HTTP sem TLS na porta 80. Antes de usar um domínio ou dados reais, configure HTTPS e revise os limites de segurança do protótipo. A API atual retorna uma resposta fixa e não é um serviço de atendimento.
+- O deploy publica HTTP sem TLS na porta 80. Antes de usar um domínio ou dados reais, configure HTTPS e revise os limites de segurança do protótipo. A API atual retorna texto aleatório precedido de um aviso, sem analisar a mensagem; não é aconselhamento nem um serviço de atendimento.
 
 #### Cadastrar secrets no GitHub
 
