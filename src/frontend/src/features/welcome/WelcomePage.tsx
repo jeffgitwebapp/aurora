@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import { EmergencyContacts } from "../emergency/EmergencyContacts";
 
@@ -15,6 +15,8 @@ const suggestedMessages = [
 
 export function WelcomePage({ onOpenConversation, onQuickExit }: WelcomePageProps) {
   const [draft, setDraft] = useState("");
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const privacyButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,11 +77,14 @@ export function WelcomePage({ onOpenConversation, onQuickExit }: WelcomePageProp
               onChange={(event) => setDraft(event.target.value)}
             />
             <div className="welcome-composer__footer">
-              <span>Protótipo local · a conversa não é salva.</span>
+              <span>
+                A conversa fica na memória enquanto esta página está aberta.
+              </span>
               <button
                 type="submit"
                 className="welcome-composer__submit"
-                aria-label="Abrir conversa"
+                aria-label="Enviar"
+                disabled={!draft.trim()}
               >
                 <span aria-hidden="true">→</span>
               </button>
@@ -106,8 +111,48 @@ export function WelcomePage({ onOpenConversation, onQuickExit }: WelcomePageProp
 
       <footer className="welcome-footer">
         <EmergencyContacts compact />
-        <span>Tecla Esc fecha a página. A conversa não é salva.</span>
+        <div className="welcome-footer__links">
+          <span>Tecla Esc fecha a página.</span>
+          <button
+            ref={privacyButtonRef}
+            type="button"
+            className="welcome-footer__link"
+            aria-expanded={isPrivacyOpen}
+            aria-controls="privacy-notice"
+            onClick={() => setIsPrivacyOpen(true)}
+          >
+            Privacidade
+          </button>
+          <a className="welcome-footer__link" href="#welcome-emergency-contacts">
+            Contatos úteis
+          </a>
+        </div>
       </footer>
+
+      <section
+        id="privacy-notice"
+        className="privacy-panel"
+        aria-labelledby="privacy-notice-title"
+        hidden={!isPrivacyOpen}
+      >
+        <h2 id="privacy-notice-title">Privacidade da conversa</h2>
+        <p>
+          Esta conversa fica na memória enquanto esta página está aberta. Ao
+          usar a Saída Rápida ou encerrar a página, o Aurora descarta o conteúdo
+          da sessão que mantém. Isso não apaga possíveis registros do navegador,
+          dispositivo, rede ou terceiros.
+        </p>
+        <button
+          type="button"
+          className="privacy-panel__close"
+          onClick={() => {
+            setIsPrivacyOpen(false);
+            privacyButtonRef.current?.focus();
+          }}
+        >
+          Fechar
+        </button>
+      </section>
     </div>
   );
 }

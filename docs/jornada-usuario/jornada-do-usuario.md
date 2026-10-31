@@ -68,11 +68,11 @@ triagem ou cadastro. A ordem prioriza segurança.
 
 | Prioridade | Ação independente | Onde começa | Ação da usuária | Resultado esperado | Origem |
 |---|---|---|---|---|---|
-| P0 | Sair rapidamente | Qualquer tela | Acionar **Saída rápida (Esc)** ou pressionar Esc | Descartar a sessão mantida pelo Aurora e abrir a página neutra local em `/organizador`; Esc age imediatamente, sem confirmação | RF06, E1-US3, wireframe; decisão de produto de 31/10/2026 |
+| P0 | Sair rapidamente | Qualquer tela | Acionar **Sair**/**Saída rápida (Esc)** ou pressionar Esc | Descartar o estado de conversa mantido pelo Aurora e abrir a página local de receitas em `/receitas`; Esc age imediatamente, sem confirmação | RF06, E1-US3, wireframe; decisão revisada pela usuária em 31/10/2026 |
 | P0 | Buscar ajuda por telefone | Início e telas de conversa; também há tela de risco agudo | Acionar o serviço desejado: Polícia Militar **190**, Central de Atendimento à Mulher **180**, SAMU **192** ou CVV **188** | O aparelho oferece a ação de ligação; o Aurora não liga pela usuária | Wireframe, E3-US8, E5-US1/2 |
 | P1 | Iniciar com texto livre | Início | Digitar no campo **Escreva sua mensagem** e acionar **Enviar** | Abrir a conversa e encaminhar o texto como primeira mensagem | RF01, wireframe, implementação |
 | P1 | Iniciar por uma sugestão | Início | Escolher uma das sugestões | Abrir a conversa e usar a frase selecionada para iniciar | Wireframe, implementação |
-| P1 | Consultar privacidade | Início | Acionar **Privacidade** | Exibir o aviso de sessão aprovado na seção 3.1; o destino visual do link ainda precisa ser definido | Link previsto no wireframe; decisão de produto de 31/10/2026 |
+| P1 | Consultar privacidade | Início | Acionar **Privacidade** | Expandir o aviso de sessão aprovado na seção 3.1 sem sair da tela | Link previsto no wireframe; implementação |
 | P1 | Ver contatos úteis | Início | Acionar **Contatos úteis** | Abrir os canais de contato disponíveis | Wireframe |
 
 ### 3.1 Tela inicial e começo anônimo
@@ -96,6 +96,8 @@ próprias palavras ou escolhendo um ponto de partida.
   - **Onde encontrar apoio**
 - Links **Privacidade** e **Contatos úteis**.
 - Aviso **Tecla Esc fecha a página**.
+- A implementação atual mantém o acesso a **Privacidade** e **Contatos úteis**
+  no rodapé; os rótulos e destinos funcionais não alteram a sessão.
 
 **Regras de interação:**
 
@@ -108,11 +110,14 @@ próprias palavras ou escolhendo um ponto de partida.
 5. Não solicitar permissão de localização, não usar pop-up e não exibir
    notificações, conforme as regras do wireframe.
 
-**Implementação observada:** o frontend atual permite enviar texto livre e
-escolher sugestões para iniciar a conversa automaticamente. O aviso atual na
-tela inicial diz **“Protótipo local · a conversa não é salva.”**; isso difere
-do texto do wireframe **“Sem cadastro. Nada fica salvo.”** e precisa ser
-consolidado antes da implementação.
+**Implementação observada:** o frontend permite enviar texto livre com a ação
+acessível **Enviar** e iniciar a conversa automaticamente por qualquer uma das
+três sugestões. Campo vazio não inicia a conversa. O aviso curto informa
+**“A conversa fica na memória enquanto esta página está aberta.”**. O link
+**Privacidade** expande o aviso completo aprovado abaixo na mesma tela;
+**Fechar** recolhe a área e devolve o foco ao controle. O link **Contatos úteis**
+leva ao painel de telefones na mesma tela. Nenhuma dessas ações exige cadastro
+ou solicita localização, permissões ou notificações.
 
 **Decisão de produto registrada em 31/10/2026:** usar o seguinte aviso para
 explicar os limites da sessão anônima:
@@ -137,11 +142,22 @@ e substituir a entrada da aplicação no histórico, conforme a capacidade do
 navegador. O alvo de latência documentado para a troca é p95 de 200 ms e p99 de
 300 ms.
 
-**Decisão de produto registrada em 31/10/2026:** o destino será uma página
-estática neutra da própria aplicação no caminho `/organizador`. A tecla Esc
-aciona a saída imediatamente, sem confirmação, em qualquer tela, inclusive
-quando o foco está em um campo. O texto e o conteúdo final da página neutra
-precisam de revisão de produto e segurança antes da implementação.
+**Decisão revisada pela usuária em 31/10/2026:** a saída abre a página local
+`/receitas`, com uma receita escolhida aleatoriamente entre pudim, pão de forno
+e frango assado, incluindo texto e imagem originais. Cada novo pedido de Saída
+Rápida mostra uma receita diferente da última exibida. A tecla Esc aciona a
+saída imediatamente, sem confirmação, em qualquer tela, inclusive quando o
+foco está em um campo. O conteúdo e as imagens são pré-carregados desde a
+abertura do site. A usuária fará a revisão de segurança após estes ajustes;
+até essa revisão, o fluxo não está liberado para uso real nem publicação.
+
+**Implementação observada:** o caminho `/receitas` substitui a rota atual na
+aplicação, não depende de chamada ao backend e não oferece navegação de volta
+ao relato. A página apresenta somente a receita selecionada e sua ilustração
+local; em cada nova saída, a seleção é aleatória e não repete a última receita
+exibida.
+Metas p95 de 200 ms e p99 de 300 ms são alvos documentados; não são garantidas
+por uma inspeção local pontual.
 
 **Limite de segurança:** a saída pode descartar o estado mantido pelo Aurora e
 navegar para a página neutra; não se deve afirmar que remove o histórico geral
@@ -228,11 +244,14 @@ em uma sugestão.
 > Nada desta conversa fica salvo. Ao fechar a página ou usar a Saída rápida,
 > tudo é apagado.
 
-**Implementação observada:** o chat atual mostra um acolhimento com texto
-similar, mantém as mensagens apenas enquanto a tela está aberta e apresenta
-estado de envio. O campo está rotulado **Sua mensagem**, usa placeholder
-**Escreva aqui…** e botão **Enviar**. A conversa não oferece ainda triagem,
-RAG ou continuação persistente.
+**Implementação observada:** o chat mostra um acolhimento com texto similar,
+mantém mensagens no estado em memória do frontend e apresenta **Lendo com
+atenção…** durante a espera. O campo está rotulado **Sua mensagem**, usa
+placeholder **Escreva aqui…** e botão **Enviar**; durante o envio, o campo e a
+ação ficam desativados. A API recebe somente a mensagem atual. Se houver erro,
+a interface informa a falha e oferece **Tentar novamente** sem adicionar outra
+cópia da mensagem ao histórico. Recarregar a conversa não restaura o relato.
+O protótipo ainda não oferece triagem, RAG ou continuação persistente.
 
 ### Etapa 2 — Triar urgência antes de informar
 
@@ -470,7 +489,7 @@ esteja vigente ou acessível.
 | Voltar de encaminhamento | **← Voltar à conversa** | Preservar conversa e permitir continuação | [WIREFRAME] define o retorno |
 | Fazer outra pergunta | Usar **Perguntar mais…** ou **Escreva aqui…** e **Enviar** | A conversa mantém contexto durante a sessão anônima | [REQUISITO] E3-US5 |
 | Acionar emergência | Tocar em um telefone | A aplicação não liga nem envia dados por conta própria | [WIREFRAME], E3-US8 |
-| Acionar Saída Rápida | **Saída rápida (Esc)** ou Esc | Encerrar a sessão volátil e ir para página neutra | Destino neutro exato ainda é gap |
+| Acionar Saída Rápida | **Sair**, **Saída rápida (Esc)** ou Esc | Encerrar o estado volátil sob controle do Aurora e ir para `/receitas` | Não apaga registros externos; revisão de segurança pendente |
 | Fechar a página anônima | Fechar navegador/aba | A conversa anônima é descartada ao encerrar a sessão; não se oferece retomada depois de fechada | RNF01 e texto do wireframe |
 | Retornar pelo navegador/aba ainda aberta | Não há regra detalhada | O comportamento de retorno entre telas deve preservar o que está na sessão até encerrá-la | [GAP] definir se marcação/retorno em memória é necessária |
 | Retomar depois de sair/fechar | Não especificado para o modo anônimo | Não recuperar relato anônimo encerrado | **[SUGESTÃO — validar]** Informar a diferença entre continuar na mesma sessão e retomar em outro momento |
@@ -587,9 +606,10 @@ As decisões de produto e seus responsáveis de validação estão consolidados 
 [J-00 do plano de implementação](./plano-implementacao-jornada-usuario.md).
 Permanecem as seguintes pendências:
 
-1. **Saída Rápida:** destino `/organizador` e tecla Esc imediata foram definidos.
-   Ainda falta aprovar o conteúdo neutro da página e revisar segurança antes de
-   implementar.
+1. **Saída Rápida:** destino `/receitas`, três receitas e tecla Esc imediata
+   foram definidos. A implementação e o pré-carregamento estão no protótipo;
+   revisão de segurança após estes ajustes, publicação e validação humana na
+   AWS permanecem pendentes.
 2. **Retorno e retomada:** preservar a sessão enquanto aberta está definido;
    telas e regras para histórico de conta são futuras e serão detalhadas em
    L-01/L-02.
@@ -645,6 +665,9 @@ Permanecem as seguintes pendências:
   `src/frontend/src/features/chat/components/MessageComposer.tsx` e
   `src/frontend/src/features/chat/components/MessageList.tsx`: comportamento
   atualmente implementado de início e conversa.
+- `src/frontend/src/features/recipes/RecipesPage.tsx` e
+  `src/frontend/public/recipes/`: tela local de saída rápida em `/receitas` e
+  ilustrações pré-carregadas.
 
 ## 11. Validação pendente
 
@@ -652,7 +675,8 @@ A usuária aprovou esta jornada em revisão anterior e as decisões de produto
 acima foram atualizadas em 31/10/2026. A validação profissional ainda precisa
 cobrir:
 
-- o conteúdo da página neutra e os limites da Saída Rápida;
+- revisão de segurança da Saída Rápida, adequação do conteúdo e das imagens da
+  página `/receitas` e limites de navegação/histórico;
 - triagem, canais por situação, classificação indeterminada e mensagens;
 - textos de privacidade e tratamento de localização;
 - fontes e conteúdos demonstrativos de risco, direitos e encaminhamento;

@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="referrer" content="no-referrer" />
     <title>Aurora — protótipo local</title>
+    <link rel="preload" as="image" href="/recipes/pudim.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="/recipes/pao-de-forno.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="/recipes/frango-assado.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
+    <div class="recipe-image-preloads" aria-hidden="true">
+      <img src="/recipes/pudim.svg" alt="" width="1" height="1" />
+      <img src="/recipes/pao-de-forno.svg" alt="" width="1" height="1" />
+      <img src="/recipes/frango-assado.svg" alt="" width="1" height="1" />
+    </div>
     <div id="root"></div>
     <noscript>Esta interface requer JavaScript habilitado no navegador.</noscript>
     <script type="module" src="/src/main.tsx"></script>

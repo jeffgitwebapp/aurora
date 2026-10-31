@@ -17,7 +17,7 @@ export async function sendMessage(message: string, signal?: AbortSignal): Promis
     });
   } catch {
     throw new ChatApiError(
-      "Não foi possível falar com o servidor local. Verifique se o backend está em execução.",
+      "Não foi possível conectar ao serviço. Verifique a conexão e tente novamente.",
     );
   }
 

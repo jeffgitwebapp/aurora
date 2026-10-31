@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01 implementada localmente, aguardando commit, publicação e validação humana na AWS; demais tarefas de implementação não iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01 concluída; I-02, I-03, I-04 e C-01 implementadas localmente; revisão de segurança, commit, publicação e validação humana na AWS permanecem pendentes para as tarefas aplicáveis; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a mocks
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -93,7 +93,7 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 | Decisão | Resultado atual | Estado / responsável pela próxima validação |
 |---|---|---|
 | Jornada-base | A usuária já aprovou a jornada em revisão anterior. Textos e fluxos sensíveis continuam sujeitos a revisão profissional. | Aprovada pela usuária; profissionais de saúde mental, direito, proteção e acessibilidade devem revisar o conteúdo antes de uso real |
-| Saída Rápida | Usar página estática neutra da própria aplicação no caminho `/organizador`. A tecla Esc aciona a saída imediatamente, sem confirmação, em qualquer tela, inclusive com foco em campo. | Decisão de produto registrada; responsável de produto deve aprovar o conteúdo neutro; segurança deve revisar ameaças e limites antes da implementação |
+| Saída Rápida | Decisão revisada pela usuária em 31/10/2026: abrir a página local `/receitas` com uma receita escolhida aleatoriamente entre pudim, pão de forno e frango assado; cada novo acionamento apresenta uma receita diferente da última exibida. A tecla Esc troca imediatamente para ela, sem confirmação, em qualquer tela, inclusive com foco em campo. Conteúdo e imagens locais devem estar pré-carregados desde a abertura do site. | Escopo da tela aprovado pela usuária; textos e imagens do protótipo foram produzidos para esta implementação; revisão de segurança será feita pela usuária após os ajustes e antes da publicação/teste AWS |
 | Privacidade da sessão | Texto aprovado para o protótipo: “Esta conversa fica na memória enquanto esta página está aberta. Ao usar a Saída Rápida ou encerrar a página, o Aurora descarta o conteúdo da sessão que mantém. Isso não apaga possíveis registros do navegador, dispositivo, rede ou terceiros.” | Aprovado pela usuária; profissional de privacidade/LGPD deve revisar a redação antes de uso real |
 | Triagem de risco agudo | Sinais documentados: ideação suicida, agressão em curso, ameaça de morte e presença de arma. Sinal agudo interrompe o fluxo informativo antes de qualquer geração por LLM. Na classificação indeterminada, não afirmar ausência de risco; mostrar estado de incerteza e canais gerais, sem resposta informativa até escolha explícita da usuária. Destacar canais conforme E5-US1/2: 190 para morte iminente/agressão em curso; 192 quando houver lesão ou risco de ato iminente; 188 para crise emocional/ideação; 180 permanece disponível como canal de orientação. | Política de produto registrada; profissionais da rede de proteção e saúde mental devem aprovar critérios, mapeamento e mensagem antes de uso real |
 | Limite de escopo | Aplicar o texto do wireframe a pedidos de diagnóstico/prescrição ou parecer jurídico individual; perguntas gerais sobre direitos permanecem no fluxo informativo. | Decisão de produto registrada; profissionais de direito e saúde mental devem revisar exemplos limítrofes |
@@ -108,7 +108,7 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 
 | Tarefa dependente | Estado após J-00 | Motivo |
 |---|---|---|
-| I-02 — Saída Rápida | Bloqueada até aprovação de conteúdo da página neutra e revisão de segurança | O caminho `/organizador` e a tecla Esc foram escolhidos, mas o conteúdo neutro e a análise de segurança não foram validados |
+| I-02 — Saída Rápida | Implementada localmente conforme decisão revisada; revisão de segurança ainda pendente | A usuária definiu `/receitas` com três opções de receita, mostrando uma por acionamento e sem repetir a última; a revisão de segurança ocorre depois dos ajustes. Não publicar nem declarar apta para uso real antes da revisão |
 | C-02/C-03 — Triagem e risco agudo | Bloqueadas para uso real até revisão da rede de proteção e saúde mental | A política foi registrada, mas casos, destaque dos canais e texto de incerteza exigem validação especializada |
 | C-04 — Resposta com fontes | Bloqueada para conteúdo real até curadoria/aprovação de fontes e fixtures | Não há autorização para inventar fontes ou afirmações sensíveis |
 | C-05 — Limite de escopo | Bloqueada para casos limítrofes até revisão jurídica e clínica | A distinção geral foi definida; exemplos e gatilhos ainda precisam de revisão |
@@ -155,7 +155,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### I-01 — Acesso a emergência por telefone
 
 **Prioridade:** P0
-**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
+**Estado:** Concluída
 **Dependências:** J-01
 **Jornada-base:** ações independentes; início, conversa e telas de risco agudo.
 
@@ -171,13 +171,14 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 - Os quatro canais estão visíveis na tela inicial e no painel “Contatos úteis” da conversa; o link “Emergência” do cabeçalho continua apontando para `tel:190`.
 - Os links são âncoras nativas, utilizáveis por teclado; a lista compacta na tela inicial mantém alvos de toque de pelo menos 44 px e se adapta ao breakpoint móvel.
 - Validação: `npm run check`, `npm run build` e `git diff --check` passaram. Inspeção no navegador local confirmou os quatro rótulos e destinos `tel:` tanto no início quanto na conversa.
-- Limitação da inspeção local: ao abrir a conversa por uma sugestão, o envio da mensagem recebeu HTTP 500 da API (`POST /api/chat/messages`). O erro não impediu a verificação dos contatos, mas o envio do chat não foi validado neste fluxo e não faz parte da implementação I-01.
-- Pendente para concluir: commit, publicação e confirmação humana do teste no ambiente AWS, conforme a seção 3.
+- Verificação adicional do fluxo local: o HTTP 500 observado ao abrir uma conversa por sugestão ocorreu porque o backend não estava em execução. Com frontend e backend ativos, a sugestão abriu a conversa e recebeu resposta normalmente.
+- Conclusão confirmada pelo usuário em 31/10/2026: publicação realizada e teste humano validado no ambiente AWS.
+- Commit da implementação: `687249b` (`resoluação I-01`), presente em `develop` e `origin/develop`.
 
 ### I-02 — Saída Rápida e descarte da sessão
 
 **Prioridade:** P0
-**Estado:** Não iniciada
+**Estado:** Implementada localmente — revisão de segurança, commit, publicação e validação humana na AWS pendentes
 **Dependências:** J-00 (destino e regra Esc aprovados), J-01
 **Jornada-base:** saída disponível sem depender de relato, triagem ou cadastro.
 
@@ -187,10 +188,24 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 
 **Skills:** [PWA, privacidade de dispositivo e Saída Rápida](../../skills/pwa-privacidade-dispositivo-saida-rapida.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
+**Implementação e evidências locais (31/10/2026):**
+
+- Conforme decisão da usuária após o registro inicial de J-00, **Sair**, **Saída rápida (Esc)** e a tecla Esc substituem a rota atual por `/receitas`, exibindo uma única receita sorteada dentre as três disponíveis, sempre diferente da última apresentada. A ação limpa as mensagens iniciais mantidas no estado do app. A troca usa navegação interna, não aguarda a API nem faz uma chamada de rede.
+- A página não mostra a marca Aurora nem um caminho para retornar ao relato. Título do documento: **Receitas**.
+- Criadas três receitas com texto e ilustrações SVG originais locais: **Pudim de leite**, **Pão de forno** e **Frango assado**. Em cada pedido de Saída Rápida aparece apenas uma receita, sorteada sem repetir a última exibida. O conteúdo é demonstrativo e deve ser revisado pela usuária; nenhuma imagem ou serviço externo é requisitado.
+- Texto das receitas está no bundle inicial; as três imagens têm `rel=preload` no HTML e são carregadas antecipadamente.
+- A usuária informou que fará a revisão de segurança após estes ajustes. Até essa revisão, a página não deve ser publicada nem considerada adequada para uso real.
+- Validação no navegador: Esc durante um envio pendente trocou para `/receitas` em 36 ms, cancelou a requisição no cliente e removeu o chat da tela; as três receitas e imagens estavam disponíveis.
+- Validação do ajuste de seleção: em 10 acionamentos consecutivos de Esc no navegador, a página exibiu exatamente uma receita por vez e nenhuma receita repetiu a imediatamente anterior.
+- Pré-carregamento verificado antes da saída para `/receitas`; em viewport de 320 px a página não apresentou overflow horizontal.
+- Latência local de Escape medida em 30 execuções a partir do início: p95 47 ms, p99 48 ms, máximo 48 ms. Esta amostra local não certifica as metas em produção nem substitui medição AWS.
+- `npm run check`, `npm run build` e `git diff --check` passaram.
+- A revisão de segurança, revisão do texto e ilustrações, commit, publicação e validação humana na AWS permanecem pendentes; não liberar para uso real antes da revisão de segurança.
+
 ### I-03 — Início anônimo e sugestões
 
 **Prioridade:** P1
-**Estado:** Não iniciada
+**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
 **Dependências:** J-01
 **Jornada-base:** tela inicial; texto livre e sugestões são entradas independentes.
 
@@ -200,10 +215,18 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 
 **Skills:** [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
+**Implementação e evidências locais (31/10/2026):**
+
+- O envio do campo inicial usa o rótulo acessível **Enviar**, não inicia com texto vazio e envia o conteúdo digitado uma vez; as três sugestões continuam como entradas independentes.
+- O aviso inicial informa que a conversa fica na memória enquanto a página está aberta; a interface não pede cadastro, localização, permissões nem notificações.
+- Testes no navegador: envio por texto livre iniciou a conversa com uma única mensagem da usuária; em viewport de 320 px não houve overflow horizontal.
+- `npm run check` e `npm run build` passaram.
+- A validação em AWS continua pendente; o aviso e a implementação ainda requerem revisão profissional de privacidade antes de uso real.
+
 ### I-04 — Privacidade e contatos úteis
 
 **Prioridade:** P1
-**Estado:** Não iniciada
+**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
 **Dependências:** J-00 (texto e destino aprovados), I-03, I-01
 **Jornada-base:** links independentes na tela inicial.
 
@@ -213,12 +236,20 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 
 **Skills:** [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
+**Implementação e evidências locais (31/10/2026):**
+
+- **Privacidade** expande uma área acessível na própria tela e apresenta o texto aprovado em J-00, sem prometer apagar registros externos; **Fechar** retorna ao início.
+- **Contatos úteis** leva ao painel com os quatro canais acionáveis; os links continuam usando `tel:` e o painel está acessível também na conversa.
+- Testado no navegador: expansão/fechamento do aviso de privacidade, foco restaurado, navegação por âncora ao painel de contatos e ausência de overflow horizontal em 320 px.
+- `npm run check`, `npm run build` e `git diff --check` passaram.
+- A validação AWS e revisão profissional de privacidade/acessibilidade permanecem pendentes.
+
 ## 8. Jornada anônima dependente
 
 ### C-01 — Conversa anônima, mensagens e contexto em memória
 
 **Prioridade:** P1
-**Estado:** Não iniciada
+**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
 **Dependências:** I-03, J-01
 **Jornada-base:** envio do primeiro relato, mensagens subsequentes e retorno durante a sessão.
 
@@ -227,6 +258,15 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 **Critérios de aceite:** o texto inicial é enviado uma vez; mensagens anteriores permanecem no estado de memória do frontend e somente a mensagem atual é enviada ao backend, sem promessa de contexto para geração; falhas não parecem sucesso e permitem recuperação clara; atualização/reabertura não transforma relato anônimo em histórico persistente; nenhuma mensagem vai para logs.
 
 **Skills:** [Arquitetura de software e integração ponta a ponta](../../skills/arquitetura-software-integracao.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
+
+**Implementação e evidências locais (31/10/2026):**
+
+- O primeiro texto (livre ou sugestão) é enviado uma vez; mensagens seguintes acrescentam apenas o texto atual ao payload da API. O histórico fica em memória no frontend.
+- Durante a espera a interface exibe **Lendo com atenção…** e desativa o campo; no backend, a resposta simulada aguarda cinco segundos.
+- Falhas são apresentadas como erro e oferecem **Tentar novamente** sem duplicar a mensagem da usuária. Uma falha seguida de resposta simulada foi exercitada no navegador.
+- Após recarregar a rota `/conversa`, o histórico não reaparece; localStorage e sessionStorage permaneceram vazios. O endpoint não registra o conteúdo da mensagem.
+- Validação local: integração navegador→Vite→FastAPI retornou HTTP 200 em 5,1 s; segundo envio preservou as duas mensagens da usuária e respectivas respostas; 10 testes do backend passaram; Ruff, `npm run check`, `npm run build` e `git diff --check` passaram.
+- Commit, publicação, teste humano na AWS e validação de privacidade antes de uso real permanecem pendentes.
 
 ### C-02 — Triagem de risco agudo antes de resposta informativa
 

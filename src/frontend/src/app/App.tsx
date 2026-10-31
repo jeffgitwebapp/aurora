@@ -1,27 +1,51 @@
 import { useEffect, useState } from "react";
 
 import { ChatPage } from "../features/chat/ChatPage";
+import {
+  getRandomRecipe,
+  RecipesPage,
+  type Recipe,
+} from "../features/recipes/RecipesPage";
 import { WelcomePage } from "../features/welcome/WelcomePage";
 
 function isConversationPath() {
   return window.location.pathname === "/conversa";
 }
 
+function isRecipesPath() {
+  return window.location.pathname === "/receitas";
+}
+
 export function App() {
   const [isConversationOpen, setIsConversationOpen] = useState(isConversationPath);
+  const [isRecipesPage, setIsRecipesPage] = useState(isRecipesPath);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(() =>
+    isRecipesPath() ? getRandomRecipe() : null,
+  );
   const [initialMessage, setInitialMessage] = useState("");
   const [sendInitialMessage, setSendInitialMessage] = useState(false);
 
   useEffect(() => {
     const handlePopState = () => {
       setIsConversationOpen(isConversationPath());
+      const shouldShowRecipes = isRecipesPath();
+      setIsRecipesPage(shouldShowRecipes);
+      if (shouldShowRecipes) {
+        setSelectedRecipe((previous) => getRandomRecipe(previous?.id));
+      }
       setInitialMessage("");
       setSendInitialMessage(false);
     };
 
     const handleQuickExit = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        window.location.replace("about:blank");
+        window.dispatchEvent(new Event("aurora:quick-exit"));
+        window.history.replaceState(null, "", "/receitas");
+        setSelectedRecipe((previous) => getRandomRecipe(previous?.id));
+        setInitialMessage("");
+        setSendInitialMessage(false);
+        setIsConversationOpen(false);
+        setIsRecipesPage(true);
       }
     };
 
@@ -34,22 +58,36 @@ export function App() {
   }, []);
 
   const openConversation = (message: string, sendImmediately = false) => {
-    window.history.pushState(null, "", "/conversa");
+    window.history.replaceState(null, "", "/conversa");
     setInitialMessage(message);
     setSendInitialMessage(sendImmediately);
     setIsConversationOpen(true);
   };
 
   const handleQuickExit = () => {
-    window.location.replace("about:blank");
+    window.dispatchEvent(new Event("aurora:quick-exit"));
+    window.history.replaceState(null, "", "/receitas");
+    setSelectedRecipe((previous) => getRandomRecipe(previous?.id));
+    setInitialMessage("");
+    setSendInitialMessage(false);
+    setIsConversationOpen(false);
+    setIsRecipesPage(true);
   };
 
   useEffect(() => {
-    document.title = isConversationOpen ? "Notas" : "Aurora — protótipo local";
+    document.title = isRecipesPage
+      ? "Receitas"
+      : isConversationOpen
+        ? "Notas"
+        : "Aurora — protótipo local";
     document.body.classList.toggle("conversation-mode", isConversationOpen);
 
     return () => document.body.classList.remove("conversation-mode");
-  }, [isConversationOpen]);
+  }, [isConversationOpen, isRecipesPage]);
+
+  if (isRecipesPage) {
+    return selectedRecipe ? <RecipesPage recipe={selectedRecipe} /> : null;
+  }
 
   if (!isConversationOpen) {
     return (

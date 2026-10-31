@@ -18,23 +18,26 @@ export function ChatPage({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [retryMessage, setRetryMessage] = useState<string | null>(null);
   const initialMessageSent = useRef(false);
   const nextMessageId = useRef(0);
+  const activeRequest = useRef(false);
+  const abortController = useRef<AbortController | null>(null);
 
-  const handleSendMessage = async (text: string) => {
+  const requestReply = async (text: string) => {
+    if (activeRequest.current) {
+      return;
+    }
+
+    activeRequest.current = true;
     setError(null);
-
-    const userMessage: ChatMessage = {
-      id: `message-${nextMessageId.current++}`,
-      role: "user",
-      text,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    setRetryMessage(null);
     setIsLoading(true);
+    const controller = new AbortController();
+    abortController.current = controller;
 
     try {
-      const replyText = await sendMessage(text);
+      const replyText = await sendMessage(text, controller.signal);
       const assistantMessage: ChatMessage = {
         id: `message-${nextMessageId.current++}`,
         role: "assistant",
@@ -42,13 +45,40 @@ export function ChatPage({
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err: unknown) {
+      if (controller.signal.aborted) {
+        return;
+      }
+
       if (err instanceof ChatApiError) {
         setError(err.message);
       } else {
         setError("Ocorreu um erro inesperado ao se comunicar com o servidor.");
       }
+      setRetryMessage(text);
     } finally {
-      setIsLoading(false);
+      if (abortController.current === controller) {
+        abortController.current = null;
+        activeRequest.current = false;
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const handleSendMessage = async (text: string) => {
+    if (activeRequest.current) {
+      return;
+    }
+
+    setMessages((prev) => [
+      ...prev,
+      { id: `message-${nextMessageId.current++}`, role: "user", text },
+    ]);
+    await requestReply(text);
+  };
+
+  const handleRetry = () => {
+    if (retryMessage) {
+      void requestReply(retryMessage);
     }
   };
 
@@ -59,19 +89,42 @@ export function ChatPage({
     }
   }, [initialMessage, sendInitialMessage]);
 
+  useEffect(() => {
+    const handleQuickExit = () => {
+      abortController.current?.abort();
+      abortController.current = null;
+      activeRequest.current = false;
+      setIsLoading(false);
+    };
+
+    window.addEventListener("aurora:quick-exit", handleQuickExit);
+    return () => window.removeEventListener("aurora:quick-exit", handleQuickExit);
+  }, []);
+
   return (
     <div className="chat-page">
       <section className="chat-page__conversation" aria-label="Conversa">
         {error && (
           <div className="chat-page__alert" role="alert">
             <p className="chat-page__alert-text">{error}</p>
-            <button
-              type="button"
-              className="chat-page__alert-dismiss"
-              onClick={() => setError(null)}
-            >
-              Fechar
-            </button>
+            <div className="chat-page__alert-actions">
+              <button
+                type="button"
+                className="chat-page__alert-dismiss"
+                onClick={() => setError(null)}
+              >
+                Fechar
+              </button>
+              {retryMessage && (
+                <button
+                  type="button"
+                  className="chat-page__alert-dismiss"
+                  onClick={handleRetry}
+                >
+                  Tentar novamente
+                </button>
+              )}
+            </div>
           </div>
         )}
 

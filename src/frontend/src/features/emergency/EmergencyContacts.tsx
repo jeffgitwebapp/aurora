@@ -12,13 +12,16 @@ interface EmergencyContactsProps {
 export function EmergencyContacts({ compact = false }: EmergencyContactsProps) {
   return (
     <section
+      id={compact ? "welcome-emergency-contacts" : "emergency-contacts"}
       className={`emergency-card${compact ? " emergency-card--compact" : ""}`}
       aria-labelledby={compact ? "welcome-emergency-title" : "emergency-title"}
+      tabIndex={-1}
     >
       {!compact && <p className="emergency-card__eyebrow">Ajuda por telefone</p>}
       <h2
         className="emergency-card__title"
         id={compact ? "welcome-emergency-title" : "emergency-title"}
+        tabIndex={-1}
       >
         Em perigo agora?
       </h2>

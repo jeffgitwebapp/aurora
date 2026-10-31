@@ -53,9 +53,10 @@ export function MessageList({ messages, isLoading = false }: MessageListProps) {
             <li
               className="message-item message-item--assistant message-item--typing"
               role="status"
-              aria-label="Aurora está digitando"
+              aria-label="Lendo com atenção"
             >
               <span className="message-item__sender">Aurora</span>
+              <span className="message-item__typing-text">Lendo com atenção…</span>
               <span className="message-item__typing-dots" aria-hidden="true">
                 <span />
                 <span />
