@@ -251,7 +251,9 @@ placeholder **Escreva aqui…** e botão **Enviar**; durante o envio, o campo e 
 ação ficam desativados. A API recebe somente a mensagem atual. Se houver erro,
 a interface informa a falha e oferece **Tentar novamente** sem adicionar outra
 cópia da mensagem ao histórico. Recarregar a conversa não restaura o relato.
-O protótipo ainda não oferece triagem, RAG ou continuação persistente.
+O protótipo oferece a triagem sintética de C-02 somente para as frases de teste
+exatas documentadas abaixo; isso não é detecção de risco real. RAG e
+continuação persistente ainda não estão implementados.
 
 ### Etapa 2 — Triar urgência antes de informar
 
@@ -273,6 +275,44 @@ não afirmar ausência de risco; apresentar estado de incerteza e canais gerais,
 sem resposta informativa até escolha explícita da usuária. A mensagem exata e
 os controles dessa escolha ainda dependem de validação de profissionais da
 rede de proteção e saúde mental.
+
+**[FIXTURES DE TESTE aprovadas pela usuária em 31/10/2026 para o mock;
+validação do time de produto e especialistas ainda pendente]**
+Para exercitar os estados sem alegar detecção real, usar as frases completas
+de teste:
+
+| Cenário sintético | Frases de teste |
+|---|---|
+| Ideação suicida | “Estou pensando em me matar”; “Quero tirar minha vida” |
+| Agressão em curso | “Ele está me agredindo agora”; “Estou sendo atacada neste momento” |
+| Ameaça de morte | “Ele disse que vai me matar”; “Recebi uma ameaça de morte” |
+| Presença de arma | “Ele está com uma arma aqui”; “Há uma arma no local agora” |
+| Fixture sem sinal agudo | “Quero informações sobre serviços de apoio na minha cidade” |
+
+O `TriageService` compara as frases completas após normalizar caixa,
+acentos, espaços e pontuação final; não procura palavras isoladas ou
+substrings. Uma frase de risco corresponde ao estado de risco agudo; se houver
+mais de uma frase de risco reconhecida, registra todos os sinais. A fixture
+explicitamente definida como sem sinal só retorna “sem sinal agudo detectado”
+quando enviada sozinha. Qualquer outra mensagem, inclusive ambígua, negada,
+hipotética ou com texto adicional não reconhecido, retorna “indeterminado” e
+não libera resposta informativa. O serviço de triagem devolve status, sinais e
+orientação de fluxo; isso não reconhece risco real nem deve ser apresentado ou
+usado como triagem confiável.
+
+**Implementação observada no protótipo:** o handler do envio orquestra portas
+de serviço: sempre chama `TriageService` primeiro e somente chama
+`ChatResponseService` quando recebe a fixture de controle sem sinal agudo.
+`TriageService` mantém as regras e fixtures estáticas desta fase; em risco agudo,
+devolve os sinais e a orientação sem invocar o chat; em resultado
+indeterminado, devolve orientação de incerteza sem resposta informativa. O
+`ChatResponseService` contém o texto demonstrativo estático desta fase. Os
+serviços são injetados na composição da aplicação e mantêm os nomes e
+responsabilidades previstos para produção; no momento oportuno, os dados
+estáticos serão substituídos por integrações reais sem criar classes paralelas
+com prefixo `Mock`. O frontend apenas apresenta a orientação do serviço
+identificada como simulação. A tela de emergência e o mapeamento de canais
+continuam na tarefa C-03, ainda não implementada.
 
 ### Etapa 3A — Exibir risco agudo
 

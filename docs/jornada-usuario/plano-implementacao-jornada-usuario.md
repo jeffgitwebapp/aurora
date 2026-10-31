@@ -1,8 +1,8 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01 concluída; I-02, I-03, I-04 e C-01 implementadas localmente; revisão de segurança, commit, publicação e validação humana na AWS permanecem pendentes para as tarefas aplicáveis; demais tarefas de implementação não iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; desenvolvimento de I-01, I-02, I-03, I-04 e C-01 concluído e publicado, aguardando validação do time de produto; desenvolvimento de C-02 concluído localmente com serviços em camadas e dados estáticos de protótipo, aguardando validação do time de produto/especialistas e publicação; revisões profissionais de segurança, privacidade e conteúdo ainda pendentes conforme indicado em cada tarefa; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
-**Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a mocks
+**Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a serviços de produção que utilizam dados e provedores simulados nesta fase
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
 
 ## 1. Objetivo e escopo
@@ -13,8 +13,10 @@ O plano inclui as ações independentes de segurança e acesso, a conversa anôn
 
 ### Limites do protótipo
 
-- Frontend e backend devem se comunicar por contratos explícitos. Adaptadores simulados podem representar triagem, recuperação de conteúdo, guardrails, catálogo e persistência.
-- Os mocks devem ser identificados como dados e comportamento de protótipo; não usar respostas fictícias para afirmar que uma situação é segura, que uma fonte foi verificada ou que um serviço está disponível.
+- Frontend e backend devem se comunicar por contratos explícitos. Serviços e componentes de produção podem operar temporariamente com dados estáticos para representar triagem, recuperação de conteúdo, guardrails, catálogo e persistência.
+- Os componentes e serviços devem ser criados com os nomes e responsabilidades que manterão em produção; não criar classes ou serviços prefixados/sufixados com `Mock`. Durante o protótipo, as implementações podem usar fixtures, respostas e outros dados estáticos internamente. Quando os provedores reais forem integrados, substituir esses dados estáticos pela integração na mesma classe/serviço, preservando seu contrato e sua responsabilidade sempre que possível. Portas/interfaces podem separar contratos de implementações. As portas de serviços que podem acessar provedores externos devem ser assíncronas. Handlers orquestram portas e casos de uso, sem conter regras de classificação, fixtures ou lógica de provedores; routers validam transporte e convertem contratos HTTP; a composição de dependências acontece na inicialização da aplicação.
+- O fluxo da conversa chama o serviço de triagem antes do serviço de resposta. Resultado agudo devolve sinais e orientação do serviço e interrompe a geração; resultado indeterminado devolve a orientação de incerteza e também não gera resposta; somente o resultado explícito sem sinal agudo segue para o serviço de chat/LLM. Quando as integrações reais forem habilitadas, os dados/provedores temporários serão substituídos dentro dos mesmos serviços, preservando a regra de orquestração do handler.
+- Dados e respostas simulados devem ser identificados como comportamento de protótipo; não usar respostas fictícias para afirmar que uma situação é segura, que uma fonte foi verificada ou que um serviço está disponível.
 - Não integrar provedores reais de LLM/RAG, bases vetoriais, autenticação externa, banco de dados ou serviços da rede nesta etapa. Deixar fronteiras substituíveis e contratos documentados para integrações futuras.
 - Não armazenar relatos anônimos em banco, logs, telemetria, `localStorage` ou `sessionStorage`. O protótipo deve manter a sessão anônima apenas em memória da aplicação e descartá-la ao encerrar a sessão.
 - Não alegar que a Saída Rápida apaga o histórico do navegador, do sistema operacional, da rede ou de terceiros.
@@ -29,6 +31,7 @@ Use estes estados em cada tarefa:
 - **Em andamento** — implementação ativa.
 - **Bloqueada** — falta decisão, conteúdo aprovado ou dependência; registrar o motivo.
 - **Implementada localmente** — código e testes locais concluídos, mas ainda faltam commit, publicação e teste humano na AWS.
+- **Desenvolvimento concluído localmente** — implementação e testes locais finalizados; aguardam validação do time de produto/especialistas e/ou publicação.
 - **Concluída** — todos os critérios da seção 3 foram cumpridos e as evidências foram registradas.
 
 Atualize o estado, os critérios e as evidências deste arquivo durante cada implementação. Não marque uma jornada como concluída apenas porque a interface foi codificada ou porque os testes locais passaram.
@@ -57,26 +60,28 @@ As especificações estão no [índice de skills](../../skills/lista_skills.md).
 
 As tarefas de preparação não substituem a priorização das jornadas: são a base técnica e as decisões necessárias. Entre as jornadas, implementar primeiro as ações independentes de segurança e emergência; depois as entradas independentes de informação; então avançar pelas dependências da conversa. As jornadas opcionais ficam depois da jornada anônima principal.
 
-| Ordem | ID | Jornada/tarefa | Tipo | Dependências |
-|---:|---|---|---|---|
-| 0 | J-00 | Resolver decisões e lacunas que bloqueiam comportamento seguro | Preparação funcional | Jornada-base e fontes relacionadas |
-| 0 | J-01 | Definir contratos e estrutura dos mocks ponta a ponta | Preparação técnica | J-00 para contratos de comportamento |
-| 1 | I-01 | Acesso a emergência por telefone | Independente, P0 | J-01 |
-| 2 | I-02 | Saída Rápida e descarte da sessão | Independente, P0 | J-00, J-01 |
-| 3 | I-03 | Início anônimo e sugestões | Independente, P1 | J-01 |
-| 4 | I-04 | Privacidade e contatos úteis | Independente, P1 | J-00, I-03 |
-| 5 | C-01 | Conversa anônima, mensagens e contexto em memória | Início da jornada dependente | I-03, J-01 |
-| 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 |
-| 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 |
-| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 |
-| 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 |
-| 10 | C-06 | Localização opcional e encaminhamento simulado | Ramo dependente da conversa | C-04, J-00 |
-| 11 | I-05 | Entrada independente para questionário e resultado simulado | Independente, opcional | C-02, C-06, decisões de conteúdo |
-| 12 | L-01 | Cadastro, login e saída da área logada (mock) | Jornada futura opcional | J-00, J-01, jornada anônima estável |
-| 13 | L-02 | Migração, histórico e exclusão de conta (mock) | Dependente de conta e sessão | C-01, L-01 |
-| 14 | L-03 | Módulos de psicoeducação (mock) | Jornada futura opcional | L-01, decisões de conteúdo |
-| 15 | L-04 | Diário de incidentes e exportação demonstrativa | Jornada futura opcional | L-01, J-00 |
-| 16 | L-05 | Guia/plano de segurança demonstrativo | Jornada futura opcional | J-00; L-01 se a decisão aprovada exigir conta |
+| Ordem | ID | Jornada/tarefa | Tipo | Dependências | Status |
+|---:|---|---|---|---|---|
+| 0 | J-00 | Resolver decisões e lacunas que bloqueiam comportamento seguro | Preparação funcional | Jornada-base e fontes relacionadas | Resolvido — decisões e lacunas registradas |
+| 0 | J-01 | Definir contratos e estrutura dos mocks ponta a ponta | Preparação técnica | J-00 para contratos de comportamento | Resolvido — contratos e estrutura de mocks definidos |
+| 1 | I-01 | Acesso a emergência por telefone | Independente, P0 | J-01 | Desenvolvimento concluído — implementação publicada; falta validação do time de produto |
+| 2 | I-02 | Saída Rápida e descarte da sessão | Independente, P0 | J-00, J-01 | Desenvolvimento concluído — implementação funcional no protótipo, publicada; falta validação do time de produto |
+| 3 | I-03 | Início anônimo e sugestões | Independente, P1 | J-01 | Desenvolvimento concluído — implementação funcional no protótipo, publicada; falta validação do time de produto |
+| 4 | I-04 | Privacidade e contatos úteis | Independente, P1 | J-00, I-03 | Desenvolvimento concluído — implementação funcional no protótipo, publicada; falta validação do time de produto |
+| 5 | C-01 | Conversa anônima, mensagens e contexto em memória | Início da jornada dependente | I-03, J-01 | Desenvolvimento concluído — conversa integrada ao mock funcional e publicada; falta validação do time de produto |
+| 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 | Desenvolvimento concluído localmente — `TriageService` separado do handler, com dados estáticos substituíveis; falta validação do time de produto/especialistas e publicação |
+| 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 | Pendente |
+| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Pendente |
+| 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 | Pendente |
+| 10 | C-06 | Localização opcional e encaminhamento simulado | Ramo dependente da conversa | C-04, J-00 | Pendente |
+| 11 | I-05 | Entrada independente para questionário e resultado simulado | Independente, opcional | C-02, C-06, decisões de conteúdo | Pendente |
+| 12 | L-01 | Cadastro, login e saída da área logada (mock) | Jornada futura opcional | J-00, J-01, jornada anônima estável | Pendente |
+| 13 | L-02 | Migração, histórico e exclusão de conta (mock) | Dependente de conta e sessão | C-01, L-01 | Pendente |
+| 14 | L-03 | Módulos de psicoeducação (mock) | Jornada futura opcional | L-01, decisões de conteúdo | Pendente |
+| 15 | L-04 | Diário de incidentes e exportação demonstrativa | Jornada futura opcional | L-01, J-00 | Pendente |
+| 16 | L-05 | Guia/plano de segurança demonstrativo | Jornada futura opcional | J-00; L-01 se a decisão aprovada exigir conta | Pendente |
+
+**Legenda de status:** “Desenvolvimento concluído” indica implementação publicada, com validação do time de produto pendente para I-01, I-02, I-03, I-04 e C-01. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem validação do time de produto/especialistas e publicação; aplica-se atualmente a C-02. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
 
 O questionário é uma entrada independente para a usuária, mas sua implementação depende da triagem e do encaminhamento para reutilizar regras e contratos. As tarefas L-01 a L-05 são de protótipo; não implementam segurança, persistência ou proteção de dados adequadas para uso real.
 
@@ -108,8 +113,8 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 
 | Tarefa dependente | Estado após J-00 | Motivo |
 |---|---|---|
-| I-02 — Saída Rápida | Implementada localmente conforme decisão revisada; revisão de segurança ainda pendente | A usuária definiu `/receitas` com três opções de receita, mostrando uma por acionamento e sem repetir a última; a revisão de segurança ocorre depois dos ajustes. Não publicar nem declarar apta para uso real antes da revisão |
-| C-02/C-03 — Triagem e risco agudo | Bloqueadas para uso real até revisão da rede de proteção e saúde mental | A política foi registrada, mas casos, destaque dos canais e texto de incerteza exigem validação especializada |
+| I-02 — Saída Rápida | Desenvolvimento concluído e publicado; falta validação do time de produto; revisão de segurança ainda pendente | A definição funcional de `/receitas` inclui três opções de receita, mostrando uma por acionamento e sem repetir a última. A revisão de segurança continua registrada como pendência antes de considerar o fluxo aprovado para uso real |
+| C-02/C-03 — Triagem e risco agudo | C-02 tem mock local; uso real bloqueado até revisão da rede de proteção e saúde mental; C-03 não iniciada | Fixtures sintéticas exercitam os estados; critérios de risco, destaque dos canais e texto de incerteza exigem validação especializada |
 | C-04 — Resposta com fontes | Bloqueada para conteúdo real até curadoria/aprovação de fontes e fixtures | Não há autorização para inventar fontes ou afirmações sensíveis |
 | C-05 — Limite de escopo | Bloqueada para casos limítrofes até revisão jurídica e clínica | A distinção geral foi definida; exemplos e gatilhos ainda precisam de revisão |
 | C-06 — Localização/encaminhamento | Bloqueada até decisão de produto sobre localização e fallback | A proposta de geolocalização está em revisão; permanece vigente a entrada manual opcional |
@@ -178,7 +183,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### I-02 — Saída Rápida e descarte da sessão
 
 **Prioridade:** P0
-**Estado:** Implementada localmente — revisão de segurança, commit, publicação e validação humana na AWS pendentes
+**Estado:** Desenvolvimento concluído — implementada, testada localmente, commitada e publicada; falta validação do time de produto
 **Dependências:** J-00 (destino e regra Esc aprovados), J-01
 **Jornada-base:** saída disponível sem depender de relato, triagem ou cadastro.
 
@@ -197,15 +202,16 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 - A usuária informou que fará a revisão de segurança após estes ajustes. Até essa revisão, a página não deve ser publicada nem considerada adequada para uso real.
 - Validação no navegador: Esc durante um envio pendente trocou para `/receitas` em 36 ms, cancelou a requisição no cliente e removeu o chat da tela; as três receitas e imagens estavam disponíveis.
 - Validação do ajuste de seleção: em 10 acionamentos consecutivos de Esc no navegador, a página exibiu exatamente uma receita por vez e nenhuma receita repetiu a imediatamente anterior.
+- A publicação de I-02 foi confirmada em 31/10/2026; falta validação do time de produto.
 - Pré-carregamento verificado antes da saída para `/receitas`; em viewport de 320 px a página não apresentou overflow horizontal.
 - Latência local de Escape medida em 30 execuções a partir do início: p95 47 ms, p99 48 ms, máximo 48 ms. Esta amostra local não certifica as metas em produção nem substitui medição AWS.
 - `npm run check`, `npm run build` e `git diff --check` passaram.
-- A revisão de segurança, revisão do texto e ilustrações, commit, publicação e validação humana na AWS permanecem pendentes; não liberar para uso real antes da revisão de segurança.
+- A revisão de segurança e a revisão do texto e das ilustrações permanecem pendentes; a conclusão de implementação/publicação não substitui essas revisões para uso real.
 
 ### I-03 — Início anônimo e sugestões
 
 **Prioridade:** P1
-**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
+**Estado:** Desenvolvimento concluído — implementada, testada localmente, commitada e publicada; falta validação do time de produto
 **Dependências:** J-01
 **Jornada-base:** tela inicial; texto livre e sugestões são entradas independentes.
 
@@ -221,12 +227,13 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 - O aviso inicial informa que a conversa fica na memória enquanto a página está aberta; a interface não pede cadastro, localização, permissões nem notificações.
 - Testes no navegador: envio por texto livre iniciou a conversa com uma única mensagem da usuária; em viewport de 320 px não houve overflow horizontal.
 - `npm run check` e `npm run build` passaram.
-- A validação em AWS continua pendente; o aviso e a implementação ainda requerem revisão profissional de privacidade antes de uso real.
+- A publicação de I-03 foi confirmada em 31/10/2026; falta validação do time de produto.
+- O aviso e a implementação ainda requerem revisão profissional de privacidade antes de uso real.
 
 ### I-04 — Privacidade e contatos úteis
 
 **Prioridade:** P1
-**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
+**Estado:** Desenvolvimento concluído — implementada, testada localmente, commitada e publicada; falta validação do time de produto
 **Dependências:** J-00 (texto e destino aprovados), I-03, I-01
 **Jornada-base:** links independentes na tela inicial.
 
@@ -242,14 +249,15 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 - **Contatos úteis** leva ao painel com os quatro canais acionáveis; os links continuam usando `tel:` e o painel está acessível também na conversa.
 - Testado no navegador: expansão/fechamento do aviso de privacidade, foco restaurado, navegação por âncora ao painel de contatos e ausência de overflow horizontal em 320 px.
 - `npm run check`, `npm run build` e `git diff --check` passaram.
-- A validação AWS e revisão profissional de privacidade/acessibilidade permanecem pendentes.
+- A publicação de I-04 foi confirmada em 31/10/2026; falta validação do time de produto.
+- Revisão profissional de privacidade/acessibilidade permanece pendente para uso real.
 
 ## 8. Jornada anônima dependente
 
 ### C-01 — Conversa anônima, mensagens e contexto em memória
 
 **Prioridade:** P1
-**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
+**Estado:** Desenvolvimento concluído — implementada, testada localmente, commitada e publicada; falta validação do time de produto
 **Dependências:** I-03, J-01
 **Jornada-base:** envio do primeiro relato, mensagens subsequentes e retorno durante a sessão.
 
@@ -266,18 +274,42 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 - Falhas são apresentadas como erro e oferecem **Tentar novamente** sem duplicar a mensagem da usuária. Uma falha seguida de resposta simulada foi exercitada no navegador.
 - Após recarregar a rota `/conversa`, o histórico não reaparece; localStorage e sessionStorage permaneceram vazios. O endpoint não registra o conteúdo da mensagem.
 - Validação local: integração navegador→Vite→FastAPI retornou HTTP 200 em 5,1 s; segundo envio preservou as duas mensagens da usuária e respectivas respostas; 10 testes do backend passaram; Ruff, `npm run check`, `npm run build` e `git diff --check` passaram.
-- Commit, publicação, teste humano na AWS e validação de privacidade antes de uso real permanecem pendentes.
+- A publicação de C-01 foi confirmada em 31/10/2026; falta validação do time de produto.
+- A validação profissional de privacidade antes de uso real permanece pendente.
 
 ### C-02 — Triagem de risco agudo antes de resposta informativa
 
 **Prioridade:** P0 de segurança
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — serviços de triagem e resposta com dados estáticos e orquestração por portas implementados e testados; falta validação do time de produto/especialistas e publicação
 **Dependências:** C-01, J-00
 **Jornada-base:** toda mensagem deve passar pela regra de urgência antes do fluxo informativo.
 
-**Escopo:** criar interface determinística/substituível para avaliar os sinais aprovados. No protótipo, dados sintéticos podem exercitar resultados, mas não alegar que a classificação simulada detecta riscos reais. A triagem não pode depender do LLM.
+**Escopo:** o handler de envio orquestra `TriageService` antes de `ChatResponseService`. A porta de triagem devolve status, sinais identificados e orientação de fluxo; se o resultado for agudo, interrompe o fluxo informativo; se for indeterminado, devolve orientação de incerteza e também interrompe; somente a fixture explicitamente classificada como sem sinal agudo segue ao serviço de resposta. Os serviços têm nomes e responsabilidades que serão mantidos em produção; atualmente suas implementações usam fixtures e respostas estáticas para o protótipo. Quando provedores reais forem integrados, substituir esses dados internos pela lógica/conexão real, mantendo os contratos públicos e a orquestração. Regras de domínio ficam no serviço de triagem, resposta conversacional no serviço de resposta, e nenhum dos dois detalhes fica no router ou no handler. A implementação não conecta um LLM real nem afirma detectar risco real.
 
-**Critérios de aceite:** contrato distingue risco agudo, não sinalizado e indisponibilidade/resultado indeterminado conforme decisão; risco agudo impede a resposta informativa até a tela de emergência; testes cobrem precedência e falhas. Não declarar o CA-02 atendido com fixtures ou mocks: recall de 100% exige suíte e validação de domínio apropriadas antes de uso real.
+**Fixtures de teste aprovadas pela usuária para o mock em 31/10/2026 — validação do time de produto e especialistas ainda pendente:**
+
+| Sinal simulado | Frases de teste que acionam o mock |
+|---|---|
+| Ideação suicida | “Estou pensando em me matar”; “Quero tirar minha vida” |
+| Agressão em curso | “Ele está me agredindo agora”; “Estou sendo atacada neste momento” |
+| Ameaça de morte | “Ele disse que vai me matar”; “Recebi uma ameaça de morte” |
+| Presença de arma | “Ele está com uma arma aqui”; “Há uma arma no local agora” |
+| Fixture sem sinal agudo | “Quero informações sobre serviços de apoio na minha cidade” |
+
+Atualmente, `TriageService` compara a mensagem após normalizar caixa, acentos, espaços e pontuação final com as frases completas dos fixtures estáticos; em mensagens com várias sentenças, cada segmento precisa corresponder integralmente a uma frase de risco ou ao controle definido. Não há correspondência por palavra isolada ou substring, nem uso de LLM. Uma ou mais frases de risco correspondentes resultam em **risco agudo**, registrando todos os sinais e devolvendo orientação sintética pelo resultado do serviço, sem invocar `ChatResponseService`. A fixture de controle, quando enviada sozinha, resulta em **sem sinal agudo detectado** e permite que o handler invoque o serviço de resposta. Mensagens não contempladas, ambíguas, negadas, hipotéticas ou misturadas com texto não reconhecido retornam **indeterminado**, com orientação de incerteza, sem invocar o serviço de resposta; ausência de correspondência nunca deve ser interpretada como confirmação de segurança. A priorização final de canais é responsabilidade do fluxo C-03 e requer validação especializada.
+
+Estas frases servem exclusivamente para demonstrar estados e testar a integração do protótipo. Mesmo com correspondência exata, fixtures não constituem triagem confiável de mensagens reais, não reconhecem variações/contexto e não satisfazem critérios clínicos ou de segurança. O frontend identifica os resultados como simulação; não usar o mock para orientar situações reais nem declarar que detecta risco.
+
+**Critérios de aceite:** contrato distingue risco agudo, fixture de controle sem sinal agudo e resultado indeterminado; falhas de transporte/servidor permanecem erros explícitos sem resposta informativa. O handler depende de portas de serviço, sem implementar classificação, fixtures ou geração de resposta. `TriageService` retorna status, sinais e orientação; `ChatResponseService` só é chamado após o status de controle sem sinal agudo. Risco agudo impede a resposta informativa e retorna os sinais reconhecidos para integração com C-03. O cliente mostra a orientação devolvida pelo serviço, identificada como simulação, e mantém os contatos úteis acessíveis; a tela completa e o mapeamento de canais pertencem a C-03. Testes cobrem cada fixture, múltiplos sinais, negações/contexto, fixture de controle, mensagens indeterminadas e não invocação do serviço de chat para casos agudos/indeterminados. Não declarar o CA-02 atendido com dados estáticos de protótipo: recall de 100% exige suíte e validação de domínio apropriadas antes de uso real.
+
+**Implementação e evidências locais (31/10/2026):**
+
+- `TriageService` aplica fixtures e dados estáticos no protótipo, produzindo `TriageResult` com status, sinais e orientação; `ChatResponseService` fornece a resposta demonstrativa. Esses são os serviços do produto, sem classes paralelas prefixadas com `Mock`; suas implementações serão conectadas a provedores/dados reais no momento oportuno.
+- Portas assíncronas `TriageEvaluator` e `ChatResponseGenerator` definem os contratos consumidos pelo handler. A composição injeta ambos serviços na feature. Handler valida entrada, chama primeiro a triagem e só invoca o serviço de resposta para o status da fixture de controle; o router traduz o resultado para o contrato HTTP (`triage_status`, `signals`, `guidance`, `reply`).
+- Casos agudos e indeterminados não recebem resposta informativa nem aguardam o atraso simulado de cinco segundos. Somente a fixture explícita de controle recebe o texto demonstrativo após o atraso.
+- Frontend exibe a orientação devolvida pela triagem, rotulada como simulação, e mantém visíveis os contatos úteis; não implementa nem duplica regras de classificação.
+- Testes cobrem os oito exemplos de risco, normalização de caixa/acentos/espaços/pontuação, mensagens negadas ou com contexto extra, dois sinais reconhecidos, fixture de controle, payloads e atraso.
+- Revisão do time de produto/especialistas, publicação e validação em ambiente publicado permanecem pendentes. C-03 ainda deve implementar a tela e o mapeamento de encaminhamento; o mock não pode ser usado para situações reais.
 
 **Skills:** [Triagem determinística de risco agudo e avaliação de segurança](../../skills/triagem-risco-agudo-avaliacao-seguranca.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Arquitetura de software e integração ponta a ponta](../../skills/arquitetura-software-integracao.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md).
 

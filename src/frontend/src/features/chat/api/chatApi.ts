@@ -2,8 +2,43 @@ const ENDPOINT = "/api/chat/messages";
 
 export class ChatApiError extends Error { }
 
-/** Envia a mensagem ao backend local e devolve a resposta textual. */
-export async function sendMessage(message: string, signal?: AbortSignal): Promise<string> {
+export type TriageStatus = "acute" | "no_acute_signal" | "indeterminate";
+
+export type TriageSignal =
+  | "suicidal_ideation"
+  | "ongoing_assault"
+  | "death_threat"
+  | "weapon_present";
+
+export interface ChatApiResult {
+  reply: string | null;
+  guidance: string | null;
+  triageStatus: TriageStatus;
+  signals: TriageSignal[];
+}
+
+function isTriageStatus(value: unknown): value is TriageStatus {
+  return (
+    value === "acute" ||
+    value === "no_acute_signal" ||
+    value === "indeterminate"
+  );
+}
+
+function isTriageSignal(value: unknown): value is TriageSignal {
+  return (
+    value === "suicidal_ideation" ||
+    value === "ongoing_assault" ||
+    value === "death_threat" ||
+    value === "weapon_present"
+  );
+}
+
+/** Envia a mensagem ao backend e devolve a resposta e o estado de triagem do mock. */
+export async function sendMessage(
+  message: string,
+  signal?: AbortSignal,
+): Promise<ChatApiResult> {
   let response: Response;
 
   try {
@@ -35,13 +70,39 @@ export async function sendMessage(message: string, signal?: AbortSignal): Promis
     throw new ChatApiError("A resposta do servidor não pôde ser lida.");
   }
 
+  if (typeof payload !== "object" || payload === null) {
+    throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
+  }
+
+  const result = payload as {
+    reply?: unknown;
+    guidance?: unknown;
+    triage_status?: unknown;
+    signals?: unknown;
+  };
   if (
-    typeof payload !== "object" ||
-    payload === null ||
-    typeof (payload as { reply?: unknown }).reply !== "string"
+    !isTriageStatus(result.triage_status) ||
+    !Array.isArray(result.signals) ||
+    !result.signals.every(isTriageSignal) ||
+    !(typeof result.reply === "string" || result.reply === null) ||
+    !(typeof result.guidance === "string" || result.guidance === null)
   ) {
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
   }
 
-  return (payload as { reply: string }).reply;
+  if (
+    (result.triage_status === "no_acute_signal" &&
+      (typeof result.reply !== "string" || result.guidance !== null)) ||
+    (result.triage_status !== "no_acute_signal" &&
+      (result.reply !== null || typeof result.guidance !== "string"))
+  ) {
+    throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
+  }
+
+  return {
+    reply: result.reply,
+    guidance: result.guidance,
+    triageStatus: result.triage_status,
+    signals: result.signals,
+  };
 }

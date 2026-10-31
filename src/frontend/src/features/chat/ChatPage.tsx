@@ -37,7 +37,14 @@ export function ChatPage({
     abortController.current = controller;
 
     try {
-      const replyText = await sendMessage(text, controller.signal);
+      const result = await sendMessage(text, controller.signal);
+      const replyText =
+        result.triageStatus === "no_acute_signal"
+          ? result.reply
+          : result.guidance;
+      if (replyText === null) {
+        throw new ChatApiError("A resposta simulada não foi disponibilizada.");
+      }
       const assistantMessage: ChatMessage = {
         id: `message-${nextMessageId.current++}`,
         role: "assistant",
