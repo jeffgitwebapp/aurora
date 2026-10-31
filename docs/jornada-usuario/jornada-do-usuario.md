@@ -60,6 +60,10 @@ usuária.
    recomendação do wireframe indica áreas de toque de pelo menos 44 px e
    contraste mínimo de 4,5:1; o desenho visual detalhado continua sendo
    referência do próprio wireframe.
+8. **Mensagens e avisos sem modal por padrão.** Mensagens de estado e avisos,
+   tenham ações ou não, devem permanecer no fluxo/tela sem bloquear a interação.
+   Os resultados de triagem aguda e incerta são exceções explícitas: abrem como
+   modal sobre a conversa para manter o contexto visível.
 
 ## 3. Ações independentes, priorizadas
 
@@ -190,9 +194,12 @@ flowchart TD
     B -->|Contatos úteis| E[Escolher canal telefônico]
     B -->|Saída rápida ou Esc| X[Página neutra e fim da sessão]
     C --> D{Triagem de urgência}
-    D -->|Risco agudo| R[Tela de risco agudo]
+    D -->|Risco agudo| R[Modal de risco agudo]
     R -->|Ligar se desejar| E
     R -->|Voltar à conversa| C
+    D -->|Resultado incerto| U[Modal de resultado incerto]
+    U -->|Ligar se desejar| E
+    U -->|Voltar à conversa| C
     D -->|Sem risco agudo detectado| I[Resposta informativa com fonte]
     I -->|Perguntar mais| C
     I -->|Precisa de ajuda local| L[Informar Cidade / UF opcional]
@@ -272,7 +279,8 @@ não um formulário de triagem completo. Não inventar tais controles.
 
 **Classificação indeterminada:** nesta demonstração, somente a frase **“frase
 incerta”** (normalizada quanto a caixa, espaços e pontuação final) produz esse
-resultado. Ela abre a tela de incerteza e não gera resposta informativa.
+resultado. Ela abre o modal de incerteza sobre a conversa e não gera resposta
+informativa.
 Mensagens fora das frases de risco e dessa fixture seguem o fluxo normal; essa
 regra estática não detecta risco real nem permite afirmar ausência de risco.
 Conteúdo e comportamento precisam de validação profissional antes de uso real.
@@ -315,10 +323,14 @@ identificada como simulação. A tela de emergência e o mapeamento de canais
 estão implementados no protótipo na tarefa C-03, aguardando revisão
 profissional, publicação e validação humana.
 
-### Etapa 3A — Exibir risco agudo
+### Etapa 3A — Exibir resultados de triagem em modal
 
-Se o sistema detectar sinal agudo, mostrar uma tela dedicada imediatamente,
-antes de conteúdos informativos:
+Se `TriageService` retornar risco agudo ou resultado incerto, abrir
+imediatamente uma janela modal sobre a conversa, antes de qualquer conteúdo
+informativo. A conversa e o relato permanecem visíveis ao fundo; o modal recebe
+foco e bloqueia a interação com o conteúdo subjacente até a escolha de uma ação.
+
+Para risco agudo, apresentar a orientação prioritária e os canais de apoio:
 
 **Título do wireframe:**
 
@@ -336,19 +348,31 @@ antes de conteúdos informativos:
 - **192 — SAMU — Ligar agora**
 - **188 — CVV · Centro de Valorização da Vida — Ligar agora**
 - **Voltar à conversa**
+- **Saída rápida (Esc)** — encerra a conversa e abre `/receitas`; Esc continua
+  sendo um atalho funcional mesmo com o modal aberto.
 
 **Aviso do wireframe:**
 
 > O Aurora não liga para ninguém por você. Você decide se e quando ligar.
 
 **Comportamento:** selecionar um número oferece a ligação correspondente; não
-executa ligação automática. **Voltar à conversa** retorna ao ponto anterior
-sem exigir que a usuária repita o relato. O resultado de triagem exibido é
-descartado ao voltar; cada mensagem enviada depois disso recebe uma nova
-avaliação. Um novo risco agudo abre a tela dedicada. A frase exata
-**“frase incerta”** abre a tela dedicada de resultado incerto; outras mensagens
-que não correspondem às frases de risco seguem o fluxo normal. A seção também
-preserva acesso à Saída Rápida.
+executa ligação automática. **Voltar à conversa** fecha o modal e devolve foco
+à conversa sem exigir que a usuária repita o relato. **Saída rápida (Esc)**
+permanece disponível como botão no modal porque o conteúdo ao fundo fica inerte;
+o atalho Esc também continua disponível. O resultado de triagem é descartado
+ao voltar; cada mensagem enviada depois disso recebe nova avaliação.
+Um novo risco agudo abre o modal correspondente. A frase exata **“frase
+incerta”** abre um modal dedicado de resultado incerto; ele informa que não foi
+possível avaliar a mensagem, esclarece que isso não significa ausência de risco
+e oferece os canais de apoio sem gerar resposta informativa. Outros textos que
+não correspondem às frases de risco ou à fixture incerta seguem o fluxo
+normal. Ambos os modais preservam **Voltar à conversa** e **Saída rápida
+(Esc)**.
+
+**Padrão para mensagens e avisos:** os estados de erro, orientação e aviso que
+não exigem interrupção da conversa devem ser apresentados no fluxo ou em tela
+própria, sem janela modal, tenham ações ou não. Os modais de risco agudo e de
+resultado incerto são exceções específicas dos resultados de triagem.
 
 **[GAP]** Os critérios exatos que escolhem quais números destacar para cada
 sinal não estão completamente apresentados nas telas. O backlog menciona 190
@@ -366,7 +390,7 @@ rede de proteção e saúde mental. Os canais gerais continuam disponíveis e a
 aplicação nunca inicia ligação automaticamente.
 
 **Classificação indeterminada:** nesta fixture demonstrativa, somente a frase
-**“frase incerta”** abre a tela de incerteza e bloqueia a resposta informativa.
+**“frase incerta”** abre o modal de incerteza e bloqueia a resposta informativa.
 Essa frase de controle é artificial e não representa um classificador. Mensagens
 fora das frases de risco e da fixture incerta seguem o fluxo normal do protótipo;
 isso não deve ser interpretado como confirmação de segurança. A regra precisa
@@ -531,7 +555,7 @@ esteja vigente ou acessível.
 
 | Situação | Comportamento especificado | O que acontece com o conteúdo | Lacuna/proposta |
 |---|---|---|---|
-| Voltar de risco agudo | **Voltar à conversa** | Preservar o relato e as mensagens enquanto a sessão estiver aberta | [WIREFRAME] define o retorno |
+| Voltar de resultado de triagem | **Voltar à conversa** | Preservar o relato e as mensagens enquanto a sessão estiver aberta | [WIREFRAME] define o retorno; aplicado aos resultados agudo e incerto |
 | Voltar de encaminhamento | **← Voltar à conversa** | Preservar conversa e permitir continuação | [WIREFRAME] define o retorno |
 | Fazer outra pergunta | Usar **Perguntar mais…** ou **Escreva aqui…** e **Enviar** | A conversa mantém contexto durante a sessão anônima | [REQUISITO] E3-US5 |
 | Acionar emergência | Tocar em um telefone | A aplicação não liga nem envia dados por conta própria | [WIREFRAME], E3-US8 |

@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01 e a versão publicada de C-02 validados em ambiente publicado; ajuste atual das fixtures de C-02 e C-03 concluídos localmente, aguardando publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01 e a versão publicada de C-02 validados em ambiente publicado; implementação atual de C-02/C-03 e build local concluídos, aguardando reconstrução/teste no Docker, publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a serviços de produção que utilizam dados e provedores simulados nesta fase
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -17,6 +17,7 @@ O plano inclui as ações independentes de segurança e acesso, a conversa anôn
 - Os componentes e serviços devem ser criados com os nomes e responsabilidades que manterão em produção; não criar classes ou serviços prefixados/sufixados com `Mock`. Durante o protótipo, as implementações podem usar fixtures, respostas e outros dados estáticos internamente. Quando os provedores reais forem integrados, substituir esses dados estáticos pela integração na mesma classe/serviço, preservando seu contrato e sua responsabilidade sempre que possível. Portas/interfaces podem separar contratos de implementações. As portas de serviços que podem acessar provedores externos devem ser assíncronas. Handlers orquestram portas e casos de uso, sem conter regras de classificação, fixtures ou lógica de provedores; routers validam transporte e convertem contratos HTTP; a composição de dependências acontece na inicialização da aplicação.
 - O fluxo da conversa chama o serviço de triagem antes do serviço de resposta. Resultado agudo devolve sinais e orientação do serviço e interrompe a geração; resultado indeterminado devolve a orientação de incerteza e também não gera resposta; somente o resultado explícito sem sinal agudo segue para o serviço de chat/LLM. Quando as integrações reais forem habilitadas, os dados/provedores temporários serão substituídos dentro dos mesmos serviços, preservando a regra de orquestração do handler.
 - Dados e respostas simulados devem ser identificados como comportamento de protótipo; não usar respostas fictícias para afirmar que uma situação é segura, que uma fonte foi verificada ou que um serviço está disponível.
+- Mensagens de estado e avisos não impeditivos devem ser apresentados no fluxo ou em tela própria, sem modais, tenham ações ou não. O risco agudo é exceção: seu diálogo modal sobrepõe a conversa e exige uma ação explícita para retornar ou escolher um canal.
 - Não integrar provedores reais de LLM/RAG, bases vetoriais, autenticação externa, banco de dados ou serviços da rede nesta etapa. Deixar fronteiras substituíveis e contratos documentados para integrações futuras.
 - Não armazenar relatos anônimos em banco, logs, telemetria, `localStorage` ou `sessionStorage`. O protótipo deve manter a sessão anônima apenas em memória da aplicação e descartá-la ao encerrar a sessão.
 - Não alegar que a Saída Rápida apaga o histórico do navegador, do sistema operacional, da rede ou de terceiros.
@@ -319,20 +320,21 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 **Prioridade:** P0 de segurança
 **Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam revisão profissional de segurança/conteúdo, commit, publicação e validação humana na AWS.
 **Dependências:** I-01, I-02, C-02
-**Jornada-base:** resultado de risco agudo.
+**Jornada-base:** resultados de risco agudo e incerto.
 
-**Escopo:** apresentar os textos e canais aprovados do wireframe; oferecer ligações apenas após ação explícita da usuária; implementar **Voltar à conversa** preservando a sessão ainda aberta e manter Saída Rápida acessível.
+**Escopo:** apresentar os resultados de risco agudo e incerto em modais sobre a conversa; oferecer ligações apenas após ação explícita da usuária; implementar **Voltar à conversa** fechando o modal, preservando a sessão ainda aberta e mantendo Saída Rápida acessível.
 
-**Critérios de aceite:** resultado de risco agudo aparece antes de conteúdo informativo; falha de qualquer serviço externo simulado não oculta os números; links de telefone não iniciam automaticamente; retorno não duplica nem perde o relato.
+**Critérios de aceite:** resultados agudo e incerto aparecem em modais acessíveis sobre a conversa, com cerca de 70% da largura/altura da viewport em desktop e 92% da largura/70% da altura em viewport móvel, visualmente separados do fundo e antes de conteúdo informativo; conversa e relato permanecem visíveis e preservados; modal recebe foco e impede interação com o fundo; ações para retornar e sair permanecem visíveis sem depender de rolagem do conteúdo; falha de qualquer serviço externo simulado não oculta os números; links de telefone não iniciam automaticamente; **Voltar à conversa** fecha o modal e devolve foco sem duplicar nem perder o relato; **Saída rápida (Esc)** continua disponível dentro dos modais e pelo atalho Esc. Mensagens e avisos comuns, com ou sem ações, não devem abrir modais.
 
 **Implementação e evidências locais (31/10/2026):**
 
-- O resultado `acute` agora substitui a conversa por uma tela dedicada, com cópia do wireframe, canais de telefone, aviso de escolha da usuária e indicação explícita de que a triagem é demonstração e não avalia situações reais.
-- Os resultados `acute` e `indeterminate` abrem telas dedicadas; a frase exata **“frase incerta”** é a única que aciona a tela de resultado incerto. As demais mensagens não classificadas como risco agudo seguem o fluxo normal.
+- O resultado `acute` abre um modal sobre a conversa, com cópia do wireframe, canais de telefone, aviso de escolha da usuária e indicação explícita de que a triagem é demonstração e não avalia situações reais.
+- Os resultados `acute` e `indeterminate` abrem apresentações dedicadas em modais bloqueantes sobre o chat. A frase exata **“frase incerta”** é a única que aciona o modal de resultado incerto; as demais mensagens não classificadas como risco agudo seguem o fluxo normal.
 - No estado agudo, 190 é destacado para agressão em curso, ameaça de morte ou presença de arma; 188 é destacado para ideação suicida; 180 permanece disponível como orientação e 192 como urgência médica. O destaque é provisório, baseado na decisão de produto registrada, e requer aprovação de especialistas; nenhum canal é ocultado.
-- Links `tel:` aparecem apenas como escolhas explícitas; nenhum telefone é acionado automaticamente. **Voltar à conversa** mantém os componentes e mensagens em memória, não reenvia o relato e devolve foco à tela de conversa. A Saída Rápida global continua acessível no cabeçalho.
+- Links `tel:` aparecem apenas como escolhas explícitas; nenhum telefone é acionado automaticamente. O modal mantém conversa e mensagens visíveis ao fundo; **Voltar à conversa** fecha o modal, não reenvia o relato e devolve foco à conversa. Como o fundo fica inerte durante o modal, **Saída rápida (Esc)** também está disponível dentro dele; o atalho Esc continua funcionando.
+- Padrão geral documentado: avisos e mensagens não impeditivos permanecem no fluxo ou em tela não modal, com ou sem ações. Resultados de triagem aguda e incerta são exceções específicas.
 - Corrigido o estado obsoleto da tela de risco: **Voltar à conversa** limpa o resultado anterior, e cada nova resposta da triagem substitui o estado exibido. Mensagens seguintes não ficam presas ao resultado antigo.
-- A suíte frontend automatizada não está configurada. Execução manual no navegador local: mensagem de risco → **Voltar à conversa** → fixture de controle preservou a conversa e recebeu resposta sem reabrir o resultado antigo. Revalidar após a alteração da regra de triagem: tela dedicada para **“frase incerta”** e fluxo normal para mensagens desconhecidas.
+- Execução manual no navegador local: `dialog:modal` confirmou modal nativo aberto com `aria-modal="true"` e conversa ainda montada ao fundo; **Voltar à conversa** fechou o modal. **Saída rápida (Esc)** dentro do modal abriu `/receitas`. A caixa foi redimensionada para ocupar 70% da viewport em desktop e as ações foram separadas numa faixa fixa para continuarem visíveis durante a rolagem do conteúdo.
 
 **Pendências para aprovação e conclusão:** revisão por profissionais da rede de proteção/saúde mental do mapeamento, ordem/destaque e textos; commit, publicação e teste humano no ambiente AWS conforme critério geral. Esta tela não deve ser usada para orientar situações reais.
 
@@ -344,7 +346,9 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 - [x] `npm run build` — passou (`vite build`, bundle de produção gerado), em 31/10/2026.
 - [x] Regressão local do estado: o retorno limpa o resultado anterior; uma nova resposta `no_acute_signal` permanece na conversa e novos resultados `acute`/`indeterminate` são avaliados independentemente — verificada pela atualização do fluxo de estado e type check/build.
 - [x] Regressão backend: `uv run python -m pytest` — 35 testes passaram; Ruff check e formatação passaram, em 31/10/2026.
-- [x] Revalidado no navegador local com respostas controladas: tela de risco, retorno, tela dedicada para **“frase incerta”**, mensagem desconhecida com resposta normal, sem reabrir a tela antiga. O classificador real do protótipo foi verificado separadamente pelos testes FastAPI/`TriageService`.
+- [x] Validação anterior no navegador local com respostas controladas: diálogo de risco agudo sobre a conversa, retorno, tela não modal para **“frase incerta”** e mensagem desconhecida com resposta normal, sem reabrir o modal antigo. A exibição não modal foi substituída pela mudança atual.
+- [ ] Validar no navegador o modal para **“frase incerta”**, incluindo conversa visível ao fundo, retorno, Saída Rápida e dimensões desktop/mobile; reconstruir a imagem/contêiner Docker para carregar o frontend atualizado.
+- [ ] Revisar modal com leitor de tela e validar posicionamento mobile; o foco modal e a ação **Saída rápida (Esc)** foram verificados no navegador integrado.
 - [ ] Publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação.
 
 ### C-04 — Resposta informativa com fontes simuladas

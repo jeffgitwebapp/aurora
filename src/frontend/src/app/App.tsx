@@ -121,6 +121,7 @@ export function App() {
         <ChatPage
           initialMessage={initialMessage}
           sendInitialMessage={sendInitialMessage}
+          onQuickExit={handleQuickExit}
         />
       </main>
     </div>
