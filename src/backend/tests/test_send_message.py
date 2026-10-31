@@ -1,7 +1,10 @@
+from types import SimpleNamespace
+
 import pytest
 from fastapi.testclient import TestClient
 
 from aurora_backend.contexts.conversation.features.send_message import handler
+from aurora_backend.contexts.conversation.features.send_message import router as send_message_router
 from aurora_backend.contexts.conversation.features.send_message.handler import (
     SIMULATED_REPLY_PREFIX,
 )
@@ -12,7 +15,17 @@ ENDPOINT = "/api/chat/messages"
 
 
 @pytest.mark.parametrize("message", ["Olá", "Preciso de ajuda", "  texto com espaços  "])
-def test_non_empty_message_returns_disclaimed_simulated_text(message: str) -> None:
+def test_non_empty_message_returns_disclaimed_simulated_text(
+    message: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    async def skip_processing_delay(_: float) -> None:
+        return None
+
+    monkeypatch.setattr(
+        send_message_router,
+        "asyncio",
+        SimpleNamespace(sleep=skip_processing_delay),
+    )
     response = client.post(ENDPOINT, json={"message": message})
 
     assert response.status_code == 200
@@ -47,11 +60,24 @@ def test_missing_message_field_is_rejected() -> None:
     assert response.status_code == 422
 
 
-def test_valid_message_returns_without_artificial_delay() -> None:
+def test_valid_message_waits_five_seconds_for_simulated_processing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sleep_durations: list[float] = []
+
+    async def record_processing_delay(seconds: float) -> None:
+        sleep_durations.append(seconds)
+
+    monkeypatch.setattr(
+        send_message_router,
+        "asyncio",
+        SimpleNamespace(sleep=record_processing_delay),
+    )
     response = client.post(ENDPOINT, json={"message": "Olá"})
 
     assert response.status_code == 200
     assert response.json()["reply"].startswith(SIMULATED_REPLY_PREFIX)
+    assert sleep_durations == [5]
 
 
 def test_get_is_not_allowed() -> None:

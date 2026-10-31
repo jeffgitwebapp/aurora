@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 concluído como preparação documental; as tarefas de implementação ainda não foram iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01 implementada localmente, aguardando commit, publicação e validação humana na AWS; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a mocks
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -121,28 +121,41 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 
 ### J-01 — Definir contratos e estrutura dos mocks ponta a ponta
 
-**Estado:** Não iniciada
+**Estado:** Concluída — contratos técnicos aprovados pela usuária; implementações de domínio continuam nas tarefas próprias
 **Tipo:** preparação técnica; não é uma jornada de tela
 **Objetivo:** permitir que cada fluxo use mocks substituíveis e tenha comportamento consistente entre frontend e backend.
 
-**Escopo:** documentar contratos tipados e erros para conversa, resultado de triagem, resposta com fontes, guardrail, catálogo/encaminhamento e, quando chegarem as tarefas logadas, conta e persistência simuladas. Definir adaptadores/mock services e fixtures sintéticas; manter regras de domínio separadas das chamadas HTTP e das dependências futuras.
+**Escopo:** documentar contratos tipados e erros para conversa, resultado de triagem, resposta com fontes, guardrail e catálogo/encaminhamento. Contratos de conta e persistência ficam adiados para L-01/L-02. Definir adaptadores/mock services e fixtures sintéticas; manter regras de domínio separadas das chamadas HTTP e das dependências futuras. A especificação aprovada está em [Contratos de Integração e Padrão de Mocks](./contratos-integracao-mocks.md).
 
 **Critérios de aceite:**
 
-- Frontend consome os contratos do backend; respostas de sucesso, validação, indisponibilidade e formato inesperado são cobertas.
-- Nenhum mock faz chamada externa, armazena relatos anônimos ou registra texto livre.
-- Fixtures de catálogo e conteúdo têm rótulo de demonstração e não são apresentadas como dados vigentes/verificados.
-- Testes identificam explicitamente quais propriedades não podem ser comprovadas por mocks (por exemplo, recall clínico, qualidade real de RAG, frescor de serviços e segurança de armazenamento real).
-- O wireframe continua sendo a referência visual; contratos não introduzem telas ou controles sem rastreabilidade.
+- Contrato HTTP atual e sua evolução coordenada para o fluxo conversacional estão documentados; a usuária aprovou não manter compatibilidade externa nem rota legada paralela.
+- Contratos internos de triagem, fontes, guardrail e catálogo têm tipos, resultados alternativos e limites definidos; contratos de conta/persistência não são antecipados.
+- Política dos mocks proíbe chamadas externas, armazenamento de relatos anônimos e logs com texto livre; fixtures são sintéticas ou fontes reais aprovadas, identificadas como demonstração.
+- Erros de validação, indisponibilidade, timeout e resposta fora de schema estão documentados; os futuros clientes frontend devem validar runtime e não converter falha em sucesso.
+- Está documentado quais propriedades exigem evidência fora de mocks (recall clínico, qualidade real de RAG, frescor de serviços e segurança de armazenamento real).
+- Contratos não introduzem telas ou controles; o wireframe continua sendo a referência visual.
+- As escolhas de compatibilidade do endpoint, envio de histórico e formato de erros foram confirmadas pela usuária em 31/10/2026 e estão registradas na especificação.
+- A estrutura dos mocks não cria pastas vazias nem implementa serviços futuros; cada adaptador será criado na tarefa que o consumir.
 
 **Skills:** [Arquitetura de software e integração ponta a ponta](../../skills/arquitetura-software-integracao.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md).
+
+**Validações registradas em 31/10/2026:**
+
+- [x] Proposta técnica revisada e aprovada pela usuária.
+- [x] Backend: `src/backend/.venv/Scripts/python.exe -m pytest` — 10 testes passaram; uma advertência de depreciação do `starlette.testclient`/`httpx` já existente.
+- [x] Frontend: `npm run check` em `src/frontend` — verificação TypeScript passou.
+- [x] Links Markdown do contrato e do plano verificados; sem links locais quebrados ou whitespace residual.
+- [x] `git diff --check` passou.
+
+Essas verificações validam os contratos documentados e o contrato atual do scaffold; não implementam nem certificam os adaptadores futuros, RAG, triagem real, guardrails, catálogo, privacidade em produção ou as métricas CA-01 a CA-05.
 
 ## 7. Ações independentes — segurança e entrada
 
 ### I-01 — Acesso a emergência por telefone
 
 **Prioridade:** P0
-**Estado:** Não iniciada
+**Estado:** Implementada localmente — aguardando commit, publicação e validação humana na AWS
 **Dependências:** J-01
 **Jornada-base:** ações independentes; início, conversa e telas de risco agudo.
 
@@ -151,6 +164,15 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 **Critérios de aceite:** destinos `tel:` correspondem aos números; controles são utilizáveis por teclado/leitor de tela; contatos aparecem nas superfícies previstas; nenhuma etapa exige cadastro ou envio de relato.
 
 **Skills:** [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
+
+**Implementação e evidências locais (31/10/2026):**
+
+- Criado `EmergencyContacts`, componente compartilhado com links `tel:190`, `tel:180`, `tel:192` e `tel:188` e nomes acessíveis que identificam o serviço e o número.
+- Os quatro canais estão visíveis na tela inicial e no painel “Contatos úteis” da conversa; o link “Emergência” do cabeçalho continua apontando para `tel:190`.
+- Os links são âncoras nativas, utilizáveis por teclado; a lista compacta na tela inicial mantém alvos de toque de pelo menos 44 px e se adapta ao breakpoint móvel.
+- Validação: `npm run check`, `npm run build` e `git diff --check` passaram. Inspeção no navegador local confirmou os quatro rótulos e destinos `tel:` tanto no início quanto na conversa.
+- Limitação da inspeção local: ao abrir a conversa por uma sugestão, o envio da mensagem recebeu HTTP 500 da API (`POST /api/chat/messages`). O erro não impediu a verificação dos contatos, mas o envio do chat não foi validado neste fluxo e não faz parte da implementação I-01.
+- Pendente para concluir: commit, publicação e confirmação humana do teste no ambiente AWS, conforme a seção 3.
 
 ### I-02 — Saída Rápida e descarte da sessão
 
@@ -202,7 +224,7 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 
 **Escopo:** integrar o chat existente ao endpoint/mock de conversa; renderizar mensagens, estado de processamento, falhas e reenvio conforme decisões aprovadas; preservar contexto enquanto a sessão estiver ativa. Usar os textos e controles indicados na jornada/wireframe.
 
-**Critérios de aceite:** o texto inicial é enviado uma vez; novas mensagens usam contexto da sessão em memória; falhas não parecem sucesso e permitem recuperação clara; atualização/reabertura não transforma relato anônimo em histórico persistente; nenhuma mensagem vai para logs.
+**Critérios de aceite:** o texto inicial é enviado uma vez; mensagens anteriores permanecem no estado de memória do frontend e somente a mensagem atual é enviada ao backend, sem promessa de contexto para geração; falhas não parecem sucesso e permitem recuperação clara; atualização/reabertura não transforma relato anônimo em histórico persistente; nenhuma mensagem vai para logs.
 
 **Skills:** [Arquitetura de software e integração ponta a ponta](../../skills/arquitetura-software-integracao.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 

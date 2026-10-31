@@ -393,7 +393,7 @@ textarea:focus-visible {
 .welcome-footer {
   display: flex;
   width: min(100% - 3rem, 1200px);
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
   margin: auto auto 0;
@@ -401,6 +401,34 @@ textarea:focus-visible {
   border-top: 1px solid var(--color-sand);
   color: var(--color-coffee-muted);
   font-size: 0.8125rem;
+}
+
+.welcome-footer .emergency-card {
+  width: min(100%, 520px);
+}
+
+.emergency-card--compact {
+  padding: 0.625rem 0.875rem;
+}
+
+.emergency-card--compact .emergency-card__title {
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.emergency-card--compact .emergency-card__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0.75rem;
+}
+
+.emergency-card--compact .emergency-card__list li + li {
+  border-top: 0;
+}
+
+.emergency-card--compact .emergency-card__list a {
+  min-height: 44px;
+  font-size: 0.75rem;
 }
 
 .welcome-footer a {
@@ -843,6 +871,10 @@ body.conversation-mode {
     padding: 1rem 0;
   }
 
+  .welcome-footer .emergency-card {
+    width: 100%;
+  }
+
   .app--conversation {
     padding: 0 0.75rem 1rem;
   }
@@ -930,6 +962,10 @@ body.conversation-mode {
   .emergency-card__list a {
     min-height: 36px;
     font-size: 0.75rem;
+  }
+
+  .emergency-card--compact .emergency-card__list a {
+    min-height: 44px;
   }
 
   .chat-page__privacy {

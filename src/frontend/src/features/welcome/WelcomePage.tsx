@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
 
+import { EmergencyContacts } from "../emergency/EmergencyContacts";
+
 interface WelcomePageProps {
   onOpenConversation: (initialMessage: string, sendImmediately?: boolean) => void;
   onQuickExit: () => void;
@@ -103,8 +105,8 @@ export function WelcomePage({ onOpenConversation, onQuickExit }: WelcomePageProp
       </main>
 
       <footer className="welcome-footer">
+        <EmergencyContacts compact />
         <span>Tecla Esc fecha a página. A conversa não é salva.</span>
-        <a href="tel:180">Central de Atendimento à Mulher · 180</a>
       </footer>
     </div>
   );

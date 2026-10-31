@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
+import { EmergencyContacts } from "../emergency/EmergencyContacts";
 import { sendMessage, ChatApiError } from "./api/chatApi";
 import { MessageComposer } from "./components/MessageComposer";
 import { MessageList } from "./components/MessageList";
@@ -84,38 +85,7 @@ export function ChatPage({
       </section>
 
       <aside className="chat-page__sidebar" aria-label="Contatos úteis">
-        <section className="emergency-card" aria-labelledby="emergency-title">
-          <p className="emergency-card__eyebrow">Ajuda por telefone</p>
-          <h2 className="emergency-card__title" id="emergency-title">
-            Em perigo agora?
-          </h2>
-          <ul className="emergency-card__list">
-            <li>
-              <a href="tel:190">
-                <span>Polícia Militar</span>
-                <strong>190</strong>
-              </a>
-            </li>
-            <li>
-              <a href="tel:180">
-                <span>Central de Atendimento à Mulher</span>
-                <strong>180</strong>
-              </a>
-            </li>
-            <li>
-              <a href="tel:192">
-                <span>SAMU</span>
-                <strong>192</strong>
-              </a>
-            </li>
-            <li>
-              <a href="tel:188">
-                <span>CVV</span>
-                <strong>188</strong>
-              </a>
-            </li>
-          </ul>
-        </section>
+        <EmergencyContacts />
 
         <p className="chat-page__privacy">
           Esta conversa existe apenas enquanto a página está aberta. Ao sair, o
