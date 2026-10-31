@@ -27,6 +27,8 @@ aurora/
 │   ├── backlog-aurora.md               # Backlog de épicos (E1 a E13)
 │   ├── c4-aurora-mvp.drawio            # Modelagem arquitetural C4
 │   └── requisitos-aurora.md            # Requisitos Funcionais e Não-Funcionais (ISO 25010)
+├── skills/                             # Competências necessárias e especificações por skill
+│   └── lista_skills.md                 # Índice das skills por fase do projeto
 ├── src/                                # Código-fonte da aplicação
 │   ├── .gitignore
 │   ├── backend/                        # FastAPI + uv (Python 3.12+)
@@ -65,6 +67,21 @@ aurora/
 │           └── styles.css              # Estilos acessíveis e responsivos
 └── LICENSE                             # Licença do projeto
 ```
+
+### Competências necessárias para desenvolver o Aurora
+
+O Aurora requer competências de produto, engenharia e domínio especializado. As principais áreas são:
+
+- **Base do MVP:** análise de requisitos e rastreabilidade; jornada e usabilidade; arquitetura e integração ponta a ponta; desenvolvimento de APIs com Python/FastAPI e frontend React/TypeScript.
+- **Segurança e responsabilidade:** domínio de violência psicológica e design informado por trauma; privacidade/LGPD; segurança de aplicação; triagem determinística de risco agudo; acessibilidade e linguagem simples.
+- **Informação e encaminhamento:** curadoria de conteúdo e RAG; integração de LLM e engenharia de prompts; guardrails e avaliação generativa; catálogo de serviços e motor de encaminhamento.
+- **Entrega e qualidade:** testes e fitness functions; DevOps, AWS, CI/CD e operação.
+- **Evolução do produto:** autenticação e área logada; persistência, criptografia e diário; gestão de conteúdo; integrações externas; conteúdo multimídia acessível; observabilidade e desempenho.
+
+Consulte o [índice de skills](./skills/lista_skills.md) para a relação completa, organizada por fase, e as especificações individuais de cada competência. O [plano de implementação da jornada](./docs/jornada-usuario/plano-implementacao-jornada-usuario.md) também indica quais skills consultar em cada tarefa.
+
+> [!NOTE]
+> Este inventário é um mapa de conhecimentos necessários para orientar o desenvolvimento; não significa que essas competências ou funcionalidades já estejam implementadas, nem que todas sejam necessárias em cada alteração. A especificação correspondente deve ser consultada conforme a tarefa. Skills técnicas não substituem validação humana especializada em saúde mental, direito, rede de proteção, privacidade, segurança e acessibilidade, especialmente antes de qualquer piloto com usuárias reais. O protótipo atual não é seguro nem funcional para esse uso.
 
 ---
 
