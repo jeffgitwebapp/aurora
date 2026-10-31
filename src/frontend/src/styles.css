@@ -1156,3 +1156,117 @@ body.conversation-mode {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+.risk-screen {
+  width: min(100%, 820px);
+  min-height: 0;
+  margin: 0 auto;
+  padding: clamp(1rem, 4vw, 2rem);
+  overflow-y: auto;
+  border: 1px solid var(--color-danger-border);
+  border-radius: 20px;
+  background: var(--color-white);
+}
+
+.risk-screen:focus {
+  outline: 3px solid var(--color-terracotta);
+  outline-offset: 3px;
+}
+
+.risk-screen__content {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.risk-screen__eyebrow {
+  margin: 0 0 0.4rem;
+  color: var(--color-terracotta);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.risk-screen h1 {
+  margin: 0;
+  font-size: clamp(1.65rem, 5vw, 2.4rem);
+  line-height: 1.2;
+}
+
+.risk-screen__intro {
+  margin: 0.75rem 0 1.25rem;
+  color: var(--color-coffee-muted);
+}
+
+.emergency-card--risk {
+  margin: 1.25rem 0;
+  border-width: 2px;
+}
+
+.emergency-card--risk .emergency-card__hint {
+  margin: 0 0 0.5rem;
+  color: var(--color-coffee-muted);
+  font-size: 0.875rem;
+}
+
+.emergency-card--risk .emergency-card__link--priority {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.emergency-card__priority {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: var(--color-terracotta);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.risk-screen__note {
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.risk-screen__demo {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--color-cream);
+  color: var(--color-coffee-muted);
+  font-size: 0.8125rem;
+}
+
+.risk-screen__return {
+  min-height: 48px;
+  margin-top: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-coffee);
+  color: var(--color-white);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.risk-screen__return:hover {
+  background: var(--color-terracotta-hover);
+}
+
+
+@media (max-width: 680px) {
+  .risk-screen {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .emergency-card--risk .emergency-card__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .emergency-card--risk .emergency-card__list li + li {
+    border-top: 1px solid var(--color-sand);
+  }
+}

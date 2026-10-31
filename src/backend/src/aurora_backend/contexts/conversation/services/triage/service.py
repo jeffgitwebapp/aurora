@@ -28,7 +28,7 @@ _RISK_FIXTURES: dict[TriageSignal, tuple[str, ...]] = {
     ),
 }
 
-_NO_ACUTE_SIGNAL_FIXTURE = "Quero informações sobre serviços de apoio na minha cidade"
+_INDETERMINATE_FIXTURE = "frase incerta"
 _SENTENCE_SEPARATOR = re.compile(r"[.!?;\n]+")
 _SIGNAL_LABELS = {
     TriageSignal.SUICIDAL_IDEATION: "ideação suicida",
@@ -50,7 +50,7 @@ _NORMALIZED_RISK_FIXTURES = {
     signal: {_normalize_fixture_sentence(phrase) for phrase in phrases}
     for signal, phrases in _RISK_FIXTURES.items()
 }
-_NORMALIZED_NO_ACUTE_SIGNAL_FIXTURE = _normalize_fixture_sentence(_NO_ACUTE_SIGNAL_FIXTURE)
+_NORMALIZED_INDETERMINATE_FIXTURE = _normalize_fixture_sentence(_INDETERMINATE_FIXTURE)
 
 
 class TriageService:
@@ -63,7 +63,7 @@ class TriageService:
             if segment.strip()
         ]
         if not normalized_segments:
-            return self._indeterminate_result()
+            return TriageResult(status=TriageStatus.NO_ACUTE_SIGNAL)
 
         matched_signals: list[TriageSignal] = []
         for segment in normalized_segments:
@@ -75,13 +75,8 @@ class TriageService:
                 ),
                 None,
             )
-            if matching_signal is not None:
-                if matching_signal not in matched_signals:
-                    matched_signals.append(matching_signal)
-                continue
-            if segment == _NORMALIZED_NO_ACUTE_SIGNAL_FIXTURE:
-                continue
-            return self._indeterminate_result()
+            if matching_signal is not None and matching_signal not in matched_signals:
+                matched_signals.append(matching_signal)
 
         if matched_signals:
             labels = ", ".join(_SIGNAL_LABELS[signal] for signal in matched_signals)
@@ -96,10 +91,13 @@ class TriageService:
                 ),
             )
 
-        if len(normalized_segments) == 1:
-            return TriageResult(status=TriageStatus.NO_ACUTE_SIGNAL)
+        if (
+            len(normalized_segments) == 1
+            and normalized_segments[0] == _NORMALIZED_INDETERMINATE_FIXTURE
+        ):
+            return self._indeterminate_result()
 
-        return self._indeterminate_result()
+        return TriageResult(status=TriageStatus.NO_ACUTE_SIGNAL)
 
     @staticmethod
     def _indeterminate_result() -> TriageResult:

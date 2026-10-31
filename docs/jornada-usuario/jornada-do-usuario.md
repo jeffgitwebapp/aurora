@@ -270,11 +270,12 @@ da triagem (por exemplo, perguntas complementares, opção de não responder ou
 correção da resposta). O wireframe apresenta tela de risco agudo como resultado,
 não um formulário de triagem completo. Não inventar tais controles.
 
-**Classificação indeterminada:** conforme decisão de produto de 31/10/2026,
-não afirmar ausência de risco; apresentar estado de incerteza e canais gerais,
-sem resposta informativa até escolha explícita da usuária. A mensagem exata e
-os controles dessa escolha ainda dependem de validação de profissionais da
-rede de proteção e saúde mental.
+**Classificação indeterminada:** nesta demonstração, somente a frase **“frase
+incerta”** (normalizada quanto a caixa, espaços e pontuação final) produz esse
+resultado. Ela abre a tela de incerteza e não gera resposta informativa.
+Mensagens fora das frases de risco e dessa fixture seguem o fluxo normal; essa
+regra estática não detecta risco real nem permite afirmar ausência de risco.
+Conteúdo e comportamento precisam de validação profissional antes de uso real.
 
 **[FIXTURES DE TESTE aprovadas pela usuária em 31/10/2026 para o mock;
 validação do time de produto e especialistas ainda pendente]**
@@ -287,32 +288,32 @@ de teste:
 | Agressão em curso | “Ele está me agredindo agora”; “Estou sendo atacada neste momento” |
 | Ameaça de morte | “Ele disse que vai me matar”; “Recebi uma ameaça de morte” |
 | Presença de arma | “Ele está com uma arma aqui”; “Há uma arma no local agora” |
-| Fixture sem sinal agudo | “Quero informações sobre serviços de apoio na minha cidade” |
+| Resultado incerto | “frase incerta” |
+| Fluxo normal sem risco agudo reconhecido | Qualquer outra mensagem que não corresponda às frases de risco ou à fixture incerta |
 
-O `TriageService` compara as frases completas após normalizar caixa,
-acentos, espaços e pontuação final; não procura palavras isoladas ou
-substrings. Uma frase de risco corresponde ao estado de risco agudo; se houver
-mais de uma frase de risco reconhecida, registra todos os sinais. A fixture
-explicitamente definida como sem sinal só retorna “sem sinal agudo detectado”
-quando enviada sozinha. Qualquer outra mensagem, inclusive ambígua, negada,
-hipotética ou com texto adicional não reconhecido, retorna “indeterminado” e
-não libera resposta informativa. O serviço de triagem devolve status, sinais e
-orientação de fluxo; isso não reconhece risco real nem deve ser apresentado ou
-usado como triagem confiável.
+O `TriageService` compara frases completas após normalizar caixa, acentos,
+espaços e pontuação final; não procura palavras isoladas. Uma ou mais frases
+exatas de risco resultam em risco agudo e registram todos os sinais. Somente a
+frase completa **“frase incerta”** retorna “indeterminado”; qualquer outra
+mensagem segue como “sem sinal agudo detectado” no protótipo. Esse resultado
+não reconhece risco real nem deve ser apresentado ou usado como triagem
+confiável.
 
 **Implementação observada no protótipo:** o handler do envio orquestra portas
-de serviço: sempre chama `TriageService` primeiro e somente chama
-`ChatResponseService` quando recebe a fixture de controle sem sinal agudo.
-`TriageService` mantém as regras e fixtures estáticas desta fase; em risco agudo,
-devolve os sinais e a orientação sem invocar o chat; em resultado
-indeterminado, devolve orientação de incerteza sem resposta informativa. O
+de serviço: sempre chama `TriageService` primeiro e só chama
+`ChatResponseService` quando recebe `no_acute_signal`. `TriageService` mantém as
+regras e fixtures estáticas desta fase; frases de risco devolvem os sinais e
+orientação sem invocar o chat; somente a frase exata “frase incerta” devolve
+orientação de incerteza sem resposta informativa. Mensagens não reconhecidas
+como risco agudo seguem ao serviço de resposta. O
 `ChatResponseService` contém o texto demonstrativo estático desta fase. Os
 serviços são injetados na composição da aplicação e mantêm os nomes e
 responsabilidades previstos para produção; no momento oportuno, os dados
 estáticos serão substituídos por integrações reais sem criar classes paralelas
 com prefixo `Mock`. O frontend apenas apresenta a orientação do serviço
 identificada como simulação. A tela de emergência e o mapeamento de canais
-continuam na tarefa C-03, ainda não implementada.
+estão implementados no protótipo na tarefa C-03, aguardando revisão
+profissional, publicação e validação humana.
 
 ### Etapa 3A — Exibir risco agudo
 
@@ -342,8 +343,12 @@ antes de conteúdos informativos:
 
 **Comportamento:** selecionar um número oferece a ligação correspondente; não
 executa ligação automática. **Voltar à conversa** retorna ao ponto anterior
-sem exigir que a usuária repita o relato. A seção também preserva acesso à
-Saída Rápida.
+sem exigir que a usuária repita o relato. O resultado de triagem exibido é
+descartado ao voltar; cada mensagem enviada depois disso recebe uma nova
+avaliação. Um novo risco agudo abre a tela dedicada. A frase exata
+**“frase incerta”** abre a tela dedicada de resultado incerto; outras mensagens
+que não correspondem às frases de risco seguem o fluxo normal. A seção também
+preserva acesso à Saída Rápida.
 
 **[GAP]** Os critérios exatos que escolhem quais números destacar para cada
 sinal não estão completamente apresentados nas telas. O backlog menciona 190
@@ -360,11 +365,12 @@ O mapeamento e a forma de destaque precisam de aprovação de profissionais da
 rede de proteção e saúde mental. Os canais gerais continuam disponíveis e a
 aplicação nunca inicia ligação automaticamente.
 
-**Classificação indeterminada:** não apresentar a ausência de sinal detectado
-como confirmação de segurança. A decisão de produto é exibir um estado de
-incerteza e os canais gerais, sem gerar resposta informativa até que a usuária
-escolha explicitamente continuar. A mensagem exata e a interação precisam de
-validação profissional; não inventar controles antes dessa revisão.
+**Classificação indeterminada:** nesta fixture demonstrativa, somente a frase
+**“frase incerta”** abre a tela de incerteza e bloqueia a resposta informativa.
+Essa frase de controle é artificial e não representa um classificador. Mensagens
+fora das frases de risco e da fixture incerta seguem o fluxo normal do protótipo;
+isso não deve ser interpretado como confirmação de segurança. A regra precisa
+de revisão profissional antes de uso real.
 
 ### Etapa 3B — Resposta informativa com fonte
 

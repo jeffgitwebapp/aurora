@@ -17,7 +17,7 @@ O protótipo mantém os serviços e componentes com os nomes e responsabilidades
 3. **Orquestrar segurança antes de conteúdo:** o caso de uso conversacional consulta `TriageService` antes de recuperação/geração via `ChatResponseService`. Resultado de risco agudo ou indeterminado não pode cair no caminho informativo por sucesso-shaped fallback.
 4. **Sem estado persistente anônimo no servidor:** nenhuma conversa, relato, sessão, classificação ou resposta fica em banco, arquivo, cache durável ou log. O histórico é mantido somente no estado em memória do frontend; o backend recebe somente a mensagem atual. Nenhum `session_id` é necessário neste protótipo.
 5. **Sem conteúdo livre em logs ou erros:** logs técnicos podem registrar nome do caso de uso, duração e resultado técnico agregado, nunca mensagem, contexto, localização ou fontes derivadas do relato.
-6. **Dados de triagem atuais são fixtures, não detecção:** nesta fase, `TriageService` compara a mensagem com as frases completas de teste aprovadas para demonstrar os ramos do fluxo. Não se trata de análise semântica, regra de risco para produção ou detecção confiável. Frase fora das fixtures resulta em indeterminação; só a fixture de controle autorizada segue ao serviço de resposta. A substituição por regras/classificador real exige validação de domínio e ocorre dentro de `TriageService`.
+6. **Dados de triagem atuais são fixtures, não detecção:** nesta fase, `TriageService` compara a mensagem com frases completas de teste aprovadas. Frases de risco acionam o ramo agudo; somente a frase exata `frase incerta` aciona o ramo indeterminado; qualquer outra mensagem segue ao serviço de resposta. Não se trata de análise semântica, regra de risco para produção ou detecção confiável. A substituição por regras/classificador real exige validação de domínio e ocorre dentro de `TriageService`.
 7. **Sem integrações externas nesta fase:** os serviços não acessam LLM, RAG, banco, geolocalização, catálogo remoto ou serviço de emergência até a respectiva tarefa e aprovação.
 8. **Dados demonstrativos identificados:** fixtures e respostas estáticas expostas à usuária indicam demonstração. Dados estáticos não comprovam acurácia, atualidade, disponibilidade ou validade clínica/jurídica.
 9. **Falha explícita:** timeout, indisponibilidade, ausência de fonte, incerteza e falha de formato são estados distintos. Nunca converter erro em resposta informativa ou ausência de risco.
@@ -109,7 +109,7 @@ interface TriageResult {
 }
 ```
 
-`no_acute_signal` significa apenas que a implementação usada não sinalizou os casos cobertos; nunca deve ser apresentado como garantia de segurança. No protótipo, `TriageService` usa as fixtures textuais aprovadas e devolve status, sinais e orientação de fluxo. Risco agudo ou indeterminado interrompe `ChatResponseService`; somente a fixture de controle explícita passa adiante. As regras reais do classificador, perguntas complementares e comportamento de incerteza dependem de validação de domínio e serão implementados/substituídos no mesmo `TriageService`. A implementação com fixtures não atende nem valida o CA-02.
+`no_acute_signal` significa apenas que as fixtures estáticas não reconheceram uma frase configurada como risco agudo; nunca deve ser apresentado como garantia de segurança. No protótipo, `TriageService` usa frases completas: frases de risco retornam `acute`, a frase exata `frase incerta` retorna `indeterminate`, e qualquer outra mensagem retorna `no_acute_signal`. Risco agudo ou indeterminado interrompe `ChatResponseService`; os demais casos seguem ao serviço de resposta. As regras reais do classificador e comportamento de incerteza dependem de validação de domínio e serão implementados/substituídos no mesmo `TriageService`. A implementação com fixtures não atende nem valida o CA-02.
 
 ### 5.3 Recuperação e fontes
 
@@ -262,14 +262,14 @@ Regras para serviços e seus dados demonstrativos:
 - não chamar rede, gerar tokens aleatórios que pareçam evidência ou armazenar estado nesta fase;
 - em testes automatizados, injetar resultados/falhas pelas portas; não adicionar gatilhos especiais de falha à mensagem da usuária;
 - identificar conteúdo demonstrativo para a UI quando for exibido;
-- limitar as frases literais de triagem a fixtures aprovadas para demonstração; entradas fora delas devem permanecer indeterminadas, sem inferência de risco.
+- limitar as frases literais de triagem a fixtures aprovadas: frases de risco simulam risco agudo e a frase `frase incerta` simula incerteza; entradas fora delas seguem o fluxo normal do protótipo, sem inferência de risco.
 
 ## 9. Matriz de cenários e limites dos testes
 
 | Capacidade | Teste automatizado de contrato | O que os dados demonstrativos não comprovam |
 |---|---|---|
 | Conversa | Entrada válida/vazia, histórico, sequência e schema da resposta | Qualidade de conversa ou compreensão real de linguagem |
-| Triagem | Frases-fixture aprovadas, resultado indeterminado fora das fixtures; precedência antes de resposta | Recall de 100%, precisão, representatividade cultural ou segurança clínica |
+| Triagem | Frases de risco e frase incerta exatas; demais mensagens seguem fluxo normal; precedência antes de resposta | Recall de 100%, precisão, representatividade cultural ou segurança clínica |
 | Fontes | Resultado com referências completas, sem fonte e fixture marcada `demo` | Qualidade de RAG, cobertura ou validade científica/jurídica da base real |
 | Guardrail | Permitir/bloquear/fora de escopo, falha fechada | Zero violações em produção ou robustez real contra casos limítrofes |
 | Catálogo | Até três opções, ordem, vazio, ambíguo, indisponível e data de verificação | Correção do contato, atendimento, frescor real ou alcance de CA-05 |

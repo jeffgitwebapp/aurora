@@ -90,15 +90,41 @@ def test_multiple_exact_risk_fixtures_keep_all_signals() -> None:
         "Estou pensando em me matar porque estou escrevendo um exemplo",
         "Preciso de informações sobre serviços de apoio",
         "mensagem aleatória",
+        "Quero informações sobre serviços de apoio na minha cidade",
     ],
 )
-def test_unrecognized_or_contextual_messages_are_indeterminate(message: str) -> None:
+def test_messages_without_an_exact_risk_or_indeterminate_fixture_follow_normal_flow(
+    message: str,
+) -> None:
     result = assess_fixture(message)
+
+    assert result.status is TriageStatus.NO_ACUTE_SIGNAL
+    assert result.signals == ()
+    assert result.guidance is None
+
+
+def test_only_exact_indeterminate_fixture_returns_indeterminate() -> None:
+    result = assess_fixture("  FRASE INCERTA! ")
 
     assert result.status is TriageStatus.INDETERMINATE
     assert result.signals == ()
     assert result.guidance is not None
     assert "Isso não significa ausência de risco" in result.guidance
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "frase incerta. Preciso de ajuda.",
+        "frase incerta porque estou testando.",
+    ],
+)
+def test_indeterminate_fixture_with_additional_text_follows_normal_flow(
+    message: str,
+) -> None:
+    result = assess_fixture(message)
+
+    assert result.status is TriageStatus.NO_ACUTE_SIGNAL
 
 
 def test_only_explicit_control_fixture_is_no_acute_signal() -> None:
@@ -107,12 +133,6 @@ def test_only_explicit_control_fixture_is_no_acute_signal() -> None:
     assert result.status is TriageStatus.NO_ACUTE_SIGNAL
     assert result.signals == ()
     assert result.guidance is None
-
-
-def test_control_fixture_with_additional_text_is_indeterminate() -> None:
-    result = assess_fixture(f"{NO_ACUTE_FIXTURE}. Preciso de ajuda.")
-
-    assert result.status is TriageStatus.INDETERMINATE
 
 
 def test_handler_does_not_call_chat_service_for_acute_or_indeterminate_results() -> None:
@@ -254,7 +274,7 @@ def test_acute_fixture_returns_service_guidance_without_chat_or_delay(
     assert sleep_durations == []
 
 
-def test_indeterminate_fixture_returns_service_guidance_without_chat_or_delay(
+def test_exact_indeterminate_fixture_returns_service_guidance_without_chat_or_delay(
     client: TestClient,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -268,7 +288,7 @@ def test_indeterminate_fixture_returns_service_guidance_without_chat_or_delay(
         "asyncio",
         SimpleNamespace(sleep=record_processing_delay),
     )
-    response = client.post(ENDPOINT, json={"message": "Preciso de ajuda"})
+    response = client.post(ENDPOINT, json={"message": "frase incerta"})
 
     assert response.status_code == 200
     payload = response.json()
@@ -277,6 +297,31 @@ def test_indeterminate_fixture_returns_service_guidance_without_chat_or_delay(
     assert payload["signals"] == []
     assert "Isso não significa ausência de risco" in payload["guidance"]
     assert sleep_durations == []
+
+
+def test_unrecognized_message_uses_normal_chat_flow(
+    client: TestClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sleep_durations: list[float] = []
+
+    async def record_processing_delay(seconds: float) -> None:
+        sleep_durations.append(seconds)
+
+    monkeypatch.setattr(
+        send_message_router,
+        "asyncio",
+        SimpleNamespace(sleep=record_processing_delay),
+    )
+    response = client.post(ENDPOINT, json={"message": "Oi, gostaria de conversar"})
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert isinstance(payload["reply"], str)
+    assert payload["triage_status"] == "no_acute_signal"
+    assert payload["signals"] == []
+    assert payload["guidance"] is None
+    assert sleep_durations == [5]
 
 
 def test_get_is_not_allowed(client: TestClient) -> None:
