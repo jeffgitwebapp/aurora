@@ -1,6 +1,6 @@
 # Jornada do Usuário — Aurora
 
-**Status:** rascunho para validação de produto e domínio
+**Status:** aprovada pela usuária; revisões de produto e domínio ainda pendentes
 **Perfil priorizado:** mulher em situação de violência psicológica ou que
 procura informação e apoio para compreender o que está vivendo
 **Tipo de documento:** usabilidade e requisitos funcionais; não define
@@ -9,7 +9,9 @@ implementação técnica nem especificação visual
 > **Atenção:** este documento organiza os comportamentos definidos e os
 > comportamentos propostos. Tudo que estiver marcado como **SUGESTÃO — validar**
 > ainda não é requisito aprovado. A jornada não deve ser tratada como validada
-> até revisão do usuário e dos especialistas de domínio pertinentes.
+> para uso real até revisão das pessoas especialistas de domínio pertinentes.
+> A usuária aprovou a jornada em revisão anterior; decisões adicionais do J-00
+> estão registradas no [plano de implementação](./plano-implementacao-jornada-usuario.md).
 
 ## 1. Objetivo e escopo
 
@@ -66,11 +68,11 @@ triagem ou cadastro. A ordem prioriza segurança.
 
 | Prioridade | Ação independente | Onde começa | Ação da usuária | Resultado esperado | Origem |
 |---|---|---|---|---|---|
-| P0 | Sair rapidamente | Qualquer tela | Acionar **Saída rápida (Esc)** ou pressionar Esc | Abrir a página neutra definida para o produto e encerrar a sessão volátil, conforme o comportamento a validar | RF06, E1-US3, wireframe |
+| P0 | Sair rapidamente | Qualquer tela | Acionar **Saída rápida (Esc)** ou pressionar Esc | Descartar a sessão mantida pelo Aurora e abrir a página neutra local em `/organizador`; Esc age imediatamente, sem confirmação | RF06, E1-US3, wireframe; decisão de produto de 31/10/2026 |
 | P0 | Buscar ajuda por telefone | Início e telas de conversa; também há tela de risco agudo | Acionar o serviço desejado: Polícia Militar **190**, Central de Atendimento à Mulher **180**, SAMU **192** ou CVV **188** | O aparelho oferece a ação de ligação; o Aurora não liga pela usuária | Wireframe, E3-US8, E5-US1/2 |
 | P1 | Iniciar com texto livre | Início | Digitar no campo **Escreva sua mensagem** e acionar **Enviar** | Abrir a conversa e encaminhar o texto como primeira mensagem | RF01, wireframe, implementação |
 | P1 | Iniciar por uma sugestão | Início | Escolher uma das sugestões | Abrir a conversa e usar a frase selecionada para iniciar | Wireframe, implementação |
-| P1 | Consultar privacidade | Início | Acionar **Privacidade** | Exibir explicação de dados e limites da sessão | Link previsto no wireframe; conteúdo/destino é lacuna |
+| P1 | Consultar privacidade | Início | Acionar **Privacidade** | Exibir o aviso de sessão aprovado na seção 3.1; o destino visual do link ainda precisa ser definido | Link previsto no wireframe; decisão de produto de 31/10/2026 |
 | P1 | Ver contatos úteis | Início | Acionar **Contatos úteis** | Abrir os canais de contato disponíveis | Wireframe |
 
 ### 3.1 Tela inicial e começo anônimo
@@ -110,7 +112,19 @@ próprias palavras ou escolhendo um ponto de partida.
 escolher sugestões para iniciar a conversa automaticamente. O aviso atual na
 tela inicial diz **“Protótipo local · a conversa não é salva.”**; isso difere
 do texto do wireframe **“Sem cadastro. Nada fica salvo.”** e precisa ser
-consolidado antes da validação de produto.
+consolidado antes da implementação.
+
+**Decisão de produto registrada em 31/10/2026:** usar o seguinte aviso para
+explicar os limites da sessão anônima:
+
+> Esta conversa fica na memória enquanto esta página está aberta. Ao usar a
+> Saída Rápida ou encerrar a página, o Aurora descarta o conteúdo da sessão que
+> mantém. Isso não apaga possíveis registros do navegador, dispositivo, rede
+> ou terceiros.
+
+O texto foi aprovado pela usuária para o protótipo; ainda requer revisão de
+privacidade/LGPD. Ele substitui promessas absolutas como “Nada fica salvo” ou
+“tudo é apagado”, que não descrevem os registros fora do controle da aplicação.
 
 ### 3.2 Saída Rápida — disponibilidade independente
 
@@ -118,23 +132,22 @@ consolidado antes da validação de produto.
 qualquer tela.
 
 **Resultado esperado no wireframe:** substituir a tela atual por uma página
-neutra, sem exigir internet, descartar a sessão e substituir a entrada no
-histórico de navegação. O alvo de latência documentado para a troca é p95 de
-200 ms e p99 de 300 ms.
+neutra sem depender de rede, descartar o estado da sessão sob controle do Aurora
+e substituir a entrada da aplicação no histórico, conforme a capacidade do
+navegador. O alvo de latência documentado para a troca é p95 de 200 ms e p99 de
+300 ms.
 
-**[GAP]** O destino neutro exato ainda não foi escolhido. O wireframe usa
-placeholders `[site neutro externo]` e `[conteúdo comum do site neutro]` e
-registra que o destino deve ser definido pelo time.
+**Decisão de produto registrada em 31/10/2026:** o destino será uma página
+estática neutra da própria aplicação no caminho `/organizador`. A tecla Esc
+aciona a saída imediatamente, sem confirmação, em qualquer tela, inclusive
+quando o foco está em um campo. O texto e o conteúdo final da página neutra
+precisam de revisão de produto e segurança antes da implementação.
 
-**[SUGESTÃO — validar]** Definir uma página neutra estática, que não revele o
-Aurora nem a ação de saída, e documentar claramente o que a aplicação descarta.
-Não afirmar que a ação remove o histórico geral do navegador, dados do sistema
-operacional, registros de rede ou monitoramento externo.
-
-**[GAP]** Confirmar se a tecla Esc sempre executa a saída imediata mesmo quando
-o foco está em um campo de texto ou quando um diálogo de confirmação estiver
-aberto. O requisito de rapidez sugere que a saída não deve depender de
-confirmação, mas essa regra não está descrita como comportamento final aprovado.
+**Limite de segurança:** a saída pode descartar o estado mantido pelo Aurora e
+navegar para a página neutra; não se deve afirmar que remove o histórico geral
+do navegador, dados do sistema operacional, registros de rede ou monitoramento
+externo. A substituição da entrada do histórico depende do comportamento
+suportado pelo navegador e não equivale à remoção de todo o histórico.
 
 ### 3.3 Acesso a emergência sem passar pelo fluxo de conversa
 
@@ -232,15 +245,15 @@ informativo e exibir a sugestão de emergência antes de qualquer resposta
 psicoeducativa. O caminho da sugestão não deve depender de geração de LLM.
 
 **[GAP]** Os documentos não especificam todas as perguntas ou controles visíveis
-da triagem (por exemplo, botões de escolha, perguntas complementares, opção de
-não responder ou correção da resposta). O wireframe apresenta tela de risco
-agudo como resultado, não um formulário de triagem completo.
+da triagem (por exemplo, perguntas complementares, opção de não responder ou
+correção da resposta). O wireframe apresenta tela de risco agudo como resultado,
+não um formulário de triagem completo. Não inventar tais controles.
 
-**[SUGESTÃO — validar]** Quando a conversa não fornecer informação suficiente
-para classificar urgência, fazer uma pergunta curta e opcional, sem atrasar a
-exibição de canais de emergência sempre disponíveis. A redação e o conjunto de
-opções precisam de revisão de profissionais de proteção e saúde mental antes de
-serem aprovados.
+**Classificação indeterminada:** conforme decisão de produto de 31/10/2026,
+não afirmar ausência de risco; apresentar estado de incerteza e canais gerais,
+sem resposta informativa até escolha explícita da usuária. A mensagem exata e
+os controles dessa escolha ainda dependem de validação de profissionais da
+rede de proteção e saúde mental.
 
 ### Etapa 3A — Exibir risco agudo
 
@@ -279,6 +292,20 @@ em risco de morte/agressão em curso, 192 se houver lesão, CVV 188 em crise
 emocional e 192 em risco de ato iminente. Confirmar a regra final e a ordem de
 exibição com especialistas; não inferir que todos os canais são equivalentes
 para todos os casos.
+
+**Decisão de produto registrada em 31/10/2026:** seguir provisoriamente o
+mapeamento do backlog: 190 para risco de morte iminente ou agressão em curso;
+192 quando houver lesão e também em risco de ato iminente; 188 para crise
+emocional ou ideação suicida; manter o 180 disponível como canal de orientação.
+O mapeamento e a forma de destaque precisam de aprovação de profissionais da
+rede de proteção e saúde mental. Os canais gerais continuam disponíveis e a
+aplicação nunca inicia ligação automaticamente.
+
+**Classificação indeterminada:** não apresentar a ausência de sinal detectado
+como confirmação de segurança. A decisão de produto é exibir um estado de
+incerteza e os canais gerais, sem gerar resposta informativa até que a usuária
+escolha explicitamente continuar. A mensagem exata e a interação precisam de
+validação profissional; não inventar controles antes dessa revisão.
 
 ### Etapa 3B — Resposta informativa com fonte
 
@@ -338,9 +365,11 @@ resposta de limite sem encerrar a conversa.
 > O Aurora informa sobre a lei, mas não diz o que você deve fazer. A decisão é
 > sempre sua.
 
-**[GAP]** A resposta deve distinguir pedido de informação geral sobre a lei de
-pedido de interpretação jurídica individual. Casos limítrofes e conteúdo
-exato de bloqueio precisam de revisão jurídica e de produto.
+**Decisão de produto registrada em 31/10/2026:** aplicar o limite a pedidos de
+diagnóstico, prescrição ou parecer jurídico individual sobre o caso. Perguntas
+gerais sobre direitos permanecem elegíveis para o fluxo informativo com fontes.
+Usar o texto do wireframe; exemplos limítrofes e gatilhos de identificação
+precisam de revisão jurídica, clínica e de produto.
 
 ### Etapa 4 — Informar localização para encontrar serviços
 
@@ -361,12 +390,18 @@ encaminhamento.
 - Se não quiser informar a localização, a usuária deve poder voltar à conversa
   ou acessar canais gerais sem ser bloqueada.
 
-**[GAP]** Não está especificado o que mostrar se a localização não for
-informada, for ambígua, não estiver no catálogo ou não tiver serviço válido.
+**Regra vigente:** a localização é informada manualmente pela usuária e é
+opcional. Não pedir permissão nem obter geolocalização do dispositivo. Em
+31/10/2026, foi solicitado avaliar futuramente a localização automática com
+confirmação em modal; a solicitação conflita com RF/RNF e wireframe e está
+bloqueada para revisão de produto e de privacidade/segurança. Até aprovação
+formal e atualização das fontes, não implementar localização automática.
 
-**[SUGESTÃO — validar]** Para localização vazia ou sem resultado local, manter
-os contatos nacionais disponíveis e explicar que não foi possível confirmar
-opções locais; oferecer **Tentar outra cidade** e **Voltar à conversa**.
+**[GAP]** A mensagem e as ações para localização vazia, ambígua, fora do
+catálogo ou sem serviço local válido ainda precisam de decisão de produto.
+Como proposta a validar, manter canais nacionais, explicar que não foi possível
+confirmar opções locais e oferecer **Tentar outra cidade** e **Voltar à
+conversa**.
 
 ### Etapa 5 — Ver opções de encaminhamento
 
@@ -420,7 +455,12 @@ vencido de aparecer como sugestão prioritária.
 
 **[SUGESTÃO — validar]** Mostrar uma mensagem de ausência sem culpar a usuária,
 manter canais nacionais e fornecer **Voltar à conversa**. Definir o texto
-exato com produto e especialistas.
+exato com produto e especialistas. Conforme CA-05, registro com mais de 180
+dias sem verificação não deve aparecer como sugestão prioritária e só pode ser
+mostrado com aviso explícito; serviços de emergência devem ter verificação nos
+últimos 30 dias, e a meta geral é ao menos 95% dos registros ativos verificados
+nos últimos 90 dias. Dados simulados no protótipo não comprovam que um contato
+esteja vigente ou acessível.
 
 ## 6. Retornar, retomar, pausar e finalizar
 
@@ -441,7 +481,9 @@ exato com produto e especialistas.
 nas telas internas, sem criar um botão que restaure uma sessão já encerrada. No
 modo logado, definir uma lista de conversas com ação **Continuar** e
 **Excluir**, protegida por autenticação; esses rótulos são propostas, não
-textos aprovados.
+textos aprovados. Os detalhes dessas jornadas serão definidos quando as tarefas
+correspondentes do plano forem iniciadas; elas não bloqueiam as ações
+independentes nem o fluxo anônimo.
 
 ## 7. Jornadas opcionais e futuras do backlog
 
@@ -532,33 +574,50 @@ ser confirmadas como texto de produto. Frases com colchetes são placeholders.
 | Emergência | **Você pode estar em perigo agora.** | Título do wireframe |
 | Emergência | **Se puder, ligue para um destes números. As ligações são gratuitas e funcionam mesmo sem internet.** | Texto do wireframe; confirmar informação e adequação com especialistas |
 | Emergência | **O Aurora não liga para ninguém por você. Você decide se e quando ligar.** | Aviso do wireframe |
-| Resposta | **Toda resposta mostra de onde veio a informação. Se não houver fonte confiável, o Aurora diz que não sabe.** | Aviso do wireframe |
+| Resposta | **Toda resposta mostra de onde veio a informação. Se não houver fonte confiável, o Aurora diz que não sabe.** | Aviso do wireframe; mocks só podem usar fontes reais identificáveis e aprovadas, com indicação de demonstração |
 | Guardrail | **Fora do que eu posso fazer** | Título do wireframe |
 | Guardrail | **Não posso dar um diagnóstico nem um parecer sobre o seu caso. Isso precisa de uma profissional que te escute com calma.** | Texto do wireframe |
 | Encaminhamento | **Onde buscar ajuda em [Cidade / UF]** | Título com campo dinâmico |
 | Encaminhamento | **Até 3 opções, do serviço público à sociedade civil. Você escolhe se, quando e qual procurar.** | Introdução do wireframe |
-| Sessão | **Nada desta conversa fica salvo. Ao fechar a página ou usar a Saída rápida, tudo é apagado.** | Wireframe; validar redação para não prometer apagar rastros externos |
+| Sessão | Texto de privacidade registrado na seção 3.1 | Aprovado pela usuária para o protótipo; sujeito a revisão de privacidade/LGPD; substitui a promessa absoluta do wireframe |
 
-## 9. Gaps prioritários para decisão
+## 9. Decisões registradas e pendências
 
-1. **Saída Rápida:** qual página neutra será usada, o que exatamente é apagado
-   pela aplicação e qual é o comportamento ao pressionar Esc durante edição?
-2. **Retorno e retomada:** quais retornos mantêm conversa em memória; o que é
-   retomável apenas com conta; como evitar sugerir que uma sessão anônima fechada
-   pode ser recuperada?
-3. **Triagem:** quais perguntas e respostas aparecem, em que ordem, quando
-   interromper e quais canais são destacados para cada sinal?
-4. **Ausência de serviço local:** que mensagem e alternativas apresentar se
-   a cidade não tiver opção verificada?
-5. **Textos de privacidade:** como explicar de forma correta a sessão volátil
-   sem prometer apagar histórico do navegador ou do dispositivo?
-6. **Conta e dados:** como funcionam cadastro, login, recuperação, migração,
-   exclusão e erros associados?
-7. **Conteúdo e diário:** quais são os avisos antes de salvar, anexar ou
-   exportar conteúdos sensíveis?
-8. **Diferença entre documentos e implementação:** validar o aviso de protótipo
-   atualmente mostrado na tela inicial versus o texto de acesso anônimo do
-   wireframe.
+As decisões de produto e seus responsáveis de validação estão consolidados no
+[J-00 do plano de implementação](./plano-implementacao-jornada-usuario.md).
+Permanecem as seguintes pendências:
+
+1. **Saída Rápida:** destino `/organizador` e tecla Esc imediata foram definidos.
+   Ainda falta aprovar o conteúdo neutro da página e revisar segurança antes de
+   implementar.
+2. **Retorno e retomada:** preservar a sessão enquanto aberta está definido;
+   telas e regras para histórico de conta são futuras e serão detalhadas em
+   L-01/L-02.
+3. **Triagem:** sinais, precedência e comportamento de incerteza foram
+   registrados. Perguntas, texto de incerteza, casos e destaque por canal
+   precisam de validação de saúde mental e rede de proteção antes de uso real.
+4. **Ausência de serviço local:** texto e alternativas para cidade vazia,
+   ambígua, indisponível ou sem contatos verificados aguardam decisão de
+   produto. Não apresentar registros desatualizados como prioritários.
+5. **Localização:** a entrada manual opcional continua sendo a regra vigente.
+   A proposta de obter localização do dispositivo e confirmá-la em modal foi
+   bloqueada para revisão de produto e de privacidade/segurança; não implementar
+   nem solicitar permissão até atualização formal das fontes.
+6. **Privacidade:** o aviso de sessão foi aprovado para o protótipo; revisão de
+   privacidade/LGPD continua pendente. Definir também o destino visual do link
+   **Privacidade**.
+7. **Conta, questionário, módulos, diário e plano de segurança:** campos,
+   validações, perguntas, estados e avisos serão definidos quando cada tarefa
+   futura for priorizada e submetida às revisões pertinentes.
+8. **Fontes e conteúdo:** usar somente fontes reais identificáveis e aprovadas;
+   fixtures devem ser marcadas como demonstração. Curadoria de conteúdo de
+   risco, direitos e encaminhamento ainda é necessária.
+9. **Rastreabilidade:** os PDFs de requisitos e de solução tecnológica não
+   puderam ser extraídos nesta resolução; confirmar se acrescentam requisitos
+   antes de fechar a rastreabilidade.
+10. **Implementação atual:** substituir o aviso de protótipo da tela inicial
+    pelo texto aprovado somente quando a tarefa de implementação correspondente
+    for iniciada e após revisão de privacidade.
 
 ## 10. Referências e rastreabilidade
 
@@ -575,8 +634,9 @@ ser confirmadas como texto de produto. Frases com colchetes são placeholders.
   Aurora pretende atender.
 - `docs/Requisitos Aurora.pdf` e
   `docs/Solução Tecnológica para Vítimas de Abuso.pdf`: documentos de referência
-  indicados para o projeto. Confirmar durante a revisão se há requisitos
-  adicionais neles que não estejam refletidos nos documentos Markdown.
+  indicados para o projeto. Não foi possível extrair/revisar o conteúdo desses
+  PDFs nesta resolução do J-00; requisitos adicionais devem ser verificados
+  antes de fechar a rastreabilidade.
 - `src/frontend/src/wireframe/Aurora — Wireframe.html`: telas de início,
   conversa, risco agudo, informação com fonte, limite/guardrail, indicação
   priorizada, Saída Rápida e guia de estilo.
@@ -588,13 +648,17 @@ ser confirmadas como texto de produto. Frases com colchetes são placeholders.
 
 ## 11. Validação pendente
 
-Este documento está em **rascunho**. Validar:
+A usuária aprovou esta jornada em revisão anterior e as decisões de produto
+acima foram atualizadas em 31/10/2026. A validação profissional ainda precisa
+cobrir:
 
-- a ordem das ações independentes;
-- os percursos de risco agudo, resposta com fonte, guardrail e encaminhamento;
-- os textos, campos e nomes de ações;
-- as propostas marcadas **SUGESTÃO — validar**;
-- a separação entre modo anônimo, modo logado e funcionalidades futuras.
+- o conteúdo da página neutra e os limites da Saída Rápida;
+- triagem, canais por situação, classificação indeterminada e mensagens;
+- textos de privacidade e tratamento de localização;
+- fontes e conteúdos demonstrativos de risco, direitos e encaminhamento;
+- exemplos de pedidos fora do escopo e casos limítrofes;
+- acessibilidade e linguagem simples dos fluxos.
 
-Após revisão, registrar as alterações aprovadas e atualizar o status do
-documento. Não tratar uma sugestão como requisito aprovado sem essa confirmação.
+Não tratar uma sugestão como requisito aprovado sem validação e registro. A
+aprovação da usuária não substitui a revisão por profissionais de saúde mental,
+direito, rede de proteção, privacidade/LGPD, segurança e acessibilidade.

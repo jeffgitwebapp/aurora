@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** plano inicial; nenhuma tarefa deste plano foi concluída
+**Status:** J-00 concluído como preparação documental; as tarefas de implementação ainda não foram iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a mocks
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -84,22 +84,38 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 
 ### J-00 — Resolver decisões e lacunas que bloqueiam comportamento seguro
 
-**Estado:** Não iniciada
+**Estado:** Concluída — decisões e pendências documentadas; tarefas dependentes bloqueadas conforme necessário
 **Tipo:** preparação funcional e validação humana
 **Objetivo:** registrar decisões de produto e de domínio necessárias para que o protótipo não invente regras sensíveis.
 
-**Decisões mínimas a registrar antes dos fluxos correspondentes:**
+**Decisões e encaminhamentos registrados em 31/10/2026:**
 
-1. Validar o status da jornada-base, atualmente marcada como rascunho, e aprovar ou corrigir textos e comportamentos.
-2. Definir o destino/conteúdo neutro da Saída Rápida e a regra da tecla Esc em campos e diálogos.
-3. Aprovar o texto de privacidade da sessão e conciliar as promessas do wireframe com os limites reais do navegador.
-4. Confirmar os sinais, precedência, comportamento de incerteza e canais a destacar na triagem. Não inventar perguntas, limiares ou pontuação.
-5. Definir como identificar pedidos fora do escopo sem bloquear pedidos gerais de informação jurídica.
-6. Aprovar fontes e conteúdo demonstrativo citável; placeholders do wireframe não são fontes reais.
-7. Definir fallback para cidade vazia/ambígua, ausência de serviço e contato desatualizado.
-8. Especificar campos, validações e estados ainda ausentes de cadastro, migração, exclusão, questionário, módulos, diário e plano de segurança, quando cada fluxo for priorizado.
+| Decisão | Resultado atual | Estado / responsável pela próxima validação |
+|---|---|---|
+| Jornada-base | A usuária já aprovou a jornada em revisão anterior. Textos e fluxos sensíveis continuam sujeitos a revisão profissional. | Aprovada pela usuária; profissionais de saúde mental, direito, proteção e acessibilidade devem revisar o conteúdo antes de uso real |
+| Saída Rápida | Usar página estática neutra da própria aplicação no caminho `/organizador`. A tecla Esc aciona a saída imediatamente, sem confirmação, em qualquer tela, inclusive com foco em campo. | Decisão de produto registrada; responsável de produto deve aprovar o conteúdo neutro; segurança deve revisar ameaças e limites antes da implementação |
+| Privacidade da sessão | Texto aprovado para o protótipo: “Esta conversa fica na memória enquanto esta página está aberta. Ao usar a Saída Rápida ou encerrar a página, o Aurora descarta o conteúdo da sessão que mantém. Isso não apaga possíveis registros do navegador, dispositivo, rede ou terceiros.” | Aprovado pela usuária; profissional de privacidade/LGPD deve revisar a redação antes de uso real |
+| Triagem de risco agudo | Sinais documentados: ideação suicida, agressão em curso, ameaça de morte e presença de arma. Sinal agudo interrompe o fluxo informativo antes de qualquer geração por LLM. Na classificação indeterminada, não afirmar ausência de risco; mostrar estado de incerteza e canais gerais, sem resposta informativa até escolha explícita da usuária. Destacar canais conforme E5-US1/2: 190 para morte iminente/agressão em curso; 192 quando houver lesão ou risco de ato iminente; 188 para crise emocional/ideação; 180 permanece disponível como canal de orientação. | Política de produto registrada; profissionais da rede de proteção e saúde mental devem aprovar critérios, mapeamento e mensagem antes de uso real |
+| Limite de escopo | Aplicar o texto do wireframe a pedidos de diagnóstico/prescrição ou parecer jurídico individual; perguntas gerais sobre direitos permanecem no fluxo informativo. | Decisão de produto registrada; profissionais de direito e saúde mental devem revisar exemplos limítrofes |
+| Fontes e mocks de conteúdo | Usar somente fontes reais identificáveis e aprovadas. Mocks devem estar rotulados como demonstração; não inventar citações nem afirmações factuais. Conteúdo sensível não aprovado não deve ser exibido como resposta real. | Política registrada; curadoria/produto e especialistas do domínio devem aprovar cada fixture |
+| Localização e catálogo | A solicitação da usuária para obter localização do dispositivo e confirmá-la em modal conflita com RF/RNF e wireframe, que preveem município/UF informado voluntariamente, sem geolocalização nem pedido de permissão. Até uma decisão formal, prevalece a especificação vigente: campo manual opcional, sem geolocalização. | Solicitação de mudança bloqueada para revisão de produto; privacidade/segurança devem avaliar qualquer proposta de alteração. Fallback de cidade vazia/ambígua continua pendente de produto |
+| Frescor do catálogo | Regras existentes: meta de ≥95% dos registros ativos verificados nos últimos 90 dias; serviços de emergência 100% revistos nos últimos 30 dias; registros com mais de 180 dias sem verificação não podem aparecer como sugestão prioritária e só podem aparecer com aviso explícito. | Definido pelas métricas CA-05; responsável pelo catálogo/rede de serviços deve verificar os contatos |
+| Jornadas futuras | Especificar campos, validações e estados ao iniciar cada tarefa correspondente; manter cada fluxo bloqueado até decisões de produto e revisão de domínio aplicáveis. | Decisão de processo registrada; responsável de produto e especialistas relevantes em cada tarefa L-01 a L-05 e I-05 |
 
-**Critério de aceite:** cada decisão tem responsável/revisor, estado (pendente/aprovada), texto ou regra aprovada e referência. Onde a decisão não estiver pronta, a tarefa de implementação dependente fica **Bloqueada** ou usa somente um mock explicitamente marcado, sem alegar que o comportamento é validado.
+**Critério de aceite:** concluído como preparação documental após confirmação final da usuária; decisões, estados, responsáveis por validação e dependências estão registrados. Pendências especializadas não foram declaradas como aprovadas. Não solicitar geolocalização nem implementar o modal de localização até que a política seja revista, aprovada e os requisitos pertinentes sejam atualizados. Tarefas dependentes dessas pendências permanecem **Bloqueadas** ou usam somente mocks claramente identificados, sem alegar que o comportamento é validado.
+
+**Impacto nas dependências:**
+
+| Tarefa dependente | Estado após J-00 | Motivo |
+|---|---|---|
+| I-02 — Saída Rápida | Bloqueada até aprovação de conteúdo da página neutra e revisão de segurança | O caminho `/organizador` e a tecla Esc foram escolhidos, mas o conteúdo neutro e a análise de segurança não foram validados |
+| C-02/C-03 — Triagem e risco agudo | Bloqueadas para uso real até revisão da rede de proteção e saúde mental | A política foi registrada, mas casos, destaque dos canais e texto de incerteza exigem validação especializada |
+| C-04 — Resposta com fontes | Bloqueada para conteúdo real até curadoria/aprovação de fontes e fixtures | Não há autorização para inventar fontes ou afirmações sensíveis |
+| C-05 — Limite de escopo | Bloqueada para casos limítrofes até revisão jurídica e clínica | A distinção geral foi definida; exemplos e gatilhos ainda precisam de revisão |
+| C-06 — Localização/encaminhamento | Bloqueada até decisão de produto sobre localização e fallback | A proposta de geolocalização está em revisão; permanece vigente a entrada manual opcional |
+| I-03/I-04 — Início e privacidade | Podem avançar com o texto registrado, sujeitos à revisão de privacidade antes de uso real | Aviso aprovado para o protótipo, mas revisão LGPD continua pendente |
+| I-01 — Telefones de emergência | Pode avançar com destinos e números documentados; verificar os contatos antes de publicação | O protótipo não valida disponibilidade ou atendimento real |
+| I-05/L-01 a L-05 — Jornadas futuras | Aguardam detalhamento ao iniciar cada tarefa | Perguntas, campos, validações e estados ainda não foram aprovados |
 
 **Skills:** [Análise de requisitos, backlog e rastreabilidade](../../skills/analise-requisitos-backlog-rastreabilidade.md), [Jornada do usuário e especificação de usabilidade](../../skills/jornada-usuario.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md).
 
@@ -246,10 +262,12 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 
 **Prioridade:** P1
 **Estado:** Não iniciada
-**Dependências:** C-04, J-00, I-01
+**Dependências:** C-04, J-00 (política de localização e fallback aprovados), I-01
 **Jornada-base:** informar Cidade/UF e ver até três opções priorizadas.
 
 **Escopo:** aceitar município/UF informado voluntariamente; consultar catálogo mockado; apresentar cartões no formato do wireframe e retorno à conversa. Não solicitar geolocalização precisa, não encaminhar o relato e não apresentar fixture como contato real/verificado.
+
+**Bloqueio atual:** a usuária solicitou revisar a obtenção automática da localização do dispositivo e sua confirmação por modal. Esse comportamento não está aprovado e conflita com a especificação vigente de localização manual opcional. Não solicitar permissão nem obter coordenadas até a decisão de produto e a revisão de privacidade/segurança; enquanto isso, C-06 não pode ser implementada.
 
 **Critérios de aceite:** localização pode ser omitida sem bloquear canais gerais; resultados simulados mostram indicação de protótipo; lista tem no máximo três itens e segue a ordem definida pelo requisito/matriz aprovada; cidade sem resultado, ambígua, indisponibilidade e contato desatualizado têm estados definidos; retorno preserva conversa em memória.
 
