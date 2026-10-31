@@ -57,7 +57,9 @@ export function EmergencyContacts({
       }
       tabIndex={-1}
     >
-      {!compact && <p className="emergency-card__eyebrow">Ajuda por telefone</p>}
+      {!compact && variant !== "risk" && (
+        <p className="emergency-card__eyebrow">Ajuda por telefone</p>
+      )}
       <h2
         className="emergency-card__title"
         id={
@@ -71,17 +73,6 @@ export function EmergencyContacts({
       >
         {variant === "risk" ? "Canais de apoio" : "Em perigo agora?"}
       </h2>
-      {variant === "risk" && (
-        <>
-          <p className="emergency-card__hint">
-            Os canais abaixo são opções. Escolha se e quando deseja ligar.
-          </p>
-          <p className="emergency-card__hint">
-            190: polícia; 192: urgência médica; 180: orientação para mulheres;
-            188: apoio emocional.
-          </p>
-        </>
-      )}
       <ul className="emergency-card__list">
         {contacts.map(({ label, number, priority }) => (
           <li key={number}>
@@ -90,13 +81,14 @@ export function EmergencyContacts({
               href={`tel:${number}`}
               aria-label={`Ligar para ${label}, ${number}${priority ? ", canal destacado" : ""}`}
             >
+              {variant === "risk" && <strong>{number}</strong>}
               <span>
                 {label}
                 {priority && (
                   <strong className="emergency-card__priority">Prioritário</strong>
                 )}
               </span>
-              <strong>{number}</strong>
+              {variant !== "risk" && <strong>{number}</strong>}
             </a>
           </li>
         ))}

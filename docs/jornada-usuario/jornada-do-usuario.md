@@ -367,7 +367,9 @@ possível avaliar a mensagem, esclarece que isso não significa ausência de ris
 e oferece os canais de apoio sem gerar resposta informativa. Outros textos que
 não correspondem às frases de risco ou à fixture incerta seguem o fluxo
 normal. Ambos os modais preservam **Voltar à conversa** e **Saída rápida
-(Esc)**.
+(Esc)**. O conteúdo deve caber sem rolagem em uma viewport usual; em telas
+baixas, com zoom ou fontes ampliadas, a rolagem permanece disponível para não
+cortar informações ou ações.
 
 **Padrão para mensagens e avisos:** os estados de erro, orientação e aviso que
 não exigem interrupção da conversa devem ser apresentados no fluxo ou em tela

@@ -233,8 +233,8 @@ export function ChatPage({
               O Aurora não liga para ninguém por você. Você decide se e quando ligar.
             </p>
             <p className="risk-screen__demo" role="note">
-              Demonstração do protótipo: a triagem usa frases de teste e não avalia
-              situações reais.
+              Demonstração: a triagem usa frases de teste e não avalia situações
+              reais.
             </p>
           </div>
           <div className="risk-screen__actions">
