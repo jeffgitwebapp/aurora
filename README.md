@@ -13,7 +13,7 @@ O projeto segue os princípios de monólito modular, Bounded Context (DDD Estrat
 
 - **Bounded Context:** `Conversa` (`contexts/conversation`).
 - **Vertical Slice:** `EnviarMensagem` (`features/send_message`), concentrando rotas, validação e lógica da funcionalidade.
-- **Frontend Modular:** Separação entre composição (`app/App.tsx`), regras e estado de tela (`features/chat/ChatPage.tsx`), cliente de API (`api/chatApi.ts`) e componentes de apresentação desacoplados.
+- **Frontend Modular:** cada pasta de `features/` é uma fatia vertical independente e importa apenas `shared/` e o próprio código. Telas e estado usados por mais de uma feature ficam em `shared/`. A navegação entre features passa por `shared/redirectsManagement` (`redirect("account")`, `redirect("referral")`, `redirect("quickExit")`…), sem a feature de origem conhecer a de destino. `app/App.tsx` é a raiz de composição: o único lugar que liga cada destino ao componente que o atende.
 
 ### Estrutura do Repositório
 
@@ -27,6 +27,8 @@ aurora/
 │   ├── backlog-aurora.md               # Backlog de épicos (E1 a E13)
 │   ├── c4-aurora-mvp.drawio            # Modelagem arquitetural C4
 │   └── requisitos-aurora.md            # Requisitos Funcionais e Não-Funcionais (ISO 25010)
+├── skills/                             # Competências necessárias e especificações por skill
+│   └── lista_skills.md                 # Índice das skills por fase do projeto
 ├── src/                                # Código-fonte da aplicação
 │   ├── .gitignore
 │   ├── backend/                        # FastAPI + uv (Python 3.12+)
@@ -40,7 +42,7 @@ aurora/
 │   │   │               └── send_message/ # Vertical Slice: EnviarMensagem
 │   │   │                   ├── router.py   # Adaptador de entrada HTTP
 │   │   │                   ├── schemas.py  # Contratos Pydantic de entrada e saída
-│   │   │                   └── handler.py  # Lógica de negócio / resposta fixa
+│   │   │                   └── handler.py  # Lógica de negócio / texto simulado
 │   │   └── tests/
 │   │       └── test_send_message.py    # Suíte de testes automatizados
 │   └── frontend/                       # React 19 + TypeScript + Vite
@@ -52,19 +54,40 @@ aurora/
 │       └── src/
 │           ├── main.tsx                # Ponto de entrada React
 │           ├── app/
-│           │   └── App.tsx             # Composição da aplicação
-│           ├── features/
-│           │   └── chat/               # Módulo da feature de chat
-│           │       ├── ChatPage.tsx    # Gerenciamento de estado efêmero e fluxo
-│           │       ├── types.ts        # Tipos de domínio e UI da feature
-│           │       ├── api/
-│           │       │   └── chatApi.ts  # Cliente HTTP REST
-│           │       └── components/
-│           │           ├── MessageList.tsx # Exibição acessível das mensagens
-│           │           └── MessageComposer.tsx # Entrada e disparo de mensagem
+│           │   └── App.tsx             # Raiz de composição: providers, painéis e seções por destino
+│           ├── shared/                 # Usado por várias features; nunca importa features/
+│           │   ├── components/         # EmergencyContacts e RiskScreen (modal de risco)
+│           │   ├── session/            # Sessão da conta, cliente autenticado e AccountForm
+│           │   ├── transcript/         # Cópia somente leitura da conversa aberta
+│           │   └── redirectsManagement/ # Destinos (páginas, painéis, Saída Rápida) e redirect()
+│           ├── features/               # Cada feature importa só shared/ e o próprio código
+│           │   ├── welcome/            # Tela inicial
+│           │   ├── chat/               # Conversa, triagem, fontes e limite de escopo
+│           │   ├── referral/           # Onde buscar ajuda (localização e catálogo)
+│           │   ├── questionnaire/      # Questionário
+│           │   ├── account/            # Minha conta, conversas salvas e exclusão
+│           │   ├── learning/           # Módulos e progresso
+│           │   ├── journal/            # Diário
+│           │   ├── safety/             # Guia e plano de segurança
+│           │   └── recipes/            # Página neutra da Saída Rápida
 │           └── styles.css              # Estilos acessíveis e responsivos
 └── LICENSE                             # Licença do projeto
 ```
+
+### Competências necessárias para desenvolver o Aurora
+
+O Aurora requer competências de produto, engenharia e domínio especializado. As principais áreas são:
+
+- **Base do MVP:** análise de requisitos e rastreabilidade; jornada e usabilidade; arquitetura e integração ponta a ponta; desenvolvimento de APIs com Python/FastAPI e frontend React/TypeScript.
+- **Segurança e responsabilidade:** domínio de violência psicológica e design informado por trauma; privacidade/LGPD; segurança de aplicação; triagem determinística de risco agudo; acessibilidade e linguagem simples.
+- **Informação e encaminhamento:** curadoria de conteúdo e RAG; integração de LLM e engenharia de prompts; guardrails e avaliação generativa; catálogo de serviços e motor de encaminhamento.
+- **Entrega e qualidade:** testes e fitness functions; DevOps, AWS, CI/CD e operação.
+- **Evolução do produto:** autenticação e área logada; persistência, criptografia e diário; gestão de conteúdo; integrações externas; conteúdo multimídia acessível; observabilidade e desempenho.
+
+Consulte o [índice de skills](./skills/lista_skills.md) para a relação completa, organizada por fase, e as especificações individuais de cada competência. O [plano de implementação da jornada](./docs/jornada-usuario/plano-implementacao-jornada-usuario.md) também indica quais skills consultar em cada tarefa.
+
+> [!NOTE]
+> Este inventário é um mapa de conhecimentos necessários para orientar o desenvolvimento; não significa que essas competências ou funcionalidades já estejam implementadas, nem que todas sejam necessárias em cada alteração. A especificação correspondente deve ser consultada conforme a tarefa. Skills técnicas não substituem validação humana especializada em saúde mental, direito, rede de proteção, privacidade, segurança e acessibilidade, especialmente antes de qualquer piloto com usuárias reais. O protótipo atual não é seguro nem funcional para esse uso.
 
 ---
 
@@ -181,7 +204,7 @@ O workflow [deploy.yml](./.github/workflows/deploy.yml) testa o backend e compil
 - Instale e inicie Docker Engine e o plugin Docker Compose v2.
 - Configure o Security Group para permitir HTTP TCP `80` de acordo com o público desejado. Restrinja SSH TCP `22`; runners hospedados pelo GitHub usam faixas de IP variáveis, então não abra SSH para `0.0.0.0/0` apenas para habilitar o deploy.
 - O usuário `ec2-user` precisa conseguir executar Docker por `sudo`.
-- O deploy publica HTTP sem TLS na porta 80. Antes de usar um domínio ou dados reais, configure HTTPS e revise os limites de segurança do protótipo. A API atual retorna uma resposta fixa e não é um serviço de atendimento.
+- O deploy publica HTTP sem TLS na porta 80. Antes de usar um domínio ou dados reais, configure HTTPS e revise os limites de segurança do protótipo. A API atual retorna texto aleatório precedido de um aviso, sem analisar a mensagem; não é aconselhamento nem um serviço de atendimento.
 
 #### Cadastrar secrets no GitHub
 
