@@ -1,155 +1,81 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, type ComponentType } from "react";
 
-import { AccountPage } from "../features/account/AccountPage";
-import { logout, type AccountSession } from "../features/account/api/accountApi";
+import { AccountPage, type AccountSection } from "../features/account/AccountPage";
+import { SaveConversationPanel } from "../features/account/SaveConversationPanel";
 import { ChatPage } from "../features/chat/ChatPage";
-import {
-  getRandomRecipe,
-  RecipesPage,
-  type Recipe,
-} from "../features/recipes/RecipesPage";
+import { JournalArea } from "../features/journal/JournalArea";
+import { LearningArea } from "../features/learning/LearningArea";
+import { QuestionnairePanel } from "../features/questionnaire/QuestionnairePanel";
+import { getRandomRecipe, RecipesPage, type Recipe } from "../features/recipes/RecipesPage";
+import { ReferralPanel } from "../features/referral/ReferralPanel";
+import { SafetyGuide } from "../features/safety/SafetyGuide";
+import { SafetyGuidePanel } from "../features/safety/SafetyGuidePanel";
 import { WelcomePage } from "../features/welcome/WelcomePage";
+import {
+  RedirectsProvider,
+  useRedirects,
+} from "../shared/redirectsManagement/RedirectsProvider";
+import type { PanelTarget } from "../shared/redirectsManagement/targets";
+import { SessionProvider } from "../shared/session/SessionProvider";
+import { TranscriptProvider } from "../shared/transcript/TranscriptProvider";
 
-function isConversationPath() {
-  return window.location.pathname === "/conversa";
-}
+/**
+ * Raiz de composição: único lugar que conhece todas as features e liga cada
+ * destino do redirectsManagement ao componente que o atende.
+ */
+const CONVERSATION_PANELS: Record<PanelTarget, ComponentType> = {
+  referral: ReferralPanel,
+  questionnaire: QuestionnairePanel,
+  saveConversation: SaveConversationPanel,
+  safetyGuide: SafetyGuidePanel,
+};
 
-function isAccountPath() {
-  return window.location.pathname === "/conta";
-}
+const ACCOUNT_SECTIONS: readonly AccountSection[] = [
+  { title: "Módulos", Component: LearningArea },
+  { title: "Diário", Component: JournalArea },
+  { title: "Guia de segurança", Component: SafetyGuide },
+];
 
-function isRecipesPath() {
-  return window.location.pathname === "/receitas";
-}
+const PAGE_TITLES = {
+  welcome: "Aurora — protótipo local",
+  conversation: "Notas",
+  account: "Conta — Aurora",
+  recipes: "Receitas",
+} as const;
 
 export function App() {
-  const [isConversationOpen, setIsConversationOpen] = useState(isConversationPath);
-  const [isRecipesPage, setIsRecipesPage] = useState(isRecipesPath);
-  const [isAccountPage, setIsAccountPage] = useState(isAccountPath);
-  // Sessão da área logada só na memória da página: recarregar ou sair a encerra.
-  const [accountSession, setAccountSession] = useState<AccountSession | null>(null);
-  const accountSessionRef = useRef<AccountSession | null>(null);
-  accountSessionRef.current = accountSession;
-  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(() =>
-    isRecipesPath() ? getRandomRecipe() : null,
+  return (
+    <SessionProvider>
+      <TranscriptProvider>
+        <RedirectsProvider panels={CONVERSATION_PANELS}>
+          <CurrentPage />
+        </RedirectsProvider>
+      </TranscriptProvider>
+    </SessionProvider>
   );
-  const [initialMessage, setInitialMessage] = useState("");
-  const [sendInitialMessage, setSendInitialMessage] = useState(false);
+}
+
+function CurrentPage() {
+  const { page, quickExitCount, redirect } = useRedirects();
+  const lastRecipe = useRef<Recipe | null>(null);
+  // Cada Saída Rápida mostra uma receita diferente da anterior.
+  const recipe = useMemo(() => getRandomRecipe(lastRecipe.current?.id), [quickExitCount]);
+  lastRecipe.current = recipe;
 
   useEffect(() => {
-    const handlePopState = () => {
-      setIsConversationOpen(isConversationPath());
-      setIsAccountPage(isAccountPath());
-      const shouldShowRecipes = isRecipesPath();
-      setIsRecipesPage(shouldShowRecipes);
-      if (shouldShowRecipes) {
-        setSelectedRecipe((previous) => getRandomRecipe(previous?.id));
-      }
-      setInitialMessage("");
-      setSendInitialMessage(false);
-    };
-
-    const handleQuickExit = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        window.dispatchEvent(new Event("aurora:quick-exit"));
-        endAccountSession();
-        setIsAccountPage(false);
-        window.history.replaceState(null, "", "/receitas");
-        setSelectedRecipe((previous) => getRandomRecipe(previous?.id));
-        setInitialMessage("");
-        setSendInitialMessage(false);
-        setIsConversationOpen(false);
-        setIsRecipesPage(true);
-      }
-    };
-
-    const endAccountSession = () => {
-      if (accountSessionRef.current) {
-        logout(accountSessionRef.current.token);
-      }
-      setAccountSession(null);
-    };
-
-    window.addEventListener("popstate", handlePopState);
-    window.addEventListener("keydown", handleQuickExit);
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-      window.removeEventListener("keydown", handleQuickExit);
-    };
-  }, []);
-
-  const openConversation = (message: string, sendImmediately = false) => {
-    window.history.replaceState(null, "", "/conversa");
-    setInitialMessage(message);
-    setSendInitialMessage(sendImmediately);
-    setIsAccountPage(false);
-    setIsConversationOpen(true);
-  };
-
-  const openAccount = () => {
-    window.history.replaceState(null, "", "/conta");
-    setIsConversationOpen(false);
-    setIsAccountPage(true);
-  };
-
-  const openWelcome = () => {
-    window.history.replaceState(null, "", "/");
-    setIsAccountPage(false);
-  };
-
-  const handleQuickExit = () => {
-    window.dispatchEvent(new Event("aurora:quick-exit"));
-    if (accountSession) {
-      logout(accountSession.token);
-    }
-    setAccountSession(null);
-    setIsAccountPage(false);
-    window.history.replaceState(null, "", "/receitas");
-    setSelectedRecipe((previous) => getRandomRecipe(previous?.id));
-    setInitialMessage("");
-    setSendInitialMessage(false);
-    setIsConversationOpen(false);
-    setIsRecipesPage(true);
-  };
-
-  useEffect(() => {
-    document.title = isRecipesPage
-      ? "Receitas"
-      : isConversationOpen
-        ? "Notas"
-        : isAccountPage
-          ? "Conta — Aurora"
-          : "Aurora — protótipo local";
-    document.body.classList.toggle("conversation-mode", isConversationOpen);
-
+    document.title = PAGE_TITLES[page];
+    document.body.classList.toggle("conversation-mode", page === "conversation");
     return () => document.body.classList.remove("conversation-mode");
-  }, [isConversationOpen, isRecipesPage, isAccountPage]);
+  }, [page]);
 
-  if (isRecipesPage) {
-    return selectedRecipe ? <RecipesPage recipe={selectedRecipe} /> : null;
+  if (page === "recipes") {
+    return <RecipesPage recipe={recipe} />;
   }
-
-  if (isAccountPage && !isConversationOpen) {
-    return (
-      <AccountPage
-        session={accountSession}
-        onSessionChange={setAccountSession}
-        onOpenConversation={() => openConversation("")}
-        onBack={openWelcome}
-        onQuickExit={handleQuickExit}
-      />
-    );
+  if (page === "account") {
+    return <AccountPage sections={ACCOUNT_SECTIONS} />;
   }
-
-  if (!isConversationOpen) {
-    return (
-      <WelcomePage
-        onOpenConversation={openConversation}
-        onOpenAccount={openAccount}
-        isLoggedIn={accountSession !== null}
-        onQuickExit={handleQuickExit}
-      />
-    );
+  if (page === "welcome") {
+    return <WelcomePage />;
   }
 
   return (
@@ -165,21 +91,14 @@ export function App() {
           <button
             className="conversation-header__exit"
             type="button"
-            onClick={handleQuickExit}
+            onClick={() => redirect("quickExit")}
           >
             Saída rápida <span aria-hidden="true">(Esc)</span>
           </button>
         </nav>
       </header>
       <main className="app__main">
-        <ChatPage
-          initialMessage={initialMessage}
-          sendInitialMessage={sendInitialMessage}
-          accountSession={accountSession}
-          onAccountSessionChange={setAccountSession}
-          onOpenAccount={openAccount}
-          onQuickExit={handleQuickExit}
-        />
+        <ChatPage />
       </main>
     </div>
   );

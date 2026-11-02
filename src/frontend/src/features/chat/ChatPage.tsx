@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
-import type { AccountSession } from "../account/api/accountApi";
-import { SaveConversationPanel } from "../account/SaveConversationPanel";
-import { EmergencyContacts } from "../emergency/EmergencyContacts";
-import { SafetyGuidePanel } from "../safety/SafetyGuidePanel";
-import { QuestionnairePanel } from "../questionnaire/QuestionnairePanel";
-import { ReferralPanel } from "../referral/ReferralPanel";
+import {
+  EmergencyContacts,
+  type EmergencyNumber,
+} from "../../shared/components/EmergencyContacts";
+import { RiskScreen } from "../../shared/components/RiskScreen";
+import {
+  PanelOutlet,
+  useRedirects,
+} from "../../shared/redirectsManagement/RedirectsProvider";
+import { QUICK_EXIT_EVENT } from "../../shared/redirectsManagement/targets";
+import { useTranscript } from "../../shared/transcript/TranscriptProvider";
 import { sendMessage, ChatApiError } from "./api/chatApi";
 import type { TriageSignal, TriageStatus } from "./api/chatApi";
 import { MessageComposer } from "./components/MessageComposer";
@@ -20,40 +25,40 @@ const LAW_QUESTION = "O que é violência psicológica?";
 const SAFETY_GUIDE_OFFER =
   "Se quiser, há um guia de segurança na área logada, com canais de apoio e um espaço para seus contatos de confiança e anotações. É opcional: você decide se e quando abrir.";
 
-interface ChatPageProps {
-  initialMessage?: string;
-  sendInitialMessage?: boolean;
-  accountSession: AccountSession | null;
-  onAccountSessionChange: (session: AccountSession | null) => void;
-  onOpenAccount: () => void;
-  onQuickExit: () => void;
+/** Canal destacado por sinal de risco; regra provisória de produto (C-03). */
+function priorityNumbers(signals: TriageSignal[]): EmergencyNumber[] {
+  const numbers: EmergencyNumber[] = [];
+  if (
+    signals.some(
+      (signal) =>
+        signal === "ongoing_assault" || signal === "death_threat" || signal === "weapon_present",
+    )
+  ) {
+    numbers.push("190");
+  }
+  if (signals.includes("suicidal_ideation")) {
+    numbers.push("188");
+  }
+  return numbers;
 }
 
-export function ChatPage({
-  initialMessage = "",
-  sendInitialMessage = false,
-  accountSession,
-  onAccountSessionChange,
-  onOpenAccount,
-  onQuickExit,
-}: ChatPageProps) {
+export function ChatPage() {
+  const { entry, panel, redirect } = useRedirects();
+  const { setMessages: publishTranscript } = useTranscript();
+  const initialMessage = entry.message;
+  const sendInitialMessage = entry.sendImmediately;
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [retryMessage, setRetryMessage] = useState<string | null>(null);
-  const [panel, setPanel] = useState<"referral" | "questionnaire" | "save" | "guide" | null>(
-    null,
-  );
   const [riskScreen, setRiskScreen] = useState<{
     status: Exclude<TriageStatus, "no_acute_signal">;
     signals: TriageSignal[];
   } | null>(null);
-  const riskScreenRef = useRef<HTMLDialogElement | null>(null);
   const initialMessageSent = useRef(false);
   const nextMessageId = useRef(0);
   const activeRequest = useRef(false);
   const abortController = useRef<AbortController | null>(null);
-  const isAcuteRisk = riskScreen?.status === "acute";
 
   const requestReply = async (text: string) => {
     if (activeRequest.current) {
@@ -154,32 +159,6 @@ export function ChatPage({
     void handleSendMessage(LAW_QUESTION);
   };
 
-  const handleOpenContacts = () => {
-    const contacts = document.getElementById("emergency-contacts");
-    contacts?.scrollIntoView({ behavior: "smooth", block: "start" });
-    document.getElementById("emergency-title")?.focus({ preventScroll: true });
-  };
-
-  const handleOpenReferral = () => {
-    setPanel("referral");
-  };
-
-  const handleOpenQuestionnaire = () => {
-    setPanel("questionnaire");
-  };
-
-  const handleClosePanel = () => {
-    setPanel(null);
-    window.requestAnimationFrame(() => {
-      document.querySelector<HTMLElement>(".chat-page__conversation")?.focus();
-    });
-  };
-
-  const handleQuestionnaireEmergency = () => {
-    setPanel(null);
-    setRiskScreen({ status: "acute", signals: [] });
-  };
-
   const handleRetry = () => {
     if (retryMessage) {
       void requestReply(retryMessage);
@@ -196,14 +175,10 @@ export function ChatPage({
   };
 
   useEffect(() => {
-    if (riskScreen) {
-      const dialog = riskScreenRef.current;
-      if (dialog && !dialog.open) {
-        dialog.showModal();
-        dialog.focus();
-      }
-    }
-  }, [riskScreen]);
+    publishTranscript(messages.map(({ role, text }) => ({ role, text })));
+  }, [messages, publishTranscript]);
+
+  useEffect(() => () => publishTranscript([]), [publishTranscript]);
 
   useEffect(() => {
     if (sendInitialMessage && initialMessage && !initialMessageSent.current) {
@@ -220,44 +195,15 @@ export function ChatPage({
       setIsLoading(false);
     };
 
-    window.addEventListener("aurora:quick-exit", handleQuickExit);
-    return () => window.removeEventListener("aurora:quick-exit", handleQuickExit);
+    window.addEventListener(QUICK_EXIT_EVENT, handleQuickExit);
+    return () => window.removeEventListener(QUICK_EXIT_EVENT, handleQuickExit);
   }, []);
 
   return (
     <div className="chat-page">
       {panel !== null && (
         <div className="chat-page__referral">
-          {panel === "referral" && (
-            <ReferralPanel
-              onBack={handleClosePanel}
-              onOpenContacts={handleOpenContacts}
-              onQuickExit={onQuickExit}
-            />
-          )}
-          {panel === "questionnaire" && (
-            <QuestionnairePanel
-              onStop={handleClosePanel}
-              onEmergency={handleQuestionnaireEmergency}
-              onOpenReferral={handleOpenReferral}
-            />
-          )}
-          {panel === "guide" && (
-            <SafetyGuidePanel
-              session={accountSession}
-              onSessionChange={onAccountSessionChange}
-              onBack={handleClosePanel}
-            />
-          )}
-          {panel === "save" && (
-            <SaveConversationPanel
-              messages={messages.map(({ role, text }) => ({ role, text }))}
-              session={accountSession}
-              onSessionChange={onAccountSessionChange}
-              onBack={handleClosePanel}
-              onOpenAccount={onOpenAccount}
-            />
-          )}
+          <PanelOutlet />
         </div>
       )}
 
@@ -295,8 +241,8 @@ export function ChatPage({
           messages={messages}
           isLoading={isLoading}
           onAskLaw={handleAskLaw}
-          onOpenContacts={handleOpenContacts}
-          onOpenSafetyGuide={() => setPanel("guide")}
+          onOpenContacts={() => redirect("emergencyContacts")}
+          onOpenSafetyGuide={() => redirect("safetyGuide")}
         />
 
         <MessageComposer
@@ -312,21 +258,21 @@ export function ChatPage({
             <button
               type="button"
               className="chat-page__referral-button"
-              onClick={handleOpenReferral}
+              onClick={() => redirect("referral")}
             >
               Onde buscar ajuda
             </button>
             <button
               type="button"
               className="chat-page__questionnaire-button"
-              onClick={handleOpenQuestionnaire}
+              onClick={() => redirect("questionnaire")}
             >
               Responder questionário
             </button>
             <button
               type="button"
               className="chat-page__questionnaire-button"
-              onClick={() => setPanel("save")}
+              onClick={() => redirect("saveConversation")}
             >
               Salvar conversa na conta
             </button>
@@ -346,66 +292,12 @@ export function ChatPage({
         </p>
       </aside>
       {riskScreen && (
-        <dialog
-          ref={riskScreenRef}
-          className="risk-screen risk-screen--modal"
-          aria-labelledby="risk-screen-title"
-          aria-modal="true"
-          tabIndex={-1}
-          onCancel={(event) => event.preventDefault()}
-        >
-          <div className="risk-screen__content">
-            <p className="risk-screen__eyebrow">
-              {isAcuteRisk ? "Ajuda agora" : "Resultado incerto"}
-            </p>
-            <h1 id="risk-screen-title">
-              {isAcuteRisk
-                ? "Você pode estar em perigo agora."
-                : "Não foi possível avaliar esta mensagem."}
-            </h1>
-            <p className="risk-screen__intro">
-              {isAcuteRisk ? (
-                <>
-                  Se puder, ligue para um destes números. As ligações são
-                  gratuitas e funcionam mesmo sem internet.
-                </>
-              ) : (
-                <>
-                  Isso não significa que não exista risco. Se precisar, você
-                  pode escolher um dos canais de apoio abaixo. Nenhuma resposta
-                  informativa foi gerada.
-                </>
-              )}
-            </p>
-            <EmergencyContacts
-              variant="risk"
-              signals={isAcuteRisk ? riskScreen.signals : undefined}
-            />
-            <p className="risk-screen__note">
-              O Aurora não liga para ninguém por você. Você decide se e quando ligar.
-            </p>
-            <p className="risk-screen__demo" role="note">
-              Demonstração: a triagem usa frases de teste e não avalia situações
-              reais.
-            </p>
-          </div>
-          <div className="risk-screen__actions">
-            <button
-              className="risk-screen__return"
-              type="button"
-              onClick={handleReturnToConversation}
-            >
-              Voltar à conversa
-            </button>
-            <button
-              className="risk-screen__quick-exit"
-              type="button"
-              onClick={onQuickExit}
-            >
-              Saída rápida (Esc)
-            </button>
-          </div>
-        </dialog>
+        <RiskScreen
+          kind={riskScreen.status}
+          priorityNumbers={priorityNumbers(riskScreen.signals)}
+          onReturn={handleReturnToConversation}
+          onQuickExit={() => redirect("quickExit")}
+        />
       )}
     </div>
   );

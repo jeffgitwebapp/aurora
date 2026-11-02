@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  AccountApiError,
-  listModuleProgress,
-  saveModuleProgress,
-  SessionExpiredError,
-  type ModuleProgress,
-} from "../account/api/accountApi";
+import type { AccountSectionProps } from "../../shared/session/SessionProvider";
+import { AccountApiError, SessionExpiredError } from "../../shared/session/sessionApi";
 import {
   getModule,
   LearningApiError,
@@ -14,12 +9,11 @@ import {
   type LearningModule,
   type ModuleSummary,
 } from "./api/learningApi";
-
-interface LearningAreaProps {
-  token: string;
-  onSessionExpired: (message: string) => void;
-  onReadingChange: (isReading: boolean) => void;
-}
+import {
+  listModuleProgress,
+  saveModuleProgress,
+  type ModuleProgress,
+} from "./api/progressApi";
 
 type ListState =
   | { kind: "loading" }
@@ -39,7 +33,11 @@ function progressLabel(module: ModuleSummary, progress: ModuleProgress | undefin
   return `Parte ${progress.section + 1} de ${module.sectionCount}`;
 }
 
-export function LearningArea({ token, onSessionExpired, onReadingChange }: LearningAreaProps) {
+export function LearningArea({
+  token,
+  onSessionExpired,
+  onFocusChange: onReadingChange,
+}: AccountSectionProps) {
   const [list, setList] = useState<ListState>({ kind: "loading" });
   const [reading, setReading] = useState<LearningModule | null>(null);
   const [section, setSection] = useState(0);

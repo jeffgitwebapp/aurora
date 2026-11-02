@@ -1,5 +1,3 @@
-import type { TriageSignal } from "../chat/api/chatApi";
-
 export const emergencyContacts = [
   { label: "Polícia Militar", number: "190" },
   { label: "Central de Atendimento à Mulher", number: "180" },
@@ -7,36 +5,23 @@ export const emergencyContacts = [
   { label: "CVV · Centro de Valorização da Vida", number: "188" },
 ] as const;
 
+export type EmergencyNumber = (typeof emergencyContacts)[number]["number"];
+
 interface EmergencyContactsProps {
   compact?: boolean;
   variant?: "default" | "risk";
-  signals?: TriageSignal[];
+  /** Números a destacar; quem chama decide, este componente não conhece a triagem. */
+  priorityNumbers?: readonly EmergencyNumber[];
 }
 
 export function EmergencyContacts({
   compact = false,
   variant = "default",
-  signals = [],
+  priorityNumbers = [],
 }: EmergencyContactsProps) {
-  const priorityNumbers = new Set<string>();
-  if (variant === "risk") {
-    if (
-      signals.some(
-        (signal) =>
-          signal === "ongoing_assault" ||
-          signal === "death_threat" ||
-          signal === "weapon_present",
-      )
-    ) {
-      priorityNumbers.add("190");
-    }
-    if (signals.includes("suicidal_ideation")) {
-      priorityNumbers.add("188");
-    }
-  }
   const contacts = emergencyContacts.map((contact) => ({
     ...contact,
-    priority: priorityNumbers.has(contact.number),
+    priority: priorityNumbers.includes(contact.number),
   }));
   return (
     <section

@@ -1,24 +1,21 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 
-import {
-  AccountApiError,
-  getSafetyPlan,
-  saveSafetyPlan,
-  SessionExpiredError,
-  type SafetyPlan,
-  type TrustedContact,
-} from "../account/api/accountApi";
-import { emergencyContacts } from "../emergency/EmergencyContacts";
+import { emergencyContacts } from "../../shared/components/EmergencyContacts";
+import type { AccountSectionProps } from "../../shared/session/SessionProvider";
+import { AccountApiError, SessionExpiredError } from "../../shared/session/sessionApi";
 import {
   getSafetyGuide,
-  LearningApiError,
+  SafetyGuideApiError,
   type SafetyGuideContent,
-} from "../learning/api/learningApi";
+} from "./api/safetyGuideApi";
+import {
+  getSafetyPlan,
+  saveSafetyPlan,
+  type SafetyPlan,
+  type TrustedContact,
+} from "./api/safetyPlanApi";
 
-interface SafetyGuideProps {
-  token: string;
-  onSessionExpired: (message: string) => void;
-}
+type SafetyGuideProps = Pick<AccountSectionProps, "token" | "onSessionExpired">;
 
 const MAX_CONTACTS = 5;
 const MAX_NOTES = 4000;
@@ -60,7 +57,7 @@ export function SafetyGuide({ token, onSessionExpired }: SafetyGuideProps) {
         return;
       }
       setLoadError(
-        err instanceof LearningApiError || err instanceof AccountApiError
+        err instanceof SafetyGuideApiError || err instanceof AccountApiError
           ? err.message
           : "Não foi possível carregar o guia.",
       );

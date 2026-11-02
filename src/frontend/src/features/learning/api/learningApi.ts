@@ -108,26 +108,3 @@ export async function getModule(id: string): Promise<LearningModule> {
   }
   return { ...parseSummary(payload), sections: payload.sections.map(parseSection) };
 }
-
-export interface SafetyGuideContent {
-  sections: Array<{ title: string; paragraphs: string[] }>;
-  inPreparation: boolean;
-}
-
-export async function getSafetyGuide(): Promise<SafetyGuideContent> {
-  const payload = (await getJson("/api/learning/safety-guide")) as Record<string, unknown> | null;
-  const sections = payload?.sections;
-  if (
-    !Array.isArray(sections) ||
-    !sections.every(
-      (section) =>
-        typeof section?.title === "string" &&
-        Array.isArray(section.paragraphs) &&
-        section.paragraphs.every((paragraph: unknown) => typeof paragraph === "string"),
-    ) ||
-    typeof payload?.in_preparation !== "boolean"
-  ) {
-    throw formatError();
-  }
-  return { sections, inPreparation: payload.in_preparation };
-}

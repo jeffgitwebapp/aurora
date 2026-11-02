@@ -1,28 +1,26 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ComponentType } from "react";
 
-import { JournalArea } from "../journal/JournalArea";
-import { SafetyGuide } from "../safety/SafetyGuide";
-import { LearningArea } from "../learning/LearningArea";
-import { AccountForm } from "./AccountForm";
+import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
+import { AccountForm } from "../../shared/session/AccountForm";
+import { useSession, type AccountSectionProps } from "../../shared/session/SessionProvider";
+import { AccountApiError, SessionExpiredError } from "../../shared/session/sessionApi";
 import {
-  AccountApiError,
   deleteAccount,
   deleteConversation,
   getConversation,
   listConversations,
-  logout,
-  SessionExpiredError,
-  type AccountSession,
   type ConversationSummary,
   type SavedMessage,
 } from "./api/accountApi";
 
+/** Seção extra de “Minha conta”, fornecida pela composição do app. */
+export interface AccountSection {
+  title: string;
+  Component: ComponentType<AccountSectionProps>;
+}
+
 interface AccountPageProps {
-  session: AccountSession | null;
-  onSessionChange: (session: AccountSession | null) => void;
-  onOpenConversation: () => void;
-  onBack: () => void;
-  onQuickExit: () => void;
+  sections: readonly AccountSection[];
 }
 
 type HistoryState =
@@ -36,13 +34,12 @@ const formatDate = (iso: string) =>
 const DEMO_NOTICE =
   "Demonstração: a conta, as conversas salvas, o diário e o plano de segurança ficam só na memória do servidor do protótipo, cifrados com uma chave derivada da sua senha, e são apagadas quando ele reinicia. Não guarde dados reais. Recarregar a página ou usar a Saída rápida encerra a sessão.";
 
-export function AccountPage({
-  session,
-  onSessionChange,
-  onOpenConversation,
-  onBack,
-  onQuickExit,
-}: AccountPageProps) {
+export function AccountPage({ sections }: AccountPageProps) {
+  const { session, setSession: onSessionChange, endSession } = useSession();
+  const { redirect } = useRedirects();
+  const onOpenConversation = () => redirect("conversation");
+  const onBack = () => redirect("welcome");
+  const onQuickExit = () => redirect("quickExit");
   const [history, setHistory] = useState<HistoryState>({ kind: "loading" });
   const [viewing, setViewing] = useState<{
     summary: ConversationSummary;
@@ -53,7 +50,8 @@ export function AccountPage({
   const [actionError, setActionError] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
-  const [isReadingModule, setIsReadingModule] = useState(false);
+  const [focusedSection, setFocusedSection] = useState<number | null>(null);
+  const isFocused = focusedSection !== null;
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   const handleFailure = useCallback(
@@ -71,7 +69,7 @@ export function AccountPage({
 
   const handleSessionExpired = useCallback(
     (message: string) => {
-      setIsReadingModule(false);
+      setFocusedSection(null);
       onSessionChange(null);
       setNotice(message);
     },
@@ -148,10 +146,7 @@ export function AccountPage({
     }, "Não foi possível excluir a conta. Nada foi apagado; tente novamente.");
 
   const handleLogout = () => {
-    if (session) {
-      logout(session.token);
-    }
-    onSessionChange(null);
+    endSession();
     setNotice(null);
   };
 
@@ -222,9 +217,9 @@ export function AccountPage({
         {session && !viewing && (
           <section
             className="account__card"
-            aria-labelledby={isReadingModule ? "module-title" : "account-title"}
+            aria-labelledby={isFocused ? undefined : "account-title"}
           >
-            {!isReadingModule && (
+            {!isFocused && (
               <>
                 <h1 id="account-title" className="account__title" tabIndex={-1} ref={titleRef}>
                   Olá, {session.nickname}
@@ -318,24 +313,22 @@ export function AccountPage({
                   </p>
                 )}
 
-                <h2 className="account__subtitle">Módulos</h2>
               </>
             )}
 
-            <LearningArea
-              token={session.token}
-              onSessionExpired={handleSessionExpired}
-              onReadingChange={setIsReadingModule}
-            />
+            {sections.map(({ title, Component }, index) => (
+              <div key={title} hidden={isFocused && focusedSection !== index}>
+                {!isFocused && <h2 className="account__subtitle">{title}</h2>}
+                <Component
+                  token={session.token}
+                  onSessionExpired={handleSessionExpired}
+                  onFocusChange={(focused) => setFocusedSection(focused ? index : null)}
+                />
+              </div>
+            ))}
 
-            {!isReadingModule && (
+            {!isFocused && (
               <>
-                <h2 className="account__subtitle">Diário</h2>
-                <JournalArea token={session.token} onSessionExpired={handleSessionExpired} />
-
-                <h2 className="account__subtitle">Guia de segurança</h2>
-                <SafetyGuide token={session.token} onSessionExpired={handleSessionExpired} />
-
                 <h2 className="account__subtitle">Excluir conta</h2>
                 {confirmAccountDeletion ? (
                   <div className="account__confirm" role="group" aria-label="Confirmar exclusão da conta">

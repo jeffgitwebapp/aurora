@@ -1,13 +1,8 @@
 import { useRef, useState, type FormEvent } from "react";
 
-import { EmergencyContacts } from "../emergency/EmergencyContacts";
-
-interface WelcomePageProps {
-  onOpenConversation: (initialMessage: string, sendImmediately?: boolean) => void;
-  onOpenAccount: () => void;
-  isLoggedIn: boolean;
-  onQuickExit: () => void;
-}
+import { EmergencyContacts } from "../../shared/components/EmergencyContacts";
+import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
+import { useSession } from "../../shared/session/SessionProvider";
 
 const suggestedMessages = [
   "Quero entender o que estou sentindo",
@@ -15,12 +10,13 @@ const suggestedMessages = [
   "Onde encontrar apoio",
 ];
 
-export function WelcomePage({
-  onOpenConversation,
-  onOpenAccount,
-  isLoggedIn,
-  onQuickExit,
-}: WelcomePageProps) {
+export function WelcomePage() {
+  const { redirect } = useRedirects();
+  const isLoggedIn = useSession().session !== null;
+  const onOpenConversation = (message: string, sendImmediately = false) =>
+    redirect("conversation", { message, sendImmediately });
+  const onOpenAccount = () => redirect("account");
+  const onQuickExit = () => redirect("quickExit");
   const [draft, setDraft] = useState("");
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const privacyButtonRef = useRef<HTMLButtonElement>(null);

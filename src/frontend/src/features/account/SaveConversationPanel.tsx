@@ -1,21 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
-import { AccountForm } from "./AccountForm";
-import {
-  AccountApiError,
-  saveConversation,
-  SessionExpiredError,
-  type AccountSession,
-  type SavedMessage,
-} from "./api/accountApi";
-
-interface SaveConversationPanelProps {
-  messages: SavedMessage[];
-  session: AccountSession | null;
-  onSessionChange: (session: AccountSession | null) => void;
-  onBack: () => void;
-  onOpenAccount: () => void;
-}
+import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
+import { AccountForm } from "../../shared/session/AccountForm";
+import { useSession } from "../../shared/session/SessionProvider";
+import { AccountApiError, SessionExpiredError } from "../../shared/session/sessionApi";
+import { useTranscript } from "../../shared/transcript/TranscriptProvider";
+import { saveConversation } from "./api/accountApi";
 
 type SaveState =
   | { kind: "confirm" }
@@ -23,13 +13,13 @@ type SaveState =
   | { kind: "saved" }
   | { kind: "error"; message: string };
 
-export function SaveConversationPanel({
-  messages,
-  session,
-  onSessionChange,
-  onBack,
-  onOpenAccount,
-}: SaveConversationPanelProps) {
+/** Painel exibido dentro da conversa; lê a transcrição sem depender da feature de conversa. */
+export function SaveConversationPanel() {
+  const { messages } = useTranscript();
+  const { session, setSession: onSessionChange } = useSession();
+  const { redirect } = useRedirects();
+  const onBack = () => redirect("closePanel");
+  const onOpenAccount = () => redirect("account");
   const [state, setState] = useState<SaveState>({ kind: "confirm" });
   const [notice, setNotice] = useState<string | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);

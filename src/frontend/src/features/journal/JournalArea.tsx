@@ -1,18 +1,15 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 
+import type { AccountSectionProps } from "../../shared/session/SessionProvider";
+import { AccountApiError, SessionExpiredError } from "../../shared/session/sessionApi";
 import {
-  AccountApiError,
   deleteJournalEntry,
   listJournal,
   saveJournalEntry,
-  SessionExpiredError,
   type JournalEntry,
-} from "../account/api/accountApi";
+} from "./api/journalApi";
 
-interface JournalAreaProps {
-  token: string;
-  onSessionExpired: (message: string) => void;
-}
+type JournalAreaProps = Pick<AccountSectionProps, "token" | "onSessionExpired">;
 
 interface Draft {
   id: string | null;

@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { AccountForm } from "../account/AccountForm";
-import type { AccountSession } from "../account/api/accountApi";
+import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
+import { AccountForm } from "../../shared/session/AccountForm";
+import { useSession } from "../../shared/session/SessionProvider";
 import { SafetyGuide } from "./SafetyGuide";
 
-interface SafetyGuidePanelProps {
-  session: AccountSession | null;
-  onSessionChange: (session: AccountSession | null) => void;
-  onBack: () => void;
-}
-
 /** Guia aberto dentro da conversa: a conversa continua preservada ao fundo. */
-export function SafetyGuidePanel({ session, onSessionChange, onBack }: SafetyGuidePanelProps) {
+export function SafetyGuidePanel() {
+  const { session, setSession: onSessionChange } = useSession();
+  const { redirect } = useRedirects();
+  const onBack = () => redirect("closePanel");
   const [notice, setNotice] = useState<string | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 

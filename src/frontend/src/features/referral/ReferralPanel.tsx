@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
+import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
 import {
   recommendServices,
   ReferralApiError,
@@ -20,12 +21,6 @@ type SearchState =
   | { kind: "result"; result: RecommendationResult }
   | { kind: "error"; message: string; location: CityState };
 
-interface ReferralPanelProps {
-  onBack: () => void;
-  onOpenContacts: () => void;
-  onQuickExit: () => void;
-}
-
 const LOCATION_MESSAGES: Record<Exclude<LocationState, "idle">, string> = {
   locating: "Procurando a cidade pela localização do aparelho…",
   unmatched:
@@ -34,7 +29,11 @@ const LOCATION_MESSAGES: Record<Exclude<LocationState, "idle">, string> = {
     "A localização do aparelho não está disponível. Se quiser, digite sua cidade abaixo.",
 };
 
-export function ReferralPanel({ onBack, onOpenContacts, onQuickExit }: ReferralPanelProps) {
+export function ReferralPanel() {
+  const { redirect } = useRedirects();
+  const onBack = () => redirect("closePanel");
+  const onOpenContacts = () => redirect("emergencyContacts");
+  const onQuickExit = () => redirect("quickExit");
   const [locationState, setLocationState] = useState<LocationState>("idle");
   const [suggestedCity, setSuggestedCity] = useState<CityState | null>(null);
   const [cityText, setCityText] = useState("");

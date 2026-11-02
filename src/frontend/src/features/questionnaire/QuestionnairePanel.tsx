@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+import { RiskScreen } from "../../shared/components/RiskScreen";
+import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
+
 import {
   fetchQuestions,
   QuestionnaireApiError,
@@ -16,22 +19,17 @@ const HELP_TYPE_LABELS: Record<HelpType, string> = {
   peer: "Apoio entre pares",
 };
 
-interface QuestionnairePanelProps {
-  onStop: () => void;
-  onEmergency: () => void;
-  onOpenReferral: () => void;
-}
-
 type LoadState =
   | { kind: "loading" }
   | { kind: "error"; message: string }
   | { kind: "ready"; questions: Question[] };
 
-export function QuestionnairePanel({
-  onStop,
-  onEmergency,
-  onOpenReferral,
-}: QuestionnairePanelProps) {
+export function QuestionnairePanel() {
+  const { redirect } = useRedirects();
+  const [isInDanger, setIsInDanger] = useState(false);
+  const onStop = () => redirect("closePanel");
+  const onEmergency = () => setIsInDanger(true);
+  const onOpenReferral = () => redirect("referral");
   const [loadState, setLoadState] = useState<LoadState>({ kind: "loading" });
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -227,6 +225,14 @@ export function QuestionnairePanel({
           </div>
           <p className="questionnaire__note">As respostas não ficam salvas.</p>
         </div>
+      )}
+
+      {isInDanger && (
+        <RiskScreen
+          kind="acute"
+          onReturn={onStop}
+          onQuickExit={() => redirect("quickExit")}
+        />
       )}
     </section>
   );

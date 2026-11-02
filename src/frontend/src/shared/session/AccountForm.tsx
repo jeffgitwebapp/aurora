@@ -5,7 +5,7 @@ import {
   login,
   registerAccount,
   type AccountSession,
-} from "./api/accountApi";
+} from "./sessionApi";
 
 const NICKNAME_PATTERN = /^[A-Za-z0-9._-]{3,30}$/;
 const NICKNAME_RULE =

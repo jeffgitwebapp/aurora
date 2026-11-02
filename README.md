@@ -13,7 +13,7 @@ O projeto segue os princípios de monólito modular, Bounded Context (DDD Estrat
 
 - **Bounded Context:** `Conversa` (`contexts/conversation`).
 - **Vertical Slice:** `EnviarMensagem` (`features/send_message`), concentrando rotas, validação e lógica da funcionalidade.
-- **Frontend Modular:** Separação entre composição (`app/App.tsx`), regras e estado de tela (`features/chat/ChatPage.tsx`), cliente de API (`api/chatApi.ts`) e componentes de apresentação desacoplados.
+- **Frontend Modular:** cada pasta de `features/` é uma fatia vertical independente e importa apenas `shared/` e o próprio código. Telas e estado usados por mais de uma feature ficam em `shared/`. A navegação entre features passa por `shared/redirectsManagement` (`redirect("account")`, `redirect("referral")`, `redirect("quickExit")`…), sem a feature de origem conhecer a de destino. `app/App.tsx` é a raiz de composição: o único lugar que liga cada destino ao componente que o atende.
 
 ### Estrutura do Repositório
 
@@ -54,16 +54,22 @@ aurora/
 │       └── src/
 │           ├── main.tsx                # Ponto de entrada React
 │           ├── app/
-│           │   └── App.tsx             # Composição da aplicação
-│           ├── features/
-│           │   └── chat/               # Módulo da feature de chat
-│           │       ├── ChatPage.tsx    # Gerenciamento de estado efêmero e fluxo
-│           │       ├── types.ts        # Tipos de domínio e UI da feature
-│           │       ├── api/
-│           │       │   └── chatApi.ts  # Cliente HTTP REST
-│           │       └── components/
-│           │           ├── MessageList.tsx # Exibição acessível das mensagens
-│           │           └── MessageComposer.tsx # Entrada e disparo de mensagem
+│           │   └── App.tsx             # Raiz de composição: providers, painéis e seções por destino
+│           ├── shared/                 # Usado por várias features; nunca importa features/
+│           │   ├── components/         # EmergencyContacts e RiskScreen (modal de risco)
+│           │   ├── session/            # Sessão da conta, cliente autenticado e AccountForm
+│           │   ├── transcript/         # Cópia somente leitura da conversa aberta
+│           │   └── redirectsManagement/ # Destinos (páginas, painéis, Saída Rápida) e redirect()
+│           ├── features/               # Cada feature importa só shared/ e o próprio código
+│           │   ├── welcome/            # Tela inicial
+│           │   ├── chat/               # Conversa, triagem, fontes e limite de escopo
+│           │   ├── referral/           # Onde buscar ajuda (localização e catálogo)
+│           │   ├── questionnaire/      # Questionário
+│           │   ├── account/            # Minha conta, conversas salvas e exclusão
+│           │   ├── learning/           # Módulos e progresso
+│           │   ├── journal/            # Diário
+│           │   ├── safety/             # Guia e plano de segurança
+│           │   └── recipes/            # Página neutra da Saída Rápida
 │           └── styles.css              # Estilos acessíveis e responsivos
 └── LICENSE                             # Licença do projeto
 ```
