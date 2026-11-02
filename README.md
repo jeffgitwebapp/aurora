@@ -13,7 +13,7 @@ O projeto segue os princípios de monólito modular, Bounded Context (DDD Estrat
 
 - **Bounded Context:** `Conversa` (`contexts/conversation`).
 - **Vertical Slice:** `EnviarMensagem` (`features/send_message`), concentrando rotas, validação e lógica da funcionalidade.
-- **Frontend Modular:** Separação entre composição (`app/App.tsx`), regras e estado de tela (`features/chat/ChatPage.tsx`), cliente de API (`api/chatApi.ts`) e componentes de apresentação desacoplados.
+- **Frontend Modular:** cada pasta de `features/` é uma fatia vertical independente e importa apenas `shared/` e o próprio código. Telas e estado usados por mais de uma feature ficam em `shared/`. A navegação entre features passa por `shared/redirectsManagement` (`redirect("account")`, `redirect("referral")`, `redirect("quickExit")`…), sem a feature de origem conhecer a de destino. `app/App.tsx` é a raiz de composição: o único lugar que liga cada destino ao componente que o atende.
 
 ### Estrutura do Repositório
 
@@ -27,6 +27,8 @@ aurora/
 │   ├── backlog-aurora.md               # Backlog de épicos (E1 a E13)
 │   ├── c4-aurora-mvp.drawio            # Modelagem arquitetural C4
 │   └── requisitos-aurora.md            # Requisitos Funcionais e Não-Funcionais (ISO 25010)
+├── skills/                             # Competências necessárias e especificações por skill
+│   └── lista_skills.md                 # Índice das skills por fase do projeto
 ├── src/                                # Código-fonte da aplicação
 │   ├── .gitignore
 │   ├── backend/                        # FastAPI + uv (Python 3.12+)
@@ -40,7 +42,7 @@ aurora/
 │   │   │               └── send_message/ # Vertical Slice: EnviarMensagem
 │   │   │                   ├── router.py   # Adaptador de entrada HTTP
 │   │   │                   ├── schemas.py  # Contratos Pydantic de entrada e saída
-│   │   │                   └── handler.py  # Lógica de negócio / resposta fixa
+│   │   │                   └── handler.py  # Lógica de negócio / texto simulado
 │   │   └── tests/
 │   │       └── test_send_message.py    # Suíte de testes automatizados
 │   └── frontend/                       # React 19 + TypeScript + Vite
@@ -52,19 +54,40 @@ aurora/
 │       └── src/
 │           ├── main.tsx                # Ponto de entrada React
 │           ├── app/
-│           │   └── App.tsx             # Composição da aplicação
-│           ├── features/
-│           │   └── chat/               # Módulo da feature de chat
-│           │       ├── ChatPage.tsx    # Gerenciamento de estado efêmero e fluxo
-│           │       ├── types.ts        # Tipos de domínio e UI da feature
-│           │       ├── api/
-│           │       │   └── chatApi.ts  # Cliente HTTP REST
-│           │       └── components/
-│           │           ├── MessageList.tsx # Exibição acessível das mensagens
-│           │           └── MessageComposer.tsx # Entrada e disparo de mensagem
+│           │   └── App.tsx             # Raiz de composição: providers, painéis e seções por destino
+│           ├── shared/                 # Usado por várias features; nunca importa features/
+│           │   ├── components/         # EmergencyContacts e RiskScreen (modal de risco)
+│           │   ├── session/            # Sessão da conta, cliente autenticado e AccountForm
+│           │   ├── transcript/         # Cópia somente leitura da conversa aberta
+│           │   └── redirectsManagement/ # Destinos (páginas, painéis, Saída Rápida) e redirect()
+│           ├── features/               # Cada feature importa só shared/ e o próprio código
+│           │   ├── welcome/            # Tela inicial
+│           │   ├── chat/               # Conversa, triagem, fontes e limite de escopo
+│           │   ├── referral/           # Onde buscar ajuda (localização e catálogo)
+│           │   ├── questionnaire/      # Questionário
+│           │   ├── account/            # Minha conta, conversas salvas e exclusão
+│           │   ├── learning/           # Módulos e progresso
+│           │   ├── journal/            # Diário
+│           │   ├── safety/             # Guia e plano de segurança
+│           │   └── recipes/            # Página neutra da Saída Rápida
 │           └── styles.css              # Estilos acessíveis e responsivos
 └── LICENSE                             # Licença do projeto
 ```
+
+### Competências necessárias para desenvolver o Aurora
+
+O Aurora requer competências de produto, engenharia e domínio especializado. As principais áreas são:
+
+- **Base do MVP:** análise de requisitos e rastreabilidade; jornada e usabilidade; arquitetura e integração ponta a ponta; desenvolvimento de APIs com Python/FastAPI e frontend React/TypeScript.
+- **Segurança e responsabilidade:** domínio de violência psicológica e design informado por trauma; privacidade/LGPD; segurança de aplicação; triagem determinística de risco agudo; acessibilidade e linguagem simples.
+- **Informação e encaminhamento:** curadoria de conteúdo e RAG; integração de LLM e engenharia de prompts; guardrails e avaliação generativa; catálogo de serviços e motor de encaminhamento.
+- **Entrega e qualidade:** testes e fitness functions; DevOps, AWS, CI/CD e operação.
+- **Evolução do produto:** autenticação e área logada; persistência, criptografia e diário; gestão de conteúdo; integrações externas; conteúdo multimídia acessível; observabilidade e desempenho.
+
+Consulte o [índice de skills](./skills/lista_skills.md) para a relação completa, organizada por fase, e as especificações individuais de cada competência. O [plano de implementação da jornada](./docs/jornada-usuario/plano-implementacao-jornada-usuario.md) também indica quais skills consultar em cada tarefa.
+
+> [!NOTE]
+> Este inventário é um mapa de conhecimentos necessários para orientar o desenvolvimento; não significa que essas competências ou funcionalidades já estejam implementadas, nem que todas sejam necessárias em cada alteração. A especificação correspondente deve ser consultada conforme a tarefa. Skills técnicas não substituem validação humana especializada em saúde mental, direito, rede de proteção, privacidade, segurança e acessibilidade, especialmente antes de qualquer piloto com usuárias reais. O protótipo atual não é seguro nem funcional para esse uso.
 
 ---
 
@@ -104,41 +127,102 @@ python --version; uv --version; node --version; npm --version
 
 ---
 
-## 3. Como Executar Localmente
+## 3. Como Executar
 
-Abra **dois terminais distintos** (PowerShell ou Prompt de Comando) e mantenha-os em execução simultaneamente:
+Escolha uma das opções abaixo. As duas opções Docker iniciam o frontend e o backend; a opção local executa cada serviço em modo de desenvolvimento.
 
-### Terminal 1 — Backend (FastAPI)
+### Opção A — Docker Desktop
+
+1. Instale e abra o Docker Desktop.
+2. Em **Settings → Resources → WSL Integration**, habilite a distribuição Ubuntu caso use o backend WSL 2.
+3. Abra um PowerShell na raiz do repositório e inicie os serviços:
+
+   ```powershell
+   docker compose up --build -d
+   ```
+
+4. Acompanhe os containers no painel **Containers** do Docker Desktop. O projeto aparece como `aurora`, com os serviços `frontend` e `backend`.
+
+Para consultar logs e parar os serviços pelo terminal:
 
 ```powershell
-# A partir da raiz do repositório (C:\Projetos\aurora):
-Set-Location "src/backend"
-# Ou especificando o caminho absoluto:
-# Set-Location "C:\Projetos\aurora\src\backend"
-
-uv sync
-uv run uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
+docker compose logs -f
+docker compose down
 ```
 
-- **Endpoint local:** `http://127.0.0.1:8000/api/chat/messages`
-- **Documentação interativa OpenAPI / Swagger:** `http://127.0.0.1:8000/docs`
+### Opção B — Docker pelo WSL
 
----
-
-### Terminal 2 — Frontend (React + Vite)
+Use esta opção se o Docker CLI estiver instalado dentro de uma distribuição WSL, como no ambiente Ubuntu. No PowerShell do Windows, execute na raiz do repositório:
 
 ```powershell
-# A partir da raiz do repositório (C:\Projetos\aurora):
-Set-Location "src/frontend"
-# Ou especificando o caminho absoluto:
-# Set-Location "C:\Projetos\aurora\src\frontend"
+wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/c/Projetos/aurora && docker compose up --build -d'
+```
 
+Para acompanhar os logs ou parar os serviços:
+
+```powershell
+wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/c/Projetos/aurora && docker compose logs -f'
+wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/c/Projetos/aurora && docker compose down'
+```
+
+Se o repositório estiver em outro local ou a distribuição tiver outro nome, ajuste `Ubuntu` e `/mnt/c/Projetos/aurora` para os valores correspondentes.
+
+### Opção C — Execução local (sem Docker)
+
+Pré-requisitos: Python 3.12+, `uv`, Node.js LTS 20+ e npm 10+. Abra **dois terminais** e mantenha ambos em execução.
+
+No primeiro terminal, inicie o backend:
+
+```powershell
+Set-Location "C:\Projetos\aurora\src\backend"
+uv sync
+uv run python -m uvicorn aurora_backend.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+No segundo terminal, inicie o frontend:
+
+```powershell
+Set-Location "C:\Projetos\aurora\src\frontend"
 npm install
 npm run dev -- --host 127.0.0.1
 ```
 
+### Endereços locais
+
 - **Interface web:** `http://127.0.0.1:5173`
-- O Vite encaminha automaticamente as chamadas `/api/*` para o backend em `http://127.0.0.1:8000`.
+- **API:** `http://127.0.0.1:8000/api/chat/messages`
+- **Documentação interativa OpenAPI / Swagger:** `http://127.0.0.1:8000/docs`
+- O frontend encaminha as chamadas `/api/*` ao backend. No Docker, isso ocorre pela rede interna do Compose; localmente, o Vite encaminha para `127.0.0.1:8000`.
+- Nos dois modos Docker, as portas são publicadas somente em `127.0.0.1`.
+
+### Publicar na EC2 com GitHub Actions
+
+O workflow [deploy.yml](./.github/workflows/deploy.yml) testa o backend e compila o frontend em cada push para `develop` e em cada tag `v*`. Se os testes passarem, publica as imagens privadas `ghcr.io/jeffgitwebapp/aurora-backend` e `ghcr.io/jeffgitwebapp/aurora-frontend` no GHCR. Pushes para `develop` também implantam automaticamente a versão na EC2; tags de release publicam as imagens sem alterar o deploy contínuo.
+
+#### Preparar a instância Amazon Linux
+
+- Instale e inicie Docker Engine e o plugin Docker Compose v2.
+- Configure o Security Group para permitir HTTP TCP `80` de acordo com o público desejado. Restrinja SSH TCP `22`; runners hospedados pelo GitHub usam faixas de IP variáveis, então não abra SSH para `0.0.0.0/0` apenas para habilitar o deploy.
+- O usuário `ec2-user` precisa conseguir executar Docker por `sudo`.
+- O deploy publica HTTP sem TLS na porta 80. Antes de usar um domínio ou dados reais, configure HTTPS e revise os limites de segurança do protótipo. A API atual retorna texto aleatório precedido de um aviso, sem analisar a mensagem; não é aconselhamento nem um serviço de atendimento.
+
+#### Cadastrar secrets no GitHub
+
+Crie o environment **`production`** em **Settings → Environments** e cadastre os valores abaixo em **Environment secrets** desse environment. O job de deploy do workflow usa `environment: production` para receber esses secrets:
+
+| Secret | Valor |
+|---|---|
+| `EC2_HOST` | `ec2-3-137-205-13.us-east-2.compute.amazonaws.com` |
+| `EC2_SSH_KEY` | Chave privada SSH autorizada para `ec2-user` |
+| `EC2_KNOWN_HOSTS` | Chave de host SSH da EC2, previamente verificada |
+| `GHCR_USERNAME` | Usuário GitHub que tem acesso de leitura aos pacotes |
+| `GHCR_READ_TOKEN` | Personal Access Token (classic) com escopo `read:packages` |
+
+Não coloque a chave SSH ou o token no repositório, no workflow ou em mensagens. Para obter a entrada de `EC2_KNOWN_HOSTS`, use `ssh-keyscan` e confirme a impressão digital da chave por um canal confiável antes de cadastrá-la. Se o SSH da instância não puder aceitar conexões dos runners do GitHub de forma restrita, use um runner com IP de saída fixo ou AWS Systems Manager em vez de abrir a porta 22 para a internet.
+
+Depois de adicionar os secrets, faça push para `develop`. Acompanhe o workflow em **Actions**; após a publicação, a aplicação ficará em `http://ec2-3-137-205-13.us-east-2.compute.amazonaws.com`. O Compose de produção publica apenas o frontend na porta 80 e mantém o backend acessível pela rede interna. O arquivo [`docker-compose.prod.yml`](./docker-compose.prod.yml) é separado do Compose local para preservar a execução de desenvolvimento.
+
+Para o passo a passo completo da instância, Docker/Compose, SSH, GHCR, secrets e publicação, consulte o [guia de deploy na EC2](./DEPLOY-EC2.md).
 
 > [!TIP]
 > **Resolução de problema no Windows / OneDrive:**  
@@ -147,6 +231,14 @@ npm run dev -- --host 127.0.0.1
 > Remove-Item -Path "node_modules\.vite" -Recurse -Force -ErrorAction SilentlyContinue
 > npm run dev -- --host 127.0.0.1
 > ```
+>
+> **Erro `Port 5173 is already in use`:** já existe um processo escutando na porta usada pelo frontend. Antes de iniciar outro servidor, abra `http://127.0.0.1:5173` no navegador: o frontend pode já estar rodando. Se precisar reiniciá-lo, pare o servidor no terminal em que ele foi iniciado com `Ctrl+C`. Para identificar qual processo está usando a porta:
+> ```powershell
+> Get-NetTCPConnection -LocalPort 5173 -State Listen |
+>   Select-Object LocalAddress, LocalPort, OwningProcess
+> Get-Process -Id <PID>
+> ```
+> Se confirmar que é um processo antigo do frontend e não tiver acesso ao terminal original, encerre somente esse processo com `Stop-Process -Id <PID>`. Apagar `node_modules\.vite` ou executar `npm install` não libera uma porta ocupada.
 
 ---
 
@@ -162,6 +254,7 @@ npm run dev -- --host 127.0.0.1
   {"message": "mensagem enviada pela pessoa usuária"}
   ```
 - **Resposta para mensagem válida (200 OK):**
+  A API aguarda 10 segundos para simular o processamento antes de responder.
   ```http
   HTTP/1.1 200 OK
   Content-Type: application/json
@@ -185,13 +278,13 @@ A partir de `src/backend` (`Set-Location "C:\Projetos\aurora\src\backend"`):
 
 ```powershell
 # Execução da suíte de testes
-uv run pytest
+uv run python -m pytest
 
 # Verificação estática de código (linter)
-uv run ruff check .
+uv run python -m ruff check .
 
 # Verificação de formatação
-uv run ruff format --check .
+uv run python -m ruff format --check .
 
 # Compilação de bytecode
 uv run python -m compileall src

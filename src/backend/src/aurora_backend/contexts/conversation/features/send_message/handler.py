@@ -1,16 +1,80 @@
-"""Caso de uso EnviarMensagem: valida a entrada e devolve a resposta fixa.
+"""Orquestra o envio de mensagem entre triagem, escopo, conhecimento e resposta."""
 
-O conteúdo da mensagem não é registrado, persistido nem utilizado para compor a resposta.
-"""
+from dataclasses import dataclass
 
-FIXED_REPLY = "Este chatbot está em desenvolvimento."
+from aurora_backend.contexts.conversation.services.chat_response.port import (
+    ChatResponseGenerator,
+)
+from aurora_backend.contexts.conversation.services.content_offer.models import ContentOffer
+from aurora_backend.contexts.conversation.services.content_offer.port import (
+    ContentOfferProvider,
+)
+from aurora_backend.contexts.conversation.services.guardrail.models import (
+    GuardrailResult,
+    ScopeDecision,
+)
+from aurora_backend.contexts.conversation.services.guardrail.port import ScopeGuardrail
+from aurora_backend.contexts.conversation.services.knowledge.models import (
+    KnowledgeResult,
+    KnowledgeStatus,
+)
+from aurora_backend.contexts.conversation.services.knowledge.port import KnowledgeRetriever
+from aurora_backend.contexts.conversation.services.triage.models import (
+    TriageResult,
+    TriageStatus,
+)
+from aurora_backend.contexts.conversation.services.triage.port import TriageEvaluator
+
+
+@dataclass(frozen=True)
+class SendMessageResult:
+    reply: str | None
+    triage: TriageResult
+    guardrail: GuardrailResult | None = None
+    knowledge: KnowledgeResult | None = None
+    offer: ContentOffer | None = None
 
 
 class EmptyMessageError(ValueError):
     """Mensagem vazia ou composta apenas por espaços."""
 
 
-def handle_send_message(message: str) -> str:
+async def handle_send_message(
+    message: str,
+    *,
+    triage_service: TriageEvaluator,
+    guardrail_service: ScopeGuardrail,
+    offer_service: ContentOfferProvider,
+    knowledge_service: KnowledgeRetriever,
+    chat_response_service: ChatResponseGenerator,
+) -> SendMessageResult:
     if not message.strip():
         raise EmptyMessageError("A mensagem não pode estar vazia.")
-    return FIXED_REPLY
+
+    triage = await triage_service.assess(message)
+    if triage.status is not TriageStatus.NO_ACUTE_SIGNAL:
+        return SendMessageResult(reply=None, triage=triage)
+
+    guardrail = await guardrail_service.check_request(message)
+    if guardrail.decision is not ScopeDecision.ALLOW:
+        return SendMessageResult(reply=None, triage=triage, guardrail=guardrail)
+
+    offer = await offer_service.suggest(message)
+    if offer is not None:
+        return SendMessageResult(reply=None, triage=triage, guardrail=guardrail, offer=offer)
+
+    knowledge = await knowledge_service.retrieve(message)
+    if knowledge.status is not KnowledgeStatus.FOUND:
+        return SendMessageResult(
+            reply=None,
+            triage=triage,
+            guardrail=guardrail,
+            knowledge=knowledge,
+        )
+
+    return SendMessageResult(
+        reply=await chat_response_service.generate_reply(message, knowledge.passages),
+        triage=triage,
+        guardrail=guardrail,
+        knowledge=knowledge,
+    )

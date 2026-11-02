@@ -3,10 +3,15 @@ import { useState, type FormEvent } from "react";
 interface MessageComposerProps {
   onSendMessage: (message: string) => Promise<void> | void;
   disabled?: boolean;
+  initialText?: string;
 }
 
-export function MessageComposer({ onSendMessage, disabled = false }: MessageComposerProps) {
-  const [text, setText] = useState("");
+export function MessageComposer({
+  onSendMessage,
+  disabled = false,
+  initialText = "",
+}: MessageComposerProps) {
+  const [text, setText] = useState(initialText);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,19 +28,18 @@ export function MessageComposer({ onSendMessage, disabled = false }: MessageComp
 
   return (
     <form className="message-composer" onSubmit={handleSubmit}>
-      <label htmlFor="message-input" className="message-composer__label">
+      <label htmlFor="message-input" className="visually-hidden">
         Sua mensagem
       </label>
       <div className="message-composer__input-group">
-        <input
+        <textarea
           id="message-input"
-          type="text"
           className="message-composer__input"
-          placeholder="Digite sua mensagem..."
+          rows={2}
+          placeholder="Escreva aqui…"
           value={text}
           onChange={(e) => setText(e.target.value)}
           disabled={disabled}
-          autoComplete="off"
         />
         <button
           type="submit"
@@ -48,4 +52,3 @@ export function MessageComposer({ onSendMessage, disabled = false }: MessageComp
     </form>
   );
 }
-

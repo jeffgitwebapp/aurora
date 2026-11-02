@@ -117,7 +117,7 @@ O Aurora **SIM**:
 
 - Nenhum campo de nome, CPF, e-mail, telefone ou endereço no modo anônimo.
 - Ausência de cookies de rastreamento e de identificadores de terceiros.
-- Localização capturada apenas em granularidade de **município/UF**, informada pela usuária, nunca por geolocalização precisa.
+- Localização usada apenas em granularidade de **município/UF**. **Alteração em 02/11/2026 (C-06, revisão de privacidade/LGPD pendente):** a localização do aparelho pode ser solicitada quando a usuária abre o encaminhamento; as coordenadas são convertidas em cidade/UF no próprio aparelho e descartadas, nunca enviadas ao servidor nem armazenadas, e a cidade só é usada após confirmação explícita. A entrada manual opcional permanece disponível.
 - Sessão volátil: relato mantido apenas em memória, descartado ao encerramento.
 - Logs de aplicação sem conteúdo do relato.
 
