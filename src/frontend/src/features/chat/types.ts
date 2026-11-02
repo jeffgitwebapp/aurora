@@ -1,4 +1,8 @@
-import type { KnowledgeStatus, SourceReference } from "./api/chatApi";
+import type {
+  KnowledgeStatus,
+  OutOfScopeCategory,
+  SourceReference,
+} from "./api/chatApi";
 
 export type MessageRole = "user" | "assistant";
 
@@ -7,6 +11,7 @@ export interface ChatMessage {
   role: MessageRole;
   text: string;
   knowledgeStatus?: KnowledgeStatus;
+  outOfScopeCategory?: OutOfScopeCategory;
   sources?: SourceReference[];
   demo?: boolean;
 }

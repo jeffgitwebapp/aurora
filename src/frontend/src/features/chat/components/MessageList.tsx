@@ -5,9 +5,16 @@ import type { ChatMessage } from "../types";
 interface MessageListProps {
   messages: ChatMessage[];
   isLoading?: boolean;
+  onAskLaw: () => void;
+  onOpenContacts: () => void;
 }
 
-export function MessageList({ messages, isLoading = false }: MessageListProps) {
+export function MessageList({
+  messages,
+  isLoading = false,
+  onAskLaw,
+  onOpenContacts,
+}: MessageListProps) {
   const containerRef = useRef<HTMLElement | null>(null);
 
   useLayoutEffect(() => {
@@ -37,15 +44,53 @@ export function MessageList({ messages, isLoading = false }: MessageListProps) {
         <ol className="message-list" role="log" aria-live="polite">
           {messages.map((message) => {
             const isUser = message.role === "user";
+            const isOutOfScope = message.outOfScopeCategory !== undefined;
+            const titleId = `${message.id}-title`;
             return (
               <li
                 key={message.id}
-                className={`message-item message-item--${message.role}`}
+                className={`message-item message-item--${message.role}${isOutOfScope ? " message-item--limit" : ""}`}
+                aria-labelledby={isOutOfScope ? titleId : undefined}
               >
                 <span className="message-item__sender">
                   {isUser ? "Você" : "Aurora"}
                 </span>
+                {isOutOfScope && (
+                  <h2 className="message-item__limit-title" id={titleId}>
+                    Fora do que eu posso fazer
+                  </h2>
+                )}
                 <p className="message-item__text">{message.text}</p>
+                {isOutOfScope && (
+                  <>
+                    <div className="message-item__actions">
+                      <button
+                        type="button"
+                        className="message-item__action"
+                        onClick={onAskLaw}
+                        disabled={isLoading}
+                      >
+                        O que a lei diz
+                      </button>
+                      <button
+                        type="button"
+                        className="message-item__action"
+                        onClick={onOpenContacts}
+                      >
+                        Defensoria Pública ou CRAM
+                      </button>
+                    </div>
+                    <p className="message-item__note">
+                      No protótipo, este botão leva aos contatos gerais desta
+                      tela. Opções de Defensoria Pública e CRAM entram com o
+                      encaminhamento por cidade.
+                    </p>
+                    <p className="message-item__autonomy">
+                      O Aurora informa sobre a lei, mas não diz o que você deve
+                      fazer. A decisão é sempre sua.
+                    </p>
+                  </>
+                )}
                 {message.sources && message.sources.length > 0 && (
                   <section
                     className="message-sources"
@@ -69,9 +114,11 @@ export function MessageList({ messages, isLoading = false }: MessageListProps) {
                 )}
                 {message.demo && (
                   <p className="message-item__demo" role="note">
-                    {message.knowledgeStatus === "found"
-                      ? "Demonstração: trecho de fonte oficial escolhido para teste do protótipo, com revisão jurídica pendente. Não é orientação sobre o seu caso."
-                      : "Demonstração: o protótipo só responde a perguntas de teste com fonte aprovada."}
+                    {isOutOfScope
+                      ? "Demonstração: o limite é acionado por frases de teste e não identifica pedidos reais."
+                      : message.knowledgeStatus === "found"
+                        ? "Demonstração: trecho de fonte oficial escolhido para teste do protótipo, com revisão jurídica pendente. Não é orientação sobre o seu caso."
+                        : "Demonstração: o protótipo só responde a perguntas de teste com fonte aprovada."}
                   </p>
                 )}
               </li>

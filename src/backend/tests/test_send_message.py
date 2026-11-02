@@ -12,6 +12,15 @@ from aurora_backend.contexts.conversation.services.chat_response.service import 
     REPLY_INTRODUCTION,
     ChatResponseService,
 )
+from aurora_backend.contexts.conversation.services.guardrail.models import (
+    GuardrailResult,
+    OutOfScopeCategory,
+    ScopeDecision,
+)
+from aurora_backend.contexts.conversation.services.guardrail.port import (
+    GuardrailUnavailableError,
+)
+from aurora_backend.contexts.conversation.services.guardrail.service import GuardrailService
 from aurora_backend.contexts.conversation.services.knowledge.models import (
     KnowledgePassage,
     KnowledgeResult,
@@ -62,6 +71,18 @@ class FixedKnowledgeService:
         return self.result
 
 
+class UnusedGuardrailService:
+    async def check_request(self, _message: str) -> GuardrailResult:
+        del _message
+        pytest.fail("Guardrail must not run for blocked triage results.")
+
+
+class FailingGuardrailService:
+    async def check_request(self, _message: str) -> GuardrailResult:
+        del _message
+        raise GuardrailUnavailableError
+
+
 class UnusedKnowledgeService:
     async def retrieve(self, _message: str) -> KnowledgeResult:
         del _message
@@ -96,6 +117,7 @@ def client() -> TestClient:
     return TestClient(
         create_app(
             triage_service=TriageService(),
+            guardrail_service=GuardrailService(),
             knowledge_service=KnowledgeService(),
             chat_response_service=ChatResponseService(),
         )
@@ -231,6 +253,7 @@ def test_handler_does_not_call_knowledge_or_chat_for_acute_or_indeterminate() ->
             handle_send_message(
                 "Mensagem de teste",
                 triage_service=FixedTriageService(triage_result),
+                guardrail_service=UnusedGuardrailService(),
                 knowledge_service=UnusedKnowledgeService(),
                 chat_response_service=UnusedChatService(),
             )
@@ -247,6 +270,7 @@ def test_handler_returns_no_source_without_generating_reply() -> None:
         handle_send_message(
             NO_ACUTE_FIXTURE,
             triage_service=TriageService(),
+            guardrail_service=GuardrailService(),
             knowledge_service=knowledge,
             chat_response_service=UnusedChatService(),
         )
@@ -269,6 +293,7 @@ def test_handler_generates_reply_only_from_retrieved_passages() -> None:
         handle_send_message(
             DEFINITION_QUESTION,
             triage_service=TriageService(),
+            guardrail_service=GuardrailService(),
             knowledge_service=FixedKnowledgeService(knowledge_result),
             chat_response_service=chat_service,
         )
@@ -290,6 +315,7 @@ def test_handler_propagates_knowledge_failure_instead_of_answering() -> None:
             handle_send_message(
                 DEFINITION_QUESTION,
                 triage_service=TriageService(),
+                guardrail_service=GuardrailService(),
                 knowledge_service=FailingKnowledgeService(),
                 chat_response_service=UnusedChatService(),
             )
@@ -428,6 +454,7 @@ def test_knowledge_failure_returns_503_without_reply(
     failing_client = TestClient(
         create_app(
             triage_service=TriageService(),
+            guardrail_service=GuardrailService(),
             knowledge_service=FailingKnowledgeService(),
             chat_response_service=ChatResponseService(),
         )
@@ -473,6 +500,8 @@ def test_acute_fixture_returns_service_guidance_without_chat_or_delay(
     assert payload["triage_status"] == "acute"
     assert payload["signals"] == [signal]
     assert payload["knowledge_status"] is None
+    assert payload["scope_status"] is None
+    assert payload["out_of_scope_category"] is None
     assert payload["sources"] == []
     assert "Simulação do protótipo" in payload["guidance"]
     assert sleep_durations == []
@@ -499,10 +528,161 @@ def test_exact_indeterminate_fixture_returns_service_guidance_without_chat_or_de
     assert payload["reply"] is None
     assert payload["triage_status"] == "indeterminate"
     assert payload["knowledge_status"] is None
+    assert payload["scope_status"] is None
+    assert payload["out_of_scope_category"] is None
     assert payload["sources"] == []
     assert payload["signals"] == []
     assert "Isso não significa ausência de risco" in payload["guidance"]
     assert sleep_durations == []
+
+
+OUT_OF_SCOPE_FIXTURES = [
+    ("Eu tenho depressão?", OutOfScopeCategory.DIAGNOSIS),
+    ("Que remédio devo tomar?", OutOfScopeCategory.PRESCRIPTION),
+    ("O que acontece no meu caso?", OutOfScopeCategory.INDIVIDUAL_LEGAL_OPINION),
+    ("Devo denunciar meu marido?", OutOfScopeCategory.INDIVIDUAL_LEGAL_OPINION),
+]
+
+
+def check_scope_fixture(message: str) -> GuardrailResult:
+    return asyncio.run(GuardrailService().check_request(message))
+
+
+@pytest.mark.parametrize(("message", "category"), OUT_OF_SCOPE_FIXTURES)
+def test_exact_out_of_scope_fixtures_return_category(
+    message: str,
+    category: OutOfScopeCategory,
+) -> None:
+    result = check_scope_fixture(message)
+
+    assert result.decision is ScopeDecision.OUT_OF_SCOPE
+    assert result.category is category
+
+
+def test_out_of_scope_fixture_normalizes_case_accents_and_punctuation() -> None:
+    result = check_scope_fixture("  QUE REMEDIO devo tomar ")
+
+    assert result.category is OutOfScopeCategory.PRESCRIPTION
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        DEFINITION_QUESTION,
+        CRIME_QUESTION,
+        "Tenho dúvidas sobre meus direitos",
+        "Quais são os direitos de uma mulher em situação de violência?",
+        "Eu tenho depressão? Ou é só cansaço?",
+        "O que acontece no meu caso? Ele grita comigo.",
+    ],
+)
+def test_general_or_extended_questions_are_allowed(message: str) -> None:
+    result = check_scope_fixture(message)
+
+    assert result.decision is ScopeDecision.ALLOW
+    assert result.category is None
+
+
+def test_guardrail_result_requires_category_only_when_out_of_scope() -> None:
+    with pytest.raises(ValueError):
+        GuardrailResult(decision=ScopeDecision.OUT_OF_SCOPE)
+    with pytest.raises(ValueError):
+        GuardrailResult(
+            decision=ScopeDecision.ALLOW,
+            category=OutOfScopeCategory.DIAGNOSIS,
+        )
+
+
+def test_handler_stops_before_knowledge_and_chat_when_out_of_scope() -> None:
+    result = asyncio.run(
+        handle_send_message(
+            "O que acontece no meu caso?",
+            triage_service=TriageService(),
+            guardrail_service=GuardrailService(),
+            knowledge_service=UnusedKnowledgeService(),
+            chat_response_service=UnusedChatService(),
+        )
+    )
+
+    assert result.reply is None
+    assert result.knowledge is None
+    assert result.guardrail is not None
+    assert result.guardrail.category is OutOfScopeCategory.INDIVIDUAL_LEGAL_OPINION
+
+
+def test_triage_runs_before_scope_guardrail() -> None:
+    result = asyncio.run(
+        handle_send_message(
+            "Ele disse que vai me matar",
+            triage_service=TriageService(),
+            guardrail_service=UnusedGuardrailService(),
+            knowledge_service=UnusedKnowledgeService(),
+            chat_response_service=UnusedChatService(),
+        )
+    )
+
+    assert result.triage.status is TriageStatus.ACUTE
+    assert result.guardrail is None
+
+
+def test_handler_fails_closed_when_guardrail_is_unavailable() -> None:
+    with pytest.raises(GuardrailUnavailableError):
+        asyncio.run(
+            handle_send_message(
+                DEFINITION_QUESTION,
+                triage_service=TriageService(),
+                guardrail_service=FailingGuardrailService(),
+                knowledge_service=UnusedKnowledgeService(),
+                chat_response_service=UnusedChatService(),
+            )
+        )
+
+
+@pytest.mark.parametrize(("message", "category"), OUT_OF_SCOPE_FIXTURES)
+def test_out_of_scope_fixture_returns_limit_without_reply_sources_or_delay(
+    client: TestClient,
+    processing_delays: list[float],
+    message: str,
+    category: OutOfScopeCategory,
+) -> None:
+    response = client.post(ENDPOINT, json={"message": message})
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["triage_status"] == "no_acute_signal"
+    assert payload["scope_status"] == "out_of_scope"
+    assert payload["out_of_scope_category"] == category.value
+    assert payload["knowledge_status"] is None
+    assert payload["reply"] is None
+    assert payload["guidance"] is None
+    assert payload["sources"] == []
+    assert payload["demo"] is True
+    assert processing_delays == []
+
+
+def test_allowed_message_reports_allowed_scope(
+    client: TestClient,
+    processing_delays: list[float],
+) -> None:
+    response = client.post(ENDPOINT, json={"message": DEFINITION_QUESTION})
+
+    payload = response.json()
+    assert payload["scope_status"] == "allowed"
+    assert payload["out_of_scope_category"] is None
+    assert payload["knowledge_status"] == "found"
+    assert processing_delays == [5]
+
+
+def test_guardrail_failure_returns_503_without_reply(
+    processing_delays: list[float],
+) -> None:
+    failing_client = TestClient(create_app(guardrail_service=FailingGuardrailService()))
+    response = failing_client.post(ENDPOINT, json={"message": DEFINITION_QUESTION})
+
+    assert response.status_code == 503
+    assert "reply" not in response.json()
+    assert DEFINITION_QUESTION not in response.text
+    assert processing_delays == []
 
 
 def test_get_is_not_allowed(client: TestClient) -> None:

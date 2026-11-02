@@ -9,6 +9,9 @@ import type { ChatMessage } from "./types";
 
 const NO_SOURCE_MESSAGE =
   "Não encontrei uma fonte confiável para responder a isso. Prefiro dizer que não sei a inventar uma resposta.";
+const OUT_OF_SCOPE_MESSAGE =
+  "Não posso dar um diagnóstico nem um parecer sobre o seu caso. Isso precisa de uma profissional que te escute com calma.\n\nPosso explicar o que a lei diz sobre isso e indicar quem pode te orientar de graça.";
+const LAW_QUESTION = "O que é violência psicológica?";
 
 interface ChatPageProps {
   initialMessage?: string;
@@ -61,23 +64,34 @@ export function ChatPage({
       }
 
       setRiskScreen(null);
-      const assistantMessage: ChatMessage =
-        result.knowledgeStatus === "found" && result.reply !== null
-          ? {
-              id: `message-${nextMessageId.current++}`,
-              role: "assistant",
-              text: result.reply,
-              knowledgeStatus: "found",
-              sources: result.sources,
-              demo: result.demo,
-            }
-          : {
-              id: `message-${nextMessageId.current++}`,
-              role: "assistant",
-              text: NO_SOURCE_MESSAGE,
-              knowledgeStatus: "no_source",
-              demo: result.demo,
-            };
+      const id = `message-${nextMessageId.current++}`;
+      let assistantMessage: ChatMessage;
+      if (result.outOfScopeCategory !== null) {
+        assistantMessage = {
+          id,
+          role: "assistant",
+          text: OUT_OF_SCOPE_MESSAGE,
+          outOfScopeCategory: result.outOfScopeCategory,
+          demo: result.demo,
+        };
+      } else if (result.knowledgeStatus === "found" && result.reply !== null) {
+        assistantMessage = {
+          id,
+          role: "assistant",
+          text: result.reply,
+          knowledgeStatus: "found",
+          sources: result.sources,
+          demo: result.demo,
+        };
+      } else {
+        assistantMessage = {
+          id,
+          role: "assistant",
+          text: NO_SOURCE_MESSAGE,
+          knowledgeStatus: "no_source",
+          demo: result.demo,
+        };
+      }
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err: unknown) {
       if (controller.signal.aborted) {
@@ -110,6 +124,16 @@ export function ChatPage({
       { id: `message-${nextMessageId.current++}`, role: "user", text },
     ]);
     await requestReply(text);
+  };
+
+  const handleAskLaw = () => {
+    void handleSendMessage(LAW_QUESTION);
+  };
+
+  const handleOpenContacts = () => {
+    const contacts = document.getElementById("emergency-contacts");
+    contacts?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("emergency-title")?.focus({ preventScroll: true });
   };
 
   const handleRetry = () => {
@@ -187,7 +211,12 @@ export function ChatPage({
           </div>
         )}
 
-        <MessageList messages={messages} isLoading={isLoading} />
+        <MessageList
+          messages={messages}
+          isLoading={isLoading}
+          onAskLaw={handleAskLaw}
+          onOpenContacts={handleOpenContacts}
+        />
 
         <MessageComposer
           onSendMessage={handleSendMessage}

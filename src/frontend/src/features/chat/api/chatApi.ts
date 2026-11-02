@@ -10,6 +10,13 @@ export type TriageSignal =
   | "death_threat"
   | "weapon_present";
 
+export type ScopeStatus = "allowed" | "out_of_scope";
+
+export type OutOfScopeCategory =
+  | "diagnosis"
+  | "prescription"
+  | "individual_legal_opinion";
+
 export type KnowledgeStatus = "found" | "no_source";
 
 export interface SourceReference {
@@ -26,6 +33,8 @@ export interface ChatApiResult {
   guidance: string | null;
   triageStatus: TriageStatus;
   signals: TriageSignal[];
+  scopeStatus: ScopeStatus | null;
+  outOfScopeCategory: OutOfScopeCategory | null;
   knowledgeStatus: KnowledgeStatus | null;
   sources: SourceReference[];
   demo: boolean;
@@ -45,6 +54,18 @@ function isTriageSignal(value: unknown): value is TriageSignal {
     value === "ongoing_assault" ||
     value === "death_threat" ||
     value === "weapon_present"
+  );
+}
+
+function isScopeStatus(value: unknown): value is ScopeStatus {
+  return value === "allowed" || value === "out_of_scope";
+}
+
+function isOutOfScopeCategory(value: unknown): value is OutOfScopeCategory {
+  return (
+    value === "diagnosis" ||
+    value === "prescription" ||
+    value === "individual_legal_opinion"
   );
 }
 
@@ -112,6 +133,8 @@ export async function sendMessage(
     guidance?: unknown;
     triage_status?: unknown;
     signals?: unknown;
+    scope_status?: unknown;
+    out_of_scope_category?: unknown;
     knowledge_status?: unknown;
     sources?: unknown;
     demo?: unknown;
@@ -122,6 +145,11 @@ export async function sendMessage(
     !result.signals.every(isTriageSignal) ||
     !(typeof result.reply === "string" || result.reply === null) ||
     !(typeof result.guidance === "string" || result.guidance === null) ||
+    !(isScopeStatus(result.scope_status) || result.scope_status === null) ||
+    !(
+      isOutOfScopeCategory(result.out_of_scope_category) ||
+      result.out_of_scope_category === null
+    ) ||
     !(isKnowledgeStatus(result.knowledge_status) || result.knowledge_status === null) ||
     !Array.isArray(result.sources) ||
     !result.sources.every(isSourceReference) ||
@@ -130,22 +158,34 @@ export async function sendMessage(
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
   }
 
+  const isAllowed =
+    result.scope_status === "allowed" && result.out_of_scope_category === null;
+  const isOutOfScope =
+    result.scope_status === "out_of_scope" &&
+    result.out_of_scope_category !== null &&
+    result.knowledge_status === null &&
+    result.reply === null &&
+    result.sources.length === 0;
   const isFound =
+    isAllowed &&
     result.knowledge_status === "found" &&
     typeof result.reply === "string" &&
     result.sources.length > 0;
   const isNoSource =
+    isAllowed &&
     result.knowledge_status === "no_source" &&
     result.reply === null &&
     result.sources.length === 0;
   const isBlockedByTriage =
+    result.scope_status === null &&
+    result.out_of_scope_category === null &&
     result.knowledge_status === null &&
     result.reply === null &&
     result.sources.length === 0 &&
     typeof result.guidance === "string";
   if (
     (result.triage_status === "no_acute_signal" &&
-      (result.guidance !== null || !(isFound || isNoSource))) ||
+      (result.guidance !== null || !(isOutOfScope || isFound || isNoSource))) ||
     (result.triage_status !== "no_acute_signal" && !isBlockedByTriage)
   ) {
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
@@ -156,6 +196,8 @@ export async function sendMessage(
     guidance: result.guidance,
     triageStatus: result.triage_status,
     signals: result.signals,
+    scopeStatus: result.scope_status,
+    outOfScopeCategory: result.out_of_scope_category,
     knowledgeStatus: result.knowledge_status,
     sources: result.sources,
     demo: result.demo,

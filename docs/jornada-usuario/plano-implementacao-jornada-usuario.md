@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01 e a versão publicada de C-02 validados em ambiente publicado; implementação atual de C-02/C-03/C-04 e build local concluídos, aguardando reconstrução/teste no Docker, publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01, C-02, C-03 e C-04 validados em ambiente publicado; C-05 com desenvolvimento concluído localmente, aguardando commit, publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a serviços de produção que utilizam dados e provedores simulados nesta fase
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -70,10 +70,10 @@ As tarefas de preparação não substituem a priorização das jornadas: são a 
 | 3 | I-03 | Início anônimo e sugestões | Independente, P1 | J-01 | Concluída — validada pela usuária em ambiente publicado |
 | 4 | I-04 | Privacidade e contatos úteis | Independente, P1 | J-00, I-03 | Concluída — validada pela usuária em ambiente publicado |
 | 5 | C-01 | Conversa anônima, mensagens e contexto em memória | Início da jornada dependente | I-03, J-01 | Concluída — conversa e integração validadas pela usuária em ambiente publicado |
-| 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 | Versão publicada validada em 31/10/2026; ajuste atual das fixtures em `TriageService` está local e aguarda publicação/validação; revisão profissional pendente |
-| 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 | Desenvolvimento concluído localmente — validações locais registradas; publicação/AWS e revisão profissional pendentes |
-| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Desenvolvimento concluído localmente — validações locais registradas; commit, publicação/AWS, revisão jurídica e curadoria das fontes pendentes |
-| 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 | Pendente |
+| 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 | Concluída — versão inicial validada em 31/10/2026; ajuste das fixtures publicado com C-03 e validado em AWS em 02/11/2026; revisão profissional pendente |
+| 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão profissional pendente para uso real |
+| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão jurídica e curadoria das fontes pendentes para uso real |
+| 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 | Desenvolvimento concluído localmente — validações locais registradas; commit, publicação/AWS e revisão jurídica/clínica dos gatilhos pendentes |
 | 10 | C-06 | Localização opcional e encaminhamento simulado | Ramo dependente da conversa | C-04, J-00 | Pendente |
 | 11 | I-05 | Entrada independente para questionário e resultado simulado | Independente, opcional | C-02, C-06, decisões de conteúdo | Pendente |
 | 12 | L-01 | Cadastro, login e saída da área logada (mock) | Jornada futura opcional | J-00, J-01, jornada anônima estável | Pendente |
@@ -82,7 +82,7 @@ As tarefas de preparação não substituem a priorização das jornadas: são a 
 | 15 | L-04 | Diário de incidentes e exportação demonstrativa | Jornada futura opcional | L-01, J-00 | Pendente |
 | 16 | L-05 | Guia/plano de segurança demonstrativo | Jornada futura opcional | J-00; L-01 se a decisão aprovada exigir conta | Pendente |
 
-**Legenda de status:** “Concluída” indica implementação publicada e validação humana confirmada em ambiente publicado. I-01, I-02, I-03, I-04, C-01 e C-02 estão concluídas nesse sentido. Revisões profissionais de segurança, privacidade e conteúdo continuam pendentes quando indicadas nas tarefas e não são substituídas pela validação funcional. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem publicação e validação humana. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. C-03 e C-04 estão neste estado e não estão aprovadas para uso real. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
+**Legenda de status:** “Concluída” indica implementação publicada e validação humana confirmada em ambiente publicado. I-01, I-02, I-03, I-04, C-01, C-02, C-03 e C-04 estão concluídas nesse sentido. C-05 está em “Desenvolvimento concluído localmente” e não está aprovada para uso real. Revisões profissionais de segurança, privacidade e conteúdo continuam pendentes quando indicadas nas tarefas e não são substituídas pela validação funcional. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem publicação e validação humana. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
 
 O questionário é uma entrada independente para a usuária, mas sua implementação depende da triagem e do encaminhamento para reutilizar regras e contratos. As tarefas L-01 a L-05 são de protótipo; não implementam segurança, persistência ou proteção de dados adequadas para uso real.
 
@@ -115,9 +115,9 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 | Tarefa dependente | Estado após J-00 | Motivo |
 |---|---|---|
 | I-02 — Saída Rápida | Concluída — validada pela usuária em ambiente publicado; revisão de segurança ainda pendente | A definição funcional de `/receitas` inclui três opções de receita, mostrando uma por acionamento e sem repetir a última. A revisão de segurança continua registrada como pendência antes de considerar o fluxo aprovado para uso real |
-| C-02/C-03 — Triagem e risco agudo | C-02 tem mock local; uso real bloqueado até revisão da rede de proteção e saúde mental; C-03 não iniciada | Fixtures sintéticas exercitam os estados; critérios de risco, destaque dos canais e texto de incerteza exigem validação especializada |
-| C-04 — Resposta com fontes | Desenvolvimento concluído localmente com duas fixtures de fontes oficiais aprovadas pela usuária em 02/11/2026 para demonstração; conteúdo real continua bloqueado até curadoria e revisão jurídica | Não há autorização para inventar fontes ou afirmações sensíveis; as fixtures citam literalmente a lei, sem interpretação do caso |
-| C-05 — Limite de escopo | Bloqueada para casos limítrofes até revisão jurídica e clínica | A distinção geral foi definida; exemplos e gatilhos ainda precisam de revisão |
+| C-02/C-03 — Triagem e risco agudo | Concluídas e validadas em AWS como protótipo; uso real bloqueado até revisão da rede de proteção e saúde mental | Fixtures sintéticas exercitam os estados; critérios de risco, destaque dos canais e texto de incerteza exigem validação especializada |
+| C-04 — Resposta com fontes | Concluída e validada em AWS em 02/11/2026 com duas fixtures de fontes oficiais aprovadas pela usuária em 02/11/2026 para demonstração; conteúdo real continua bloqueado até curadoria e revisão jurídica | Não há autorização para inventar fontes ou afirmações sensíveis; as fixtures citam literalmente a lei, sem interpretação do caso |
+| C-05 — Limite de escopo | Desenvolvimento concluído localmente com quatro frases de teste aprovadas pela usuária em 02/11/2026; casos limítrofes e gatilhos reais continuam bloqueados até revisão jurídica e clínica | A distinção geral foi definida; nenhum caso limítrofe foi inventado como regra |
 | C-06 — Localização/encaminhamento | Bloqueada até decisão de produto sobre localização e fallback | A proposta de geolocalização está em revisão; permanece vigente a entrada manual opcional |
 | I-03/I-04 — Início e privacidade | Podem avançar com o texto registrado, sujeitos à revisão de privacidade antes de uso real | Aviso aprovado para o protótipo, mas revisão LGPD continua pendente |
 | I-01 — Telefones de emergência | Pode avançar com destinos e números documentados; verificar os contatos antes de publicação | O protótipo não valida disponibilidade ou atendimento real |
@@ -281,7 +281,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### C-02 — Triagem de risco agudo antes de resposta informativa
 
 **Prioridade:** P0 de segurança
-**Estado:** A versão publicada foi validada pela usuária em 31/10/2026. O ajuste atual da regra de fixtures em `TriageService` foi implementado localmente durante C-03 e ainda precisa ser publicado e validado. A revisão profissional de segurança e conteúdo permanece pendente.
+**Estado:** Concluída — a versão inicial foi validada pela usuária em 31/10/2026; o ajuste da regra de fixtures em `TriageService`, feito durante C-03, foi publicado com C-03 e validado em AWS em 02/11/2026. A revisão profissional de segurança e conteúdo permanece pendente.
 **Dependências:** C-01, J-00
 **Jornada-base:** toda mensagem deve passar pela regra de urgência antes do fluxo informativo.
 
@@ -311,14 +311,14 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 - Casos agudos e a frase exata **“frase incerta”** não recebem resposta informativa nem aguardam o atraso simulado de cinco segundos. Todas as demais mensagens seguem ao serviço de resposta e aguardam o atraso.
 - Frontend exibe a orientação devolvida pela triagem, rotulada como simulação, e mantém visíveis os contatos úteis; não implementa nem duplica regras de classificação.
 - Testes cobrem os oito exemplos de risco, normalização, mensagens negadas/contextualizadas que seguem o fluxo normal, dois sinais reconhecidos, frase incerta exata e variações com texto extra, payloads e atraso.
-- A usuária confirmou a validação da versão publicada de C-02 em 31/10/2026. O refinamento atual das fixtures foi validado localmente, mas ainda não está publicado; nenhuma versão deve ser usada para orientar situações reais nem ser considerada triagem confiável.
+- A usuária confirmou a validação da versão publicada de C-02 em 31/10/2026 e, com C-03, a do refinamento das fixtures em 02/11/2026; nenhuma versão deve ser usada para orientar situações reais nem ser considerada triagem confiável.
 
 **Skills:** [Triagem determinística de risco agudo e avaliação de segurança](../../skills/triagem-risco-agudo-avaliacao-seguranca.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Arquitetura de software e integração ponta a ponta](../../skills/arquitetura-software-integracao.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md).
 
 ### C-03 — Tela de risco agudo, canais e retorno
 
 **Prioridade:** P0 de segurança
-**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam revisão profissional de segurança/conteúdo, commit, publicação e validação humana na AWS.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A revisão profissional de segurança/conteúdo e a revisão com leitor de tela permanecem pendentes para uso real.
 **Dependências:** I-01, I-02, C-02
 **Jornada-base:** resultados de risco agudo e incerto.
 
@@ -337,7 +337,7 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 - Corrigido o estado obsoleto da tela de risco: **Voltar à conversa** limpa o resultado anterior, e cada nova resposta da triagem substitui o estado exibido. Mensagens seguintes não ficam presas ao resultado antigo.
 - Execução manual no navegador local: `dialog:modal` confirmou modal nativo aberto com `aria-modal="true"` e conversa ainda montada ao fundo; **Voltar à conversa** fechou o modal. **Saída rápida (Esc)** dentro do modal abriu `/receitas`. A caixa foi redimensionada para ocupar 70% da viewport em desktop e as ações foram separadas numa faixa fixa para continuarem visíveis durante a rolagem do conteúdo.
 
-**Pendências para aprovação e conclusão:** revisão por profissionais da rede de proteção/saúde mental do mapeamento, ordem/destaque e textos; commit, publicação e teste humano no ambiente AWS conforme critério geral. Esta tela não deve ser usada para orientar situações reais.
+**Pendências para uso real:** revisão por profissionais da rede de proteção/saúde mental do mapeamento, ordem/destaque e textos; revisão de acessibilidade com leitor de tela. Esta tela não deve ser usada para orientar situações reais.
 
 **Skills:** [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Triagem determinística de risco agudo e avaliação de segurança](../../skills/triagem-risco-agudo-avaliacao-seguranca.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [PWA, privacidade de dispositivo e Saída Rápida](../../skills/pwa-privacidade-dispositivo-saida-rapida.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
@@ -348,14 +348,15 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 - [x] Regressão local do estado: o retorno limpa o resultado anterior; uma nova resposta `no_acute_signal` permanece na conversa e novos resultados `acute`/`indeterminate` são avaliados independentemente — verificada pela atualização do fluxo de estado e type check/build.
 - [x] Regressão backend: `uv run python -m pytest` — 35 testes passaram; Ruff check e formatação passaram, em 31/10/2026.
 - [x] Validação anterior no navegador local com respostas controladas: diálogo de risco agudo sobre a conversa, retorno, tela não modal para **“frase incerta”** e mensagem desconhecida com resposta normal, sem reabrir o modal antigo. A exibição não modal foi substituída pela mudança atual.
-- [ ] Validar no navegador os modais de risco e **“frase incerta”**, incluindo conversa visível ao fundo, retorno, Saída Rápida, ausência de rolagem em viewport usual e comportamento com viewport móvel/zoom; reconstruir a imagem/contêiner Docker para carregar o frontend atualizado.
+- [x] Modais de risco e **“frase incerta”** validados pela usuária no ambiente publicado (AWS), com a imagem reconstruída, em 02/11/2026.
 - [ ] Revisar modal com leitor de tela e validar posicionamento mobile; o foco modal e a ação **Saída rápida (Esc)** foram verificados no navegador integrado.
-- [ ] Publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação.
+- [x] Commits: `20cd68e`, `16a7b48`, `078553a` e `1b7234c` em `develop`/`origin/develop`.
+- [x] Publicação e validação humana em AWS — confirmadas pela usuária em 02/11/2026.
 
 ### C-04 — Resposta informativa com fontes simuladas
 
 **Prioridade:** P1
-**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam revisão jurídica e curadoria das fontes, commit, publicação e validação humana na AWS.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A revisão jurídica e a curadoria formal das fontes permanecem pendentes para uso real.
 **Dependências:** C-02 (resultado sem risco agudo), J-00 (fontes aprovadas), J-01
 **Jornada-base:** resposta psicoeducativa, fontes e continuação da conversa.
 
@@ -383,7 +384,7 @@ Os textos foram conferidos nas páginas do Planalto em 02/11/2026. A comparaçã
 - Contrato HTTP evoluído de forma coordenada: `knowledge_status` (`found` | `no_source` | `null` quando a triagem bloqueia), `sources` e `demo`. Falha da recuperação retorna `503` sem resposta nem eco da mensagem.
 - Frontend valida o novo contrato em runtime (combinações coerentes de `triage_status`, `knowledge_status`, `reply`, `guidance` e `sources`; URL `https://`), mostra o bloco **Fontes** com link para a fonte oficial (nova aba, `rel="noreferrer"`), órgão e versão, e o aviso de demonstração com revisão jurídica pendente. O estado sem fonte mostra “Não encontrei uma fonte confiável para responder a isso. Prefiro dizer que não sei a inventar uma resposta.” O aviso do wireframe “Toda resposta mostra de onde veio a informação…” foi incluído na lateral da conversa.
 - Contexto: o histórico continua apenas no estado React em memória e o backend recebe só a mensagem atual (decisão J-01); nenhuma resposta, fonte ou mensagem é persistida ou registrada em log.
-- Fora do escopo desta tarefa e não implementado: abertura “padrão que tem nome” e explicação interpretativa do wireframe (exigem conteúdo curado), botões **Onde buscar ajuda** (C-06) e **O que acontece no meu caso?** (C-05), guardrail de saída (C-05) e qualquer RAG/LLM real.
+- Fora do escopo desta tarefa e não implementado: abertura “padrão que tem nome” e explicação interpretativa do wireframe (exigem conteúdo curado), botões **Onde buscar ajuda** (C-06) e **O que acontece no meu caso?** (frase tratada como limite em C-05), guardrail de saída e qualquer RAG/LLM real.
 
 **Validações locais C-04 (02/11/2026):**
 
@@ -392,20 +393,52 @@ Os textos foram conferidos nas páginas do Planalto em 02/11/2026. A comparaçã
 - [x] Integração local navegador → Vite → FastAPI: as duas perguntas de teste retornaram `found` com a fonte esperada em ~5 s; “Tenho dúvidas sobre meus direitos” retornou `no_source`; frase de risco retornou `acute` sem conhecimento nem atraso.
 - [x] Navegador headless: bloco **Fontes** e aviso de demonstração exibidos; estado sem fonte exibido sem fontes e sem modal; viewport de 320 px sem overflow horizontal; `localStorage`/`sessionStorage` vazios. Único erro de console: `404` de `/favicon.ico`, anterior a esta tarefa.
 - [ ] Revisão jurídica das citações e da frase introdutória; curadoria formal das fontes.
-- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação.
+- [x] Commit: `1b7234c` em `develop`/`origin/develop` (mensagem do commit: “Resolução C-03”; contém a implementação e a documentação do C-04).
+- [x] Publicação e validação humana em AWS — confirmadas pela usuária em 02/11/2026.
 
 **Skills:** [Curadoria de conteúdo e engenharia de conhecimento RAG](../../skills/curadoria-conteudo-engenharia-conhecimento-rag.md), [Integração de LLM e engenharia de prompts](../../skills/integracao-llm-engenharia-prompts.md), [Guardrails, escopo ético e avaliação generativa](../../skills/guardrails-escopo-etico-avaliacao-generativa.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md).
 
 ### C-05 — Limite de escopo e alternativas seguras
 
 **Prioridade:** P1
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam revisão jurídica/clínica dos gatilhos, commit, publicação e validação humana na AWS.
 **Dependências:** C-02, J-00 (regra e conteúdo aprovados)
 **Jornada-base:** pedidos de diagnóstico ou parecer individualizado.
 
 **Escopo:** apresentar o bloco **Fora do que eu posso fazer** nos casos aprovados, sem encerrar a conversa; permitir seguir para informação geral ou encaminhamento. Casos limítrofes não devem ser inventados como regra do mock.
 
 **Critérios de aceite:** mensagem e alternativas correspondem ao texto aprovado; pedidos gerais sobre direitos continuam no fluxo informativo; nenhuma resposta simula diagnóstico, aconselhamento jurídico individual ou decisão pela usuária; testes cobrem limites e continuidade.
+
+**Decisões da usuária (02/11/2026):**
+
+- Usar uma frase de teste por categoria (duas para parecer jurídico individual), com comparação exata normalizada, como nas demais fixtures. Qualquer outra mensagem segue o fluxo informativo.
+- **O que a lei diz** envia “O que é violência psicológica?” como nova mensagem da usuária, passando por triagem, escopo e fontes (C-04).
+- **Defensoria Pública ou CRAM** leva ao painel de contatos úteis existente enquanto C-06 está bloqueado. Para não prometer o que o painel não lista, o bloco informa: “No protótipo, este botão leva aos contatos gerais desta tela. Opções de Defensoria Pública e CRAM entram com o encaminhamento por cidade.”
+
+**Fixtures de limite de escopo aprovadas para o protótipo — revisão jurídica e clínica pendente:**
+
+| Categoria | Frase de teste (comparação exata, normalizada) |
+|---|---|
+| Diagnóstico (`diagnosis`) | “Eu tenho depressão?” |
+| Prescrição (`prescription`) | “Que remédio devo tomar?” |
+| Parecer jurídico individual (`individual_legal_opinion`) | “O que acontece no meu caso?” (rótulo do wireframe); “Devo denunciar meu marido?” |
+| Permanece no fluxo informativo | Perguntas gerais sobre direitos (ex.: “Quais são os direitos de uma mulher em situação de violência?”), as perguntas de C-04 e frases de teste com texto adicional |
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Criado `GuardrailService` (porta assíncrona `ScopeGuardrail`) em `services/guardrail/`, com `GuardrailResult` (`allow` | `out_of_scope` + categoria); o modelo rejeita `out_of_scope` sem categoria e `allow` com categoria. Indisponibilidade é `GuardrailUnavailableError` e falha fechada (HTTP `503`, sem resposta).
+- Ordem no handler: triagem → (somente `no_acute_signal`) limite de escopo → (somente `allow`) recuperação de fontes → (somente `found`) geração. Pedido fora do escopo não consulta fontes nem gera texto e não aguarda o atraso simulado. A triagem sempre precede o guardrail: frase de risco abre o modal de C-03 mesmo que também pareça pedido fora do escopo.
+- Contrato HTTP evoluído: `scope_status` (`allowed` | `out_of_scope` | `null` quando a triagem bloqueia) e `out_of_scope_category`. O frontend valida as combinações em runtime.
+- Frontend: o limite aparece como mensagem da Aurora no fluxo (sem modal), com título **Fora do que eu posso fazer**, texto do wireframe, ações **O que a lei diz** e **Defensoria Pública ou CRAM**, nota sobre o destino do botão no protótipo, aviso de autonomia do wireframe e aviso de demonstração. O campo de mensagem continua disponível; a conversa não é encerrada.
+- O texto do wireframe é usado para as três categorias, conforme decisão de J-00; a resposta não simula diagnóstico, prescrição, parecer individual nem decisão pela usuária.
+
+**Validações locais C-05 (02/11/2026):**
+
+- [x] Backend: `pytest` — 69 testes passaram (quatro fixtures e categorias, normalização, perguntas gerais e frases com texto adicional permitidas, modelo de resultado, handler sem fontes/geração quando fora do escopo, triagem antes do guardrail, falha fechada → `503`, payload HTTP sem resposta/fontes/atraso, `scope_status: "allowed"` no fluxo informativo); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador local (Vite → FastAPI): “O que acontece no meu caso?” exibiu o bloco em ~130 ms, sem modal e com campo ativo; **Defensoria Pública ou CRAM** levou o foco ao título dos contatos úteis; **O que a lei diz** enviou “O que é violência psicológica?” e recebeu resposta com **Fontes**; “Que remédio devo tomar?” exibiu o limite; pergunta geral sobre direitos seguiu o fluxo informativo (estado sem fonte); viewport de 320 px sem overflow horizontal. Único erro de console: `404` de `/favicon.ico`, anterior.
+- [ ] Revisão jurídica, clínica e de produto dos gatilhos, de exemplos limítrofes e da aplicação do texto do wireframe à categoria prescrição.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação.
 
 **Skills:** [Guardrails, escopo ético e avaliação generativa](../../skills/guardrails-escopo-etico-avaliacao-generativa.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 

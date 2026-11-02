@@ -321,8 +321,8 @@ responsabilidades previstos para produção; no momento oportuno, os dados
 estáticos serão substituídos por integrações reais sem criar classes paralelas
 com prefixo `Mock`. O frontend apenas apresenta a orientação do serviço
 identificada como simulação. A tela de emergência e o mapeamento de canais
-estão implementados no protótipo na tarefa C-03, aguardando revisão
-profissional, publicação e validação humana.
+estão implementados no protótipo na tarefa C-03, publicada e validada pela
+usuária em AWS em 02/11/2026; a revisão profissional continua pendente.
 
 ### Etapa 3A — Exibir resultados de triagem em modal
 
@@ -476,6 +476,20 @@ diagnóstico, prescrição ou parecer jurídico individual sobre o caso. Pergunt
 gerais sobre direitos permanecem elegíveis para o fluxo informativo com fontes.
 Usar o texto do wireframe; exemplos limítrofes e gatilhos de identificação
 precisam de revisão jurídica, clínica e de produto.
+
+**Implementação observada no protótipo (C-05, 02/11/2026; frases de teste
+aprovadas pela usuária, revisão jurídica e clínica pendente):** depois da
+triagem sem sinal agudo, o `GuardrailService` compara a mensagem inteira com
+as frases **“Eu tenho depressão?”** (diagnóstico), **“Que remédio devo
+tomar?”** (prescrição), **“O que acontece no meu caso?”** e **“Devo denunciar
+meu marido?”** (parecer jurídico individual). Nesses casos, a conversa mostra o
+bloco **Fora do que eu posso fazer** no fluxo, sem modal, sem consultar fontes
+e sem gerar texto. **O que a lei diz** envia “O que é violência psicológica?”
+como nova mensagem. **Defensoria Pública ou CRAM** leva aos contatos úteis
+gerais da tela, com nota de que Defensoria e CRAM entram com o encaminhamento
+por cidade (C-06). Demais mensagens, inclusive perguntas gerais sobre direitos,
+seguem o fluxo informativo. Falha do guardrail aparece como erro, nunca como
+resposta.
 
 ### Etapa 4 — Informar localização para encontrar serviços
 

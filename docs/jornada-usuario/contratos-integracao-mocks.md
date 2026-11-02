@@ -33,7 +33,9 @@ FastAPI router: valida/transfere HTTP
   └─ handler do caso de uso: orquestra
        ├─ TriageEvaluator → TriageService
        │    └─ frases de fixture estáticas nesta fase
-       ├─ KnowledgeRetriever → KnowledgeService (somente sem sinal agudo)
+       ├─ ScopeGuardrail → GuardrailService (somente sem sinal agudo)
+       │    └─ frases-fixture de pedidos fora do escopo (C-05)
+       ├─ KnowledgeRetriever → KnowledgeService (somente com escopo permitido)
        │    └─ trechos literais de fontes oficiais aprovadas como fixture (C-04)
        └─ ChatResponseGenerator → ChatResponseService (somente com fonte)
             └─ redação estática a partir dos trechos recebidos nesta fase
@@ -81,7 +83,9 @@ A API atual implementa `POST /api/chat/messages`.
 }
 ```
 
-Combinações válidas (C-04): sem sinal agudo e `knowledge_status: "found"` → `reply` texto e ao menos uma fonte; sem sinal agudo e `"no_source"` → `reply: null` e `sources: []`; `acute`/`indeterminate` → `knowledge_status: null`, `reply: null`, `sources: []` e `guidance` preenchida. Para risco agudo ou indeterminação, o serviço retorna orientação e não executa recuperação nem geração. Falha técnica da recuperação retorna `503` com `detail` genérico. O frontend rejeita qualquer outra combinação como resposta fora do schema. O campo `message` é obrigatório e não pode ser vazio ou só conter espaços. A API usa `422` para entrada inválida e `200` para processamento concluído. O frontend valida o formato desses campos em runtime.
+Campos de escopo (C-05): `scope_status` (`"allowed"` | `"out_of_scope"` | `null`) e `out_of_scope_category` (`"diagnosis"` | `"prescription"` | `"individual_legal_opinion"` | `null`). Sem sinal agudo e `out_of_scope` → categoria preenchida, `knowledge_status: null`, `reply: null`, `sources: []`, sem atraso simulado; o texto do limite é o do wireframe, apresentado pelo frontend. Falha do guardrail retorna `503` (falha fechada). Nos demais casos sem sinal agudo, `scope_status: "allowed"` e categoria `null`; em `acute`/`indeterminate`, ambos `null`.
+
+Combinações válidas (C-04): sem sinal agudo, escopo permitido e `knowledge_status: "found"` → `reply` texto e ao menos uma fonte; sem sinal agudo e `"no_source"` → `reply: null` e `sources: []`; `acute`/`indeterminate` → `knowledge_status: null`, `reply: null`, `sources: []` e `guidance` preenchida. Para risco agudo ou indeterminação, o serviço retorna orientação e não executa recuperação nem geração. Falha técnica da recuperação retorna `503` com `detail` genérico. O frontend rejeita qualquer outra combinação como resposta fora do schema. O campo `message` é obrigatório e não pode ser vazio ou só conter espaços. A API usa `422` para entrada inválida e `200` para processamento concluído. O frontend valida o formato desses campos em runtime.
 
 ### Compatibilidade aprovada
 
@@ -166,7 +170,9 @@ type GuardrailResult =
 - Perguntas gerais sobre direitos não são automaticamente classificadas como parecer individual.
 - Falha/indisponibilidade do guardrail é `block`, não `allow`.
 - O texto de resposta ao usuário vem do conteúdo aprovado, não de uma mensagem improvisada pelo serviço.
-- Categorias e gatilhos dependem de revisão jurídica/clínica antes de implementação.
+- Categorias e gatilhos dependem de revisão jurídica/clínica antes de uso real.
+
+**Implementado em C-05 (entrada):** `ScopeGuardrail.check_request(message)` devolve `allow` ou `out_of_scope` com categoria; indisponibilidade é `GuardrailUnavailableError` (equivalente a `block`/`guardrail_unavailable`, HTTP `503`). No protótipo, `GuardrailService` compara a mensagem inteira normalizada com quatro frases de teste aprovadas pela usuária em 02/11/2026; não classifica pedidos reais. O guardrail de saída (`unsafe_output`) ainda não foi implementado e será necessário quando houver geração por LLM.
 
 ### 5.5 Catálogo e encaminhamento
 
@@ -232,7 +238,7 @@ interface EmergencyChannel {
 
 `EmergencyChannel` representa somente canais registrados no backlog. Os rótulos e a seleção contextual ainda precisam de revisão profissional; o destino `tel:` não inicia a ligação por si só.
 
-**Ordem obrigatória no backend:** validar entrada → executar triagem → se risco agudo/indeterminado, retornar o resultado correspondente sem recuperação/geração informativa → recuperar fontes → aplicar guardrail ao pedido/saída → gerar/validar resposta ancorada → retornar conteúdo com fontes. Uma falha em qualquer dependência é um erro explícito ou resultado `blocked`; nunca uma resposta fictícia de sucesso.
+**Ordem obrigatória no backend:** validar entrada → executar triagem → se risco agudo/indeterminado, retornar o resultado correspondente sem recuperação/geração informativa → aplicar guardrail de escopo ao pedido (fora do escopo retorna o limite sem recuperação/geração) → recuperar fontes → gerar resposta ancorada → aplicar guardrail de saída (futuro) → retornar conteúdo com fontes. Implementado até a geração em C-04/C-05; o guardrail de saída fica para a integração com LLM. Uma falha em qualquer dependência é um erro explícito ou resultado `blocked`; nunca uma resposta fictícia de sucesso.
 
 **Atenção:** este contrato é uma proposta técnica para suportar decisões já registradas no J-00. A classificação de risco indeterminada, os textos de UI e os campos de ação ainda dependem de revisão humana e não devem ser implementados com conteúdo final antes dela.
 
@@ -269,6 +275,10 @@ src/backend/src/aurora_backend/
 │           │   ├── models.py
 │           │   └── service.py      # TriageService + fixtures temporárias
 │           ├── fixture_text.py     # normalização compartilhada das frases-fixture
+│           ├── guardrail/
+│           │   ├── port.py         # ScopeGuardrail, GuardrailUnavailableError
+│           │   ├── models.py       # GuardrailResult, ScopeDecision, OutOfScopeCategory
+│           │   └── service.py      # GuardrailService + frases-fixture de limite de escopo
 │           ├── knowledge/
 │           │   ├── port.py         # KnowledgeRetriever, KnowledgeUnavailableError
 │           │   ├── models.py       # KnowledgeResult, KnowledgePassage, SourceReference
@@ -278,7 +288,7 @@ src/backend/src/aurora_backend/
 │               └── service.py     # ChatResponseService + redação temporária a partir dos trechos
 ```
 
-A estrutura acima representa a implementação atual de conversa, triagem e conhecimento com fontes. Outras capacidades devem ser adicionadas somente quando suas tarefas começarem; não criar diretórios vazios ou abstrações sem consumidor.
+A estrutura acima representa a implementação atual de conversa, triagem, limite de escopo e conhecimento com fontes. Outras capacidades devem ser adicionadas somente quando suas tarefas começarem; não criar diretórios vazios ou abstrações sem consumidor.
 
 Regras para serviços e seus dados demonstrativos:
 

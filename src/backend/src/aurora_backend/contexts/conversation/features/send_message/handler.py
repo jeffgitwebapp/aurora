@@ -1,10 +1,15 @@
-"""Orquestra o envio de mensagem entre triagem, conhecimento e resposta."""
+"""Orquestra o envio de mensagem entre triagem, escopo, conhecimento e resposta."""
 
 from dataclasses import dataclass
 
 from aurora_backend.contexts.conversation.services.chat_response.port import (
     ChatResponseGenerator,
 )
+from aurora_backend.contexts.conversation.services.guardrail.models import (
+    GuardrailResult,
+    ScopeDecision,
+)
+from aurora_backend.contexts.conversation.services.guardrail.port import ScopeGuardrail
 from aurora_backend.contexts.conversation.services.knowledge.models import (
     KnowledgeResult,
     KnowledgeStatus,
@@ -21,6 +26,7 @@ from aurora_backend.contexts.conversation.services.triage.port import TriageEval
 class SendMessageResult:
     reply: str | None
     triage: TriageResult
+    guardrail: GuardrailResult | None = None
     knowledge: KnowledgeResult | None = None
 
 
@@ -32,6 +38,7 @@ async def handle_send_message(
     message: str,
     *,
     triage_service: TriageEvaluator,
+    guardrail_service: ScopeGuardrail,
     knowledge_service: KnowledgeRetriever,
     chat_response_service: ChatResponseGenerator,
 ) -> SendMessageResult:
@@ -42,12 +49,22 @@ async def handle_send_message(
     if triage.status is not TriageStatus.NO_ACUTE_SIGNAL:
         return SendMessageResult(reply=None, triage=triage)
 
+    guardrail = await guardrail_service.check_request(message)
+    if guardrail.decision is not ScopeDecision.ALLOW:
+        return SendMessageResult(reply=None, triage=triage, guardrail=guardrail)
+
     knowledge = await knowledge_service.retrieve(message)
     if knowledge.status is not KnowledgeStatus.FOUND:
-        return SendMessageResult(reply=None, triage=triage, knowledge=knowledge)
+        return SendMessageResult(
+            reply=None,
+            triage=triage,
+            guardrail=guardrail,
+            knowledge=knowledge,
+        )
 
     return SendMessageResult(
         reply=await chat_response_service.generate_reply(message, knowledge.passages),
         triage=triage,
+        guardrail=guardrail,
         knowledge=knowledge,
     )
