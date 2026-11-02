@@ -4,6 +4,8 @@ import { EmergencyContacts } from "../emergency/EmergencyContacts";
 
 interface WelcomePageProps {
   onOpenConversation: (initialMessage: string, sendImmediately?: boolean) => void;
+  onOpenAccount: () => void;
+  isLoggedIn: boolean;
   onQuickExit: () => void;
 }
 
@@ -13,7 +15,12 @@ const suggestedMessages = [
   "Onde encontrar apoio",
 ];
 
-export function WelcomePage({ onOpenConversation, onQuickExit }: WelcomePageProps) {
+export function WelcomePage({
+  onOpenConversation,
+  onOpenAccount,
+  isLoggedIn,
+  onQuickExit,
+}: WelcomePageProps) {
   const [draft, setDraft] = useState("");
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const privacyButtonRef = useRef<HTMLButtonElement>(null);
@@ -126,6 +133,9 @@ export function WelcomePage({ onOpenConversation, onQuickExit }: WelcomePageProp
           <a className="welcome-footer__link" href="#welcome-emergency-contacts">
             Contatos úteis
           </a>
+          <button type="button" className="welcome-footer__link" onClick={onOpenAccount}>
+            {isLoggedIn ? "Minha conta" : "Entrar"}
+          </button>
         </div>
       </footer>
 

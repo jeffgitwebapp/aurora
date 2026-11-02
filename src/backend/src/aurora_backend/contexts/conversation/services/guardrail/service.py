@@ -1,12 +1,12 @@
 """Serviço de limite de escopo com frases-fixture estáticas no protótipo."""
 
-from aurora_backend.contexts.conversation.services.fixture_text import (
-    normalize_fixture_sentence,
-)
 from aurora_backend.contexts.conversation.services.guardrail.models import (
     GuardrailResult,
     OutOfScopeCategory,
     ScopeDecision,
+)
+from aurora_backend.shared.fixture_text import (
+    normalize_fixture_sentence,
 )
 
 # Frases de teste aprovadas pela usuária em 02/11/2026; casos limítrofes e

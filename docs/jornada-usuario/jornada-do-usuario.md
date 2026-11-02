@@ -517,11 +517,20 @@ confirmação em modal; a solicitação conflita com RF/RNF e wireframe e está
 bloqueada para revisão de produto e de privacidade/segurança. Até aprovação
 formal e atualização das fontes, não implementar localização automática.
 
-**[GAP]** A mensagem e as ações para localização vazia, ambígua, fora do
-catálogo ou sem serviço local válido ainda precisam de decisão de produto.
-Como proposta a validar, manter canais nacionais, explicar que não foi possível
-confirmar opções locais e oferecer **Tentar outra cidade** e **Voltar à
-conversa**.
+**Decisão de 02/11/2026 (C-06; revisão de privacidade/LGPD e aprovação do
+time de produto pendentes):** ao abrir **Onde buscar ajuda** (ação fixa na
+lateral da conversa), o Aurora pede a localização do aparelho. As coordenadas
+são convertidas em cidade/UF no próprio aparelho e descartadas; um modal
+**Confirmar sua cidade** oferece **Usar esta cidade**, **Digitar outra cidade**
+e **Saída rápida (Esc)**. Sem permissão, sem localização ou longe de uma
+capital, a tela informa isso e mantém o campo manual. A regra anterior
+(somente digitação) fica substituída por esta, e o RNF01 foi atualizado.
+
+**Sem resultado (proposta aprovada para o protótipo):** “Não consegui confirmar
+serviços perto de você nesta demonstração. Os canais nacionais continuam
+disponíveis.”, com **Ver canais nacionais**, **Tentar outra cidade** e **Voltar
+à conversa**. Entrada sem UF mostra “Informe a cidade e a UF, por exemplo:
+Recife / PE.”.
 
 ### Etapa 5 — Ver opções de encaminhamento
 
@@ -597,6 +606,15 @@ esteja vigente ou acessível.
 | Continuar conversas anteriores com conta | E3-US6 prevê histórico para usuária logada | Retomada de conversa anterior deve existir para a área logada | **[GAP]** tela, lista, seleção, confirmação e exclusão não estão especificadas |
 | Excluir conta | E2-US4 prevê exclusão permanente com um clique | Excluir conta e dados vinculados | **[GAP]** confirmação, feedback, prazo e falhas precisam ser especificados |
 
+**Implementação observada no protótipo (L-02, 02/11/2026; decisões da
+usuária, revisões e aprovação do time de produto pendentes):** **Salvar
+conversa na conta** na lateral da conversa pede login ali mesmo, se preciso, e
+confirmação explícita antes de guardar. Em **Minha conta**, o histórico é
+somente leitura (**Ver**, **Excluir**); **Excluir conta e todos os dados** pede
+confirmação na própria tela e informa “Conta e dados excluídos.” ou, em falha,
+que nada foi apagado. As conversas ficam cifradas na memória do servidor de
+demonstração e somem quando ele reinicia.
+
 **[SUGESTÃO — validar]** No modo anônimo, manter uma ação de retorno explícita
 nas telas internas, sem criar um botão que restaure uma sessão já encerrada. No
 modo logado, definir uma lista de conversas com ação **Continuar** e
@@ -621,6 +639,16 @@ excluir a conta/dados.
 esqueci a senha, bloqueio, migração, confirmação de exclusão ou saída da conta.
 Regras de apelido e senha também não estão especificadas.
 
+**Implementação observada no protótipo (L-01, 02/11/2026; regras aprovadas
+pela usuária, revisão de segurança e aprovação do time de produto pendentes):**
+link **Entrar** no rodapé da tela inicial abre `/conta` com **Entrar** e
+**Criar conta**. Apelido de 3 a 30 caracteres; senha com pelo menos 10
+caracteres, letras e números, confirmação e **Mostrar senha**. Erro genérico
+“Apelido ou senha incorretos.”; bloqueio de 1 minuto após 5 erros; sem
+recuperação de senha. Após entrar: “Olá, [apelido]”, **Ir para a conversa** e
+**Sair da conta**. As contas existem só na memória do servidor do protótipo; a
+Saída Rápida e o recarregamento encerram a sessão.
+
 **[SUGESTÃO — validar]** Definir esses estados antes de construir a área
 logada. No fluxo de migração, explicar o que será transferido e pedir
 confirmação; não migrar silenciosamente relatos sensíveis.
@@ -639,6 +667,15 @@ e comportamento de interrupção ao detectar risco agudo.
 opção de interromper e caminho direto para emergência. Conteúdo e classificação
 devem ser validados com especialistas; não inventar perguntas ou pontuação.
 
+**Implementação observada no protótipo (I-05, 02/11/2026; decisões da usuária,
+instrumento e aprovação do time de produto pendentes):** botão **Responder
+questionário** na lateral da conversa; duas perguntas provisórias sem conteúdo
+clínico e a pergunta de tipo de ajuda do E4-US4, uma por tela, com progresso,
+**Voltar**, **Parar questionário** e **Estou em perigo agora** (abre o modal de
+risco agudo). O resultado mostra uma “Faixa de demonstração A/B/C” fictícia,
+com aviso de que não indica padrão, risco nem diagnóstico, e oferece **Onde
+buscar ajuda** e **Conversar com a Aurora**. As respostas não são guardadas.
+
 ### 7.3 Módulos de psicoeducação
 
 **Definido:** área logada com módulos curtos em texto, áudio ou vídeo sobre
@@ -647,6 +684,14 @@ progresso.
 
 **[GAPS]** Faltam catálogo de módulos, tela de detalhe, controle de reprodução,
 legendas/transcrições, retomada, conclusão, progresso e preferências de áudio.
+
+**Implementação observada no protótipo (L-03, 02/11/2026; decisões da
+usuária, conteúdo e aprovação do time de produto pendentes):** seção **Módulos**
+em **Minha conta** com oito temas do backlog. Só **O que é violência
+psicológica** tem texto (citações literais da lei com fonte); os demais estão
+marcados “em preparação”. Leitura por partes com **Anterior**, **Próxima** e
+**Concluir módulo**; progresso salvo na conta e **Continuar de onde parei**.
+Áudio e vídeo ainda não estão disponíveis.
 
 **[SUGESTÃO — validar]** Especificar navegação de catálogo → detalhe → consumo
 → retomar/concluir, preservando controle da usuária e formatos acessíveis.
@@ -660,6 +705,15 @@ adicionar fotos ou áudio e exportar PDF protegido.
 confirmação, anexo, exclusão, exportação, senha do PDF ou avisos sobre riscos
 de guardar material no dispositivo.
 
+**Implementação observada no protótipo (L-04, 02/11/2026; decisões da
+usuária, revisões e aprovação do time de produto pendentes):** seção **Diário**
+em **Minha conta** com data (não futura), hora opcional e descrição; aviso de
+privacidade antes de salvar; edição, exclusão com confirmação e cancelamento
+sem salvar. O anexo de foto ou áudio é simulado (só nome e tamanho; o arquivo
+não é enviado). **Exportar (demonstração)** mostra um aviso sobre arquivos no
+aparelho e sobre a falta de garantia jurídica e depois uma prévia na tela, sem
+gerar arquivo.
+
 **[SUGESTÃO — validar]** Antes de uma ação irreversível ou exportação, explicar
 o que será guardado/gerado e permitir cancelar. Não apresentar o arquivo como
 prova garantida nem afirmar que sua posse é segura em dispositivo monitorado.
@@ -671,6 +725,16 @@ anotações pessoais, contatos de emergência e oferta contextual sem pressão.
 
 **[GAPS]** Faltam início do guia, passos, formulário, edição, salvamento,
 retomada, exclusão e definição de como sugeri-lo na conversa.
+
+**Implementação observada no protótipo (L-05, 02/11/2026; conteúdo e
+aprovação do time de produto pendentes):** seção **Guia de segurança** em
+**Minha conta**, também aberta pela conversa quando a frase de teste “Quero
+pensar na minha segurança” traz o convite opcional **Abrir guia de segurança**.
+O guia avisa que é opcional e não presume que a pessoa deva sair de casa ou do
+relacionamento; as seções estão “em preparação” e só os canais 190/180/192/188
+são conteúdo real. **Meu plano** guarda até 5 contatos de confiança e anotações,
+cifrados, com **Salvar plano** e **Sair sem salvar**; telefones só são chamados
+se a pessoa tocar neles.
 
 **[SUGESTÃO — validar]** Tornar explícito que o conteúdo é opcional e
 informativo, permitir sair sem salvar e nunca presumir que a usuária deve

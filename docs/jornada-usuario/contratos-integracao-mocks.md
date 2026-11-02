@@ -83,6 +83,8 @@ A API atual implementa `POST /api/chat/messages`.
 }
 ```
 
+Campo de oferta (L-05): `offer` (`"safety_guide"` | `null`). Com a frase de teste aprovada, depois da triagem sem sinal agudo e do escopo permitido, a API devolve `offer: "safety_guide"`, `knowledge_status: null`, `reply: null` e `sources: []`, sem consultar fontes nem gerar texto. Nos demais casos, `offer: null`.
+
 Campos de escopo (C-05): `scope_status` (`"allowed"` | `"out_of_scope"` | `null`) e `out_of_scope_category` (`"diagnosis"` | `"prescription"` | `"individual_legal_opinion"` | `null`). Sem sinal agudo e `out_of_scope` → categoria preenchida, `knowledge_status: null`, `reply: null`, `sources: []`, sem atraso simulado; o texto do limite é o do wireframe, apresentado pelo frontend. Falha do guardrail retorna `503` (falha fechada). Nos demais casos sem sinal agudo, `scope_status: "allowed"` e categoria `null`; em `acute`/`indeterminate`, ambos `null`.
 
 Combinações válidas (C-04): sem sinal agudo, escopo permitido e `knowledge_status: "found"` → `reply` texto e ao menos uma fonte; sem sinal agudo e `"no_source"` → `reply: null` e `sources: []`; `acute`/`indeterminate` → `knowledge_status: null`, `reply: null`, `sources: []` e `guidance` preenchida. Para risco agudo ou indeterminação, o serviço retorna orientação e não executa recuperação nem geração. Falha técnica da recuperação retorna `503` com `detail` genérico. O frontend rejeita qualquer outra combinação como resposta fora do schema. O campo `message` é obrigatório e não pode ser vazio ou só conter espaços. A API usa `422` para entrada inválida e `200` para processamento concluído. O frontend valida o formato desses campos em runtime.
@@ -202,12 +204,14 @@ interface ServiceRecommendationResult {
 }
 ```
 
-- A entrada de localização continua manual e opcional, como definido nos requisitos. Geolocalização automática permanece bloqueada para revisão de produto.
+**Implementado em C-06:** `POST /api/referral/recommendations` com corpo `{"city": string, "state": "UF"}` e resposta `{"status": "found" | "no_verified_result", "city", "state", "services": [{"id", "name", "priority", "category", "description", "contact", "hours", "cost", "last_verified_at", "demo"}], "demo"}`. `need` e `urgency` não foram implementados nesta etapa. `422` para cidade vazia ou UF inválida; `503` para falha do catálogo.
+
+- Localização (decisão de 02/11/2026, revisão de privacidade pendente): o frontend pode pedir a localização do aparelho ao abrir o encaminhamento, converte as coordenadas em cidade/UF localmente e só envia a cidade confirmada pela usuária. Coordenadas nunca fazem parte do contrato HTTP. A entrada manual opcional continua disponível.
 - O retorno contém no máximo três opções; prioridade e hierarquia jurídica seguem os requisitos e a matriz aprovados.
 - `no_verified_result`, cidade ambígua, falha técnica e resultado vazio não são intercambiáveis.
 - Registro desatualizado não é promovido a recomendação prioritária. `demo: true` impede que fixture seja confundida com contato real.
 - O serviço recomendado não recebe relato nem dados pessoais; o contato é ação da usuária.
-- O fallback textual e as opções para entrada vazia/ambígua ainda dependem de decisão de produto.
+- Fallback aprovado para o protótipo: sem resultado → texto da proposta da jornada, canais nacionais, **Tentar outra cidade** e **Voltar à conversa**; entrada sem UF → erro de formato no cliente.
 
 ## 6. Mapeamento futuro de resposta da API conversacional (proposta)
 

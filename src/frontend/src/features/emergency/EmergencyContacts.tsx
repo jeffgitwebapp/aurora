@@ -1,6 +1,6 @@
 import type { TriageSignal } from "../chat/api/chatApi";
 
-const emergencyContacts = [
+export const emergencyContacts = [
   { label: "Polícia Militar", number: "190" },
   { label: "Central de Atendimento à Mulher", number: "180" },
   { label: "SAMU", number: "192" },

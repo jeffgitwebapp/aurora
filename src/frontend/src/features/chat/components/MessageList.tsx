@@ -7,6 +7,7 @@ interface MessageListProps {
   isLoading?: boolean;
   onAskLaw: () => void;
   onOpenContacts: () => void;
+  onOpenSafetyGuide: () => void;
 }
 
 export function MessageList({
@@ -14,6 +15,7 @@ export function MessageList({
   isLoading = false,
   onAskLaw,
   onOpenContacts,
+  onOpenSafetyGuide,
 }: MessageListProps) {
   const containerRef = useRef<HTMLElement | null>(null);
 
@@ -91,6 +93,17 @@ export function MessageList({
                     </p>
                   </>
                 )}
+                {message.offer === "safety_guide" && (
+                  <div className="message-item__actions">
+                    <button
+                      type="button"
+                      className="message-item__action"
+                      onClick={onOpenSafetyGuide}
+                    >
+                      Abrir guia de segurança
+                    </button>
+                  </div>
+                )}
                 {message.sources && message.sources.length > 0 && (
                   <section
                     className="message-sources"
@@ -114,11 +127,13 @@ export function MessageList({
                 )}
                 {message.demo && (
                   <p className="message-item__demo" role="note">
-                    {isOutOfScope
-                      ? "Demonstração: o limite é acionado por frases de teste e não identifica pedidos reais."
-                      : message.knowledgeStatus === "found"
-                        ? "Demonstração: trecho de fonte oficial escolhido para teste do protótipo, com revisão jurídica pendente. Não é orientação sobre o seu caso."
-                        : "Demonstração: o protótipo só responde a perguntas de teste com fonte aprovada."}
+                    {message.offer
+                      ? "Demonstração: o convite é acionado por uma frase de teste."
+                      : isOutOfScope
+                        ? "Demonstração: o limite é acionado por frases de teste e não identifica pedidos reais."
+                        : message.knowledgeStatus === "found"
+                          ? "Demonstração: trecho de fonte oficial escolhido para teste do protótipo, com revisão jurídica pendente. Não é orientação sobre o seu caso."
+                          : "Demonstração: o protótipo só responde a perguntas de teste com fonte aprovada."}
                   </p>
                 )}
               </li>

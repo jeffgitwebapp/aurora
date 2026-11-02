@@ -2,13 +2,13 @@
 
 import re
 
-from aurora_backend.contexts.conversation.services.fixture_text import (
-    normalize_fixture_sentence,
-)
 from aurora_backend.contexts.conversation.services.triage.models import (
     TriageResult,
     TriageSignal,
     TriageStatus,
+)
+from aurora_backend.shared.fixture_text import (
+    normalize_fixture_sentence,
 )
 
 _RISK_FIXTURES: dict[TriageSignal, tuple[str, ...]] = {

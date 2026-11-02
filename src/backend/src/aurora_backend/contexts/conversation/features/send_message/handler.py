@@ -5,6 +5,10 @@ from dataclasses import dataclass
 from aurora_backend.contexts.conversation.services.chat_response.port import (
     ChatResponseGenerator,
 )
+from aurora_backend.contexts.conversation.services.content_offer.models import ContentOffer
+from aurora_backend.contexts.conversation.services.content_offer.port import (
+    ContentOfferProvider,
+)
 from aurora_backend.contexts.conversation.services.guardrail.models import (
     GuardrailResult,
     ScopeDecision,
@@ -28,6 +32,7 @@ class SendMessageResult:
     triage: TriageResult
     guardrail: GuardrailResult | None = None
     knowledge: KnowledgeResult | None = None
+    offer: ContentOffer | None = None
 
 
 class EmptyMessageError(ValueError):
@@ -39,6 +44,7 @@ async def handle_send_message(
     *,
     triage_service: TriageEvaluator,
     guardrail_service: ScopeGuardrail,
+    offer_service: ContentOfferProvider,
     knowledge_service: KnowledgeRetriever,
     chat_response_service: ChatResponseGenerator,
 ) -> SendMessageResult:
@@ -52,6 +58,10 @@ async def handle_send_message(
     guardrail = await guardrail_service.check_request(message)
     if guardrail.decision is not ScopeDecision.ALLOW:
         return SendMessageResult(reply=None, triage=triage, guardrail=guardrail)
+
+    offer = await offer_service.suggest(message)
+    if offer is not None:
+        return SendMessageResult(reply=None, triage=triage, guardrail=guardrail, offer=offer)
 
     knowledge = await knowledge_service.retrieve(message)
     if knowledge.status is not KnowledgeStatus.FOUND:

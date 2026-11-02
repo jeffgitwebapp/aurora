@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01, C-02, C-03 e C-04 validados em ambiente publicado; C-05 com desenvolvimento concluído localmente, aguardando commit, publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01, C-02, C-03, C-04 e C-05 validados pela usuária em ambiente publicado; nenhuma tarefa foi aprovada pelo time de produto até 02/11/2026; C-06, I-05 e L-01 a L-05 com desenvolvimento concluído localmente (testes locais vistos pela usuária), aguardando commit, publicação e validação humana na AWS; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a serviços de produção que utilizam dados e provedores simulados nesta fase
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -49,6 +49,8 @@ Para cada tarefa de jornada, marcar cada etapa somente quando houver evidência:
 - [ ] Versão foi publicada/deployada; registrar a versão ou referência da publicação.
 - [ ] Uma pessoa testou o fluxo no ambiente AWS e registrou data, resultado e eventuais problemas.
 
+**Aprovação do time de produto:** registrada à parte do teste funcional na AWS. Até 02/11/2026, nenhuma tarefa (I-01 a I-04, C-01 a C-05) foi validada pelo time de produto; o status “Concluída” indica somente implementação publicada e validação funcional pela usuária. Ao receber a aprovação, registrar data, responsável e eventuais ajustes em cada tarefa.
+
 **O teste na AWS é uma etapa humana obrigatória.** O assistente não deve declarar uma jornada concluída sem a confirmação e evidência dessa validação humana.
 
 ## 4. Skills necessárias
@@ -65,24 +67,24 @@ As tarefas de preparação não substituem a priorização das jornadas: são a 
 |---:|---|---|---|---|---|
 | 0 | J-00 | Resolver decisões e lacunas que bloqueiam comportamento seguro | Preparação funcional | Jornada-base e fontes relacionadas | Resolvido — decisões e lacunas registradas |
 | 0 | J-01 | Definir contratos e estrutura dos mocks ponta a ponta | Preparação técnica | J-00 para contratos de comportamento | Resolvido — contratos e estrutura de mocks definidos |
-| 1 | I-01 | Acesso a emergência por telefone | Independente, P0 | J-01 | Concluída — validada pela usuária em ambiente publicado |
-| 2 | I-02 | Saída Rápida e descarte da sessão | Independente, P0 | J-00, J-01 | Concluída — validada pela usuária em ambiente publicado |
-| 3 | I-03 | Início anônimo e sugestões | Independente, P1 | J-01 | Concluída — validada pela usuária em ambiente publicado |
-| 4 | I-04 | Privacidade e contatos úteis | Independente, P1 | J-00, I-03 | Concluída — validada pela usuária em ambiente publicado |
-| 5 | C-01 | Conversa anônima, mensagens e contexto em memória | Início da jornada dependente | I-03, J-01 | Concluída — conversa e integração validadas pela usuária em ambiente publicado |
-| 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 | Concluída — versão inicial validada em 31/10/2026; ajuste das fixtures publicado com C-03 e validado em AWS em 02/11/2026; revisão profissional pendente |
-| 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão profissional pendente para uso real |
-| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão jurídica e curadoria das fontes pendentes para uso real |
-| 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 | Desenvolvimento concluído localmente — validações locais registradas; commit, publicação/AWS e revisão jurídica/clínica dos gatilhos pendentes |
-| 10 | C-06 | Localização opcional e encaminhamento simulado | Ramo dependente da conversa | C-04, J-00 | Pendente |
-| 11 | I-05 | Entrada independente para questionário e resultado simulado | Independente, opcional | C-02, C-06, decisões de conteúdo | Pendente |
-| 12 | L-01 | Cadastro, login e saída da área logada (mock) | Jornada futura opcional | J-00, J-01, jornada anônima estável | Pendente |
-| 13 | L-02 | Migração, histórico e exclusão de conta (mock) | Dependente de conta e sessão | C-01, L-01 | Pendente |
-| 14 | L-03 | Módulos de psicoeducação (mock) | Jornada futura opcional | L-01, decisões de conteúdo | Pendente |
-| 15 | L-04 | Diário de incidentes e exportação demonstrativa | Jornada futura opcional | L-01, J-00 | Pendente |
-| 16 | L-05 | Guia/plano de segurança demonstrativo | Jornada futura opcional | J-00; L-01 se a decisão aprovada exigir conta | Pendente |
+| 1 | I-01 | Acesso a emergência por telefone | Independente, P0 | J-01 | Concluída — validada pela usuária em ambiente publicado; aprovação do time de produto pendente |
+| 2 | I-02 | Saída Rápida e descarte da sessão | Independente, P0 | J-00, J-01 | Concluída — validada pela usuária em ambiente publicado; aprovação do time de produto pendente |
+| 3 | I-03 | Início anônimo e sugestões | Independente, P1 | J-01 | Concluída — validada pela usuária em ambiente publicado; aprovação do time de produto pendente |
+| 4 | I-04 | Privacidade e contatos úteis | Independente, P1 | J-00, I-03 | Concluída — validada pela usuária em ambiente publicado; aprovação do time de produto pendente |
+| 5 | C-01 | Conversa anônima, mensagens e contexto em memória | Início da jornada dependente | I-03, J-01 | Concluída — conversa e integração validadas pela usuária em ambiente publicado; aprovação do time de produto pendente |
+| 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 | Concluída — versão inicial validada em 31/10/2026; ajuste das fixtures publicado com C-03 e validado em AWS em 02/11/2026; revisão profissional pendente; aprovação do time de produto pendente |
+| 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão profissional pendente para uso real; aprovação do time de produto pendente |
+| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão jurídica e curadoria das fontes pendentes para uso real; aprovação do time de produto pendente |
+| 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 | Concluída — validada pela usuária em ambiente publicado (AWS) em 02/11/2026; revisão jurídica/clínica dos gatilhos pendente; aprovação do time de produto pendente |
+| 10 | C-06 | Localização opcional e encaminhamento simulado | Ramo dependente da conversa | C-04, J-00 | Desenvolvimento concluído localmente — validações locais registradas; commit, publicação/AWS, revisão de privacidade da geolocalização e aprovação do time de produto pendentes |
+| 11 | I-05 | Entrada independente para questionário e resultado simulado | Independente, opcional | C-02, C-06, decisões de conteúdo | Desenvolvimento concluído localmente — perguntas provisórias e faixa fictícia; commit, publicação/AWS, instrumento validado e aprovação do time de produto pendentes |
+| 12 | L-01 | Cadastro, login e saída da área logada (mock) | Jornada futura opcional | J-00, J-01, jornada anônima estável | Desenvolvimento concluído localmente — contas em memória; commit, publicação/AWS, revisão de segurança e aprovação do time de produto pendentes |
+| 13 | L-02 | Migração, histórico e exclusão de conta (mock) | Dependente de conta e sessão | C-01, L-01 | Desenvolvimento concluído localmente — conversas cifradas em memória; commit, publicação/AWS, revisão de segurança/privacidade e aprovação do time de produto pendentes |
+| 14 | L-03 | Módulos de psicoeducação (mock) | Jornada futura opcional | L-01, decisões de conteúdo | Desenvolvimento concluído localmente — 1 módulo com citações legais e 7 em preparação; commit, publicação/AWS, conteúdo aprovado e aprovação do time de produto pendentes |
+| 15 | L-04 | Diário de incidentes e exportação demonstrativa | Jornada futura opcional | L-01, J-00 | Desenvolvimento concluído localmente — diário cifrado em memória, anexo simulado e prévia de exportação; commit, publicação/AWS, revisões e aprovação do time de produto pendentes |
+| 16 | L-05 | Guia/plano de segurança demonstrativo | Jornada futura opcional | J-00; L-01 se a decisão aprovada exigir conta | Desenvolvimento concluído localmente — guia com placeholders, plano cifrado e convite por frase de teste; commit, publicação/AWS, conteúdo aprovado e aprovação do time de produto pendentes |
 
-**Legenda de status:** “Concluída” indica implementação publicada e validação humana confirmada em ambiente publicado. I-01, I-02, I-03, I-04, C-01, C-02, C-03 e C-04 estão concluídas nesse sentido. C-05 está em “Desenvolvimento concluído localmente” e não está aprovada para uso real. Revisões profissionais de segurança, privacidade e conteúdo continuam pendentes quando indicadas nas tarefas e não são substituídas pela validação funcional. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem publicação e validação humana. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
+**Legenda de status:** “Concluída” indica implementação publicada e validação humana confirmada em ambiente publicado. I-01, I-02, I-03, I-04, C-01, C-02, C-03, C-04 e C-05 estão concluídas nesse sentido. Nenhuma delas foi aprovada pelo time de produto até 02/11/2026; essa aprovação é registrada separadamente e não é substituída pela validação funcional da usuária. Revisões profissionais de segurança, privacidade e conteúdo continuam pendentes quando indicadas nas tarefas e não são substituídas pela validação funcional. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem publicação e validação humana. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
 
 O questionário é uma entrada independente para a usuária, mas sua implementação depende da triagem e do encaminhamento para reutilizar regras e contratos. As tarefas L-01 a L-05 são de protótipo; não implementam segurança, persistência ou proteção de dados adequadas para uso real.
 
@@ -104,7 +106,7 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 | Triagem de risco agudo | Sinais documentados: ideação suicida, agressão em curso, ameaça de morte e presença de arma. Sinal agudo interrompe o fluxo informativo antes de qualquer geração por LLM. Na classificação indeterminada, não afirmar ausência de risco; mostrar estado de incerteza e canais gerais, sem resposta informativa até escolha explícita da usuária. Destacar canais conforme E5-US1/2: 190 para morte iminente/agressão em curso; 192 quando houver lesão ou risco de ato iminente; 188 para crise emocional/ideação; 180 permanece disponível como canal de orientação. | Política de produto registrada; profissionais da rede de proteção e saúde mental devem aprovar critérios, mapeamento e mensagem antes de uso real |
 | Limite de escopo | Aplicar o texto do wireframe a pedidos de diagnóstico/prescrição ou parecer jurídico individual; perguntas gerais sobre direitos permanecem no fluxo informativo. | Decisão de produto registrada; profissionais de direito e saúde mental devem revisar exemplos limítrofes |
 | Fontes e mocks de conteúdo | Usar somente fontes reais identificáveis e aprovadas. Mocks devem estar rotulados como demonstração; não inventar citações nem afirmações factuais. Conteúdo sensível não aprovado não deve ser exibido como resposta real. | Política registrada; curadoria/produto e especialistas do domínio devem aprovar cada fixture |
-| Localização e catálogo | A solicitação da usuária para obter localização do dispositivo e confirmá-la em modal conflita com RF/RNF e wireframe, que preveem município/UF informado voluntariamente, sem geolocalização nem pedido de permissão. Até uma decisão formal, prevalece a especificação vigente: campo manual opcional, sem geolocalização. | Solicitação de mudança bloqueada para revisão de produto; privacidade/segurança devem avaliar qualquer proposta de alteração. Fallback de cidade vazia/ambígua continua pendente de produto |
+| Localização e catálogo | Decisão da usuária (responsável de produto do protótipo) em 02/11/2026: ao abrir **Onde buscar ajuda**, pedir a localização do aparelho e confirmar a cidade sugerida em modal. As coordenadas são convertidas em cidade/UF somente no aparelho (capital mais próxima em até 40 km) e descartadas; apenas a cidade/UF confirmada vai ao backend. O campo manual opcional continua disponível e é o caminho quando a permissão é negada, a localização não está disponível ou não há capital próxima. Fallback de cidade não encontrada: proposta da jornada aprovada (canais nacionais, **Tentar outra cidade**, **Voltar à conversa**). Catálogo do protótipo: serviços fictícios, sem contato. | RNF01 atualizado; revisão de privacidade/LGPD e segurança pendente — inclui o rastro da permissão de localização guardada pelo navegador; aprovação do time de produto pendente |
 | Frescor do catálogo | Regras existentes: meta de ≥95% dos registros ativos verificados nos últimos 90 dias; serviços de emergência 100% revistos nos últimos 30 dias; registros com mais de 180 dias sem verificação não podem aparecer como sugestão prioritária e só podem aparecer com aviso explícito. | Definido pelas métricas CA-05; responsável pelo catálogo/rede de serviços deve verificar os contatos |
 | Jornadas futuras | Especificar campos, validações e estados ao iniciar cada tarefa correspondente; manter cada fluxo bloqueado até decisões de produto e revisão de domínio aplicáveis. | Decisão de processo registrada; responsável de produto e especialistas relevantes em cada tarefa L-01 a L-05 e I-05 |
 
@@ -117,11 +119,16 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 | I-02 — Saída Rápida | Concluída — validada pela usuária em ambiente publicado; revisão de segurança ainda pendente | A definição funcional de `/receitas` inclui três opções de receita, mostrando uma por acionamento e sem repetir a última. A revisão de segurança continua registrada como pendência antes de considerar o fluxo aprovado para uso real |
 | C-02/C-03 — Triagem e risco agudo | Concluídas e validadas em AWS como protótipo; uso real bloqueado até revisão da rede de proteção e saúde mental | Fixtures sintéticas exercitam os estados; critérios de risco, destaque dos canais e texto de incerteza exigem validação especializada |
 | C-04 — Resposta com fontes | Concluída e validada em AWS em 02/11/2026 com duas fixtures de fontes oficiais aprovadas pela usuária em 02/11/2026 para demonstração; conteúdo real continua bloqueado até curadoria e revisão jurídica | Não há autorização para inventar fontes ou afirmações sensíveis; as fixtures citam literalmente a lei, sem interpretação do caso |
-| C-05 — Limite de escopo | Desenvolvimento concluído localmente com quatro frases de teste aprovadas pela usuária em 02/11/2026; casos limítrofes e gatilhos reais continuam bloqueados até revisão jurídica e clínica | A distinção geral foi definida; nenhum caso limítrofe foi inventado como regra |
-| C-06 — Localização/encaminhamento | Bloqueada até decisão de produto sobre localização e fallback | A proposta de geolocalização está em revisão; permanece vigente a entrada manual opcional |
+| C-05 — Limite de escopo | Concluída e validada em AWS em 02/11/2026 com quatro frases de teste aprovadas pela usuária em 02/11/2026; casos limítrofes e gatilhos reais continuam bloqueados até revisão jurídica e clínica | A distinção geral foi definida; nenhum caso limítrofe foi inventado como regra |
+| C-06 — Localização/encaminhamento | Desenvolvimento concluído localmente após decisão da usuária em 02/11/2026 | Geolocalização com confirmação em modal e conversão local; revisão de privacidade/LGPD e segurança pendente |
 | I-03/I-04 — Início e privacidade | Podem avançar com o texto registrado, sujeitos à revisão de privacidade antes de uso real | Aviso aprovado para o protótipo, mas revisão LGPD continua pendente |
 | I-01 — Telefones de emergência | Pode avançar com destinos e números documentados; verificar os contatos antes de publicação | O protótipo não valida disponibilidade ou atendimento real |
-| I-05/L-01 a L-05 — Jornadas futuras | Aguardam detalhamento ao iniciar cada tarefa | Perguntas, campos, validações e estados ainda não foram aprovados |
+| I-05 — Questionário | Desenvolvimento concluído localmente com perguntas provisórias aprovadas pela usuária em 02/11/2026 | O instrumento validado (perguntas, escala e classificação) continua sem aprovação; nenhuma pergunta clínica foi inventada |
+| L-01 — Cadastro/login | Desenvolvimento concluído localmente com regras aprovadas pela usuária em 02/11/2026 | Contas só em memória do processo; não protegem dados reais; revisão de segurança pendente |
+| L-02 — Migração/histórico/exclusão | Desenvolvimento concluído localmente com decisões da usuária de 02/11/2026 | Armazenamento só em memória; não é persistência real |
+| L-03 — Módulos | Desenvolvimento concluído localmente com decisões da usuária de 02/11/2026 | Conteúdo educativo continua sem aprovação; só o módulo com citações legais tem texto |
+| L-04 — Diário | Desenvolvimento concluído localmente com decisões da usuária de 02/11/2026 | Anexos reais e PDF protegido continuam fora; revisão jurídica/segurança pendente |
+| L-05 — Guia/plano de segurança | Desenvolvimento concluído localmente com decisões da usuária de 02/11/2026 | Conteúdo do guia e critérios reais de oferta continuam sem aprovação de especialistas |
 
 **Skills:** [Análise de requisitos, backlog e rastreabilidade](../../skills/analise-requisitos-backlog-rastreabilidade.md), [Jornada do usuário e especificação de usabilidade](../../skills/jornada-usuario.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md).
 
@@ -161,7 +168,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### I-01 — Acesso a emergência por telefone
 
 **Prioridade:** P0
-**Estado:** Concluída
+**Estado:** Concluída — publicação e validação humana confirmadas em 31/10/2026. A aprovação do time de produto está pendente.
 **Dependências:** J-01
 **Jornada-base:** ações independentes; início, conversa e telas de risco agudo.
 
@@ -184,7 +191,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### I-02 — Saída Rápida e descarte da sessão
 
 **Prioridade:** P0
-**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. A revisão de segurança permanece pendente para uso real.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. A revisão de segurança permanece pendente para uso real. A aprovação do time de produto está pendente.
 **Dependências:** J-00 (destino e regra Esc aprovados), J-01
 **Jornada-base:** saída disponível sem depender de relato, triagem ou cadastro.
 
@@ -212,7 +219,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### I-03 — Início anônimo e sugestões
 
 **Prioridade:** P1
-**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. A revisão profissional de privacidade permanece pendente para uso real.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. A revisão profissional de privacidade permanece pendente para uso real. A aprovação do time de produto está pendente.
 **Dependências:** J-01
 **Jornada-base:** tela inicial; texto livre e sugestões são entradas independentes.
 
@@ -234,7 +241,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### I-04 — Privacidade e contatos úteis
 
 **Prioridade:** P1
-**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. As revisões profissionais de privacidade e acessibilidade permanecem pendentes para uso real.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. As revisões profissionais de privacidade e acessibilidade permanecem pendentes para uso real. A aprovação do time de produto está pendente.
 **Dependências:** J-00 (texto e destino aprovados), I-03, I-01
 **Jornada-base:** links independentes na tela inicial.
 
@@ -258,7 +265,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### C-01 — Conversa anônima, mensagens e contexto em memória
 
 **Prioridade:** P1
-**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. A validação profissional de privacidade permanece pendente para uso real.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado confirmada em 31/10/2026. A validação profissional de privacidade permanece pendente para uso real. A aprovação do time de produto está pendente.
 **Dependências:** I-03, J-01
 **Jornada-base:** envio do primeiro relato, mensagens subsequentes e retorno durante a sessão.
 
@@ -281,7 +288,7 @@ Essas verificações validam os contratos documentados e o contrato atual do sca
 ### C-02 — Triagem de risco agudo antes de resposta informativa
 
 **Prioridade:** P0 de segurança
-**Estado:** Concluída — a versão inicial foi validada pela usuária em 31/10/2026; o ajuste da regra de fixtures em `TriageService`, feito durante C-03, foi publicado com C-03 e validado em AWS em 02/11/2026. A revisão profissional de segurança e conteúdo permanece pendente.
+**Estado:** Concluída — a versão inicial foi validada pela usuária em 31/10/2026; o ajuste da regra de fixtures em `TriageService`, feito durante C-03, foi publicado com C-03 e validado em AWS em 02/11/2026. A revisão profissional de segurança e conteúdo permanece pendente. A aprovação do time de produto está pendente.
 **Dependências:** C-01, J-00
 **Jornada-base:** toda mensagem deve passar pela regra de urgência antes do fluxo informativo.
 
@@ -318,7 +325,7 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 ### C-03 — Tela de risco agudo, canais e retorno
 
 **Prioridade:** P0 de segurança
-**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A revisão profissional de segurança/conteúdo e a revisão com leitor de tela permanecem pendentes para uso real.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A revisão profissional de segurança/conteúdo e a revisão com leitor de tela permanecem pendentes para uso real. A aprovação do time de produto está pendente.
 **Dependências:** I-01, I-02, C-02
 **Jornada-base:** resultados de risco agudo e incerto.
 
@@ -356,7 +363,7 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 ### C-04 — Resposta informativa com fontes simuladas
 
 **Prioridade:** P1
-**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A revisão jurídica e a curadoria formal das fontes permanecem pendentes para uso real.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A revisão jurídica e a curadoria formal das fontes permanecem pendentes para uso real. A aprovação do time de produto está pendente.
 **Dependências:** C-02 (resultado sem risco agudo), J-00 (fontes aprovadas), J-01
 **Jornada-base:** resposta psicoeducativa, fontes e continuação da conversa.
 
@@ -401,7 +408,7 @@ Os textos foram conferidos nas páginas do Planalto em 02/11/2026. A comparaçã
 ### C-05 — Limite de escopo e alternativas seguras
 
 **Prioridade:** P1
-**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam revisão jurídica/clínica dos gatilhos, commit, publicação e validação humana na AWS.
+**Estado:** Concluída — implementação publicada e validação humana em ambiente publicado (AWS) confirmada pela usuária em 02/11/2026. A aprovação do time de produto e a revisão jurídica/clínica dos gatilhos permanecem pendentes.
 **Dependências:** C-02, J-00 (regra e conteúdo aprovados)
 **Jornada-base:** pedidos de diagnóstico ou parecer individualizado.
 
@@ -438,35 +445,87 @@ Os textos foram conferidos nas páginas do Planalto em 02/11/2026. A comparaçã
 - [x] Frontend: `npm run check` e `npm run build` passaram.
 - [x] Navegador local (Vite → FastAPI): “O que acontece no meu caso?” exibiu o bloco em ~130 ms, sem modal e com campo ativo; **Defensoria Pública ou CRAM** levou o foco ao título dos contatos úteis; **O que a lei diz** enviou “O que é violência psicológica?” e recebeu resposta com **Fontes**; “Que remédio devo tomar?” exibiu o limite; pergunta geral sobre direitos seguiu o fluxo informativo (estado sem fonte); viewport de 320 px sem overflow horizontal. Único erro de console: `404` de `/favicon.ico`, anterior.
 - [ ] Revisão jurídica, clínica e de produto dos gatilhos, de exemplos limítrofes e da aplicação do texto do wireframe à categoria prescrição.
-- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação.
+- [x] Commit: `21d0a86` (“resolucao C-05”) em `develop`.
+- [x] Publicação e validação humana em AWS — confirmadas pela usuária em 02/11/2026.
+- [ ] Aprovação do time de produto — pendente.
 
 **Skills:** [Guardrails, escopo ético e avaliação generativa](../../skills/guardrails-escopo-etico-avaliacao-generativa.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
 ### C-06 — Localização opcional e encaminhamento simulado
 
 **Prioridade:** P1
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam commit, publicação, validação humana na AWS, revisão de privacidade/LGPD e segurança da geolocalização e aprovação do time de produto.
 **Dependências:** C-04, J-00 (política de localização e fallback aprovados), I-01
 **Jornada-base:** informar Cidade/UF e ver até três opções priorizadas.
 
 **Escopo:** aceitar município/UF informado voluntariamente; consultar catálogo mockado; apresentar cartões no formato do wireframe e retorno à conversa. Não solicitar geolocalização precisa, não encaminhar o relato e não apresentar fixture como contato real/verificado.
 
-**Bloqueio atual:** a usuária solicitou revisar a obtenção automática da localização do dispositivo e sua confirmação por modal. Esse comportamento não está aprovado e conflita com a especificação vigente de localização manual opcional. Não solicitar permissão nem obter coordenadas até a decisão de produto e a revisão de privacidade/segurança; enquanto isso, C-06 não pode ser implementada.
+**Bloqueio anterior resolvido em 02/11/2026:** Decisão da usuária (responsável de produto do protótipo) em 02/11/2026: ao abrir **Onde buscar ajuda**, pedir a localização do aparelho e confirmar a cidade sugerida em modal. As coordenadas são convertidas em cidade/UF somente no aparelho (capital mais próxima em até 40 km) e descartadas; apenas a cidade/UF confirmada vai ao backend. O campo manual opcional continua disponível e é o caminho quando a permissão é negada, a localização não está disponível ou não há capital próxima. RNF01 foi atualizado com essa alteração. A revisão de privacidade/LGPD e segurança continua pendente; ela deve avaliar, entre outros pontos, que o navegador guarda a permissão de localização do site (rastro visível no aparelho, fora do controle do Aurora).
 
 **Critérios de aceite:** localização pode ser omitida sem bloquear canais gerais; resultados simulados mostram indicação de protótipo; lista tem no máximo três itens e segue a ordem definida pelo requisito/matriz aprovada; cidade sem resultado, ambígua, indisponibilidade e contato desatualizado têm estados definidos; retorno preserva conversa em memória.
+
+**Decisões da usuária (02/11/2026):** geolocalização com confirmação em modal (acima); catálogo com serviços **fictícios** em duas cidades de teste, sem contato, horário, custo nem data de verificação inventados; texto de cidade não encontrada conforme a proposta da jornada; entrada pela ação fixa **Onde buscar ajuda** na lateral da conversa. O botão **Defensoria Pública ou CRAM** do C-05 continua levando aos contatos úteis.
+
+**Fixtures do catálogo — demonstração, sem dados reais:**
+
+| Cidade de teste | Opções (ordem pela hierarquia jurídica) |
+|---|---|
+| Recife / PE | 1 · Órgão público — Defensoria Pública do Estado — exemplo; 2 · Serviço especializado — Centro de Referência de Atendimento à Mulher — exemplo; 3 · Sociedade civil — Organização da sociedade civil — exemplo |
+| São Paulo / SP | Mesmas três opções fictícias |
+| Qualquer outra cidade/UF válida | `no_verified_result` |
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Novo bounded context `referral` com a feature `recommend_services` (`POST /api/referral/recommendations`, corpo `{city, state}`) e `CatalogService` (porta assíncrona `ServiceCatalog`). O serviço ordena pela hierarquia (`ServiceTier`: órgão público → serviço especializado → sociedade civil → voluntariado) e o modelo rejeita mais de três opções. UF inválida ou cidade vazia → `422`; falha do catálogo (`CatalogUnavailableError`) → `503`; cidade fora do catálogo → `no_verified_result`. Os registros vêm propositalmente fora de ordem para o teste comprovar a priorização.
+- A normalização de frases-fixture foi movida para `aurora_backend/shared/fixture_text.py`, usada pelos dois contextos sem acoplamento entre eles.
+- Frontend `features/referral/`: `ReferralPanel` substitui a área da conversa enquanto aberto; a conversa fica apenas oculta (mensagens e rascunho preservados) e **← Voltar à conversa** devolve o foco. Ao abrir, pede a localização (`enableHighAccuracy: false`, `maximumAge: 0`, 10 s); `location.ts` encontra a capital mais próxima em até 40 km e descarta as coordenadas. Com cidade sugerida, abre o modal **Confirmar sua cidade** (**Usar esta cidade**, **Digitar outra cidade**, **Saída rápida (Esc)**). Sem permissão, sem suporte ou sem capital próxima, mostra mensagem de estado e mantém o campo manual.
+- Campo **Cidade / UF (opcional)** com o texto e o placeholder do wireframe; formato inválido mostra “Informe a cidade e a UF, por exemplo: Recife / PE.”. Resultados: título “Onde buscar ajuda em Cidade / UF”, introdução do wireframe, cartões com posição, categoria, **O que faz**, **Contato**, **Horário** e **Custo** (“Não incluído na demonstração”) e a nota “Demonstração: serviços fictícios, sem contatos verificados. Nada desta busca fica salvo.”. Sem resultado: texto aprovado, **Ver canais nacionais**, **Tentar outra cidade** e **Voltar à conversa**. Erro técnico: alerta com **Tentar novamente**.
+- O botão **Ver contato** do wireframe não é exibido porque nenhum contato fictício é mostrado. A regra de frescor do CA-05 não é exercitada: não há datas de verificação nas fixtures.
+
+**Validações locais C-06 (02/11/2026):**
+
+- [x] Backend: `pytest` — 86 testes passaram (17 novos: hierarquia e limite de três, normalização da cidade, cidade/UF fora do catálogo, `422` para cidade vazia/UF inválida, coordenadas ignoradas e nunca devolvidas, falha → `503` sem ecoar a cidade); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless com geolocalização simulada: perto de Recife → modal “Encontramos: Recife / PE” → três cartões na ordem 1 · Órgão público, 2 · Serviço especializado, 3 · Sociedade civil; **← Voltar à conversa** reexibiu a conversa com o rascunho preservado. Permissão negada → mensagem de localização indisponível; “Recife” sem UF → erro de formato; “Olinda / PE” → estado sem resultado; **Tentar outra cidade** focou o campo. Coordenada longe das capitais → mensagem sem modal; busca manual “São Paulo / SP” funcionou; viewport de 320 px sem overflow horizontal; Esc abriu `/receitas`. As requisições enviaram apenas `{"city","state"}`, nunca coordenadas. Único erro de console: `404` de `/favicon.ico`, anterior.
+- [ ] Revisão de privacidade/LGPD e segurança da geolocalização (incluindo a permissão guardada pelo navegador) e aprovação do time de produto.
+- [x] Teste local visto e aprovado pela usuária em 02/11/2026 (demonstração em janela do navegador).
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação. Observação: na AWS, a geolocalização só funciona em HTTPS, e fora de uma capital o fluxo cai para a digitação manual.
 
 **Skills:** [Catálogo de serviços e motor de encaminhamento](../../skills/catalogo-servicos-motor-encaminhamento.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
 ### I-05 — Entrada independente para questionário e resultado simulado
 
 **Prioridade:** após a jornada anônima de segurança
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam commit, publicação, validação humana na AWS, aprovação do instrumento por especialistas e aprovação do time de produto.
 **Dependências:** C-02, C-06 e J-00 (perguntas, escalas e apresentação aprovadas)
 **Jornada-base:** questionário de reconhecimento e triagem.
 
 **Escopo:** construir o percurso guiado conforme instrumento e conteúdo aprovados, com opção de interromper e caminho de emergência. O plano não autoriza criar perguntas, opções, pesos ou classificações clínicas por inferência. A demonstração de resultado deve ser identificada como simulada.
 
 **Critérios de aceite:** cada pergunta/alternativa tem rastreabilidade e aprovação; progresso, retorno/edição, interrupção e resultado correspondem à especificação aprovada; risco agudo interrompe o percurso e oferece canais; estado anônimo não grava respostas.
+
+**Decisões da usuária (02/11/2026):**
+
+- Perguntas de reconhecimento: dois placeholders explícitos, sem conteúdo clínico (“Pergunta de demonstração 1/2”, alternativas “Opção de demonstração A/B” e “Prefiro não responder”), até a aprovação do instrumento validado (E4-US1).
+- Terceira pergunta: tipo de ajuda do backlog E4-US4 — Denúncia, Orientação jurídica, Apoio psicológico, Apoio entre pares, Prefiro não responder.
+- Resultado com **faixa simulada**: “Faixa de demonstração A/B/C”, calculada pelo número de respostas “Opção de demonstração A” nas perguntas 1 e 2 (2 → A, 1 → B, 0 → C). A tela informa que a faixa é fictícia e não indica padrão de violência, risco nem diagnóstico.
+- Entrada: botão **Responder questionário** na lateral da conversa.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Novo bounded context `questionnaire` com a feature `take_questionnaire`: `GET /api/questionnaire/questions` (perguntas servidas pelo backend, substituíveis pelo instrumento aprovado) e `POST /api/questionnaire/results` com `{answers}` → `{band, help_type, demo}`. `QuestionnaireService` (porta `Questionnaire`) valida que todas as perguntas foram respondidas com alternativas válidas (`422` caso contrário). Nada é persistido nem registrado.
+- Frontend `features/questionnaire/QuestionnairePanel`: uma pergunta por tela com progresso “Passo X de 3”, **Continuar** desativado até haver resposta, **Voltar** preservando respostas, **Parar questionário** (descarta as respostas e volta à conversa) e **Estou em perigo agora** visível em todas as etapas. Esse botão interrompe o questionário e abre o modal de risco agudo do C-03 com todos os canais (E4-US6). Resultado: faixa, aviso de demonstração, tipo de ajuda escolhido, **Onde buscar ajuda** (C-06) e **Conversar com a Aurora**.
+- Como no C-06, a conversa fica oculta enquanto o questionário está aberto e é reexibida intacta.
+- Limites: as perguntas de demonstração não exercitam a regra de risco agudo por resposta; a interrupção por risco é feita pelo botão explícito. A pergunta de urgência (E4-US3) e o histórico logado (E4-US7) não foram implementados.
+
+**Validações locais I-05 (02/11/2026):**
+
+- [x] Backend: `pytest` — 99 testes passaram (13 novos: perguntas e alternativas servidas, cálculo das faixas, “Prefiro não responder”, respostas incompletas/extras/inválidas → `422`, endpoint de resultado); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless: passo 1 de 3 com foco no título e **Continuar** desativado; **Voltar** manteve as respostas; resultado “Faixa de demonstração B” para A + “Prefiro não responder”, com “Orientação jurídica”; **Onde buscar ajuda** abriu o C-06; reabrir o questionário começou sem respostas; **Estou em perigo agora** abriu o modal “Você pode estar em perigo agora.” e **Voltar à conversa** reexibiu a conversa; **Parar questionário** voltou à conversa; 320 px sem overflow horizontal; `localStorage`/`sessionStorage` vazios.
+- [x] Teste local visto e aprovado pela usuária em 02/11/2026 (demonstração em janela do navegador).
+- [ ] Aprovação do instrumento validado (perguntas, escala, classificação e textos) por especialistas e aprovação do time de produto.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes.
 
 **Skills:** [Análise de requisitos, backlog e rastreabilidade](../../skills/analise-requisitos-backlog-rastreabilidade.md), [Triagem determinística de risco agudo e avaliação de segurança](../../skills/triagem-risco-agudo-avaliacao-seguranca.md), [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
@@ -475,60 +534,173 @@ Os textos foram conferidos nas páginas do Planalto em 02/11/2026. A comparaçã
 ### L-01 — Cadastro, login e saída da área logada (mock)
 
 **Prioridade:** jornada futura, depois do fluxo anônimo
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam teste visto pela usuária, commit, publicação, validação humana na AWS, revisão de segurança/privacidade e aprovação do time de produto.
 **Dependências:** J-00 (regras e mensagens aprovadas), J-01, jornada anônima estável.
 
 **Escopo:** implementar telas e transições de cadastro por apelido/senha, login, tentativa inválida e saída, com autenticação simulada em memória. Não coletar e-mail/telefone real nem sugerir que o mock protege uma conta real.
 
 **Critérios de aceite:** campos e validações vêm de decisão aprovada; estados de erro são explícitos; sessões demonstrativas não persistem como conta real; a área logada nunca é pré-requisito para emergência ou acesso anônimo.
 
+**Decisões da usuária (02/11/2026):**
+
+- Apelido: 3 a 30 caracteres (letras, números, ponto, hífen, sublinhado), único sem diferenciar maiúsculas. Senha forte: mínimo 10 caracteres com letras e números (máximo 128), com confirmação e **Mostrar senha**. Aviso: “Não use seu nome real nem uma senha que você usa em outro lugar. Não é preciso e-mail nem telefone.”
+- Login inválido: “Apelido ou senha incorretos.” (não revela se o apelido existe). Sem recuperação de senha: “Sem e-mail, não é possível recuperar a senha. Guarde-a em lugar seguro.” Cinco tentativas erradas seguidas para o mesmo apelido bloqueiam por 1 minuto: “Muitas tentativas. Aguarde 1 minuto e tente novamente.”
+- Entrada: link **Entrar** no rodapé da tela inicial (vira **Minha conta** com sessão ativa), tela `/conta` com **Entrar** / **Criar conta**; área logada mínima: “Olá, [apelido]”, **Ir para a conversa** e **Sair da conta**. Histórico, migração e exclusão ficam para o L-02.
+- Armazenamento: contas e sessões na memória do processo do backend; token só na memória da página.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Novo bounded context `accounts`: `POST /api/accounts` (cadastro, `201`), `POST /api/sessions` (login), `GET /api/sessions/current` e `DELETE /api/sessions/current` (token `Bearer`). `AccountService` (porta `Accounts`) guarda senha com hash scrypt e sal aleatório, compara em tempo constante, calcula hash também para apelido inexistente e conta tentativas por apelido mesmo sem conta, para o bloqueio (`429`) não revelar cadastros. Sessões expiram em 30 minutos. Erros: `422` regras, `409` apelido em uso, `401` credenciais/sessão, `429` bloqueio.
+- Frontend: `features/account/AccountPage` e `accountApi`. O token fica no estado do `App` (sem cookie, `localStorage` ou `sessionStorage`). **Sair da conta**, a Saída Rápida (botão e Esc) e o recarregamento encerram a sessão; a Saída Rápida chama `DELETE` com `keepalive` sem aguardar a rede. A conversa anônima continua acessível sem conta.
+- Limites: contas somem quando o backend reinicia e não são compartilhadas entre instâncias (na AWS com mais de uma instância, o login pode falhar); o registro de tentativas cresce sem limite na memória; o hash scrypt roda no laço de eventos. Nada disso é adequado para uso real.
+
+**Validações locais L-01 (02/11/2026):**
+
+- [x] Backend: `pytest` — 118 testes passaram (19 novos: regras de apelido e senha, unicidade sem diferenciar maiúsculas, senha não armazenada em texto, erro genérico igual para senha errada e apelido inexistente, bloqueio após 5 erros com e sem conta, liberação após 1 minuto, reinício da contagem após login, logout e expiração, fluxo HTTP e códigos `201/409/422/401/429`); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless: **Entrar** no rodapé abriu `/conta`; senha fraca e senhas diferentes mostraram os erros; **Mostrar senha** funcionou; cadastro levou a “Olá, [apelido]”; **Sair da conta** voltou ao formulário; senha errada → “Apelido ou senha incorretos.”; login → **Ir para a conversa** → Esc abriu `/receitas` e encerrou a sessão no servidor (`DELETE` `204`), e o rodapé voltou a mostrar **Entrar**; cinco erros → mensagem de bloqueio; 320 px sem overflow; sem cookies nem armazenamento local. Corrigido durante o teste: campos com altura excessiva no formulário.
+- [x] Teste local visto e aprovado pela usuária em 02/11/2026 (demonstração em janela do navegador).
+- [ ] Revisão de segurança/privacidade e aprovação do time de produto.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes.
+
 **Skills:** [Autenticação, autorização e área logada pseudonimizada](../../skills/autenticacao-autorizacao-area-logada.md), [Arquitetura de software e integração ponta a ponta](../../skills/arquitetura-software-integracao.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
 ### L-02 — Migração, histórico e exclusão de conta (mock)
 
 **Prioridade:** jornada futura
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam teste visto pela usuária, commit, publicação, validação humana na AWS, revisão de segurança/privacidade e aprovação do time de produto.
 **Dependências:** C-01, L-01, J-00.
 
 **Escopo:** demonstrar migração voluntária da sessão anônima, visualização/continuação de conversas anteriores e exclusão de conta/dados com estados e confirmações aprovados. Toda persistência é simulada e não sobrevive como armazenamento de conta real.
 
 **Critérios de aceite:** migração exige confirmação explícita; o protótipo mostra claramente o limite do armazenamento simulado; exclusão tem confirmação e feedback; falhas não são apresentadas como exclusão concluída; os dados anônimos não são migrados automaticamente.
 
+**Decisões da usuária (02/11/2026):**
+
+- Migração: botão **Salvar conversa na conta** na lateral da conversa. Sem sessão, o formulário Entrar/Criar conta abre dentro da área da conversa, sem perder as mensagens. Em seguida, confirmação explícita: “Isto vai guardar N mensagens desta conversa na conta [apelido]. Salvar?” com **Salvar** / **Cancelar**.
+- Histórico em **Minha conta**: lista (data, início da primeira mensagem, número de mensagens) com **Ver** (somente leitura) e **Excluir** por conversa.
+- Armazenamento: memória do servidor, cifrado com AES-GCM usando chave derivada da senha (scrypt, sal próprio) no login; a chave existe só enquanto a sessão está aberta.
+- Exclusão da conta: **Excluir conta e todos os dados** → confirmação na própria tela, sem modal (“Isto apaga a conta e N conversas salvas. Não dá para desfazer.”, **Excluir agora** / **Cancelar**) → “Conta e dados excluídos.”. Em falha, a mensagem diz que nada foi apagado.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Contexto `accounts` ampliado: `POST/GET /api/account/conversations`, `GET/DELETE /api/account/conversations/{id}` e `DELETE /api/accounts/current`, todos com token `Bearer`. `AccountService` cifra cada conversa (papel e texto das mensagens) com AES-GCM, nonce aleatório e dados associados `conta:id`; o servidor não guarda a chave fora da sessão. Limites: até 50 conversas por conta, 200 mensagens por conversa, 4.000 caracteres por mensagem e papéis `user`/`assistant`. Excluir a conta remove conta, conversas, contagem de tentativas e todas as sessões dela.
+- Nova dependência do backend: `cryptography` (registrada em `pyproject.toml` e `uv.lock`; o Dockerfile instala pelo lock).
+- Frontend: `AccountForm` reutilizável (página de conta e painel de salvar); `SaveConversationPanel` na conversa, com **Ver em Minha conta** após salvar (navegação interna, sem recarregar e perder a sessão); `AccountPage` com histórico, visualização somente leitura, exclusão por conversa e exclusão da conta, todas com confirmação na tela. Sessão expirada (`401`) volta ao formulário com “Sua sessão terminou. Entre de novo para continuar.”.
+- Limites: só papel e texto são guardados (fontes, blocos de limite e encaminhamentos reaparecem como texto); a conversa não pode ser continuada a partir do histórico; os dados somem quando o backend reinicia; a cifra protege contra leitura do armazenamento, não contra o próprio processo enquanto a sessão está aberta.
+
+**Validações locais L-02 (02/11/2026):**
+
+- [x] Backend: `pytest` — 130 testes passaram (12 novos: salvar/listar/ler, texto cifrado em repouso, nova sessão com a senha lê conversas anteriores, isolamento entre contas, mensagens inválidas e limites, exclusão de conversa, exclusão da conta com todas as sessões, fluxo HTTP `201/200/204/401/404/422`); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless: conversa anônima → **Salvar conversa na conta** → criar conta dentro da conversa → confirmação com “2 mensagens” (nenhum envio antes de **Salvar**) → salva, conversa preservada → **Ver em Minha conta** → histórico com 2 itens → **Ver** mostrou a transcrição → exclusão de uma conversa com confirmação → falha simulada (`500`) da exclusão da conta mostrou “Não foi possível excluir a conta. Nada foi apagado; tente novamente.” e manteve a sessão → exclusão real mostrou “Conta e dados excluídos.” → login com o apelido excluído falhou. 320 px sem overflow; sem cookies nem armazenamento local. Corrigidos durante o teste: falta de caminho da conversa para **Minha conta** sem recarregar e mensagem genérica em falha de exclusão.
+- [x] Teste local visto e aprovado pela usuária em 02/11/2026 (demonstração em janela do navegador).
+- [ ] Revisão de segurança/privacidade (cifra, chave em memória, exclusão verificável) e aprovação do time de produto.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes.
+
 **Skills:** [Autenticação, autorização e área logada pseudonimizada](../../skills/autenticacao-autorizacao-area-logada.md), [Persistência, criptografia e diário seguro](../../skills/persistencia-criptografia-diario-seguro.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
 ### L-03 — Módulos de psicoeducação (mock)
 
 **Prioridade:** jornada futura
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam teste visto pela usuária, commit, publicação, validação humana na AWS, conteúdo aprovado por especialistas e aprovação do time de produto.
 **Dependências:** L-01, J-00 (catálogo e conteúdo aprovados).
 
 **Escopo:** demonstrar navegação de catálogo → detalhe → consumo → retomar/concluir, com conteúdo de exemplo aprovado e controles de acessibilidade. Áudio/vídeo não deve parecer conteúdo publicado se for fixture.
 
 **Critérios de aceite:** conteúdo, transcrição/legenda, reprodução, progresso e retomada têm estados rastreáveis; conteúdo simulado está identificado; a usuária pode sair sem pressão ou perda de autonomia.
 
+**Decisões da usuária (02/11/2026):**
+
+- Catálogo com os temas do backlog E6-US1/US2. O módulo **O que é violência psicológica** reaproveita as citações literais aprovadas no C-04 (Lei nº 11.340/2006, art. 7º, II; Código Penal, art. 147-B); os outros sete trazem só “Conteúdo em preparação — demonstração. Este módulo ainda não tem texto aprovado por especialistas.”.
+- Somente texto: aviso “Áudio e vídeo com legenda e transcrição: ainda não disponíveis nesta demonstração.”; nenhum player simulado.
+- Progresso por seção salvo na conta, com **Continuar de onde parei**; ao concluir, “Você concluiu este módulo. Você decide o que fazer com o que leu.”, sem pontuação (E6-US5).
+- Entrada: seção **Módulos** em **Minha conta**; sem conta, não aparece.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Novo bounded context `learning` com a feature `browse_modules`: `GET /api/learning/modules` e `GET /api/learning/modules/{id}`; `ModuleCatalogService` (porta `ModuleCatalog`) mantém o catálogo estático, a ser substituído pelo painel de conteúdo (E11). As citações legais passaram para `aurora_backend/shared/legal_sources.py`, usadas pelo C-04 e pelos módulos sem acoplar os contextos.
+- Progresso no contexto `accounts`: `GET /api/account/module-progress` e `PUT /api/account/module-progress/{module_id}` com `{section, completed}`; rever um módulo concluído não desfaz a conclusão; o progresso é apagado com a conta. O progresso não é cifrado (não contém relato); limites de 100 módulos e 50 seções.
+- Frontend `features/learning/LearningArea`: lista com tema, situação (“Não iniciado”, “Parte X de N”, “Concluído”) e “em preparação”; ações **Começar**, **Continuar de onde parei** e **Rever**; leitor com “Parte X de N”, **Anterior**, **Próxima**, **Concluir módulo**, fonte com link para o Planalto, aviso de mídia e de demonstração. Falha ao salvar o progresso aparece no fluxo sem impedir a leitura.
+- Fora do escopo: sugestões personalizadas a partir do chat (E6-US4) e qualquer conteúdo educativo próprio.
+
+**Validações locais L-03 (02/11/2026):**
+
+- [x] Backend: `pytest` — 139 testes passaram (9 novos: catálogo com um módulo pronto, citações literais, placeholders sem afirmações, progresso salvo e conclusão mantida, progresso inválido, progresso apagado com a conta, fluxo HTTP `200/401/404/422`); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless: sem conta, a tela inicial não mostra módulos; com conta, oito módulos “Não iniciado”; leitor abriu com foco no título e a citação da Lei Maria da Penha com fonte; Parte 2 mostrou a fonte do Código Penal; ao sair e voltar, “Parte 2 de 2” e **Continuar de onde parei** retomou na Parte 2; **Concluir módulo** mostrou a mensagem de conclusão e a lista passou a “Concluído” / **Rever**; módulo em preparação exibiu apenas o placeholder; 320 px sem overflow.
+- [x] Teste local visto e aprovado pela usuária em 02/11/2026 (demonstração em janela do navegador).
+- [ ] Conteúdo dos módulos aprovado por especialistas e aprovação do time de produto.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes.
+
 **Skills:** [Conteúdo multimídia e aprendizagem acessível](../../skills/conteudo-multimidia-aprendizagem-acessivel.md), [Curadoria de conteúdo e engenharia de conhecimento RAG](../../skills/curadoria-conteudo-engenharia-conhecimento-rag.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
 ### L-04 — Diário de incidentes e exportação demonstrativa
 
 **Prioridade:** jornada futura
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam teste visto pela usuária, commit, publicação, validação humana na AWS, revisões de segurança, privacidade e jurídica e aprovação do time de produto.
 **Dependências:** L-01, J-00 (campos, avisos e ações aprovados).
 
 **Escopo:** demonstrar criação/edição de registro com data, hora e descrição; anexos e exportação protegida só podem ser simulados depois de definir as interações. Não armazenar dados reais nem gerar arquivo que se apresente como evidência jurídica garantida.
 
 **Critérios de aceite:** criação, cancelamento, edição, exclusão e exportação têm estados explícitos; aviso de privacidade precede armazenamento/exportação simulados; nenhuma informação é enviada ou persistida fora do mock em memória; não há promessa de segurança em dispositivo monitorado.
 
+**Decisões da usuária (02/11/2026):**
+
+- Seção **Diário** em **Minha conta**. Campos: Data (obrigatória, não futura), Hora (opcional, HH:MM), Descrição (obrigatória, até 4.000 caracteres). Ações: **Novo registro**, **Editar**, **Excluir** (confirmação na tela) e **Cancelar** sem salvar. Registros cifrados com a chave derivada da senha, como as conversas salvas.
+- Anexo **simulado**: a usuária pode escolher uma imagem ou áudio; só nome e tamanho aparecem, e o arquivo é descartado sem ir ao servidor.
+- Exportação: **Exportar (demonstração)** mostra antes o aviso de que um arquivo baixado pode ficar no aparelho e ser visto, e de que a exportação não garante valor jurídico; depois exibe uma prévia na tela, sem criar arquivo. O PDF protegido (E7-US4) fica para a persistência real.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Contexto `accounts`: `GET/POST /api/account/journal` e `PUT/DELETE /api/account/journal/{id}`. `AccountService` valida data (ISO, não futura), hora e descrição, cifra data, hora e descrição de cada registro com AES-GCM (dados associados `conta:journal:id`), limita a 200 registros, ordena do mais recente para o mais antigo e apaga o diário com a conta.
+- Frontend `features/journal/JournalArea`: aviso de privacidade no formulário antes de salvar (“Antes de salvar: … Não escreva dados reais. O Aurora não garante segurança se o aparelho for monitorado.”), contador de caracteres, anexo simulado com **Remover anexo**, mensagens “Registro salvo.”, “Registro atualizado.”, “Registro excluído.” e “Nada foi salvo.”; falhas informam que nada foi salvo ou apagado. A exportação fica desativada sem registros.
+- Limites: sem anexos reais (validação, remoção de metadados como localização da foto e armazenamento seguro pendentes), sem PDF; dados somem quando o backend reinicia; não há proteção contra quem acessa o aparelho com a sessão aberta.
+
+**Validações locais L-04 (02/11/2026):**
+
+- [x] Backend: `pytest` — 151 testes passaram (12 novos: criar, editar, listar em ordem e excluir; cifra em repouso de data e texto; data futura, formato inválido, data inexistente, hora inválida, descrição vazia ou longa; edição de registro inexistente; diário apagado com a conta; fluxo HTTP `201/200/204/401/404/422`); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless: exportação desativada sem registros; **Cancelar** mostrou “Nada foi salvo.”; formulário com foco no título e aviso de privacidade; descrição vazia → erro; anexo simulado mostrou “anexo-teste.png (2 KB)… não foi enviado nem será guardado” e nenhuma requisição levou o arquivo; criar, editar e criar um segundo registro (lista do mais recente ao mais antigo); exportação mostrou o aviso e depois a prévia com 2 registros, sem nenhum download; exclusão com confirmação; 320 px sem overflow.
+- [x] Teste local visto e aprovado pela usuária em 02/11/2026 (demonstração em janela do navegador).
+- [ ] Revisões de segurança, privacidade e jurídica (inclusive riscos de exportação) e aprovação do time de produto.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes.
+
 **Skills:** [Persistência, criptografia e diário seguro](../../skills/persistencia-criptografia-diario-seguro.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Segurança de aplicação e modelagem de ameaças](../../skills/seguranca-aplicacao-modelagem-ameacas.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 
 ### L-05 — Guia/plano de segurança demonstrativo
 
 **Prioridade:** jornada futura
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam teste visto pela usuária, commit, publicação, validação humana na AWS, conteúdo aprovado por especialistas e aprovação do time de produto.
 **Dependências:** J-00 (modo de acesso, conteúdo e regras de salvamento aprovados); L-01 somente se o escopo aprovado exigir conta.
 
 **Escopo:** demonstrar conteúdo informativo, contatos e anotações opcionais conforme a jornada validada. A interface não presume que a usuária deve deixar o relacionamento ou a residência e não substitui atendimento especializado.
 
 **Critérios de aceite:** uso é voluntário; saída sem salvar está disponível; conteúdos e sugestões têm aprovação de domínio; qualquer salvamento aparece como mock; não há ação automática de contato ou compartilhamento.
+
+**Decisões da usuária (02/11/2026):**
+
+- Guia com três seções de títulos neutros (“Pensar na sua segurança”, “Documentos e itens importantes”, “Pessoas e serviços de apoio”), todas com “Conteúdo em preparação — demonstração…”; o único conteúdo real são os canais 190/180/192/188. Aviso: “Este guia é opcional e informativo. Ele não presume que você deva sair de casa ou do relacionamento e não substitui atendimento especializado. Você decide o que usar.”
+- Plano pessoal com contatos de confiança (até 5, nome ou apelido e telefone; o telefone só vira ligação se a usuária tocar) e anotações (até 4.000 caracteres).
+- Acesso pela área logada (seção **Guia de segurança** em **Minha conta**), cifrado com a chave da senha; **Salvar plano** e **Sair sem salvar**; aviso de privacidade antes de salvar.
+- Oferta pela conversa (E8-US4) com a frase de teste exata “Quero pensar na minha segurança”: a resposta traz um convite opcional com **Abrir guia de segurança**.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Contexto `learning`: `GET /api/learning/safety-guide` (`SafetyGuideService`, porta `SafetyGuide`) com as seções-placeholder.
+- Contexto `accounts`: `GET/PUT /api/account/safety-plan`; contatos e anotações cifrados com AES-GCM como um único registro, validados (até 5 contatos, telefone com 8 a 20 caracteres e pelo menos 8 dígitos, anotações até 4.000) e apagados com a conta.
+- Contexto `conversation`: `ContentOfferService` (porta `ContentOfferProvider`) consultado depois da triagem e do limite de escopo. Com a frase de teste, a API devolve `offer: "safety_guide"` sem consultar fontes nem gerar texto (`knowledge_status: null`, `reply: null`). Frases de risco continuam abrindo o modal do C-03, sem oferta.
+- Frontend: `SafetyGuide` (guia, canais, plano em modo leitura com links `tel:` e modo edição) reutilizado em **Minha conta** e no `SafetyGuidePanel` da conversa; sem sessão, o painel pede login ali mesmo e a conversa continua preservada. O cliente valida o campo `offer` em runtime.
+- Limites: nenhum conteúdo de orientação de segurança foi escrito; a oferta só reage à frase de teste; o Aurora não envia mensagens nem compartilha o plano.
+
+**Validações locais L-05 (02/11/2026):**
+
+- [x] Backend: `pytest` — 166 testes passaram (15 novos: guia só com placeholders, plano vazio/salvo/lido, cifra em repouso, validação de contatos e anotações, plano apagado com a conta, oferta pela frase exata e normalizada, sem oferta para outras frases, handler sem consultar fontes, fluxo HTTP de oferta, guia e plano com `200/401/422`); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Navegador headless: “Quero pensar na minha segurança” trouxe o convite com **Abrir guia de segurança**; o painel pediu login dentro da conversa; o guia mostrou o aviso de não presunção, os três placeholders e os canais; **Sair sem salvar** mostrou “Nada foi salvo.” e manteve o plano vazio; telefone inválido mostrou erro; com dados válidos, “Plano salvo.” e o contato virou link `tel:81999990000` sem nenhuma ligação automática; **← Voltar à conversa** manteve as 2 mensagens; o mesmo plano apareceu em **Minha conta**; 320 px sem overflow.
+- [ ] Teste visto pela usuária em janela do navegador.
+- [ ] Conteúdo do guia e critérios de oferta aprovados por especialistas; aprovação do time de produto.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes.
 
 **Skills:** [Domínio de violência psicológica e design informado por trauma](../../skills/dominio-violencia-psicologica-design-informado-trauma.md), [Curadoria de conteúdo e engenharia de conhecimento RAG](../../skills/curadoria-conteudo-engenharia-conhecimento-rag.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Acessibilidade, inclusão e linguagem simples](../../skills/acessibilidade-inclusao-linguagem-simples.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md).
 

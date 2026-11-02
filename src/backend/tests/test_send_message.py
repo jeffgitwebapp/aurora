@@ -12,6 +12,9 @@ from aurora_backend.contexts.conversation.services.chat_response.service import 
     REPLY_INTRODUCTION,
     ChatResponseService,
 )
+from aurora_backend.contexts.conversation.services.content_offer.service import (
+    ContentOfferService,
+)
 from aurora_backend.contexts.conversation.services.guardrail.models import (
     GuardrailResult,
     OutOfScopeCategory,
@@ -118,6 +121,7 @@ def client() -> TestClient:
         create_app(
             triage_service=TriageService(),
             guardrail_service=GuardrailService(),
+            offer_service=ContentOfferService(),
             knowledge_service=KnowledgeService(),
             chat_response_service=ChatResponseService(),
         )
@@ -254,6 +258,7 @@ def test_handler_does_not_call_knowledge_or_chat_for_acute_or_indeterminate() ->
                 "Mensagem de teste",
                 triage_service=FixedTriageService(triage_result),
                 guardrail_service=UnusedGuardrailService(),
+                offer_service=ContentOfferService(),
                 knowledge_service=UnusedKnowledgeService(),
                 chat_response_service=UnusedChatService(),
             )
@@ -271,6 +276,7 @@ def test_handler_returns_no_source_without_generating_reply() -> None:
             NO_ACUTE_FIXTURE,
             triage_service=TriageService(),
             guardrail_service=GuardrailService(),
+            offer_service=ContentOfferService(),
             knowledge_service=knowledge,
             chat_response_service=UnusedChatService(),
         )
@@ -294,6 +300,7 @@ def test_handler_generates_reply_only_from_retrieved_passages() -> None:
             DEFINITION_QUESTION,
             triage_service=TriageService(),
             guardrail_service=GuardrailService(),
+            offer_service=ContentOfferService(),
             knowledge_service=FixedKnowledgeService(knowledge_result),
             chat_response_service=chat_service,
         )
@@ -316,6 +323,7 @@ def test_handler_propagates_knowledge_failure_instead_of_answering() -> None:
                 DEFINITION_QUESTION,
                 triage_service=TriageService(),
                 guardrail_service=GuardrailService(),
+                offer_service=ContentOfferService(),
                 knowledge_service=FailingKnowledgeService(),
                 chat_response_service=UnusedChatService(),
             )
@@ -455,6 +463,7 @@ def test_knowledge_failure_returns_503_without_reply(
         create_app(
             triage_service=TriageService(),
             guardrail_service=GuardrailService(),
+            offer_service=ContentOfferService(),
             knowledge_service=FailingKnowledgeService(),
             chat_response_service=ChatResponseService(),
         )
@@ -599,6 +608,7 @@ def test_handler_stops_before_knowledge_and_chat_when_out_of_scope() -> None:
             "O que acontece no meu caso?",
             triage_service=TriageService(),
             guardrail_service=GuardrailService(),
+            offer_service=ContentOfferService(),
             knowledge_service=UnusedKnowledgeService(),
             chat_response_service=UnusedChatService(),
         )
@@ -616,6 +626,7 @@ def test_triage_runs_before_scope_guardrail() -> None:
             "Ele disse que vai me matar",
             triage_service=TriageService(),
             guardrail_service=UnusedGuardrailService(),
+            offer_service=ContentOfferService(),
             knowledge_service=UnusedKnowledgeService(),
             chat_response_service=UnusedChatService(),
         )
@@ -632,6 +643,7 @@ def test_handler_fails_closed_when_guardrail_is_unavailable() -> None:
                 DEFINITION_QUESTION,
                 triage_service=TriageService(),
                 guardrail_service=FailingGuardrailService(),
+                offer_service=ContentOfferService(),
                 knowledge_service=UnusedKnowledgeService(),
                 chat_response_service=UnusedChatService(),
             )

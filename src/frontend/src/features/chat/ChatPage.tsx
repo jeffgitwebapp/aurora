@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
+import type { AccountSession } from "../account/api/accountApi";
+import { SaveConversationPanel } from "../account/SaveConversationPanel";
 import { EmergencyContacts } from "../emergency/EmergencyContacts";
+import { SafetyGuidePanel } from "../safety/SafetyGuidePanel";
+import { QuestionnairePanel } from "../questionnaire/QuestionnairePanel";
+import { ReferralPanel } from "../referral/ReferralPanel";
 import { sendMessage, ChatApiError } from "./api/chatApi";
 import type { TriageSignal, TriageStatus } from "./api/chatApi";
 import { MessageComposer } from "./components/MessageComposer";
@@ -12,22 +17,33 @@ const NO_SOURCE_MESSAGE =
 const OUT_OF_SCOPE_MESSAGE =
   "Não posso dar um diagnóstico nem um parecer sobre o seu caso. Isso precisa de uma profissional que te escute com calma.\n\nPosso explicar o que a lei diz sobre isso e indicar quem pode te orientar de graça.";
 const LAW_QUESTION = "O que é violência psicológica?";
+const SAFETY_GUIDE_OFFER =
+  "Se quiser, há um guia de segurança na área logada, com canais de apoio e um espaço para seus contatos de confiança e anotações. É opcional: você decide se e quando abrir.";
 
 interface ChatPageProps {
   initialMessage?: string;
   sendInitialMessage?: boolean;
+  accountSession: AccountSession | null;
+  onAccountSessionChange: (session: AccountSession | null) => void;
+  onOpenAccount: () => void;
   onQuickExit: () => void;
 }
 
 export function ChatPage({
   initialMessage = "",
   sendInitialMessage = false,
+  accountSession,
+  onAccountSessionChange,
+  onOpenAccount,
   onQuickExit,
 }: ChatPageProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [retryMessage, setRetryMessage] = useState<string | null>(null);
+  const [panel, setPanel] = useState<"referral" | "questionnaire" | "save" | "guide" | null>(
+    null,
+  );
   const [riskScreen, setRiskScreen] = useState<{
     status: Exclude<TriageStatus, "no_acute_signal">;
     signals: TriageSignal[];
@@ -66,7 +82,15 @@ export function ChatPage({
       setRiskScreen(null);
       const id = `message-${nextMessageId.current++}`;
       let assistantMessage: ChatMessage;
-      if (result.outOfScopeCategory !== null) {
+      if (result.offer !== null) {
+        assistantMessage = {
+          id,
+          role: "assistant",
+          text: SAFETY_GUIDE_OFFER,
+          offer: result.offer,
+          demo: result.demo,
+        };
+      } else if (result.outOfScopeCategory !== null) {
         assistantMessage = {
           id,
           role: "assistant",
@@ -136,6 +160,26 @@ export function ChatPage({
     document.getElementById("emergency-title")?.focus({ preventScroll: true });
   };
 
+  const handleOpenReferral = () => {
+    setPanel("referral");
+  };
+
+  const handleOpenQuestionnaire = () => {
+    setPanel("questionnaire");
+  };
+
+  const handleClosePanel = () => {
+    setPanel(null);
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(".chat-page__conversation")?.focus();
+    });
+  };
+
+  const handleQuestionnaireEmergency = () => {
+    setPanel(null);
+    setRiskScreen({ status: "acute", signals: [] });
+  };
+
   const handleRetry = () => {
     if (retryMessage) {
       void requestReply(retryMessage);
@@ -182,10 +226,46 @@ export function ChatPage({
 
   return (
     <div className="chat-page">
+      {panel !== null && (
+        <div className="chat-page__referral">
+          {panel === "referral" && (
+            <ReferralPanel
+              onBack={handleClosePanel}
+              onOpenContacts={handleOpenContacts}
+              onQuickExit={onQuickExit}
+            />
+          )}
+          {panel === "questionnaire" && (
+            <QuestionnairePanel
+              onStop={handleClosePanel}
+              onEmergency={handleQuestionnaireEmergency}
+              onOpenReferral={handleOpenReferral}
+            />
+          )}
+          {panel === "guide" && (
+            <SafetyGuidePanel
+              session={accountSession}
+              onSessionChange={onAccountSessionChange}
+              onBack={handleClosePanel}
+            />
+          )}
+          {panel === "save" && (
+            <SaveConversationPanel
+              messages={messages.map(({ role, text }) => ({ role, text }))}
+              session={accountSession}
+              onSessionChange={onAccountSessionChange}
+              onBack={handleClosePanel}
+              onOpenAccount={onOpenAccount}
+            />
+          )}
+        </div>
+      )}
+
       <section
         className="chat-page__conversation"
         aria-label="Conversa"
         tabIndex={-1}
+        hidden={panel !== null}
       >
         {error && (
           <div className="chat-page__alert" role="alert">
@@ -216,6 +296,7 @@ export function ChatPage({
           isLoading={isLoading}
           onAskLaw={handleAskLaw}
           onOpenContacts={handleOpenContacts}
+          onOpenSafetyGuide={() => setPanel("guide")}
         />
 
         <MessageComposer
@@ -226,6 +307,32 @@ export function ChatPage({
       </section>
 
       <aside className="chat-page__sidebar" aria-label="Contatos úteis">
+        {panel === null && (
+          <>
+            <button
+              type="button"
+              className="chat-page__referral-button"
+              onClick={handleOpenReferral}
+            >
+              Onde buscar ajuda
+            </button>
+            <button
+              type="button"
+              className="chat-page__questionnaire-button"
+              onClick={handleOpenQuestionnaire}
+            >
+              Responder questionário
+            </button>
+            <button
+              type="button"
+              className="chat-page__questionnaire-button"
+              onClick={() => setPanel("save")}
+            >
+              Salvar conversa na conta
+            </button>
+          </>
+        )}
+
         <EmergencyContacts />
 
         <p className="chat-page__privacy">

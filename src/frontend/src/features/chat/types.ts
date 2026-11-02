@@ -1,4 +1,5 @@
 import type {
+  ContentOffer,
   KnowledgeStatus,
   OutOfScopeCategory,
   SourceReference,
@@ -12,6 +13,7 @@ export interface ChatMessage {
   text: string;
   knowledgeStatus?: KnowledgeStatus;
   outOfScopeCategory?: OutOfScopeCategory;
+  offer?: ContentOffer;
   sources?: SourceReference[];
   demo?: boolean;
 }

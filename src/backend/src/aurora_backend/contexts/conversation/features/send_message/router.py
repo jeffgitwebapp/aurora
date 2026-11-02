@@ -16,6 +16,9 @@ from aurora_backend.contexts.conversation.features.send_message.schemas import (
 from aurora_backend.contexts.conversation.services.chat_response.port import (
     ChatResponseGenerator,
 )
+from aurora_backend.contexts.conversation.services.content_offer.port import (
+    ContentOfferProvider,
+)
 from aurora_backend.contexts.conversation.services.guardrail.models import ScopeDecision
 from aurora_backend.contexts.conversation.services.guardrail.port import (
     GuardrailUnavailableError,
@@ -38,6 +41,7 @@ def create_send_message_router(
     *,
     triage_service: TriageEvaluator,
     guardrail_service: ScopeGuardrail,
+    offer_service: ContentOfferProvider,
     knowledge_service: KnowledgeRetriever,
     chat_response_service: ChatResponseGenerator,
 ) -> APIRouter:
@@ -50,6 +54,7 @@ def create_send_message_router(
                 request.message,
                 triage_service=triage_service,
                 guardrail_service=guardrail_service,
+                offer_service=offer_service,
                 knowledge_service=knowledge_service,
                 chat_response_service=chat_response_service,
             )
@@ -79,6 +84,7 @@ def create_send_message_router(
                 if guardrail is not None and guardrail.category is not None
                 else None
             ),
+            offer=result.offer.value if result.offer is not None else None,
             knowledge_status=knowledge.status.value if knowledge is not None else None,
             sources=[
                 SourceReferenceResponse(
