@@ -8,11 +8,20 @@ from aurora_backend.contexts.conversation.features.send_message import router as
 from aurora_backend.contexts.conversation.features.send_message.handler import (
     handle_send_message,
 )
-from aurora_backend.contexts.conversation.services.chat_response import service as chat_service
 from aurora_backend.contexts.conversation.services.chat_response.service import (
-    SIMULATED_REPLY_PREFIX,
+    REPLY_INTRODUCTION,
     ChatResponseService,
 )
+from aurora_backend.contexts.conversation.services.knowledge.models import (
+    KnowledgePassage,
+    KnowledgeResult,
+    KnowledgeStatus,
+    SourceReference,
+)
+from aurora_backend.contexts.conversation.services.knowledge.port import (
+    KnowledgeUnavailableError,
+)
+from aurora_backend.contexts.conversation.services.knowledge.service import KnowledgeService
 from aurora_backend.contexts.conversation.services.triage.models import (
     TriageResult,
     TriageSignal,
@@ -23,10 +32,63 @@ from aurora_backend.main import create_app
 
 ENDPOINT = "/api/chat/messages"
 NO_ACUTE_FIXTURE = "Quero informações sobre serviços de apoio na minha cidade"
+DEFINITION_QUESTION = "O que é violência psicológica?"
+CRIME_QUESTION = "Violência psicológica é crime?"
+TEST_SOURCE = SourceReference(
+    id="fonte-teste",
+    title="Fonte sintética de teste",
+    locator="seção 1",
+    publisher="Testes automatizados",
+    url="https://example.org/fonte-teste",
+)
+TEST_PASSAGE = KnowledgePassage(text="Trecho sintético.", source=TEST_SOURCE)
 
 
 def assess_fixture(message: str) -> TriageResult:
     return asyncio.run(TriageService().assess(message))
+
+
+def retrieve_fixture(message: str) -> KnowledgeResult:
+    return asyncio.run(KnowledgeService().retrieve(message))
+
+
+class FixedKnowledgeService:
+    def __init__(self, result: KnowledgeResult) -> None:
+        self.result = result
+        self.messages: list[str] = []
+
+    async def retrieve(self, message: str) -> KnowledgeResult:
+        self.messages.append(message)
+        return self.result
+
+
+class UnusedKnowledgeService:
+    async def retrieve(self, _message: str) -> KnowledgeResult:
+        del _message
+        pytest.fail("Knowledge service must not run for blocked triage results.")
+
+
+class UnusedChatService:
+    async def generate_reply(
+        self,
+        _message: str,
+        _passages: tuple[KnowledgePassage, ...],
+    ) -> str:
+        del _message, _passages
+        pytest.fail("Chat response service must not run without a found source.")
+
+
+class FixedChatService:
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, tuple[KnowledgePassage, ...]]] = []
+
+    async def generate_reply(
+        self,
+        message: str,
+        passages: tuple[KnowledgePassage, ...],
+    ) -> str:
+        self.calls.append((message, passages))
+        return "Resposta ancorada de teste."
 
 
 @pytest.fixture
@@ -34,9 +96,25 @@ def client() -> TestClient:
     return TestClient(
         create_app(
             triage_service=TriageService(),
+            knowledge_service=KnowledgeService(),
             chat_response_service=ChatResponseService(),
         )
     )
+
+
+@pytest.fixture
+def processing_delays(monkeypatch: pytest.MonkeyPatch) -> list[float]:
+    sleep_durations: list[float] = []
+
+    async def record_processing_delay(seconds: float) -> None:
+        sleep_durations.append(seconds)
+
+    monkeypatch.setattr(
+        send_message_router,
+        "asyncio",
+        SimpleNamespace(sleep=record_processing_delay),
+    )
+    return sleep_durations
 
 
 @pytest.mark.parametrize(
@@ -135,7 +213,7 @@ def test_only_explicit_control_fixture_is_no_acute_signal() -> None:
     assert result.guidance is None
 
 
-def test_handler_does_not_call_chat_service_for_acute_or_indeterminate_results() -> None:
+def test_handler_does_not_call_knowledge_or_chat_for_acute_or_indeterminate() -> None:
     class FixedTriageService:
         def __init__(self, result: TriageResult) -> None:
             self.result = result
@@ -143,11 +221,6 @@ def test_handler_does_not_call_chat_service_for_acute_or_indeterminate_results()
         async def assess(self, _message: str) -> TriageResult:
             del _message
             return self.result
-
-    class UnusedChatService:
-        async def generate_reply(self, _message: str) -> str:
-            del _message
-            pytest.fail("Chat response service must not run for blocked triage results.")
 
     for triage_status in (TriageStatus.ACUTE, TriageStatus.INDETERMINATE):
         triage_result = TriageResult(
@@ -158,47 +231,125 @@ def test_handler_does_not_call_chat_service_for_acute_or_indeterminate_results()
             handle_send_message(
                 "Mensagem de teste",
                 triage_service=FixedTriageService(triage_result),
+                knowledge_service=UnusedKnowledgeService(),
                 chat_response_service=UnusedChatService(),
             )
         )
 
         assert result.triage is triage_result
         assert result.reply is None
+        assert result.knowledge is None
 
 
-def test_handler_calls_chat_service_only_after_no_acute_triage() -> None:
-    class FixedChatService:
-        def __init__(self) -> None:
-            self.messages: list[str] = []
-
-        async def generate_reply(self, message: str) -> str:
-            self.messages.append(message)
-            return "Resposta mockada."
-
-    chat_service = FixedChatService()
+def test_handler_returns_no_source_without_generating_reply() -> None:
+    knowledge = FixedKnowledgeService(KnowledgeResult(status=KnowledgeStatus.NO_SOURCE))
     result = asyncio.run(
         handle_send_message(
             NO_ACUTE_FIXTURE,
             triage_service=TriageService(),
-            chat_response_service=chat_service,
+            knowledge_service=knowledge,
+            chat_response_service=UnusedChatService(),
         )
     )
 
     assert result.triage.status is TriageStatus.NO_ACUTE_SIGNAL
-    assert result.reply == "Resposta mockada."
-    assert chat_service.messages == [NO_ACUTE_FIXTURE]
+    assert result.reply is None
+    assert result.knowledge is not None
+    assert result.knowledge.status is KnowledgeStatus.NO_SOURCE
+    assert knowledge.messages == [NO_ACUTE_FIXTURE]
 
 
-def test_mock_chat_response_changes_with_generator(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(chat_service.random, "choice", lambda options: options[0])
-    first_reply = asyncio.run(ChatResponseService().generate_reply("mensagem 1"))
+def test_handler_generates_reply_only_from_retrieved_passages() -> None:
+    knowledge_result = KnowledgeResult(
+        status=KnowledgeStatus.FOUND,
+        passages=(TEST_PASSAGE,),
+    )
+    chat_service = FixedChatService()
+    result = asyncio.run(
+        handle_send_message(
+            DEFINITION_QUESTION,
+            triage_service=TriageService(),
+            knowledge_service=FixedKnowledgeService(knowledge_result),
+            chat_response_service=chat_service,
+        )
+    )
 
-    monkeypatch.setattr(chat_service.random, "choice", lambda options: options[-1])
-    second_reply = asyncio.run(ChatResponseService().generate_reply("mensagem 2"))
+    assert result.reply == "Resposta ancorada de teste."
+    assert result.knowledge is knowledge_result
+    assert chat_service.calls == [(DEFINITION_QUESTION, (TEST_PASSAGE,))]
 
-    assert first_reply != second_reply
-    assert first_reply.startswith(SIMULATED_REPLY_PREFIX)
-    assert second_reply.startswith(SIMULATED_REPLY_PREFIX)
+
+def test_handler_propagates_knowledge_failure_instead_of_answering() -> None:
+    class FailingKnowledgeService:
+        async def retrieve(self, _message: str) -> KnowledgeResult:
+            del _message
+            raise KnowledgeUnavailableError
+
+    with pytest.raises(KnowledgeUnavailableError):
+        asyncio.run(
+            handle_send_message(
+                DEFINITION_QUESTION,
+                triage_service=TriageService(),
+                knowledge_service=FailingKnowledgeService(),
+                chat_response_service=UnusedChatService(),
+            )
+        )
+
+
+@pytest.mark.parametrize(
+    ("message", "source_id"),
+    [
+        (DEFINITION_QUESTION, "lei-11340-2006-art-7-ii"),
+        ("  o que e VIOLENCIA psicologica  ", "lei-11340-2006-art-7-ii"),
+        (CRIME_QUESTION, "codigo-penal-art-147-b"),
+    ],
+)
+def test_knowledge_fixtures_return_identified_demo_sources(
+    message: str,
+    source_id: str,
+) -> None:
+    result = retrieve_fixture(message)
+
+    assert result.status is KnowledgeStatus.FOUND
+    assert result.demo is True
+    assert [source.id for source in result.sources] == [source_id]
+    source = result.sources[0]
+    assert source.url.startswith("https://www.planalto.gov.br/")
+    assert source.title and source.locator and source.publisher
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        NO_ACUTE_FIXTURE,
+        "O que é violência psicológica? Ele faz isso comigo.",
+        "Tenho dúvidas sobre meus direitos",
+        "mensagem aleatória",
+    ],
+)
+def test_messages_without_knowledge_fixture_return_no_source(message: str) -> None:
+    result = retrieve_fixture(message)
+
+    assert result.status is KnowledgeStatus.NO_SOURCE
+    assert result.passages == ()
+    assert result.sources == ()
+
+
+def test_knowledge_result_rejects_found_without_passages() -> None:
+    with pytest.raises(ValueError):
+        KnowledgeResult(status=KnowledgeStatus.FOUND)
+
+
+def test_chat_response_quotes_only_received_passages() -> None:
+    reply = asyncio.run(ChatResponseService().generate_reply("pergunta", (TEST_PASSAGE,)))
+
+    assert reply.startswith(REPLY_INTRODUCTION)
+    assert "Fonte sintética de teste, seção 1: “Trecho sintético.”" in reply
+
+
+def test_chat_response_refuses_to_answer_without_passages() -> None:
+    with pytest.raises(ValueError):
+        asyncio.run(ChatResponseService().generate_reply("pergunta", ()))
 
 
 @pytest.mark.parametrize("message", ["", " ", "   \t\n "])
@@ -214,28 +365,79 @@ def test_missing_message_field_is_rejected(client: TestClient) -> None:
     assert response.status_code == 422
 
 
-def test_control_fixture_returns_chat_reply_after_five_seconds(
+@pytest.mark.parametrize(
+    ("message", "source_id"),
+    [
+        (DEFINITION_QUESTION, "lei-11340-2006-art-7-ii"),
+        (CRIME_QUESTION, "codigo-penal-art-147-b"),
+    ],
+)
+def test_knowledge_fixture_returns_reply_with_sources_after_five_seconds(
     client: TestClient,
-    monkeypatch: pytest.MonkeyPatch,
+    processing_delays: list[float],
+    message: str,
+    source_id: str,
 ) -> None:
-    sleep_durations: list[float] = []
+    response = client.post(ENDPOINT, json={"message": message})
 
-    async def record_processing_delay(seconds: float) -> None:
-        sleep_durations.append(seconds)
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["triage_status"] == "no_acute_signal"
+    assert payload["signals"] == []
+    assert payload["guidance"] is None
+    assert payload["knowledge_status"] == "found"
+    assert payload["demo"] is True
+    assert payload["reply"].startswith(REPLY_INTRODUCTION)
+    assert [source["id"] for source in payload["sources"]] == [source_id]
+    assert set(payload["sources"][0]) == {
+        "id",
+        "title",
+        "locator",
+        "publisher",
+        "url",
+        "version",
+    }
+    assert processing_delays == [5]
 
-    monkeypatch.setattr(
-        send_message_router,
-        "asyncio",
-        SimpleNamespace(sleep=record_processing_delay),
-    )
+
+def test_message_without_source_returns_no_source_state(
+    client: TestClient,
+    processing_delays: list[float],
+) -> None:
     response = client.post(ENDPOINT, json={"message": NO_ACUTE_FIXTURE})
 
     assert response.status_code == 200
-    assert response.json()["triage_status"] == "no_acute_signal"
-    assert response.json()["signals"] == []
-    assert response.json()["guidance"] is None
-    assert response.json()["reply"].startswith(f"{SIMULATED_REPLY_PREFIX}: ")
-    assert sleep_durations == [5]
+    payload = response.json()
+    assert payload["triage_status"] == "no_acute_signal"
+    assert payload["knowledge_status"] == "no_source"
+    assert payload["reply"] is None
+    assert payload["guidance"] is None
+    assert payload["sources"] == []
+    assert payload["demo"] is True
+    assert processing_delays == [5]
+
+
+def test_knowledge_failure_returns_503_without_reply(
+    processing_delays: list[float],
+) -> None:
+    class FailingKnowledgeService:
+        async def retrieve(self, _message: str) -> KnowledgeResult:
+            del _message
+            raise KnowledgeUnavailableError
+
+    failing_client = TestClient(
+        create_app(
+            triage_service=TriageService(),
+            knowledge_service=FailingKnowledgeService(),
+            chat_response_service=ChatResponseService(),
+        )
+    )
+    response = failing_client.post(ENDPOINT, json={"message": DEFINITION_QUESTION})
+
+    assert response.status_code == 503
+    assert "reply" not in response.json()
+    assert DEFINITION_QUESTION not in response.text
+    assert processing_delays == []
 
 
 @pytest.mark.parametrize(
@@ -270,6 +472,8 @@ def test_acute_fixture_returns_service_guidance_without_chat_or_delay(
     assert payload["reply"] is None
     assert payload["triage_status"] == "acute"
     assert payload["signals"] == [signal]
+    assert payload["knowledge_status"] is None
+    assert payload["sources"] == []
     assert "Simulação do protótipo" in payload["guidance"]
     assert sleep_durations == []
 
@@ -294,34 +498,11 @@ def test_exact_indeterminate_fixture_returns_service_guidance_without_chat_or_de
     payload = response.json()
     assert payload["reply"] is None
     assert payload["triage_status"] == "indeterminate"
+    assert payload["knowledge_status"] is None
+    assert payload["sources"] == []
     assert payload["signals"] == []
     assert "Isso não significa ausência de risco" in payload["guidance"]
     assert sleep_durations == []
-
-
-def test_unrecognized_message_uses_normal_chat_flow(
-    client: TestClient,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    sleep_durations: list[float] = []
-
-    async def record_processing_delay(seconds: float) -> None:
-        sleep_durations.append(seconds)
-
-    monkeypatch.setattr(
-        send_message_router,
-        "asyncio",
-        SimpleNamespace(sleep=record_processing_delay),
-    )
-    response = client.post(ENDPOINT, json={"message": "Oi, gostaria de conversar"})
-
-    assert response.status_code == 200
-    payload = response.json()
-    assert isinstance(payload["reply"], str)
-    assert payload["triage_status"] == "no_acute_signal"
-    assert payload["signals"] == []
-    assert payload["guidance"] is None
-    assert sleep_durations == [5]
 
 
 def test_get_is_not_allowed(client: TestClient) -> None:

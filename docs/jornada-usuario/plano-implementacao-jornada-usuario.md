@@ -1,6 +1,6 @@
 # Plano de Implementação — Jornada do Usuário Aurora
 
-**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01 e a versão publicada de C-02 validados em ambiente publicado; implementação atual de C-02/C-03 e build local concluídos, aguardando reconstrução/teste no Docker, publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
+**Status:** J-00 e J-01 concluídos como preparação documental/técnica; I-01, I-02, I-03, I-04, C-01 e a versão publicada de C-02 validados em ambiente publicado; implementação atual de C-02/C-03/C-04 e build local concluídos, aguardando reconstrução/teste no Docker, publicação e validação humana; revisões profissionais de segurança/conteúdo pendentes conforme cada tarefa; demais tarefas de implementação não iniciadas
 **Documento-base:** [Jornada do Usuário](./jornada-do-usuario.md)
 **Escopo:** protótipo funcional ponta a ponta, com frontend e backend integrados a serviços de produção que utilizam dados e provedores simulados nesta fase
 **Regra de conclusão:** uma jornada só fica concluída após implementação, testes locais, commit, publicação e teste no ambiente AWS realizado por uma pessoa.
@@ -72,7 +72,7 @@ As tarefas de preparação não substituem a priorização das jornadas: são a 
 | 5 | C-01 | Conversa anônima, mensagens e contexto em memória | Início da jornada dependente | I-03, J-01 | Concluída — conversa e integração validadas pela usuária em ambiente publicado |
 | 6 | C-02 | Triagem de risco agudo antes de resposta informativa | Dependente da mensagem | C-01, J-00 | Versão publicada validada em 31/10/2026; ajuste atual das fixtures em `TriageService` está local e aguarda publicação/validação; revisão profissional pendente |
 | 7 | C-03 | Tela de risco agudo, canais e retorno | Dependente da triagem | I-01, I-02, C-02 | Desenvolvimento concluído localmente — validações locais registradas; publicação/AWS e revisão profissional pendentes |
-| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Pendente |
+| 8 | C-04 | Resposta informativa com fontes simuladas | Dependente da triagem sem risco agudo | C-02, J-00 | Desenvolvimento concluído localmente — validações locais registradas; commit, publicação/AWS, revisão jurídica e curadoria das fontes pendentes |
 | 9 | C-05 | Limite de escopo e alternativas seguras | Ramo dependente da conversa | C-02, J-00 | Pendente |
 | 10 | C-06 | Localização opcional e encaminhamento simulado | Ramo dependente da conversa | C-04, J-00 | Pendente |
 | 11 | I-05 | Entrada independente para questionário e resultado simulado | Independente, opcional | C-02, C-06, decisões de conteúdo | Pendente |
@@ -82,7 +82,7 @@ As tarefas de preparação não substituem a priorização das jornadas: são a 
 | 15 | L-04 | Diário de incidentes e exportação demonstrativa | Jornada futura opcional | L-01, J-00 | Pendente |
 | 16 | L-05 | Guia/plano de segurança demonstrativo | Jornada futura opcional | J-00; L-01 se a decisão aprovada exigir conta | Pendente |
 
-**Legenda de status:** “Concluída” indica implementação publicada e validação humana confirmada em ambiente publicado. I-01, I-02, I-03, I-04, C-01 e C-02 estão concluídas nesse sentido. Revisões profissionais de segurança, privacidade e conteúdo continuam pendentes quando indicadas nas tarefas e não são substituídas pela validação funcional. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem publicação e validação humana. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. C-03 está neste estado e não está aprovada para uso real. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
+**Legenda de status:** “Concluída” indica implementação publicada e validação humana confirmada em ambiente publicado. I-01, I-02, I-03, I-04, C-01 e C-02 estão concluídas nesse sentido. Revisões profissionais de segurança, privacidade e conteúdo continuam pendentes quando indicadas nas tarefas e não são substituídas pela validação funcional. “Desenvolvimento concluído localmente” indica implementação e testes locais finalizados, mas sem publicação e validação humana. O protótipo deve manter componentes e serviços com nomes/responsabilidades de produção; respostas e fixtures estáticas identificam somente a implementação temporária, não a classe/serviço nem a arquitetura final. C-03 e C-04 estão neste estado e não estão aprovadas para uso real. “Pendente” indica tarefa ainda não concluída e não necessariamente iniciada.
 
 O questionário é uma entrada independente para a usuária, mas sua implementação depende da triagem e do encaminhamento para reutilizar regras e contratos. As tarefas L-01 a L-05 são de protótipo; não implementam segurança, persistência ou proteção de dados adequadas para uso real.
 
@@ -116,7 +116,7 @@ O questionário é uma entrada independente para a usuária, mas sua implementa�
 |---|---|---|
 | I-02 — Saída Rápida | Concluída — validada pela usuária em ambiente publicado; revisão de segurança ainda pendente | A definição funcional de `/receitas` inclui três opções de receita, mostrando uma por acionamento e sem repetir a última. A revisão de segurança continua registrada como pendência antes de considerar o fluxo aprovado para uso real |
 | C-02/C-03 — Triagem e risco agudo | C-02 tem mock local; uso real bloqueado até revisão da rede de proteção e saúde mental; C-03 não iniciada | Fixtures sintéticas exercitam os estados; critérios de risco, destaque dos canais e texto de incerteza exigem validação especializada |
-| C-04 — Resposta com fontes | Bloqueada para conteúdo real até curadoria/aprovação de fontes e fixtures | Não há autorização para inventar fontes ou afirmações sensíveis |
+| C-04 — Resposta com fontes | Desenvolvimento concluído localmente com duas fixtures de fontes oficiais aprovadas pela usuária em 02/11/2026 para demonstração; conteúdo real continua bloqueado até curadoria e revisão jurídica | Não há autorização para inventar fontes ou afirmações sensíveis; as fixtures citam literalmente a lei, sem interpretação do caso |
 | C-05 — Limite de escopo | Bloqueada para casos limítrofes até revisão jurídica e clínica | A distinção geral foi definida; exemplos e gatilhos ainda precisam de revisão |
 | C-06 — Localização/encaminhamento | Bloqueada até decisão de produto sobre localização e fallback | A proposta de geolocalização está em revisão; permanece vigente a entrada manual opcional |
 | I-03/I-04 — Início e privacidade | Podem avançar com o texto registrado, sujeitos à revisão de privacidade antes de uso real | Aviso aprovado para o protótipo, mas revisão LGPD continua pendente |
@@ -355,13 +355,44 @@ Estas frases servem exclusivamente para demonstrar estados e testar a integraç�
 ### C-04 — Resposta informativa com fontes simuladas
 
 **Prioridade:** P1
-**Estado:** Não iniciada
+**Estado:** Desenvolvimento concluído localmente — implementação e validações locais registradas; aguardam revisão jurídica e curadoria das fontes, commit, publicação e validação humana na AWS.
 **Dependências:** C-02 (resultado sem risco agudo), J-00 (fontes aprovadas), J-01
 **Jornada-base:** resposta psicoeducativa, fontes e continuação da conversa.
 
 **Escopo:** representar recuperação de trechos e geração por adaptadores mockados, com resposta estruturada e fontes demonstrativas aprovadas. O estado sem fonte relevante declara a limitação; não usar placeholders como citações reais nem mostrar resposta sem fundamentação como informação verificada.
 
 **Critérios de aceite:** resposta inclui fontes identificáveis como fixture de protótipo; estado sem resultado e falha do mock são distintos; LLM/RAG não decide risco nem encaminhamento; consulta posterior mantém contexto sem persistir a sessão anônima; limites do protótipo aparecem onde a pessoa possa confundir simulação com serviço real.
+
+**Decisão da usuária (02/11/2026):** usar fixtures com leis reais, citadas literalmente e marcadas como demonstração; revisão jurídica e curadoria permanecem pendentes. Qualquer outra pergunta retorna o estado sem fonte.
+
+**Fixtures de conhecimento aprovadas para o protótipo — revisão jurídica pendente:**
+
+| Pergunta de teste (comparação exata, normalizada) | Trecho retornado | Fonte |
+|---|---|---|
+| “O que é violência psicológica?” | Texto literal do art. 7º, II (redação dada pela Lei nº 13.772/2018) | [Lei nº 11.340/2006 — Planalto](https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm) |
+| “Violência psicológica é crime?” | Texto literal do caput e da pena do art. 147-B (incluído pela Lei nº 14.188/2021) | [Decreto-Lei nº 2.848/1940 (Código Penal) — Planalto](https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm) |
+| Qualquer outra mensagem sem sinal agudo | Nenhum | Estado `no_source` |
+
+Os textos foram conferidos nas páginas do Planalto em 02/11/2026. A comparação usa a mesma normalização das fixtures de triagem (caixa, acentos, espaços e pontuação nas bordas); mensagens com texto adicional não correspondem. Isso não é recuperação semântica nem RAG.
+
+**Implementação e evidências locais (02/11/2026):**
+
+- Criado `KnowledgeService` (porta assíncrona `KnowledgeRetriever`) em `services/knowledge/`, com `KnowledgeResult` (`found`/`no_source`), `KnowledgePassage` e `SourceReference` (`id`, `title`, `locator`, `publisher`, `url`, `version`). `found` sem trecho e `no_source` com trecho são rejeitados pelo modelo. Falha técnica é `KnowledgeUnavailableError`, distinta de `no_source`.
+- Normalização de frases-fixture extraída para `services/fixture_text.py` e reutilizada por `TriageService` e `KnowledgeService`, sem mudar a regra de triagem.
+- O handler orquestra: triagem → (somente `no_acute_signal`) recuperação → (somente `found`) geração. `ChatResponseService.generate_reply(message, passages)` redige a resposta apenas com os trechos recebidos — no protótipo, frase introdutória “sem opinar sobre o seu caso” seguida da citação literal; recusa gerar sem trechos. O gerador não cria fontes, não decide risco nem encaminhamento. O texto aleatório anterior foi removido.
+- Contrato HTTP evoluído de forma coordenada: `knowledge_status` (`found` | `no_source` | `null` quando a triagem bloqueia), `sources` e `demo`. Falha da recuperação retorna `503` sem resposta nem eco da mensagem.
+- Frontend valida o novo contrato em runtime (combinações coerentes de `triage_status`, `knowledge_status`, `reply`, `guidance` e `sources`; URL `https://`), mostra o bloco **Fontes** com link para a fonte oficial (nova aba, `rel="noreferrer"`), órgão e versão, e o aviso de demonstração com revisão jurídica pendente. O estado sem fonte mostra “Não encontrei uma fonte confiável para responder a isso. Prefiro dizer que não sei a inventar uma resposta.” O aviso do wireframe “Toda resposta mostra de onde veio a informação…” foi incluído na lateral da conversa.
+- Contexto: o histórico continua apenas no estado React em memória e o backend recebe só a mensagem atual (decisão J-01); nenhuma resposta, fonte ou mensagem é persistida ou registrada em log.
+- Fora do escopo desta tarefa e não implementado: abertura “padrão que tem nome” e explicação interpretativa do wireframe (exigem conteúdo curado), botões **Onde buscar ajuda** (C-06) e **O que acontece no meu caso?** (C-05), guardrail de saída (C-05) e qualquer RAG/LLM real.
+
+**Validações locais C-04 (02/11/2026):**
+
+- [x] Backend: `pytest` — 48 testes passaram (fixtures de conhecimento, normalização, `no_source`, modelo rejeitando `found` sem trecho, gerador só com trechos recebidos, handler sem recuperação/geração para agudo/indeterminado, sem geração para `no_source`, falha → `503`, payload HTTP com fontes); Ruff check e formatação passaram.
+- [x] Frontend: `npm run check` e `npm run build` passaram.
+- [x] Integração local navegador → Vite → FastAPI: as duas perguntas de teste retornaram `found` com a fonte esperada em ~5 s; “Tenho dúvidas sobre meus direitos” retornou `no_source`; frase de risco retornou `acute` sem conhecimento nem atraso.
+- [x] Navegador headless: bloco **Fontes** e aviso de demonstração exibidos; estado sem fonte exibido sem fontes e sem modal; viewport de 320 px sem overflow horizontal; `localStorage`/`sessionStorage` vazios. Único erro de console: `404` de `/favicon.ico`, anterior a esta tarefa.
+- [ ] Revisão jurídica das citações e da frase introdutória; curadoria formal das fontes.
+- [ ] Commit, reconstrução Docker, publicação e validação humana em AWS — pendentes; não marcar a tarefa como concluída sem confirmação.
 
 **Skills:** [Curadoria de conteúdo e engenharia de conhecimento RAG](../../skills/curadoria-conteudo-engenharia-conhecimento-rag.md), [Integração de LLM e engenharia de prompts](../../skills/integracao-llm-engenharia-prompts.md), [Guardrails, escopo ético e avaliação generativa](../../skills/guardrails-escopo-etico-avaliacao-generativa.md), [Backend Python e APIs com FastAPI](../../skills/backend-python-fastapi.md), [Frontend React, TypeScript e experiência conversacional](../../skills/frontend-react-typescript-chat.md), [Engenharia de qualidade, testes e fitness functions](../../skills/engenharia-qualidade-testes-fitness-functions.md), [Privacidade, LGPD e governança de dados](../../skills/privacidade-lgpd-governanca-dados.md).
 

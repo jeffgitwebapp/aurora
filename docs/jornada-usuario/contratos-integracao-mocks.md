@@ -33,8 +33,10 @@ FastAPI router: valida/transfere HTTP
   └─ handler do caso de uso: orquestra
        ├─ TriageEvaluator → TriageService
        │    └─ frases de fixture estáticas nesta fase
-       └─ ChatResponseGenerator → ChatResponseService
-            └─ resposta demonstrativa estática nesta fase
+       ├─ KnowledgeRetriever → KnowledgeService (somente sem sinal agudo)
+       │    └─ trechos literais de fontes oficiais aprovadas como fixture (C-04)
+       └─ ChatResponseGenerator → ChatResponseService (somente com fonte)
+            └─ redação estática a partir dos trechos recebidos nesta fase
 ```
 
 - O frontend chama somente rotas de aplicação documentadas; não chama serviços internos ou provedores.
@@ -60,14 +62,26 @@ A API atual implementa `POST /api/chat/messages`.
 
 ```json
 {
-  "reply": "texto demonstrativo",
+  "reply": "texto redigido somente a partir dos trechos recuperados",
   "guidance": null,
   "triage_status": "no_acute_signal",
-  "signals": []
+  "signals": [],
+  "knowledge_status": "found",
+  "sources": [
+    {
+      "id": "lei-11340-2006-art-7-ii",
+      "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+      "locator": "art. 7º, II",
+      "publisher": "Presidência da República — Planalto",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+      "version": "Redação dada pela Lei nº 13.772, de 2018"
+    }
+  ],
+  "demo": true
 }
 ```
 
-Os valores de `reply`, `guidance`, `triage_status` e `signals` variam conforme o resultado da triagem; o JSON acima representa somente o caminho de controle sem sinal agudo. Para risco agudo ou indeterminação, o serviço retorna orientação e não gera resposta informativa. O campo `message` é obrigatório e não pode ser vazio ou só conter espaços. A API usa `422` para entrada inválida e `200` para processamento concluído. O frontend valida o formato desses campos em runtime.
+Combinações válidas (C-04): sem sinal agudo e `knowledge_status: "found"` → `reply` texto e ao menos uma fonte; sem sinal agudo e `"no_source"` → `reply: null` e `sources: []`; `acute`/`indeterminate` → `knowledge_status: null`, `reply: null`, `sources: []` e `guidance` preenchida. Para risco agudo ou indeterminação, o serviço retorna orientação e não executa recuperação nem geração. Falha técnica da recuperação retorna `503` com `detail` genérico. O frontend rejeita qualquer outra combinação como resposta fora do schema. O campo `message` é obrigatório e não pode ser vazio ou só conter espaços. A API usa `422` para entrada inválida e `200` para processamento concluído. O frontend valida o formato desses campos em runtime.
 
 ### Compatibilidade aprovada
 
@@ -117,16 +131,23 @@ interface TriageResult {
 interface SourceReference {
   id: string;
   title: string;
+  locator: string;      // artigo/inciso/página citada
   publisher: string;
-  publishedAt?: string;
-  version?: string;
-  url?: string;
+  url: string;
+  version: string | null;
+}
+
+interface KnowledgePassage {
+  text: string;         // trecho literal recuperado
+  source: SourceReference;
 }
 
 type KnowledgeResult =
-  | { status: "found"; answer: string; sources: SourceReference[]; demo: boolean }
-  | { status: "no_source"; demo: boolean };
+  | { status: "found"; passages: KnowledgePassage[]; demo: boolean }
+  | { status: "no_source"; passages: []; demo: boolean };
 ```
+
+**Implementado em C-04:** a recuperação devolve trechos e fontes; a redação da resposta é responsabilidade de `ChatResponseGenerator.generate_reply(message, passages)`, que só é chamada com `found` e não cria metadados de fonte. Falha técnica é `KnowledgeUnavailableError` (HTTP `503`), distinta de `no_source`. No protótipo, `KnowledgeService` compara a mensagem completa normalizada com duas perguntas de teste aprovadas pela usuária em 02/11/2026 e devolve citações literais do Planalto; não é RAG nem busca semântica.
 
 - `found` exige ao menos uma fonte identificável e aprovada; o gerador não cria metadados de fonte.
 - `no_source` é distinto de erro técnico e nunca libera geração sem fundamentação.
@@ -247,12 +268,17 @@ src/backend/src/aurora_backend/
 │           │   ├── port.py         # TriageEvaluator
 │           │   ├── models.py
 │           │   └── service.py      # TriageService + fixtures temporárias
+│           ├── fixture_text.py     # normalização compartilhada das frases-fixture
+│           ├── knowledge/
+│           │   ├── port.py         # KnowledgeRetriever, KnowledgeUnavailableError
+│           │   ├── models.py       # KnowledgeResult, KnowledgePassage, SourceReference
+│           │   └── service.py      # KnowledgeService + trechos-fixture de fontes oficiais
 │           └── chat_response/
 │               ├── port.py         # ChatResponseGenerator
-│               └── service.py     # ChatResponseService + resposta temporária
+│               └── service.py     # ChatResponseService + redação temporária a partir dos trechos
 ```
 
-A estrutura acima representa a implementação atual de conversa/triagem. Outras capacidades devem ser adicionadas somente quando suas tarefas começarem; não criar diretórios vazios ou abstrações sem consumidor.
+A estrutura acima representa a implementação atual de conversa, triagem e conhecimento com fontes. Outras capacidades devem ser adicionadas somente quando suas tarefas começarem; não criar diretórios vazios ou abstrações sem consumidor.
 
 Regras para serviços e seus dados demonstrativos:
 

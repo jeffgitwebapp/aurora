@@ -9,6 +9,15 @@ class SendMessageRequest(BaseModel):
     message: str
 
 
+class SourceReferenceResponse(BaseModel):
+    id: str
+    title: str
+    locator: str
+    publisher: str
+    url: str
+    version: str | None
+
+
 class SendMessageResponse(BaseModel):
     reply: str | None
     guidance: str | None
@@ -21,3 +30,6 @@ class SendMessageResponse(BaseModel):
             "weapon_present",
         ]
     ]
+    knowledge_status: Literal["found", "no_source"] | None
+    sources: list[SourceReferenceResponse]
+    demo: bool

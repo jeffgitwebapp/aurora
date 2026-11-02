@@ -1,8 +1,10 @@
 """Serviço de triagem com regras estáticas para o protótipo atual."""
 
 import re
-import unicodedata
 
+from aurora_backend.contexts.conversation.services.fixture_text import (
+    normalize_fixture_sentence,
+)
 from aurora_backend.contexts.conversation.services.triage.models import (
     TriageResult,
     TriageSignal,
@@ -38,19 +40,11 @@ _SIGNAL_LABELS = {
 }
 
 
-def _normalize_fixture_sentence(sentence: str) -> str:
-    decomposed = unicodedata.normalize("NFKD", sentence)
-    without_accents = "".join(
-        character for character in decomposed if unicodedata.category(character) != "Mn"
-    )
-    return " ".join(without_accents.casefold().split()).strip(" \t\r\n.,;:!?")
-
-
 _NORMALIZED_RISK_FIXTURES = {
-    signal: {_normalize_fixture_sentence(phrase) for phrase in phrases}
+    signal: {normalize_fixture_sentence(phrase) for phrase in phrases}
     for signal, phrases in _RISK_FIXTURES.items()
 }
-_NORMALIZED_INDETERMINATE_FIXTURE = _normalize_fixture_sentence(_INDETERMINATE_FIXTURE)
+_NORMALIZED_INDETERMINATE_FIXTURE = normalize_fixture_sentence(_INDETERMINATE_FIXTURE)
 
 
 class TriageService:
@@ -58,7 +52,7 @@ class TriageService:
 
     async def assess(self, message: str) -> TriageResult:
         normalized_segments = [
-            _normalize_fixture_sentence(segment)
+            normalize_fixture_sentence(segment)
             for segment in _SENTENCE_SEPARATOR.split(message)
             if segment.strip()
         ]

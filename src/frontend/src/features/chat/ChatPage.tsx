@@ -7,6 +7,9 @@ import { MessageComposer } from "./components/MessageComposer";
 import { MessageList } from "./components/MessageList";
 import type { ChatMessage } from "./types";
 
+const NO_SOURCE_MESSAGE =
+  "Não encontrei uma fonte confiável para responder a isso. Prefiro dizer que não sei a inventar uma resposta.";
+
 interface ChatPageProps {
   initialMessage?: string;
   sendInitialMessage?: boolean;
@@ -58,15 +61,23 @@ export function ChatPage({
       }
 
       setRiskScreen(null);
-      const replyText = result.reply;
-      if (replyText === null) {
-        throw new ChatApiError("A resposta simulada não foi disponibilizada.");
-      }
-      const assistantMessage: ChatMessage = {
-        id: `message-${nextMessageId.current++}`,
-        role: "assistant",
-        text: replyText,
-      };
+      const assistantMessage: ChatMessage =
+        result.knowledgeStatus === "found" && result.reply !== null
+          ? {
+              id: `message-${nextMessageId.current++}`,
+              role: "assistant",
+              text: result.reply,
+              knowledgeStatus: "found",
+              sources: result.sources,
+              demo: result.demo,
+            }
+          : {
+              id: `message-${nextMessageId.current++}`,
+              role: "assistant",
+              text: NO_SOURCE_MESSAGE,
+              knowledgeStatus: "no_source",
+              demo: result.demo,
+            };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err: unknown) {
       if (controller.signal.aborted) {
@@ -187,6 +198,11 @@ export function ChatPage({
 
       <aside className="chat-page__sidebar" aria-label="Contatos úteis">
         <EmergencyContacts />
+
+        <p className="chat-page__privacy">
+          Toda resposta mostra de onde veio a informação. Se não houver fonte
+          confiável, o Aurora diz que não sabe.
+        </p>
 
         <p className="chat-page__privacy">
           Esta conversa existe apenas enquanto a página está aberta. Ao sair, o

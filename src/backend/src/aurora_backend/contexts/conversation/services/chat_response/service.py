@@ -1,38 +1,24 @@
-"""Serviço de resposta da conversa com conteúdo estático de protótipo."""
+"""Serviço de resposta da conversa com redação estática de protótipo."""
 
-import random
+from aurora_backend.contexts.conversation.services.knowledge.models import KnowledgePassage
 
-SIMULATED_REPLY_PREFIX = "ATENÇÃO ISSO NÃO É ACONSELHAMENTO, APENAS TEXTO SIMULADO"
-
-_SCENES = (
-    "No panorama das possibilidades, diferentes elementos se encontram em constante transformação.",
-    "Em uma dinâmica ampla, ideias e contextos se conectam de maneiras variadas.",
-    "A composição desse cenário reúne perspectivas que seguem em movimento.",
-)
-
-_DEVELOPMENTS = (
-    "Cada etapa acrescenta uma nova camada a esse cenário.",
-    "Os caminhos se reorganizam conforme novas perspectivas entram em cena.",
-    "Os elementos dessa dinâmica se articulam em diferentes direções.",
-)
-
-_CLOSINGS = (
-    "O resultado permanece aberto, sem apontar para uma conclusão prática.",
-    "Essa composição segue em movimento, sem indicar uma orientação concreta.",
-    "Assim, o cenário continua em construção, sem oferecer recomendações.",
-)
+REPLY_INTRODUCTION = "Este é o texto da lei sobre isso, sem opinar sobre o seu caso."
 
 
 class ChatResponseService:
-    """Gera texto demonstrativo; a implementação será integrada ao LLM aprovado."""
+    """Redige a resposta somente com os trechos recebidos; o LLM aprovado substituirá
+    esta redação estática sem decidir risco, encaminhamento nem criar fontes."""
 
-    async def generate_reply(self, message: str) -> str:
+    async def generate_reply(
+        self,
+        message: str,
+        passages: tuple[KnowledgePassage, ...],
+    ) -> str:
         del message
-        paragraph = " ".join(
-            (
-                random.choice(_SCENES),
-                random.choice(_DEVELOPMENTS),
-                random.choice(_CLOSINGS),
-            )
+        if not passages:
+            raise ValueError("A resposta exige ao menos um trecho de fonte.")
+        quotes = (
+            f"{passage.source.title}, {passage.source.locator}: “{passage.text}”"
+            for passage in passages
         )
-        return f"{SIMULATED_REPLY_PREFIX}: {paragraph}"
+        return "\n\n".join((REPLY_INTRODUCTION, *quotes))

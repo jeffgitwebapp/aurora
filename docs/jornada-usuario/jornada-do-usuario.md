@@ -259,7 +259,8 @@ ação ficam desativados. A API recebe somente a mensagem atual. Se houver erro,
 a interface informa a falha e oferece **Tentar novamente** sem adicionar outra
 cópia da mensagem ao histórico. Recarregar a conversa não restaura o relato.
 O protótipo oferece a triagem sintética de C-02 somente para as frases de teste
-exatas documentadas abaixo; isso não é detecção de risco real. RAG e
+exatas documentadas abaixo; isso não é detecção de risco real. As respostas com
+fonte de C-04 usam somente duas perguntas de teste (Etapa 3B). RAG real e
 continuação persistente ainda não estão implementados.
 
 ### Etapa 2 — Triar urgência antes de informar
@@ -429,6 +430,20 @@ O wireframe reserva espaço para:
 
 **[REQUISITO]** Se não houver trecho relevante na base, declarar a limitação
 em vez de gerar conteúdo sem fonte.
+
+**Implementação observada no protótipo (C-04, 02/11/2026; fixtures aprovadas
+pela usuária, revisão jurídica pendente):** depois de `no_acute_signal`, o
+`KnowledgeService` recupera trechos e só então o `ChatResponseService` redige a
+resposta com os trechos recebidos. Somente as perguntas exatas **“O que é
+violência psicológica?”** (Lei nº 11.340/2006, art. 7º, II) e **“Violência
+psicológica é crime?”** (Código Penal, art. 147-B, incluído pela Lei nº
+14.188/2021) retornam citação literal com bloco **Fontes** e aviso de
+demonstração. Qualquer outra mensagem mostra “Não encontrei uma fonte confiável
+para responder a isso. Prefiro dizer que não sei a inventar uma resposta.”
+Falha técnica aparece como erro com **Tentar novamente**, nunca como resposta.
+A abertura “padrão que tem nome”, a explicação interpretativa e as opções
+**Onde buscar ajuda** / **O que acontece no meu caso?** dependem de conteúdo
+curado e das tarefas C-05/C-06.
 
 ### Etapa 3C — Pedido fora do escopo
 

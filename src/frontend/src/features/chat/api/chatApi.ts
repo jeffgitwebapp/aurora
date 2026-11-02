@@ -10,11 +10,25 @@ export type TriageSignal =
   | "death_threat"
   | "weapon_present";
 
+export type KnowledgeStatus = "found" | "no_source";
+
+export interface SourceReference {
+  id: string;
+  title: string;
+  locator: string;
+  publisher: string;
+  url: string;
+  version: string | null;
+}
+
 export interface ChatApiResult {
   reply: string | null;
   guidance: string | null;
   triageStatus: TriageStatus;
   signals: TriageSignal[];
+  knowledgeStatus: KnowledgeStatus | null;
+  sources: SourceReference[];
+  demo: boolean;
 }
 
 function isTriageStatus(value: unknown): value is TriageStatus {
@@ -34,7 +48,26 @@ function isTriageSignal(value: unknown): value is TriageSignal {
   );
 }
 
-/** Envia a mensagem ao backend e devolve a resposta e o estado de triagem do mock. */
+function isKnowledgeStatus(value: unknown): value is KnowledgeStatus {
+  return value === "found" || value === "no_source";
+}
+
+function isSourceReference(value: unknown): value is SourceReference {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const source = value as Record<string, unknown>;
+  return (
+    ["id", "title", "locator", "publisher"].every(
+      (field) => typeof source[field] === "string" && source[field] !== "",
+    ) &&
+    typeof source.url === "string" &&
+    source.url.startsWith("https://") &&
+    (typeof source.version === "string" || source.version === null)
+  );
+}
+
+/** Envia a mensagem ao backend e devolve triagem, resposta e fontes do protótipo. */
 export async function sendMessage(
   message: string,
   signal?: AbortSignal,
@@ -79,22 +112,41 @@ export async function sendMessage(
     guidance?: unknown;
     triage_status?: unknown;
     signals?: unknown;
+    knowledge_status?: unknown;
+    sources?: unknown;
+    demo?: unknown;
   };
   if (
     !isTriageStatus(result.triage_status) ||
     !Array.isArray(result.signals) ||
     !result.signals.every(isTriageSignal) ||
     !(typeof result.reply === "string" || result.reply === null) ||
-    !(typeof result.guidance === "string" || result.guidance === null)
+    !(typeof result.guidance === "string" || result.guidance === null) ||
+    !(isKnowledgeStatus(result.knowledge_status) || result.knowledge_status === null) ||
+    !Array.isArray(result.sources) ||
+    !result.sources.every(isSourceReference) ||
+    typeof result.demo !== "boolean"
   ) {
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
   }
 
+  const isFound =
+    result.knowledge_status === "found" &&
+    typeof result.reply === "string" &&
+    result.sources.length > 0;
+  const isNoSource =
+    result.knowledge_status === "no_source" &&
+    result.reply === null &&
+    result.sources.length === 0;
+  const isBlockedByTriage =
+    result.knowledge_status === null &&
+    result.reply === null &&
+    result.sources.length === 0 &&
+    typeof result.guidance === "string";
   if (
     (result.triage_status === "no_acute_signal" &&
-      (typeof result.reply !== "string" || result.guidance !== null)) ||
-    (result.triage_status !== "no_acute_signal" &&
-      (result.reply !== null || typeof result.guidance !== "string"))
+      (result.guidance !== null || !(isFound || isNoSource))) ||
+    (result.triage_status !== "no_acute_signal" && !isBlockedByTriage)
   ) {
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
   }
@@ -104,5 +156,8 @@ export async function sendMessage(
     guidance: result.guidance,
     triageStatus: result.triage_status,
     signals: result.signals,
+    knowledgeStatus: result.knowledge_status,
+    sources: result.sources,
+    demo: result.demo,
   };
 }

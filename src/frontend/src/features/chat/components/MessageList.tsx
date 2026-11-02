@@ -46,6 +46,34 @@ export function MessageList({ messages, isLoading = false }: MessageListProps) {
                   {isUser ? "Você" : "Aurora"}
                 </span>
                 <p className="message-item__text">{message.text}</p>
+                {message.sources && message.sources.length > 0 && (
+                  <section
+                    className="message-sources"
+                    aria-label="Fontes desta resposta"
+                  >
+                    <h2 className="message-sources__title">Fontes</h2>
+                    <ul className="message-sources__list">
+                      {message.sources.map((source) => (
+                        <li key={source.id}>
+                          <a href={source.url} target="_blank" rel="noreferrer">
+                            {source.title}, {source.locator}
+                          </a>
+                          <span className="message-sources__meta">
+                            {source.publisher}
+                            {source.version ? ` · ${source.version}` : ""}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+                {message.demo && (
+                  <p className="message-item__demo" role="note">
+                    {message.knowledgeStatus === "found"
+                      ? "Demonstração: trecho de fonte oficial escolhido para teste do protótipo, com revisão jurídica pendente. Não é orientação sobre o seu caso."
+                      : "Demonstração: o protótipo só responde a perguntas de teste com fonte aprovada."}
+                  </p>
+                )}
               </li>
             );
           })}
