@@ -8,7 +8,6 @@ import asyncio
 import json
 from typing import Any
 
-import httpx
 import httpx2
 from google import genai
 from google.genai import errors, types
@@ -19,7 +18,8 @@ from aurora_backend.contexts.conversation.services.language_model.port import (
     LanguageModelUsage,
 )
 
-_TRANSPORT_ERRORS = (errors.APIError, httpx.HTTPError, httpx2.HTTPError, OSError, TimeoutError)
+# httpx2 é dependência de produção (via google-genai/anthropic); httpx é só de dev.
+_TRANSPORT_ERRORS = (errors.APIError, httpx2.HTTPError, OSError, TimeoutError)
 # A API do Gemini recusa prazos menores que 10 s ("Minimum allowed deadline is 10s").
 MIN_API_DEADLINE_SECONDS = 10.0
 # O plano gratuito devolve 503 ("high demand") com frequência: novas tentativas curtas
