@@ -12,7 +12,7 @@ from aurora_backend.contexts.conversation.services.knowledge_base.repository imp
 from aurora_backend.contexts.conversation.services.knowledge_base.selector import (
     ChunkSelectionUnavailableError,
     ChunkSelector,
-    ClaudeChunkSelector,
+    LanguageModelChunkSelector,
 )
 from aurora_backend.contexts.conversation.services.knowledge_base.service import (
     KnowledgeBaseService,
@@ -22,7 +22,7 @@ __all__ = [
     "ChunkSelectionUnavailableError",
     "ChunkSelector",
     "CitableKind",
-    "ClaudeChunkSelector",
+    "LanguageModelChunkSelector",
     "KnowledgeBaseRepository",
     "KnowledgeBaseService",
     "KnowledgeBaseSnapshot",

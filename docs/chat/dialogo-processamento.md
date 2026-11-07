@@ -15,7 +15,7 @@ Papéis no turno:
 | Papel | Quem | Pode | Não pode |
 |---|---|---|---|
 | Sistema (código) | Handler `send_message` + `TriageService` + `GuardrailService` (existentes) + `KnowledgeBaseService` + `AnswerGuardrailService` (novos) | Impor a ordem, recuperar trechos, bloquear (*fail-closed*), versionar e registrar metadados | Registrar conteúdo da conversa |
-| Agente (LLM) | `GroundedAnswerService` (Claude) | Redigir a partir dos trechos recebidos, citar e declarar limite (e buscar mais, na F4) | Decidir risco, escopo ou encaminhamento; criar fonte, telefone, prazo ou pena; opinar sobre o caso; exibir raciocínio |
+| Agente (LLM) | `GroundedAnswerService` (LLM pela porta `LanguageModel`: Gemini na demonstração, Claude por troca de ambiente — D-13) | Redigir a partir dos trechos recebidos, citar e declarar limite (e buscar mais, na F4) | Decidir risco, escopo ou encaminhamento; criar fonte, telefone, prazo ou pena; opinar sobre o caso; exibir raciocínio |
 | Usuária | — | Perguntar, abrir as fontes, escolher contatos ou encaminhamento, sair a qualquer momento | — (o sistema nunca decide por ela) |
 | Especialistas | Psicóloga, advogada | Aprovar trechos (`status: aprovado`), prompt e exemplos **antes** do uso | — |
 
@@ -71,7 +71,7 @@ stateDiagram-v2
 | 1 | Triagem | `TriageService` (existente, determinístico, U-01) | — (regra do projeto: segurança antes do LLM) | Frases-fixture; o LLM nunca vê mensagens de risco | `triage_status: acute/indeterminate` + `guidance` |
 | 2 | Limite de escopo | `GuardrailService` (existente, determinístico, U-01) | System prompt com escopo explícito (S1) como reforço, não como substituto | Pedido de diagnóstico, prescrição ou parecer é parado antes de gerar | `scope_status: out_of_scope` + categoria |
 | 3 | Oferta | `ContentOfferService` (existente) | — | Sem mudança | `offer: safety_guide` |
-| 4 | Recuperação | `KnowledgeBaseService` (novo, porta `KnowledgeRetriever`) | "Carregar trechos do documento como contexto" (S2); escalonamento (S6) | BM25 sobre a **versão vigente** (§7) traz até 30 candidatos; o `ClaudeChunkSelector` escolhe até 5 que respondem à mensagem, ou nenhum (D-12). Sem candidato ou seleção vazia, para | `knowledge_status: no_source`, `reply: null`; falha do seletor → `503` |
+| 4 | Recuperação | `KnowledgeBaseService` (novo, porta `KnowledgeRetriever`) | "Carregar trechos do documento como contexto" (S2); escalonamento (S6) | BM25 sobre a **versão vigente** (§7) traz até 30 candidatos; o `LanguageModelChunkSelector` escolhe até 5 que respondem à mensagem, ou nenhum (D-12). Sem candidato ou seleção vazia, para | `knowledge_status: no_source`, `reply: null`; falha do seletor → `503` |
 | 5 | Geração | `GroundedAnswerService` (novo, porta `ChatResponseGenerator`) | API + system prompt + few-shot de forma (S1); citações; *adaptive thinking* no lugar do CoT explícito (S1) | Uma chamada ao Claude; trechos como `search_result` com citações; resumo e "Atenção" como apoio não citável | — |
 | 5' | (F4) Busca agêntica | idem + tool | ReAct limitado (S3); tool use `strict` (S2) | Até 2–3 buscas só de leitura; cada passo no trace | — |
 | 6 | Marcação de fontes | `GroundedAnswerService` / `ChatResponseService` (U-03) | Resposta com fonte explícita (S4) | Citações → `[n]` na ordem de `sources` | `reply` com `[n]` + `sources` |
@@ -123,13 +123,12 @@ Forma
 
 **Few-shot de forma:** no máximo 2 pares curtos (o tom de uma resposta e o de uma limitação), sem fatos jurídicos próprios, aprovados pela psicóloga.
 
-**Mensagem do usuário enviada à API:**
-- `k` blocos `search_result`, cada um com:
-  - `title` = título do documento + localizador;
-  - `source` = `url_oficial#chunk_id`;
-  - `content` = texto oficial;
-  - `citations.enabled` = true;
-- em seguida, um bloco `text` com a pergunta.
+**Formato da resposta (D-13, independente de provedor):** o LLM devolve JSON `{"segments": [{"text": "...", "source_ids": ["cp-art147b#caput"]}]}`. O backend converte os `source_ids` em `[n]` na ordem de `sources` e o guardrail confere que todo id está entre os trechos enviados. Citações nativas do Claude não são usadas, porque o Gemini não as tem.
+
+**Mensagem enviada ao LLM (pela porta):**
+- os trechos selecionados, cada um em `<trecho id="chunk_id">` com fonte, localizador e texto citável;
+- em seguida, a pergunta em `<mensagem_da_usuaria>`;
+- o schema JSON acima como formato obrigatório.
 
 ---
 
@@ -271,5 +270,6 @@ class KnowledgeBaseSnapshot:
 | Data | Alteração |
 |---|---|
 | 07/11/2026 | Criação |
+| 07/11/2026 | D-13: porta de LLM independente de provedor (Gemini na demonstração, Claude por ambiente); resposta em JSON de segmentos |
 | 07/11/2026 | F1: recuperação em duas etapas (BM25 → seleção pelo Claude, D-12) |
 | 07/11/2026 | Revisão 2: livro H-ACD fora do escopo; sem endpoint novo (o motor v1.2 entra pelas portas existentes); triagem e escopo determinísticos; marcadores `[n]` nos dois motores; front ajustado só para exibir as fontes (U-06); base em `docs/aurora-base-rag/vX.YY` com releitura automática |

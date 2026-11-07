@@ -43,6 +43,7 @@ Prompt sugerido para o Claude Code:
 | U-03 | **Marcar a fonte de cada trecho da resposta.** A marcação vai **dentro do texto do `reply`** (`[1]`, `[2]`… na ordem da lista `sources`), mantendo o contrato HTTP. O **mesmo comportamento é replicado na versão com fixtures** (`ChatResponseService`). |
 | U-04 | Pastas da base no padrão **`vX.YY`** (ex.: `v0.03`, `v0.04`), ordenadas **numericamente**; a maior é a vigente. |
 | U-05 | Fora do item U-06, o front não é alterado. Consequência: **sem histórico de conversa no backend** nesta versão (o front envia só a mensagem atual). |
+| U-07 | **Roteamento do backend entre mocks e modelo** por `AURORA_CHAT_ENGINE` (`fixtures` / `base` / `llm`), só por variável de ambiente, sem troca por requisição. O `docker compose` local lê `src/backend/.env` (opcional). Na EC2, `/opt/aurora/backend.env` com `env_file` opcional (F5) |
 | U-06 | **O front pode ser ajustado somente para U-03:** numerar a lista **Fontes** (`[1]`, `[2]`…) e renderizar os marcadores `[n]` do texto como referência clicável/acessível para a fonte correspondente. Sem mudança de contrato, de fluxo, de telas ou de outras features. Vale para os dois motores. |
 
 ---
@@ -204,12 +205,14 @@ Front (só exibição de fontes muda, U-06) ── POST /api/chat/messages ─�
   4. KnowledgeRetriever       → [v1.2] KnowledgeBaseService   (BM25 na versão vigente da base)
   5. ChatResponseGenerator    → [v1.2] GroundedAnswerService  (Claude + citações + marcadores [n]
                                                                + AnswerGuardrail + DecisionTrace)
-Seleção do motor em main.py:  AURORA_CHAT_ENGINE = "fixtures" (padrão) | "v1.2"
+Seleção do motor em main.py (contexts/conversation/engine.py):
+  AURORA_CHAT_ENGINE = "fixtures" (padrão) | "base" (BM25, sem LLM) | "llm" (BM25 + seleção pelo LLM)
 ```
 
 - Com `fixtures`, tudo funciona como hoje, mais os marcadores `[n]` (U-03) e sem o atraso (U-02).
-- Com `v1.2`, as etapas 4 e 5 usam o novo motor; o contrato HTTP é o mesmo.
-- `v1.2` sem credencial válida → falha na inicialização com mensagem clara (*fail-fast*); nunca cai silenciosamente para fixtures.
+- Com `base` ou `llm`, as etapas 4 e 5 usam o novo motor; o contrato HTTP é o mesmo. Até a F2, a resposta nos dois modos é montada por `SourceReplyService` (abertura neutra + citações com `[n]`); na F2 a redação passa ao LLM.
+- `llm` sem credencial válida, ou valor desconhecido → o app **não sobe** e diz o motivo (*fail-fast*); nunca cai silenciosamente para outro motor.
+- Sem troca por requisição (decisão da usuária, U-07): o motor é só por variável de ambiente.
 
 ### 5.2 Estrutura de código nova
 
@@ -221,7 +224,7 @@ src/backend/src/aurora_backend/contexts/conversation/services/
 │   ├── ingestion.py                # parser Markdown → chunks (usado pelo script e pelos testes)
 │   ├── repository.py               # KnowledgeBaseRepository: chunks por id, resumo, "Atenção"
 │   ├── search.py                   # normalização pt-BR (D-03) + índice BM25
-│   ├── selector.py                 # ChunkSelector / ClaudeChunkSelector (D-12)
+│   ├── selector.py                 # ChunkSelector / LanguageModelChunkSelector (D-12)
 │   ├── service.py                  # KnowledgeBaseService implementa KnowledgeRetriever (BM25 → seleção)
 │   └── data/knowledge_base.json    # snapshot gerado (versão, hash, chunks)
 ├── grounded_answer/                # NOVO
@@ -233,6 +236,12 @@ src/backend/src/aurora_backend/contexts/conversation/services/
 │   └── service.py                  # AnswerGuardrailService (regras determinísticas, §5.5)
 └── decision_trace/                 # NOVO
     └── service.py                  # DecisionTraceService (log JSON só com metadados, §5.7)
+
+src/backend/src/aurora_backend/contexts/conversation/services/language_model/   # NOVO (D-13)
+├── port.py      # LanguageModel.generate_json, LanguageModelUnavailableError
+├── gemini.py    # GeminiLanguageModel (google-genai)
+├── claude.py    # ClaudeLanguageModel (anthropic)
+└── factory.py   # AURORA_LLM_PROVIDER / AURORA_LLM_MODEL -> adaptador
 
 src/backend/scripts/build_knowledge_snapshot.py   # NOVO — gera o snapshot a partir da versão vigente
 src/backend/evals/v1_2/                           # NOVO — dataset + runner da avaliação (F3)
@@ -246,7 +255,8 @@ src/backend/tests/test_knowledge_base*.py, test_grounded_answer*.py, test_answer
 | `features/send_message/router.py` | Remover `SIMULATED_PROCESSING_DELAY_SECONDS` e o `asyncio.sleep`; mapear `ChatResponseUnavailableError` → `503` | U-02; §5.4 |
 | `services/chat_response/port.py` | Adicionar `ChatResponseUnavailableError` (como já existe `KnowledgeUnavailableError`) | §5.4 |
 | `services/chat_response/service.py` | Acrescentar `[n]` a cada citação, na ordem de `KnowledgeResult.sources` | U-03 |
-| `main.py` | Selecionar o motor por `AURORA_CHAT_ENGINE` | §5.1 |
+| `main.py` | Selecionar o motor por `AURORA_CHAT_ENGINE` via `contexts/conversation/engine.py` (serviços injetados nos testes têm precedência) | §5.1, U-07 |
+| `docker-compose.yml` (local) | `env_file: ./src/backend/.env` com `required: false` | U-07 |
 | `tests/test_send_message.py` | Ajustar asserções de atraso e de texto da fixture | consequência de U-02/U-03 |
 | `frontend/src/features/chat/components/MessageList.tsx` (+ componente de marcador e estilos, se necessário) | Numerar a lista **Fontes**; transformar `[n]` do texto em referência acessível (link para âncora da fonte `n`, com `aria-label` "Fonte n: título"); `[n]` sem fonte correspondente é exibido como texto, sem link | U-06 |
 | `pyproject.toml` / `uv.lock` | `anthropic` (produção) e `pyyaml` (só dev, para a ingestão). BM25 implementado sem dependência | F1 |
@@ -290,24 +300,37 @@ Funções puras, cada uma testada com respostas violadoras sintéticas (CA-03 M4
 5. **Fail-closed:** exceção ou timeout no guardrail → `ChatResponseUnavailableError` → `503`.
 6. **(Opcional, D-10)** Classificador LLM com saída estruturada, depois das regras determinísticas.
 
-### 5.6 Integração com a API do Claude (parâmetros de partida)
+### 5.6 Integração com o LLM: porta independente de provedor (D-13)
 
-| Item | Decisão inicial | Observação |
+> **Revisão 07/11/2026:** sem créditos na Anthropic, a demonstração usa o **plano gratuito do Gemini**. O código fica preparado para trocar para o Claude **só por variável de ambiente**.
+
+**Desenho:** porta `LanguageModel` em `services/language_model/port.py` com uma única capacidade, `generate_json(system, prompt, schema, max_output_tokens)`, que devolve um objeto JSON validado contra o schema.
+- **Adaptadores:** `GeminiLanguageModel` (`google-genai`) e `ClaudeLanguageModel` (`anthropic`). São os únicos que importam SDK.
+- **Fábrica:** `create_language_model` escolhe o adaptador pelo ambiente e importa só o SDK escolhido.
+- **Erros:** timeout, cota (429), bloqueio de segurança/recusa e resposta fora do schema viram `LanguageModelUnavailableError` → `503` (falha fechada).
+- **Consumidores:** o seletor de trechos (`LanguageModelChunkSelector`, D-12) e, na F2, a redação da resposta (`GroundedAnswerService`) dependem **só da porta**.
+- **Citações:** a resposta vem como JSON `{"segments": [{"text", "source_ids"}]}` e o backend monta os `[n]`. As citações nativas do Claude (`search_result`) **não** são usadas, porque não existem no Gemini; a verificação de fonte fica no guardrail de saída (ids ⊆ trechos enviados).
+
+| Variável | Gemini (padrão da demonstração) | Claude (troca direta) |
 |---|---|---|
-| SDK | `anthropic`, cliente assíncrono injetado no `GroundedAnswerService` | O domínio não importa o SDK |
-| Modelo | `claude-opus-5-5`, configurável por `AURORA_LLM_MODEL` | D-01 resolvida: Opus 5.5, effort `low`; F3 mede custo e latência (comparação com `claude-haiku-5-5` só informativa) |
-| Thinking / effort | sem `thinking` explícito (adaptativo); `output_config.effort` explícito, começando em `low` | No Opus 5.5 o *thinking* não desliga; o default é `medium` |
-| Trechos | blocos `search_result` (title, source = `url_oficial#chunk_id`, content = texto oficial) com `citations: {enabled: true}` | As citações retornadas são convertidas em marcadores `[n]` |
-| Resumo + "Atenção (escopo)" | contexto de apoio **não citável** (bloco de instruções) | R-09 |
-| System prompt | arquivo versionado + `cache_control` | Conferir `usage.cache_read_input_tokens` |
-| Streaming | não | O front espera JSON único, e o guardrail precisa do texto completo |
-| Timeout / retries | `timeout` ≈ 8 s, `max_retries` = 1 | Falha → `503` |
-| `max_tokens` | ~1.024 | Resposta curta |
-| Recusa | checar `stop_reason == "refusal"` antes de ler `content` → `503` | Avaliar `fallbacks: "default"` (beta), recomendado no Opus 5.5 |
-| Segredo | `ANTHROPIC_API_KEY` por ambiente; nunca no repositório | Produção: `/opt/aurora/.env` (F5) |
-| Retenção de dados | envio liberado na fase de demonstração (D-07) | **Ponto de atenção futuro:** revisar retenção/ZDR/termos antes de uso real |
+| `AURORA_LLM_PROVIDER` | `gemini` | `claude` |
+| `AURORA_LLM_MODEL` | `gemini-3.5-flash-lite` (padrão desde 07/11/2026: ~1 s e cota gratuita suficiente; `gemini-3.6-flash` estourou a cota) | `claude-opus-5-5` (padrão) |
+| Credencial | `GEMINI_API_KEY` (aistudio.google.com/apikey, sem cartão) | `ANTHROPIC_API_KEY` |
+| Raciocínio | `thinking_level: LOW` | `effort: low` (thinking adaptativo) |
+| Recusa/segurança | `finish_reason ≠ STOP` ou `prompt_feedback.block_reason` → `503` | `stop_reason ≠ end_turn` → `503`; `fallbacks: "default"` (beta) |
+| Timeout / retries | 8 s, 2 tentativas (`HttpRetryOptions`) | 8 s, `max_retries` = 1 |
+| `AURORA_LLM_TIMEOUT_SECONDS` | opcional (padrão 8) | opcional (padrão 8) |
 
-**Custo (ordem de grandeza, a medir na F3):** ~2 mil tokens de system + 3–5 mil de trechos + ~400 de saída. Com o Opus 5.5 (US$ 4 / US$ 20 por milhão de tokens), ≈ US$ 0,03 por pergunta sem cache; com o Haiku 5.5, < US$ 0,001.
+| Item | Decisão |
+|---|---|
+| Resumo + "Atenção (escopo)" | contexto de apoio **não citável** no prompt (R-09) |
+| System prompt | arquivo versionado; hash no trace |
+| Streaming | não (o front espera JSON único; o guardrail precisa do texto completo) |
+| Segredo | variável de ambiente; nunca no repositório. Local: `src/backend/.env` (gitignored) + `uv run --env-file .env`. EC2: `/opt/aurora/backend.env` (F5) |
+| **Privacidade (D-13)** | **No plano gratuito do Gemini, o Google pode usar os dados enviados para melhorar seus produtos.** Até trocar para plano pago ou para o Claude, o sistema só pode receber **dados sintéticos** (nenhuma vítima real) |
+| Limites | plano gratuito ~10–15 requisições/min por projeto (conferir no AI Studio); 429 → `503` |
+
+**Custo:** Gemini gratuito = US$ 0 dentro da cota. Claude Opus 5.5 ≈ US$ 0,03 por chamada (US$ 4 / US$ 20 por milhão de tokens); cada pergunta informativa faz 2 chamadas (seleção + redação).
 
 ### 5.7 Trace (observabilidade sem conteúdo)
 
@@ -345,7 +368,7 @@ Mesmo critério do [plano da jornada §3](./jornada-usuario/plano-implementacao-
 | Ordem | ID | Fase | Depende de | Status |
 |---:|---|---|---|---|
 | 0 | F0 | Preparação: decisões abertas, versionar a base, recursos do Claude Code, dataset de avaliação | — | Desenvolvimento concluído localmente — aguardando revisão do dataset pela usuária e commit (a base entra no commit, D-06) |
-| 1 | F1 | Base vigente: versionamento `vX.YY`, ingestão, snapshot, BM25 + seleção pelo Claude (D-12), gate da CI | F0 | Desenvolvimento concluído localmente — falta medir a seleção com a API (sem credencial nesta máquina) e commit |
+| 1 | F1 | Base vigente: versionamento `vX.YY`, ingestão, snapshot, BM25 + seleção pelo LLM (D-12/D-13), gate da CI | F0 | Desenvolvimento concluído localmente — falta medir a seleção com o LLM (precisa de `GEMINI_API_KEY`) e commit |
 | 2 | F2 | Motor v1.2 + ajustes autorizados (sem atraso, `[n]` nas fixtures, `503`) | F1 | Não iniciada |
 | 3 | F3 | Avaliação (gate CA-03, latência, custo) | F2 | Não iniciada |
 | 4 | F4 | (Condicional) Busca agêntica limitada (tool de busca, ReAct com teto) | F3 com lacuna de recall | Não iniciada |
@@ -422,7 +445,7 @@ Mesmo critério do [plano da jornada §3](./jornada-usuario/plano-implementacao-
 
 1. O job `backend-tests` já roda os testes novos (sem rede), incluindo o gate do snapshot. Adicionar `ruff` ao job se a usuária aprovar.
 2. Workflow `eval-v1-2.yml` (`workflow_dispatch`) é o único com o secret `ANTHROPIC_API_KEY`.
-3. Produção: `AURORA_CHAT_ENGINE=fixtures` por padrão; trocar para `v1.2` após o gate da F3 (D-09). D-07 liberou o envio ao provedor nesta fase. A chave vai em `/opt/aurora/.env` (ajuste do passo de deploy documentado em [DEPLOY-EC2.md](../DEPLOY-EC2.md)).
+3. Produção: arquivo `/opt/aurora/backend.env` (root, `chmod 600`, nunca reescrito pelo workflow) com `AURORA_CHAT_ENGINE`, `AURORA_LLM_PROVIDER`, `AURORA_LLM_MODEL` e a chave do provedor; `docker-compose.prod.yml` com `env_file: [{path: backend.env, required: false}]` no serviço `backend` (sem o arquivo, sobe em `fixtures`). Trocar de motor: editar o arquivo e `docker compose -f docker-compose.prod.yml up -d --force-recreate backend`. Ativar `llm` após o gate da F3 (D-09). A chave vai em `/opt/aurora/.env` (ajuste do passo de deploy documentado em [DEPLOY-EC2.md](../DEPLOY-EC2.md)).
 4. README: seção nova "Motor de chat v1.2", com variáveis, regra da versão da base e como regenerar o snapshot.
 5. Teste humano na AWS (R-13).
 
@@ -438,12 +461,13 @@ U-01 a U-06 (seção 1.1), em 07/11/2026, e as decisões abaixo.
 
 | ID | Decisão | Resolução da usuária (07/11/2026) | Consequência no plano |
 |---|---|---|---|
-| D-01 | Modelo do gerador | **Seguir a recomendação**: `claude-opus-5-5`, effort `low`, configurável por `AURORA_LLM_MODEL` | F3 mede custo e latência e compara com `claude-haiku-5-5` só como informação; troca de modelo exige nova decisão |
+| D-01 | Modelo do gerador | **Revisada em 07/11/2026 (D-13):** provedor padrão `gemini` com `gemini-3.5-flash-lite` (plano gratuito; trocado de `gemini-3.6-flash` após a medição); `claude-opus-5-5` (effort `low`) como troca direta por ambiente | Seleção e redação usam o mesmo provedor/modelo configurado. Trocar exige só `AURORA_LLM_PROVIDER`/`AURORA_LLM_MODEL` e a credencial |
 | D-02 | Uso de trechos `pendente` | **Pode usar**: todo o projeto está em modo demonstração | `pendente` aceito por padrão (`AURORA_KB_ALLOW_PENDING=true` como padrão nesta fase) e respostas com `demo: true`. `literatura/` é citada pelo resumo da curadoria + DOI/URL. **Ponto de atenção futuro:** antes de qualquer uso real, voltar a exigir `status: aprovado` (regra da base) |
 | D-03 | BM25 em vez de base vetorial | **Seguir**, com a exigência de reconhecer palavras **sem acento** e com **qualquer combinação de maiúsculas e minúsculas** | Normalização obrigatória e idêntica no índice e na consulta (seção 5.8); testes dedicados na F1 |
 | D-06 | Versionar `docs/aurora-base-rag/` no git | **Sim, nos próximos commits** | Entra no primeiro commit da implementação (F0/F1) |
 | D-07 | Envio do texto da usuária à Anthropic | **Liberado sem restrição** nesta fase de demonstração, inclusive na AWS | Não bloqueia F2 nem F5. **Ponto de atenção futuro (registrado na seção 11):** antes de uso com pessoas reais, fazer revisão de privacidade/LGPD (retenção de dados, ZDR, termos do provedor, região, minimização do texto enviado) |
-| D-12 | Estratégia de recuperação (descoberta na F1: BM25 puro dá recall@5 de 64% e nenhum limiar separa as perguntas fora da base) | **BM25 traz até 30 candidatos e o Claude (`claude-opus-5-5`) escolhe até 5 que respondem à mensagem, ou nenhum** | Implementado no `KnowledgeBaseService` por um `ChunkSelector` (`ClaudeChunkSelector`): saída estruturada, `effort: low`, `fallbacks: "default"`, timeout 8 s. O seletor só escolhe ids entre os candidatos (o código descarta ids estranhos). Sem candidato ou seleção vazia → `no_source` sem chamar a redação. Falha do seletor → `KnowledgeUnavailableError` → `503` (o router atual já faz esse mapeamento). Duas chamadas ao Claude por pergunta informativa. Teto de recall = recall@30 do BM25 (86% na v0.03) |
+| D-12 | Estratégia de recuperação (descoberta na F1: BM25 puro dá recall@5 de 64% e nenhum limiar separa as perguntas fora da base) | **BM25 traz até 30 candidatos e o LLM configurado (D-13) escolhe até 5 que respondem à mensagem, ou nenhum** | Implementado no `KnowledgeBaseService` por um `ChunkSelector` (`LanguageModelChunkSelector`, sobre a porta `LanguageModel`): saída JSON com schema, timeout 8 s. O seletor só escolhe ids entre os candidatos (o código descarta ids estranhos). Sem candidato ou seleção vazia → `no_source` sem chamar a redação. Falha do seletor → `KnowledgeUnavailableError` → `503` (o router atual já faz esse mapeamento). Duas chamadas ao LLM por pergunta informativa. Teto de recall = recall@30 do BM25 (86% na v0.03) |
+| D-13 | Provedor de LLM (a usuária não tem créditos na Anthropic) | **Plano gratuito de outro provedor (Gemini) na demonstração; integração substituível pelo Claude de forma transparente** | Porta `LanguageModel` + adaptadores Gemini/Claude + fábrica por ambiente (§5.6). **Ponto de atenção:** no plano gratuito os dados podem ser usados pelo Google → só dados sintéticos até migrar para plano pago ou Claude |
 
 ### 7.2 Abertas
 
@@ -511,6 +535,7 @@ U-01 a U-06 (seção 1.1), em 07/11/2026, e as decisões abaixo.
 | Risco | Mitigação |
 |---|---|
 | Base 100% `pendente` | D-02: aceito em demonstração com `demo: true`; **futuro:** exigir `aprovado` antes de uso real |
+| Plano gratuito do Gemini pode usar os dados enviados (D-13) | Só dados sintéticos até migrar para plano pago ou Claude; registrado no adaptador e neste plano |
 | Envio do relato a provedor externo sem revisão de privacidade | D-07: aceito na demonstração; **futuro:** revisão LGPD (retenção, ZDR, termos, região, minimização) antes de uso real |
 | Telefone, prazo ou pena inventados | Citações + regra de contatos e links + `503` em caso de dúvida |
 | Injeção de prompt | Trechos como `search_result` (dados); system prompt; dataset adversarial; guardrail independente do prompt |
@@ -532,3 +557,7 @@ U-01 a U-06 (seção 1.1), em 07/11/2026, e as decisões abaixo.
 | 07/11/2026 | — | Decisões D-01, D-02, D-03 (com normalização sem acento e sem diferença de caixa), D-06 e D-07 resolvidas pela usuária; pontos de atenção futuros registrados (exigir `aprovado` e revisão LGPD antes de uso real) | Seção 7.1 | Claude Code + usuária |
 | 07/11/2026 | F0 | (1) Hook `PreToolUse` em `.claude/settings.json` + `.claude/hooks/protect-paths.js`: pede confirmação ao editar `src/frontend/**`, `services/{triage,guardrail,knowledge,content_offer}/**` e `docs/jornada-usuario/**`. Testado por pipe com caminhos Windows reais; passa a valer após `/hooks` ou reinício da sessão. (2) Skill `.claude/skills/aurora-agente-rag/SKILL.md`. (3) Dataset `src/backend/evals/v1_2/dataset.jsonl` (base v0.03, 338 casos): 78 perguntas de teste da base (cobrem 55 dos 81 chunks) + 156 variantes sem acento/maiúsculas + 60 adversariais + 30 fora da base + 10 de risco + 4 fixtures de escopo. Gerado por `evals/v1_2/build_dataset.py` (lê sempre a versão vigente) a partir de `cases_manual.jsonl`. (4) Suíte existente intacta: 166 testes, ruff check/format ok. O método de correção e o custo da avaliação com API (`/claude-api build-eval`) ficam para a F3 | Arquivos não commitados na branch | Claude Code |
 | 07/11/2026 | F1 | **Implementado em `services/knowledge_base/`:** `versioning` (maior `vX.YY`; hash SHA-256 com fins de linha normalizados), `ingestion` (YAML via PyYAML só em dev; validação estrita), `repository`, `search` (normalização D-03 + BM25 próprio), `selector` (`ClaudeChunkSelector`, D-12) e `service` (`KnowledgeBaseService`, porta `KnowledgeRetriever`). Também `scripts/build_knowledge_snapshot.py` e `evals/v1_2/run_retrieval_eval.py`. **Snapshot v0.03 (`8222eba1fafd`):** 81 chunks, 78 pesquisáveis (55 com texto oficial, 7 com dados, 16 com resumo da curadoria, porque os 13 "Trecho da fonte" dos guias são placeholders `[colar…]` e a literatura só tem resumo) e 3 internos (`uso: INTERNO`). **Medições BM25 (sem rede):** recall@1 35,9%, @5 64,1%, @30 85,9%. Variantes sem acento e em maiúsculas têm **exatamente** o mesmo recall (D-03 ok). Nenhum limiar absoluto ou relativo separa as perguntas fora da base sem perder ~40% do recall → decisão D-12. **Seleção pelo Claude:** não medida (sem `ANTHROPIC_API_KEY` nesta máquina); rodar `uv run python evals/v1_2/run_retrieval_eval.py --claude` (~108 chamadas). **Testes:** 209 passando (43 novos da base); ruff check/format e compileall ok. Gate da CI `test_snapshot_matches_latest_base` ativo. Ambiente: o diretório `.venv/.../aurora_backend-0.1.0.dist-info` estava somente leitura e travava o `uv`; o atributo foi removido | Arquivos não commitados | Claude Code |
+| 07/11/2026 | F1 (rev.) | **D-13:** porta `LanguageModel` (`services/language_model/`: `port`, `gemini`, `claude`, `factory`). O seletor virou `LanguageModelChunkSelector` (sem SDK). Dependência `google-genai>=3.0.0,<4` (3.0.0). Padrão inicial `AURORA_LLM_PROVIDER=gemini` / `gemini-3.6-flash` (depois trocado para `gemini-3.5-flash-lite`). `evals/v1_2/run_retrieval_eval.py --llm --rpm 10` usa o provedor do ambiente. Testes: 228 passando (adaptadores Gemini e Claude com clientes falsos, fábrica, seletor pela porta); ruff e compileall ok. Medição real da seleção pendente de `GEMINI_API_KEY` | Arquivos não commitados | Claude Code |
+| 07/11/2026 | F1 (medição) | **Seleção pelo LLM medida** (`run_retrieval_eval.py --llm --rpm 10`, base v0.03, 108 chamadas): com `gemini-3.5-flash-lite`, **recall@5 = 83,3% (65/78)** contra 64,1% do BM25 sozinho; o teto (recall@30 do BM25) é 85,9%, ou seja, o seletor aproveitou 65 dos 67 casos alcançáveis. **Fora da base → sem fonte: 28/30.** Falhas técnicas (503): 2. **Achados do Gemini gratuito:** (a) a API exige prazo mínimo de 10 s por requisição (o adaptador agora usa ≥ 10 s); (b) `503 high demand` frequente → até 3 tentativas só para 500/503/504, limite total de 25 s; (c) `gemini-3.6-flash` estourou a cota gratuita (429) quase sempre, enquanto `gemini-3.5-flash-lite` respondeu em ~1 s → recomendação de trocar o modelo padrão | Saída do script; testes do adaptador | Claude Code |
+| 07/11/2026 | F2 (parcial) | **Roteamento por `AURORA_CHAT_ENGINE` (U-07):** `contexts/conversation/engine.py` (`fixtures` / `base` / `llm`, fail-fast), `SourceReplyService` (resposta com abertura neutra + `[n]` nos modos `base`/`llm`), composição em `main.py`, `docker-compose.yml` local com `env_file` opcional. Testes: 238 passando (10 novos, incluindo HTTP de ponta a ponta no modo `base` sem rede). **Prova com uvicorn real:** os três motores sobem e o log mostra o motor ativo; "Ele me filmou…" → `llm` devolve `cp-art216b-218c#216B`; "previsão do tempo" → `llm` sem fonte, mas **`base` devolve trechos irrelevantes** (limiar BM25 2,0 fraco; conhecido). O atraso simulado de 5 s continua (sai na F2, U-02) | Arquivos não commitados | Claude Code |
+| 07/11/2026 | D-01 | Modelo padrão do Gemini trocado para `gemini-3.5-flash-lite` (código, testes, `.env` local e skill), com base na medição da F1 | Este arquivo | Usuária + Claude Code |

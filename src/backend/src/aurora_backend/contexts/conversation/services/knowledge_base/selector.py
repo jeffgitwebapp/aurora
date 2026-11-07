@@ -4,20 +4,21 @@ O seletor só escolhe ids entre os candidatos recebidos; não cria fonte, não
 responde à usuária e não decide risco ou escopo (triagem e escopo vêm antes).
 """
 
-import json
 import logging
 import time
 from typing import Any, Protocol
 
-import anthropic
-
 from aurora_backend.contexts.conversation.services.knowledge_base.models import KnowledgeChunk
+from aurora_backend.contexts.conversation.services.language_model.port import (
+    LanguageModel,
+    LanguageModelUnavailableError,
+)
 
 logger = logging.getLogger(__name__)
 
 MAX_SELECTED = 5
 CANDIDATE_TEXT_CHARS = 700
-FALLBACK_BETA = "server-side-fallback-2026-07-01"
+MAX_OUTPUT_TOKENS = 2048
 
 SELECTOR_SYSTEM_PROMPT = """\
 Você seleciona trechos de uma base de conhecimento do Aurora, um serviço de psicoeducação \
@@ -68,26 +69,18 @@ def _candidate_block(chunk: KnowledgeChunk) -> str:
     )
 
 
-class ClaudeChunkSelector:
-    """Seletor com a API do Claude e saída estruturada; ids fora da lista são descartados."""
+class LanguageModelChunkSelector:
+    """Seletor sobre a porta LanguageModel (Gemini ou Claude); ids estranhos são descartados."""
 
     def __init__(
-        self,
-        client: anthropic.AsyncAnthropic,
-        *,
-        model: str,
-        effort: str = "low",
-        timeout_seconds: float = 8.0,
-        max_tokens: int = 2048,
+        self, language_model: LanguageModel, *, max_output_tokens: int = MAX_OUTPUT_TOKENS
     ):
-        self._client = client.with_options(timeout=timeout_seconds, max_retries=1)
-        self._model = model
-        self._effort = effort
-        self._max_tokens = max_tokens
+        self._language_model = language_model
+        self._max_output_tokens = max_output_tokens
 
     async def select(self, message: str, candidates: tuple[KnowledgeChunk, ...]) -> tuple[str, ...]:
         candidate_ids = {chunk.id for chunk in candidates}
-        content = (
+        prompt = (
             "<trechos_candidatos>\n"
             + "\n".join(_candidate_block(chunk) for chunk in candidates)
             + "\n</trechos_candidatos>\n\n<mensagem_da_usuaria>\n"
@@ -96,45 +89,29 @@ class ClaudeChunkSelector:
         )
         started = time.perf_counter()
         try:
-            response = await self._client.beta.messages.create(
-                model=self._model,
-                max_tokens=self._max_tokens,
-                system=[
-                    {
-                        "type": "text",
-                        "text": SELECTOR_SYSTEM_PROMPT,
-                        "cache_control": {"type": "ephemeral"},
-                    }
-                ],
-                messages=[{"role": "user", "content": content}],
-                output_config={
-                    "effort": self._effort,
-                    "format": {"type": "json_schema", "schema": SELECTION_SCHEMA},
-                },
-                betas=[FALLBACK_BETA],
-                fallbacks="default",
+            result = await self._language_model.generate_json(
+                system=SELECTOR_SYSTEM_PROMPT,
+                prompt=prompt,
+                schema=SELECTION_SCHEMA,
+                max_output_tokens=self._max_output_tokens,
             )
-        except (anthropic.APIStatusError, anthropic.APIConnectionError) as exc:
-            raise ChunkSelectionUnavailableError(type(exc).__name__) from exc
+        except LanguageModelUnavailableError as exc:
+            raise ChunkSelectionUnavailableError(str(exc)) from exc
 
-        if response.stop_reason != "end_turn":
-            raise ChunkSelectionUnavailableError(f"stop_reason={response.stop_reason}")
-        text = next((block.text for block in response.content if block.type == "text"), None)
-        try:
-            raw_ids = json.loads(text or "")["relevant_ids"]
-        except (json.JSONDecodeError, KeyError, TypeError) as exc:
-            raise ChunkSelectionUnavailableError("resposta fora do schema") from exc
-
+        raw_ids = result.data.get("relevant_ids")
+        if not isinstance(raw_ids, list) or not all(isinstance(i, str) for i in raw_ids):
+            raise ChunkSelectionUnavailableError("resposta fora do schema")
         selected = tuple(dict.fromkeys(i for i in raw_ids if i in candidate_ids))[:MAX_SELECTED]
         logger.info(
             "knowledge_base.selection",
             extra={
-                "model": response.model,
+                "provider": result.provider,
+                "model": result.model,
                 "candidates": len(candidates),
                 "selected": len(selected),
                 "discarded_ids": len(raw_ids) - len(selected),
-                "input_tokens": response.usage.input_tokens,
-                "output_tokens": response.usage.output_tokens,
+                "input_tokens": result.usage.input_tokens,
+                "output_tokens": result.usage.output_tokens,
                 "duration_ms": round((time.perf_counter() - started) * 1000),
             },
         )
