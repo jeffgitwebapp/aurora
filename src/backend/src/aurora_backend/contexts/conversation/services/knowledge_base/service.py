@@ -8,8 +8,9 @@ Com um seletor agêntico (F4), o LLM pode pedir até `max_extra_searches` buscas
 termos técnicos; o serviço roda o BM25 com esses termos e soma os candidatos.
 """
 
-import logging
-
+from aurora_backend.contexts.conversation.services.decision_trace.service import (
+    DecisionTraceService,
+)
 from aurora_backend.contexts.conversation.services.knowledge.models import (
     KnowledgePassage,
     KnowledgeResult,
@@ -21,6 +22,7 @@ from aurora_backend.contexts.conversation.services.knowledge.port import (
 )
 from aurora_backend.contexts.conversation.services.knowledge_base.agentic_selector import (
     AgenticChunkSelector,
+    SelectionDecision,
 )
 from aurora_backend.contexts.conversation.services.knowledge_base.models import (
     CitableKind,
@@ -38,8 +40,6 @@ from aurora_backend.contexts.conversation.services.knowledge_base.selector impor
     ChunkSelectionUnavailableError,
     ChunkSelector,
 )
-
-logger = logging.getLogger(__name__)
 
 DEFAULT_TOP_K = 5
 DEFAULT_CANDIDATES = 30
@@ -97,6 +97,7 @@ class KnowledgeBaseService:
         score_threshold: float = DEFAULT_SCORE_THRESHOLD,
         allow_pending: bool = True,
         max_extra_searches: int = DEFAULT_MAX_EXTRA_SEARCHES,
+        trace: DecisionTraceService | None = None,
     ):
         self._chunks = repository.searchable_chunks(allow_pending=allow_pending)
         self._index = BM25Index([tokenize(_index_text(chunk)) for chunk in self._chunks])
@@ -105,6 +106,7 @@ class KnowledgeBaseService:
         self._candidates = candidates
         self._threshold = score_threshold
         self._max_extra_searches = max_extra_searches
+        self._trace = trace or DecisionTraceService()
         self.kb_version = repository.kb_version
 
     def rank(self, message: str) -> list[tuple[KnowledgeChunk, float]]:
@@ -149,11 +151,12 @@ class KnowledgeBaseService:
         """Laço limitado: escolher ou pedir nova busca; sem escolha útil, sem fonte."""
         candidates = list(ranked[: self._candidates])
         queries: list[str] = []
+        decision = SelectionDecision()
         try:
             while True:
                 can_search = len(queries) < self._max_extra_searches
                 if not candidates and not can_search:
-                    return []
+                    break
                 decision = await selector.decide(
                     message,
                     tuple(candidates),
@@ -169,10 +172,16 @@ class KnowledgeBaseService:
                 candidates.extend(new[:EXTRA_SEARCH_CANDIDATES])
         except ChunkSelectionUnavailableError as exc:
             raise KnowledgeUnavailableError("Seleção de trechos indisponível.") from exc
-        logger.info(
-            "knowledge_base.agentic_search",
-            extra={"extra_searches": len(queries), "candidates": len(candidates)},
-        )
         by_id = {chunk.id: chunk for chunk in candidates}
         ids = decision.relevant_ids if decision.search_query is None else ()
-        return [by_id[chunk_id] for chunk_id in ids if chunk_id in by_id][: self._top_k]
+        selected = [by_id[chunk_id] for chunk_id in ids if chunk_id in by_id][: self._top_k]
+        # Só contagens e ids: a consulta reformulada deriva da mensagem e não vai ao trace.
+        self._trace.record(
+            "knowledge_retrieval",
+            outcome=KnowledgeStatus.FOUND.value if selected else KnowledgeStatus.NO_SOURCE.value,
+            kb_version=self.kb_version,
+            extra_searches=len(queries),
+            candidates=len(candidates),
+            source_ids=[chunk.id for chunk in selected],
+        )
+        return selected

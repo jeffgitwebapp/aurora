@@ -5,6 +5,7 @@ from typing import Any
 
 import pytest
 
+from aurora_backend.contexts.conversation.services.decision_trace.service import ALLOWED_FIELDS
 from aurora_backend.contexts.conversation.services.knowledge.models import KnowledgeStatus
 from aurora_backend.contexts.conversation.services.knowledge.port import (
     KnowledgeUnavailableError,
@@ -290,4 +291,55 @@ def test_logs_have_no_message_nor_reformulated_query(caplog: pytest.LogCaptureFi
 
     logged = " ".join(f"{record.getMessage()} {record.__dict__}" for record in caplog.records)
     assert secret not in logged
-    assert "extra_searches" in logged
+
+
+class FakeTrace:
+    def __init__(self) -> None:
+        self.events: list[tuple[str, dict[str, Any]]] = []
+
+    def record(self, event: str, **fields: Any) -> None:
+        self.events.append((event, fields))
+
+
+def test_trace_records_number_of_extra_searches() -> None:
+    trace = FakeTrace()
+    agent = FakeAgent(search("perseguição"), pick("perseguicao#1"))
+
+    asyncio.run(service(agent, trace=trace).retrieve(COLLOQUIAL))
+
+    assert trace.events == [
+        (
+            "knowledge_retrieval",
+            {
+                "outcome": "found",
+                "kb_version": "v0.01",
+                "extra_searches": 1,
+                "candidates": 1,
+                "source_ids": ["perseguicao#1"],
+            },
+        )
+    ]
+
+
+def test_trace_records_no_source_without_any_search() -> None:
+    trace = FakeTrace()
+
+    asyncio.run(service(FakeAgent(pick()), trace=trace).retrieve("registro da intimidade"))
+
+    event, fields = trace.events[0]
+    assert event == "knowledge_retrieval"
+    assert fields["outcome"] == "no_source"
+    assert fields["extra_searches"] == 0
+    assert fields["source_ids"] == []
+
+
+def test_trace_is_recorded_even_when_loop_ends_without_candidates() -> None:
+    trace = FakeTrace()
+
+    asyncio.run(service(FakeAgent(pick()), trace=trace, max_extra_searches=0).retrieve(COLLOQUIAL))
+
+    assert trace.events[0][1]["outcome"] == "no_source"
+
+
+def test_extra_searches_are_allowed_trace_fields() -> None:
+    assert {"extra_searches", "candidates"} <= ALLOWED_FIELDS
