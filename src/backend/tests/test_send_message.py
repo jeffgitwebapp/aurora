@@ -8,6 +8,10 @@ from aurora_backend.contexts.conversation.features.send_message import router as
 from aurora_backend.contexts.conversation.features.send_message.handler import (
     handle_send_message,
 )
+from aurora_backend.contexts.conversation.features.send_message.replies import (
+    NO_SOURCE_REPLY,
+    OUT_OF_SCOPE_REPLY,
+)
 from aurora_backend.contexts.conversation.services.chat_response.service import (
     REPLY_INTRODUCTION,
     ChatResponseService,
@@ -335,7 +339,7 @@ def test_handler_returns_no_source_without_generating_reply() -> None:
     )
 
     assert result.triage.status is TriageStatus.NO_ACUTE_SIGNAL
-    assert result.reply is None
+    assert result.reply == NO_SOURCE_REPLY
     assert result.knowledge is not None
     assert result.knowledge.status is KnowledgeStatus.NO_SOURCE
     assert knowledge.messages == [NO_ACUTE_FIXTURE]
@@ -496,7 +500,7 @@ def test_message_without_source_returns_no_source_state(
     payload = response.json()
     assert payload["triage_status"] == "no_acute_signal"
     assert payload["knowledge_status"] == "no_source"
-    assert payload["reply"] is None
+    assert payload["reply"] == NO_SOURCE_REPLY
     assert payload["guidance"] is None
     assert payload["sources"] == []
     assert payload["demo"] is True
@@ -668,7 +672,7 @@ def test_handler_stops_before_knowledge_and_chat_when_out_of_scope() -> None:
         )
     )
 
-    assert result.reply is None
+    assert result.reply == OUT_OF_SCOPE_REPLY
     assert result.knowledge is None
     assert result.guardrail is not None
     assert result.guardrail.category is OutOfScopeCategory.INDIVIDUAL_LEGAL_OPINION
@@ -719,7 +723,7 @@ def test_out_of_scope_fixture_returns_limit_without_reply_sources_or_delay(
     assert payload["scope_status"] == "out_of_scope"
     assert payload["out_of_scope_category"] == category.value
     assert payload["knowledge_status"] is None
-    assert payload["reply"] is None
+    assert payload["reply"] == OUT_OF_SCOPE_REPLY
     assert payload["guidance"] is None
     assert payload["sources"] == []
     assert payload["demo"] is True

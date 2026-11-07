@@ -190,14 +190,14 @@ export async function sendMessage(
     isAllowed &&
     result.offer !== null &&
     result.knowledge_status === null &&
-    result.reply === null &&
+    typeof result.reply === "string" &&
     result.sources.length === 0;
   const isOutOfScope =
     result.offer === null &&
     result.scope_status === "out_of_scope" &&
     result.out_of_scope_category !== null &&
     result.knowledge_status === null &&
-    result.reply === null &&
+    typeof result.reply === "string" &&
     result.sources.length === 0;
   const isFound =
     isAllowed &&
@@ -209,7 +209,7 @@ export async function sendMessage(
     isAllowed &&
     result.offer === null &&
     result.knowledge_status === "no_source" &&
-    result.reply === null &&
+    typeof result.reply === "string" &&
     result.sources.length === 0;
   const isBlockedByTriage =
     result.offer === null &&

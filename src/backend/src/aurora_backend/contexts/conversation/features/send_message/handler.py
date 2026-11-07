@@ -2,6 +2,11 @@
 
 from dataclasses import dataclass
 
+from aurora_backend.contexts.conversation.features.send_message.replies import (
+    NO_SOURCE_REPLY,
+    OUT_OF_SCOPE_REPLY,
+    SAFETY_GUIDE_OFFER_REPLY,
+)
 from aurora_backend.contexts.conversation.services.chat_response.port import (
     ChatResponseGenerator,
 )
@@ -64,7 +69,7 @@ async def handle_send_message(
 
     guardrail = await guardrail_service.check_request(message)
     if guardrail.decision is not ScopeDecision.ALLOW:
-        return SendMessageResult(reply=None, triage=triage, guardrail=guardrail)
+        return SendMessageResult(reply=OUT_OF_SCOPE_REPLY, triage=triage, guardrail=guardrail)
 
     small_talk = await (small_talk_service or SmallTalkService()).respond(message)
     if small_talk is not None:
@@ -77,12 +82,14 @@ async def handle_send_message(
 
     offer = await offer_service.suggest(message)
     if offer is not None:
-        return SendMessageResult(reply=None, triage=triage, guardrail=guardrail, offer=offer)
+        return SendMessageResult(
+            reply=SAFETY_GUIDE_OFFER_REPLY, triage=triage, guardrail=guardrail, offer=offer
+        )
 
     knowledge = await knowledge_service.retrieve(message)
     if knowledge.status is not KnowledgeStatus.FOUND:
         return SendMessageResult(
-            reply=None,
+            reply=NO_SOURCE_REPLY,
             triage=triage,
             guardrail=guardrail,
             knowledge=knowledge,
