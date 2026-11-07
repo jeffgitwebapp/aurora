@@ -199,6 +199,57 @@ O arquivo `/opt/aurora/.env` é criado pelo workflow com o proprietário das
 imagens e a tag do commit implantado. O arquivo Compose de produção define
 reinício automático (`unless-stopped`) para os serviços.
 
+### Motor do chat e LLM (v1.2)
+
+O backend escolhe o motor do chat por variável de ambiente
+(`AURORA_CHAT_ENGINE`): `fixtures` (padrão, frases de teste), `base` (base de
+conhecimento sem LLM) ou `llm` (base de conhecimento com seleção e redação pelo
+LLM). Essas variáveis e a chave do provedor ficam em `/opt/aurora/backend.env`,
+**separado** do `/opt/aurora/.env`, que o workflow reescreve a cada deploy.
+Sem o `backend.env`, o backend sobe com `fixtures`.
+
+Criar o arquivo uma vez (só o root lê):
+
+```bash
+sudo install -m 600 -o root -g root /dev/null /opt/aurora/backend.env
+sudo nano /opt/aurora/backend.env
+```
+
+Conteúdo para o modo `llm` com o Gemini gratuito:
+
+```
+AURORA_CHAT_ENGINE=llm
+AURORA_LLM_PROVIDER=gemini
+AURORA_LLM_MODEL=gemini-3.5-flash-lite
+GEMINI_API_KEY=<chave criada em https://aistudio.google.com/apikey>
+```
+
+Para usar o Claude no lugar do Gemini, troque as três últimas linhas por
+`AURORA_LLM_PROVIDER=claude`, `AURORA_LLM_MODEL=claude-opus-5-5` e
+`ANTHROPIC_API_KEY=<chave>`. Nada no código muda.
+
+Aplicar uma mudança no arquivo sem novo deploy:
+
+```bash
+cd /opt/aurora
+sudo docker compose -f docker-compose.prod.yml up -d --force-recreate backend
+sudo docker compose -f docker-compose.prod.yml logs --tail=30 backend
+```
+
+O log de subida mostra o motor ativo, por exemplo
+`aurora.chat_engine: base v0.03, BM25 + seleção e redação por gemini/gemini-3.5-flash-lite`.
+Se o motor for inválido ou faltar a chave, o backend não sobe e o log diz o
+motivo; para voltar ao estado seguro, use `AURORA_CHAT_ENGINE=fixtures`.
+
+Cuidados:
+
+- Use uma chave do Gemini diferente da usada no desenvolvimento.
+- No plano gratuito do Gemini, o Google pode usar os dados enviados para
+  melhorar seus produtos: **só dados sintéticos**, nunca relatos reais.
+- A cota gratuita é por projeto; com várias pessoas testando ao mesmo tempo,
+  podem aparecer erros `503`, que o front mostra como erro técnico.
+- Cada resposta com fonte leva cerca de 6 a 8 s (duas chamadas ao LLM).
+
 ## 8. Problemas encontrados e como identificar
 
 - **`sudo: docker: command not found`**: Docker Engine não estava instalado na

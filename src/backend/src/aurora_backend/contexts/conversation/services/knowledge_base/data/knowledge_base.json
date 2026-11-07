@@ -1,0 +1,2020 @@
+{
+ "kb_version": "v0.03",
+ "source_hash": "8222eba1fafd333f638d9cc04d35ef9cb372537dea5f0298726b4ea60426d0f4",
+ "chunks": [
+  {
+   "id": "datasenado-2025-pnvcm#psicologica",
+   "doc_id": "datasenado-2025-pnvcm",
+   "kind": "dados",
+   "title": "Pesquisa Nacional de Violência contra a Mulher — 11ª edição (2025)",
+   "section": "Violência psicológica é a forma mais relatada",
+   "locator": "relatório 2025, Tabela 28 (violência mais grave sofrida)",
+   "citable_text": "88% (±1,6 p.p.) das mulheres que já sofreram violência doméstica ou familiar provocada por homem relataram violência psicológica. Desde 2021, a psicológica passou a ser a forma mais relatada (antes era a física).",
+   "citable_kind": "data",
+   "plain_summary": "Entre as mulheres que já viveram violência doméstica, quase 9 em cada 10 contam ter sofrido violência psicológica. Ela é a forma mais comum, embora muitas vezes não seja reconhecida como violência.",
+   "scope_notes": [
+    "a base do percentual são as vítimas, não todas as brasileiras."
+   ],
+   "topics": [
+    "dados",
+    "violencia-psicologica"
+   ],
+   "test_questions": [
+    "Violência psicológica é comum?"
+   ],
+   "url": "https://www12.senado.leg.br/institucional/datasenado/materias/relatorios-de-pesquisa/pesquisa-nacional-de-violencia-contra-a-mulher-datasenado-2025",
+   "version": "Relatório oficial lido em 04/11/2026. Coleta de 16/5 a 8/7/2025; 21.641 mulheres de 16 anos ou mais (CATI); margem média de 0,69 ponto percentual.",
+   "publisher": "Instituto de Pesquisa DataSenado e Observatório da Mulher contra a Violência (Senado Federal)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "datasenado-2025-pnvcm#ajuda",
+   "doc_id": "datasenado-2025-pnvcm",
+   "kind": "dados",
+   "title": "Pesquisa Nacional de Violência contra a Mulher — 11ª edição (2025)",
+   "section": "Quantas mulheres e como procuram ajuda",
+   "locator": "relatório 2025, seções de violência declarada, vivida e busca de ajuda",
+   "citable_text": "27% das brasileiras já sofreram violência doméstica ou familiar provocada por homem; cerca de 3,7 milhões (3.688.951; 4%) declararam ter sofrido nos últimos 12 meses (5,85 milhões em 2023); 33% vivenciaram ao menos uma de 13 situações de agressão no último ano. Depois da última agressão, procuraram: família 57%, igreja 53%, Delegacia da Mulher 28%, Ligue 180 11%.",
+   "citable_kind": "data",
+   "plain_summary": "Muitas mulheres buscam primeiro a família ou a igreja; uma parte menor procura a delegacia ou o Ligue 180. Buscar ajuda pode começar por alguém de confiança.",
+   "scope_notes": [],
+   "topics": [
+    "dados",
+    "busca-de-ajuda"
+   ],
+   "test_questions": [
+    "É normal pedir ajuda primeiro pra família?"
+   ],
+   "url": "https://www12.senado.leg.br/institucional/datasenado/materias/relatorios-de-pesquisa/pesquisa-nacional-de-violencia-contra-a-mulher-datasenado-2025",
+   "version": "Relatório oficial lido em 04/11/2026. Coleta de 16/5 a 8/7/2025; 21.641 mulheres de 16 anos ou mais (CATI); margem média de 0,69 ponto percentual.",
+   "publisher": "Instituto de Pesquisa DataSenado e Observatório da Mulher contra a Violência (Senado Federal)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "datasenado-2025-pnvcm#digital",
+   "doc_id": "datasenado-2025-pnvcm",
+   "kind": "dados",
+   "title": "Pesquisa Nacional de Violência contra a Mulher — 11ª edição (2025)",
+   "section": "Violência digital",
+   "locator": "relatório 2025, seção de violência digital (6 situações)",
+   "citable_text": "10% das mulheres de 16 anos ou mais (≈8,8 milhões) sofreram violência digital nos últimos 12 meses; a forma mais comum é o envio repetido de mensagens ofensivas ou ameaçadoras; a chantagem com fotos ou vídeos íntimos passou de 1% (2023) para 2% (2025).",
+   "citable_kind": "data",
+   "plain_summary": null,
+   "scope_notes": [],
+   "topics": [
+    "dados",
+    "violencia-digital"
+   ],
+   "test_questions": [],
+   "url": "https://www12.senado.leg.br/institucional/datasenado/materias/relatorios-de-pesquisa/pesquisa-nacional-de-violencia-contra-a-mulher-datasenado-2025",
+   "version": "Relatório oficial lido em 04/11/2026. Coleta de 16/5 a 8/7/2025; 21.641 mulheres de 16 anos ou mais (CATI); margem média de 0,69 ponto percentual.",
+   "publisher": "Instituto de Pesquisa DataSenado e Observatório da Mulher contra a Violência (Senado Federal)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "fbsp-anuario-2026#psicologica-perseguicao",
+   "doc_id": "fbsp-anuario-2026",
+   "kind": "dados",
+   "title": "20º Anuário Brasileiro de Segurança Pública (2026) — recorte violência contra a mulher (dados de 2025)",
+   "section": "Registros de violência psicológica e de perseguição",
+   "locator": "20º Anuário, seção de violência contra meninas e mulheres",
+   "citable_text": "violência psicológica contra a mulher (CP, art. 147-B): 51.830 registros em 2024 → 60.830 em 2025 (+16,9%; taxa de 47,6 → 55,6 por 100 mil mulheres). Perseguição (art. 147-A): 94.836 → 123.871 (+30,1%). Descumprimento de medida protetiva: +17%.",
+   "citable_kind": "data",
+   "plain_summary": "Em 2025, o Brasil registrou mais de 60 mil ocorrências de violência psicológica contra mulheres nas polícias — quase 17% a mais que em 2024 — e mais de 120 mil de perseguição. São só os casos que chegaram à polícia.",
+   "scope_notes": [
+    "usar para mostrar que a usuária não está sozinha e que a denúncia é possível, nunca para assustar ou prever risco."
+   ],
+   "topics": [
+    "dados",
+    "violencia-psicologica",
+    "perseguicao"
+   ],
+   "test_questions": [
+    "Muitas mulheres denunciam violência psicológica?"
+   ],
+   "url": "https://publicacoes.forumseguranca.org.br/handle/fbsp/305",
+   "version": "20ª edição, 424 p., ISSN 1983-7364. Números conferidos em 04/11/2026 na cobertura de lançamento (23–24/07/2026); conferir na tabela do Anuário antes de aprovar.",
+   "publisher": "Fórum Brasileiro de Segurança Pública (FBSP)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "fbsp-anuario-2026#feminicidio",
+   "doc_id": "fbsp-anuario-2026",
+   "kind": "dados",
+   "title": "20º Anuário Brasileiro de Segurança Pública (2026) — recorte violência contra a mulher (dados de 2025)",
+   "section": "Feminicídios em 2025",
+   "locator": "20º Anuário, seção de violência letal contra mulheres",
+   "citable_text": "1.504 (2024) → 1.571 vítimas em 2025 (+4%; 1,4 por 100 mil mulheres; maior número desde 2015). Autoria: parceiro íntimo 60,9%, ex-parceiro 18,9%, familiar 12,1%. 62,5% dentro de casa. 65,1% das vítimas eram negras. Para cada feminicídio houve, em média, 38,7 registros de violência psicológica.",
+   "citable_kind": "data",
+   "plain_summary": null,
+   "scope_notes": [
+    "nunca usar para estimar o risco de morte da usuária.",
+    "contexto para a equipe e para a apresentação; para a usuária, só com Guardrails (alta carga emocional)."
+   ],
+   "topics": [
+    "dados",
+    "feminicidio"
+   ],
+   "test_questions": [],
+   "url": "https://publicacoes.forumseguranca.org.br/handle/fbsp/305",
+   "version": "20ª edição, 424 p., ISSN 1983-7364. Números conferidos em 04/11/2026 na cobertura de lançamento (23–24/07/2026); conferir na tabela do Anuário antes de aprovar.",
+   "publisher": "Fórum Brasileiro de Segurança Pública (FBSP)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "fbsp-visivel-invisivel-2025#vitimizacao",
+   "doc_id": "fbsp-visivel-invisivel-2025",
+   "kind": "dados",
+   "title": "Visível e Invisível: a vitimização de mulheres no Brasil — 5ª edição (2025)",
+   "section": "Vitimização nos últimos 12 meses",
+   "locator": "sumário executivo e infográfico da 5ª edição",
+   "citable_text": "37,5% das mulheres de 16 anos ou mais (cerca de 21,4 milhões) sofreram alguma violência nos 12 meses anteriores — o maior índice da série iniciada em 2017 (28,9% em 2023). A forma mais citada foi a ofensa verbal (31,4%; cerca de 17,7 milhões).",
+   "citable_kind": "data",
+   "plain_summary": "Mais de uma em cada três mulheres disse ter sofrido algum tipo de violência no último ano, e a mais comum foram insultos e humilhações.",
+   "scope_notes": [
+    "pesquisa de vitimização com amostra menor que a do DataSenado; citar sempre ano e fonte."
+   ],
+   "topics": [
+    "dados",
+    "vitimizacao",
+    "violencia-psicologica"
+   ],
+   "test_questions": [],
+   "url": "https://forumseguranca.org.br/publicacoes/visivel-e-invisivel-5ed/",
+   "version": "5ª edição (relatório, sumário executivo e infográfico). Campo: 10 a 14/2/2025; 2.007 entrevistas em 126 municípios (1.040 mulheres; 793 no módulo de autopreenchimento).",
+   "publisher": "Fórum Brasileiro de Segurança Pública e Instituto Datafolha",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "oms-2025-prevalencia#global",
+   "doc_id": "oms-2025-prevalencia",
+   "kind": "dados",
+   "title": "Violence against women prevalence estimates, 2023 (WHO e parceiros da ONU)",
+   "section": "Quantas mulheres no mundo",
+   "locator": "relatório \"Violence against women prevalence estimates, 2023\", principais resultados",
+   "citable_text": "cerca de 840 milhões de mulheres (quase 1 em cada 3) já sofreram violência física e/ou sexual por parceiro íntimo ou violência sexual por não parceiro ao longo da vida; 316 milhões (11% das mulheres com 15 anos ou mais) sofreram violência física ou sexual por parceiro nos últimos 12 meses. A queda anual da violência por parceiro foi de só 0,2% em duas décadas.",
+   "citable_kind": "data",
+   "plain_summary": "A violência contra as mulheres é muito comum no mundo todo: quase uma em cada três mulheres já passou por violência física ou sexual de um parceiro ou violência sexual de outra pessoa.",
+   "scope_notes": [
+    "não usar \"736 milhões\" (estimativa antiga) e não apresentar esses números como dado de violência psicológica."
+   ],
+   "topics": [
+    "dados",
+    "contexto-internacional"
+   ],
+   "test_questions": [],
+   "url": "https://www.who.int/publications/i/item/9789240116962",
+   "version": "Relatório de 164 p., publicado em 19/11/2025, com dados de 168 países (2000–2023). Ficha informativa da OMS atualizada em 18/06/2026.",
+   "publisher": "Organização Mundial da Saúde (OMS/WHO)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cfp-crepop-2024-ref-tecnicas#eixos",
+   "doc_id": "cfp-crepop-2024-ref-tecnicas",
+   "kind": "referencia-tecnica-profissional",
+   "title": "Referências Técnicas para Atuação de Psicólogas(os) no Atendimento às Mulheres em Situação de Violência — 2ª edição",
+   "section": "Organização do documento",
+   "locator": "sumário (4 eixos)",
+   "citable_text": "O documento se organiza em quatro eixos: (1) dimensão ético-política — gênero, feminismos, contextos de violência e marcos legais; (2) Psicologia e violência contra mulheres — dados empíricos e teóricos sobre o Brasil; (3) prática e rede de atenção à mulher — como a psicóloga atua na rede de proteção; (4) condições de trabalho das psicólogas nas políticas públicas. A abordagem é interseccional e foi escrita com mulheres negras, indígenas, trans, lésbicas, bissexuais, com deficiência e sobreviventes.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "O documento se organiza em quatro eixos: (1) dimensão ético-política — gênero, feminismos, contextos de violência e marcos legais; (2) Psicologia e violência contra mulheres — dados empíricos e teóricos sobre o Brasil; (3) prática e rede de atenção à mulher — como a psicóloga atua na rede de proteção; (4) condições de trabalho das psicólogas nas políticas públicas. A abordagem é interseccional e foi escrita com mulheres negras, indígenas, trans, lésbicas, bissexuais, com deficiência e sobreviventes.",
+   "scope_notes": [
+    "base para o desenho da Matriz de Encaminhamento e para a linguagem não revitimizante."
+   ],
+   "topics": [
+    "psicologia",
+    "rede-de-atendimento"
+   ],
+   "test_questions": [],
+   "url": "https://site.cfp.org.br/publicacao/referencias-tecnicas-para-atuacao-de-psicologasos-no-atendimento-as-mulheres-em-situacao-de-violencia-2a-edicao",
+   "version": "2ª edição (São Paulo: GM Editorial; Brasília: CFP, 2024), 199 p., ISBN 978-65-984864-2-6. Substitui a 1ª edição (2012/2013), revisada após consulta pública (dez/2023–fev/2024). Lançada em 15–17/11/2024.",
+   "publisher": "Conselho Federal de Psicologia / CREPOP",
+   "status": "pendente",
+   "internal": true
+  },
+  {
+   "id": "cfp-nt-25-2025#estrutura",
+   "doc_id": "cfp-nt-25-2025",
+   "kind": "norma-tecnica-profissional",
+   "title": "Nota Técnica CFP nº 25/2025 — Atuação profissional da psicóloga com mulheres em situação de violências",
+   "section": "Estrutura e pontos úteis para o Aurora",
+   "locator": "seções 4.4 (violência psicológica, pp. 9–11), 5.2 (notificação compulsória, p. 12), 5.3 (comunicação externa, p. 12) e 6 (conclusão, pp. 14–15) — páginas aproximadas",
+   "citable_text": "A nota orienta psicólogas a uma escuta qualificada, não patologizante e interseccional (raça, classe, identidade de gênero, orientação sexual, deficiência, idade, território). Reconhece formas de violência além das da Lei Maria da Penha (institucional, obstétrica, econômica, simbólica, política, processual). Sobre violência psicológica, aponta sinais concretos (controle, isolamento, humilhação, controle financeiro) e lembra que a medida protetiva pode ser pedida sem prova de agressão física. A quebra de sigilo é exceção, avaliada caso a caso; diante de risco iminente à vida, a comunicação à polícia (24 h) deve ser construída com a mulher sempre que possível e documentada. A notificação compulsória é vigilância epidemiológica: não substitui o boletim de ocorrência e é sigilosa.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "A nota orienta psicólogas a uma escuta qualificada, não patologizante e interseccional (raça, classe, identidade de gênero, orientação sexual, deficiência, idade, território). Reconhece formas de violência além das da Lei Maria da Penha (institucional, obstétrica, econômica, simbólica, política, processual). Sobre violência psicológica, aponta sinais concretos (controle, isolamento, humilhação, controle financeiro) e lembra que a medida protetiva pode ser pedida sem prova de agressão física. A quebra de sigilo é exceção, avaliada caso a caso; diante de risco iminente à vida, a comunicação à polícia (24 h) deve ser construída com a mulher sempre que possível e documentada. A notificação compulsória é vigilância epidemiológica: não substitui o boletim de ocorrência e é sigilosa.",
+   "scope_notes": [
+    "calibrar o tom (não diagnosticar, não culpabilizar) e a regra do RF de não emitir parecer; subsidiar a explicação, revisada pela advogada, da relação entre a Lei 10.778/2003 (notificação) e o sigilo."
+   ],
+   "topics": [
+    "psicologia",
+    "sigilo",
+    "violencia-psicologica"
+   ],
+   "test_questions": [],
+   "url": "https://site.cfp.org.br/wp-content/uploads/2025/09/SEI_2278804_Nota_Tecnica_25.pdf",
+   "version": "Versão assinada em 07/07/2025; lida em 04/11/2026.",
+   "publisher": "Conselho Federal de Psicologia (CFP)",
+   "status": "pendente",
+   "internal": true
+  },
+  {
+   "id": "imp-ciclo-da-violencia#fases",
+   "doc_id": "imp-ciclo-da-violencia",
+   "kind": "guia-sociedade-civil",
+   "title": "Ciclo da violência — Instituto Maria da Penha",
+   "section": "As três fases do ciclo",
+   "locator": "página \"Ciclo da violência\", seções Fase 1, Fase 2 e Fase 3",
+   "citable_text": "Fase 1, aumento da tensão: o agressor se irrita por coisas pequenas, humilha, ameaça, quebra objetos; a mulher tenta acalmá-lo, sente medo e ansiedade e muitas vezes se culpa ou esconde o que vive. Fase 2, ato de violência: a tensão explode em violência verbal, física, psicológica, moral ou patrimonial; a mulher sente paralisia, medo, vergonha e confusão. Fase 3, arrependimento (\"lua de mel\"): o agressor fica carinhoso e promete mudar; a mulher se sente confusa, culpada e esperançosa, e a dependência aumenta. Com o tempo, as fases ficam mais curtas e deixam de seguir a ordem.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Fase 1, aumento da tensão: o agressor se irrita por coisas pequenas, humilha, ameaça, quebra objetos; a mulher tenta acalmá-lo, sente medo e ansiedade e muitas vezes se culpa ou esconde o que vive. Fase 2, ato de violência: a tensão explode em violência verbal, física, psicológica, moral ou patrimonial; a mulher sente paralisia, medo, vergonha e confusão. Fase 3, arrependimento (\"lua de mel\"): o agressor fica carinhoso e promete mudar; a mulher se sente confusa, culpada e esperançosa, e a dependência aumenta. Com o tempo, as fases ficam mais curtas e deixam de seguir a ordem.",
+   "scope_notes": [
+    "usar como explicação geral, sem afirmar que a usuária \"está no ciclo\". Se a mensagem trouxer ideação suicida, a rota de emergência (188) tem precedência."
+   ],
+   "topics": [
+    "ciclo-da-violencia"
+   ],
+   "test_questions": [
+    "Depois de cada briga ele fica um amor. Por que isso sempre volta?"
+   ],
+   "url": "https://www.institutomariadapenha.org.br/violencia-domestica/ciclo-da-violencia.html",
+   "version": "Página lida em 04/11/2026; conceito estável (Walker, 1979). É a fonte citada pela cartilha do Ministério das Mulheres/UNFPA (2026, p. 11).",
+   "publisher": "Instituto Maria da Penha (IMP)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "imp-ciclo-da-violencia#silencio",
+   "doc_id": "imp-ciclo-da-violencia",
+   "kind": "guia-sociedade-civil",
+   "title": "Ciclo da violência — Instituto Maria da Penha",
+   "section": "Por que a mulher se cala e por que romper o ciclo",
+   "locator": "seções \"É preciso quebrar esse ciclo\", \"Não se cale\" e \"Saia do ciclo\"",
+   "citable_text": "Vergonha, medo e constrangimento dificultam falar sobre a violência, e muitos agressores constroem a imagem de bons parceiros e pais. A ideia de que a mulher fica porque \"gosta de apanhar\" é inaceitável. A cultura machista dificulta perceber o ciclo, e em alguns casos ele termina em feminicídio.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Vergonha, medo e constrangimento dificultam falar sobre a violência, e muitos agressores constroem a imagem de bons parceiros e pais. A ideia de que a mulher fica porque \"gosta de apanhar\" é inaceitável. A cultura machista dificulta perceber o ciclo, e em alguns casos ele termina em feminicídio.",
+   "scope_notes": [
+    "a menção ao feminicídio exige tom cuidadoso; nunca prever risco de morte para a usuária."
+   ],
+   "topics": [
+    "acolhimento",
+    "culpa"
+   ],
+   "test_questions": [],
+   "url": "https://www.institutomariadapenha.org.br/violencia-domestica/ciclo-da-violencia.html",
+   "version": "Página lida em 04/11/2026; conceito estável (Walker, 1979). É a fonte citada pela cartilha do Ministério das Mulheres/UNFPA (2026, p. 11).",
+   "publisher": "Instituto Maria da Penha (IMP)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#causas",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Por que a violência contra as mulheres é tão comum",
+   "locator": "p. 7 (\"Por que a violência contra as mulheres é tão comum?\")",
+   "citable_text": "A cartilha explica a violência pela crença de que homens seriam superiores e teriam direito de controlar a vida das mulheres, e pela valorização da agressividade como traço masculino. Álcool, drogas e ciúme podem agravar ou desencadear episódios, mas não são a causa nem justificam a violência.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "A cartilha explica a violência pela crença de que homens seriam superiores e teriam direito de controlar a vida das mulheres, e pela valorização da agressividade como traço masculino. Álcool, drogas e ciúme podem agravar ou desencadear episódios, mas não são a causa nem justificam a violência.",
+   "scope_notes": [],
+   "topics": [
+    "causas",
+    "genero"
+   ],
+   "test_questions": [
+    "Ele só fica agressivo quando bebe. Então a culpa é da bebida?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#permanencia",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Por que algumas mulheres permanecem em relações violentas",
+   "locator": "pp. 8–10",
+   "citable_text": "Há muitas razões para não conseguir sair de uma relação violenta: medo de mais violência ou de morrer, dependência financeira, preocupação com os filhos, vergonha, esperança de que o agressor mude, dependência afetiva, descrença na polícia, medo de ser humilhada ao denunciar, isolamento provocado pelo controle e pelo ciúme, e chantagens (ameaçar tirar os filhos, negar pensão, ameaçar se matar ou matar). A cartilha recusa a ideia de que a mulher \"gosta\" ou é \"fraca\" e reforça que cada mulher tem o seu tempo.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Há muitas razões para não conseguir sair de uma relação violenta: medo de mais violência ou de morrer, dependência financeira, preocupação com os filhos, vergonha, esperança de que o agressor mude, dependência afetiva, descrença na polícia, medo de ser humilhada ao denunciar, isolamento provocado pelo controle e pelo ciúme, e chantagens (ameaçar tirar os filhos, negar pensão, ameaçar se matar ou matar). A cartilha recusa a ideia de que a mulher \"gosta\" ou é \"fraca\" e reforça que cada mulher tem o seu tempo.",
+   "scope_notes": [
+    "acolher sem pressionar a decisão; o Aurora não decide pela usuária."
+   ],
+   "topics": [
+    "acolhimento",
+    "culpa",
+    "dependencia"
+   ],
+   "test_questions": [
+    "Por que eu não consigo sair dessa relação?",
+    "Será que eu sou fraca por continuar com ele?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#ciclo",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "O ciclo da violência",
+   "locator": "pp. 10–12",
+   "citable_text": "Com base em Lenore Walker, a cartilha descreve três fases que se repetem: tensão (raiva, insultos e ameaças se acumulando, e a mulher tentando evitar \"provocar\"), agressão (explosão da tensão) e \"lua de mel\" (pedido de perdão, promessa de mudança ou fingir que nada aconteceu). Com o tempo, a violência tende a ficar mais grave e os intervalos mais curtos. Nunca se deve subestimar uma ameaça.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Com base em Lenore Walker, a cartilha descreve três fases que se repetem: tensão (raiva, insultos e ameaças se acumulando, e a mulher tentando evitar \"provocar\"), agressão (explosão da tensão) e \"lua de mel\" (pedido de perdão, promessa de mudança ou fingir que nada aconteceu). Com o tempo, a violência tende a ficar mais grave e os intervalos mais curtos. Nunca se deve subestimar uma ameaça.",
+   "scope_notes": [],
+   "topics": [
+    "ciclo-da-violencia"
+   ],
+   "test_questions": [
+    "Ele pede desculpas e depois tudo volta. Isso é normal?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#exemplos-psicologica",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Exemplos de violência emocional ou psicológica",
+   "locator": "p. 14",
+   "citable_text": "Exemplos dados pela cartilha: xingar e humilhar; ameaçar e intimidar; criticar, desvalorizar e debochar em público, minando a autoestima; tentar fazer a mulher ficar confusa ou achar que está \"ficando louca\"; atormentar, impedir de dormir, culpar; controlar aonde vai e com quem; impedir de trabalhar, estudar, sair, ir à igreja ou viajar; vasculhar celular e e-mail; usar os filhos para chantagem; isolar de amigos e parentes.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Exemplos dados pela cartilha: xingar e humilhar; ameaçar e intimidar; criticar, desvalorizar e debochar em público, minando a autoestima; tentar fazer a mulher ficar confusa ou achar que está \"ficando louca\"; atormentar, impedir de dormir, culpar; controlar aonde vai e com quem; impedir de trabalhar, estudar, sair, ir à igreja ou viajar; vasculhar celular e e-mail; usar os filhos para chantagem; isolar de amigos e parentes.",
+   "scope_notes": [
+    "o Aurora informa que essas condutas aparecem como exemplos de violência psicológica; não afirma que a situação da usuária \"é\" violência."
+   ],
+   "topics": [
+    "violencia-psicologica",
+    "sinais",
+    "exemplos"
+   ],
+   "test_questions": [
+    "Ele mexe no meu celular toda noite. Isso é violência?",
+    "Ele diz que eu invento as coisas e que estou louca."
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#sinais",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Sinais de uma relação violenta",
+   "locator": "p. 18 (\"Existem 'sinais' para identificar uma relação violenta?\")",
+   "citable_text": "Sinais citados: ciúme excessivo (ciúme não é cuidado, é posse e controle); vigiar o que ela faz, aonde vai e com quem fala; explosões de raiva; controlar o dinheiro, impedir que trabalhe ou exigir o salário. Não existe perfil de agressor: ele pode ser gentil com outras pessoas. A culpa é sempre de quem agride.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Sinais citados: ciúme excessivo (ciúme não é cuidado, é posse e controle); vigiar o que ela faz, aonde vai e com quem fala; explosões de raiva; controlar o dinheiro, impedir que trabalhe ou exigir o salário. Não existe perfil de agressor: ele pode ser gentil com outras pessoas. A culpa é sempre de quem agride.",
+   "scope_notes": [],
+   "topics": [
+    "sinais",
+    "violencia-psicologica",
+    "controle"
+   ],
+   "test_questions": [
+    "Ciúme demais é sinal de amor?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#outras-formas",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Outras formas de violência e a perseguição",
+   "locator": "pp. 13–17",
+   "citable_text": "A cartilha dá exemplos de violência física, sexual (inclusive forçar relação quando ela dorme ou está doente e impedir a contracepção), patrimonial (controlar ou tirar dinheiro, destruir objetos e documentos) e moral (humilhar em público, expor a intimidade nas redes, acusar falsamente). Lembra que a perseguição (stalking, Lei 14.132/2021), presencial ou on-line, também é crime.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "A cartilha dá exemplos de violência física, sexual (inclusive forçar relação quando ela dorme ou está doente e impedir a contracepção), patrimonial (controlar ou tirar dinheiro, destruir objetos e documentos) e moral (humilhar em público, expor a intimidade nas redes, acusar falsamente). Lembra que a perseguição (stalking, Lei 14.132/2021), presencial ou on-line, também é crime.",
+   "scope_notes": [
+    "na p. 13 a cartilha fala em cinco formas de violência; desde a Lei 15.384/2026 são seis (inclui a vicária). Não usar a contagem da cartilha."
+   ],
+   "topics": [
+    "formas-de-violencia",
+    "perseguicao"
+   ],
+   "test_questions": [],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#denuncia",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Como denunciar e o que fazer se ainda não quer procurar a polícia",
+   "locator": "pp. 19–20",
+   "citable_text": "Se a agressão está acontecendo, é emergência: ligar 190. A Delegacia da Mulher deve funcionar 24 horas; onde não houver, a delegacia comum deve dar prioridade e sala reservada. Se a mulher ainda não quer ir à polícia, pode buscar orientação jurídica ou psicológica em centros especializados ou na assistência social, ligar para o 180 ou consultar o Painel de Serviços da Rede do Ligue 180. Qualquer pessoa que saiba de uma situação de violência pode ligar para o 180.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Se a agressão está acontecendo, é emergência: ligar 190. A Delegacia da Mulher deve funcionar 24 horas; onde não houver, a delegacia comum deve dar prioridade e sala reservada. Se a mulher ainda não quer ir à polícia, pode buscar orientação jurídica ou psicológica em centros especializados ou na assistência social, ligar para o 180 ou consultar o Painel de Serviços da Rede do Ligue 180. Qualquer pessoa que saiba de uma situação de violência pode ligar para o 180.",
+   "scope_notes": [],
+   "topics": [
+    "denuncia",
+    "rede-de-atendimento"
+   ],
+   "test_questions": [
+    "Não quero ir à delegacia ainda. Tem outro jeito de pedir ajuda?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#delegacia",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "O que acontece na delegacia",
+   "locator": "p. 21",
+   "citable_text": "A polícia registra o boletim de ocorrência (ajuda dar detalhes: tipo de agressão, ameaças, armas, se atinge os filhos, testemunhas), pode encaminhar ao IML se houver lesão e abre inquérito. O pedido de medida protetiva segue ao juiz em até 48 h, e o juiz tem até 48 h para decidir. A prisão pode ocorrer em flagrante ou por decisão do juiz; ao final do processo, a pena pode ou não ser de prisão.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "A polícia registra o boletim de ocorrência (ajuda dar detalhes: tipo de agressão, ameaças, armas, se atinge os filhos, testemunhas), pode encaminhar ao IML se houver lesão e abre inquérito. O pedido de medida protetiva segue ao juiz em até 48 h, e o juiz tem até 48 h para decidir. A prisão pode ocorrer em flagrante ou por decisão do juiz; ao final do processo, a pena pode ou não ser de prisão.",
+   "scope_notes": [],
+   "topics": [
+    "delegacia",
+    "processo"
+   ],
+   "test_questions": [
+    "Se eu denunciar, ele vai ser preso na hora?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#medida-protetiva",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Medida protetiva: como pedir e o que ela pode incluir",
+   "locator": "pp. 22–24",
+   "citable_text": "Não é preciso advogada para pedir medida protetiva: o pedido pode ser feito na delegacia (ou pelo Ministério Público) e pode ser concedido mesmo sem processo ou inquérito, sempre que houver risco. As medidas vão além do afastamento do lar: proibição de aproximação e de contato, restrição de visitas, suspensão de armas, pensão, auxílio-aluguel por até 6 meses, programas de reeducação para o agressor. Descumprir a medida é crime (2 a 5 anos e multa).",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Não é preciso advogada para pedir medida protetiva: o pedido pode ser feito na delegacia (ou pelo Ministério Público) e pode ser concedido mesmo sem processo ou inquérito, sempre que houver risco. As medidas vão além do afastamento do lar: proibição de aproximação e de contato, restrição de visitas, suspensão de armas, pensão, auxílio-aluguel por até 6 meses, programas de reeducação para o agressor. Descumprir a medida é crime (2 a 5 anos e multa).",
+   "scope_notes": [
+    "a cartilha diz que, sem juiz na cidade, a medida pode ser concedida pelo delegado e, na falta dele, por qualquer policial. Pela lei, isso vale só para o afastamento do lar (art. 12-C) e, no caso do delegado, para a monitoração eletrônica (art. 12-D), e só onde o município não é sede de comarca; as demais medidas são do juiz. Responder com base nos arts. 12-C, 12-D e 19 da Lei Maria da Penha."
+   ],
+   "topics": [
+    "medidas-protetivas"
+   ],
+   "test_questions": [
+    "Preciso de advogado pra pedir medida protetiva?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#sair-de-casa",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Sair de casa, abrigamento e guarda dos filhos",
+   "locator": "pp. 24–25",
+   "citable_text": "Sair de casa por causa da violência não faz a mulher perder direitos; ela pode pedir à polícia proteção, transporte e acompanhamento para buscar os pertences, e tem direito a assistência jurídica (Defensoria). Em algumas cidades há abrigamento, e as Casas da Mulher Brasileira têm alojamento de passagem de até 48 h. Quando o juiz reconhece a violência, é difícil a mulher perder a guarda; o risco de violência doméstica impede a guarda compartilhada (Lei 14.713/2023).",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Sair de casa por causa da violência não faz a mulher perder direitos; ela pode pedir à polícia proteção, transporte e acompanhamento para buscar os pertences, e tem direito a assistência jurídica (Defensoria). Em algumas cidades há abrigamento, e as Casas da Mulher Brasileira têm alojamento de passagem de até 48 h. Quando o juiz reconhece a violência, é difícil a mulher perder a guarda; o risco de violência doméstica impede a guarda compartilhada (Lei 14.713/2023).",
+   "scope_notes": [],
+   "topics": [
+    "abrigo",
+    "filhos",
+    "guarda",
+    "direitos"
+   ],
+   "test_questions": [
+    "Se eu sair de casa, perco a guarda dos meus filhos?"
+   ],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "mmulheres-unfpa-2026-cartilha-lmp#rede",
+   "doc_id": "mmulheres-unfpa-2026-cartilha-lmp",
+   "kind": "guia-oficial",
+   "title": "Lei Maria da Penha: Direitos das mulheres e meninas e como buscar ajuda (reedição)",
+   "section": "Onde buscar atendimento especializado",
+   "locator": "pp. 26–30",
+   "citable_text": "Além da delegacia, do Ministério Público, da Defensoria e do Juizado, a cartilha descreve: serviços de saúde para violência sexual (contracepção de emergência, profilaxias, interrupção legal da gravidez); Centros de Referência (CRAM/CEAM), com apoio psicológico, social e jurídico; abrigamento; Casa da Mulher Brasileira; CREAS; programas de renda e qualificação. O Ligue 180 é gratuito, funciona 24 h, atende em português, espanhol e inglês, aceita denúncia anônima e mantém sigilo.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Além da delegacia, do Ministério Público, da Defensoria e do Juizado, a cartilha descreve: serviços de saúde para violência sexual (contracepção de emergência, profilaxias, interrupção legal da gravidez); Centros de Referência (CRAM/CEAM), com apoio psicológico, social e jurídico; abrigamento; Casa da Mulher Brasileira; CREAS; programas de renda e qualificação. O Ligue 180 é gratuito, funciona 24 h, atende em português, espanhol e inglês, aceita denúncia anônima e mantém sigilo.",
+   "scope_notes": [
+    "a existência dos serviços varia por cidade; para endereço, telefone e horário usar só o catálogo verificado (CA-05)."
+   ],
+   "topics": [
+    "rede-de-atendimento",
+    "defensoria",
+    "ministerio-publico",
+    "assistencia-social",
+    "ligue-180"
+   ],
+   "test_questions": [],
+   "url": "https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/CartilhaLeiMariadaPenhaversodigital.pdf",
+   "version": "Reedição de fevereiro de 2026 (PDF criado em 27/03/2026). Lida na íntegra em 04/11/2026.",
+   "publisher": "Ministério das Mulheres (Secretaria Nacional de Enfrentamento à Violência contra Mulheres) e Fundo de População das Nações Unidas (UNFPA)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cf-1988-art226#par8",
+   "doc_id": "cf-1988-art226",
+   "kind": "legislacao",
+   "title": "Constituição da República Federativa do Brasil de 1988, art. 226, § 8º",
+   "section": "art. 226, § 8º — dever do Estado de coibir a violência na família",
+   "locator": "CF/1988, art. 226, § 8º",
+   "citable_text": "Art. 226. A família, base da sociedade, tem especial proteção do Estado.\n\n[…]\n\n§ 8º O Estado assegurará a assistência à família na pessoa de cada um dos que a integram, criando mecanismos para coibir a violência no âmbito de suas relações.",
+   "citable_kind": "official_text",
+   "plain_summary": "A Constituição determina que o Estado dê assistência a cada pessoa da família e crie mecanismos para coibir a violência dentro das relações familiares. É nesse dispositivo, junto com tratados internacionais, que a Lei Maria da Penha se apoia.",
+   "scope_notes": [],
+   "topics": [
+    "fundamento-constitucional"
+   ],
+   "test_questions": [
+    "A Constituição fala sobre violência dentro de casa?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+   "version": "Redação original, sem emenda (compilado conferido em 04/11/2026)",
+   "publisher": "Assembleia Nacional Constituinte",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cp-art147a#caput",
+   "doc_id": "cp-art147a",
+   "kind": "legislacao",
+   "title": "Código Penal, art. 147-A: crime de perseguição (stalking)",
+   "section": "art. 147-A — o crime, a pena e os aumentos",
+   "locator": "Código Penal, art. 147-A, caput, §§ 1º a 3º",
+   "citable_text": "Art. 147-A. Perseguir alguém, reiteradamente e por qualquer meio, ameaçando-lhe a integridade física ou psicológica, restringindo-lhe a capacidade de locomoção ou, de qualquer forma, invadindo ou perturbando sua esfera de liberdade ou privacidade.\n\nPena - reclusão, de 6 (seis) meses a 2 (dois) anos, e multa.\n\n§ 1º A pena é aumentada de metade se o crime é cometido:\n\nI - contra criança, adolescente ou idoso;\n\nII - contra mulher por razões da condição de sexo feminino, nos termos do § 2º-A do art. 121 deste Código;\n\nIII - mediante concurso de 2 (duas) ou mais pessoas ou com o emprego de arma.\n\n§ 2º As penas deste artigo são aplicáveis sem prejuízo das correspondentes à violência.\n\n§ 3º Somente se procede mediante representação. (Artigo acrescido pela Lei nº 14.132, de 31/3/2021)",
+   "citable_kind": "official_text",
+   "plain_summary": "É crime perseguir alguém repetidamente, por qualquer meio (inclusive pela internet), ameaçando sua integridade física ou psicológica, restringindo sua liberdade de ir e vir ou invadindo e perturbando sua liberdade ou privacidade. Pena: reclusão de 6 meses a 2 anos e multa. A pena aumenta de metade quando o crime é contra criança, adolescente ou pessoa idosa; contra mulher por razões da condição do sexo feminino; ou com duas ou mais pessoas ou com uso de arma. As penas da perseguição se somam às da violência que vier junto. O processo depende de representação da vítima.",
+   "scope_notes": [],
+   "topics": [
+    "perseguicao",
+    "crime"
+   ],
+   "test_questions": [
+    "Meu ex fica me seguindo e mandando mensagem de vários perfis. Isso é crime?",
+    "Stalking é crime no Brasil?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
+   "version": "Incluído pela Lei nº 14.132/2021. Compilados da Câmara e do Planalto conferidos em 04/11/2026: sem alteração no texto do artigo.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cp-art147b#caput",
+   "doc_id": "cp-art147b",
+   "kind": "legislacao",
+   "title": "Código Penal, art. 147-B: crime de violência psicológica contra a mulher",
+   "section": "art. 147-B, caput — o crime e a pena",
+   "locator": "Decreto-Lei 2.848/1940 (Código Penal), art. 147-B, caput",
+   "citable_text": "Art. 147-B. Causar dano emocional à mulher que a prejudique e perturbe seu pleno desenvolvimento ou que vise a degradar ou a controlar suas ações, comportamentos, crenças e decisões, mediante ameaça, constrangimento, humilhação, manipulação, isolamento, chantagem, ridicularização, limitação do direito de ir e vir ou qualquer outro meio que cause prejuízo à sua saúde psicológica e autodeterminação: (“Caput” do artigo acrescido pela Lei nº 14.188, de 28/7/2021)\n\nPena - reclusão, de 6 (seis) meses a 2 (dois) anos, e multa, se a conduta não constitui crime mais grave. (Pena acrescida pela Lei nº 14.188, de 28/7/2021)",
+   "citable_kind": "official_text",
+   "plain_summary": "Desde julho de 2021, causar dano emocional à mulher que a prejudique e perturbe seu pleno desenvolvimento, ou que busque degradar ou controlar suas ações, comportamentos, crenças e decisões, é crime. Os meios citados incluem ameaça, constrangimento, humilhação, manipulação, isolamento, chantagem, ridicularização, limitação do direito de ir e vir, ou qualquer outro meio que prejudique sua saúde psicológica e autodeterminação. Pena: reclusão de 6 meses a 2 anos e multa, se a conduta não constituir crime mais grave.",
+   "scope_notes": [
+    "o Aurora não avalia se uma situação concreta configura o crime; indica Defensoria/NUDEM, DEAM ou advocacia para essa análise."
+   ],
+   "topics": [
+    "violencia-psicologica",
+    "crime"
+   ],
+   "test_questions": [
+    "Violência psicológica é crime?",
+    "Qual a pena pra violência psicológica?",
+    "Desde quando violência psicológica é crime no Brasil?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
+   "version": "Incluído pela Lei nº 14.188/2021; parágrafo único incluído pela Lei nº 15.123, de 24/04/2025 (DOU 25/04/2025). Compilados da Câmara e do Planalto conferidos em 04/11/2026: sem alteração posterior.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cp-art147b#paragrafo-unico",
+   "doc_id": "cp-art147b",
+   "kind": "legislacao",
+   "title": "Código Penal, art. 147-B: crime de violência psicológica contra a mulher",
+   "section": "art. 147-B, parágrafo único — uso de inteligência artificial",
+   "locator": "Código Penal, art. 147-B, parágrafo único",
+   "citable_text": "Parágrafo único. A pena é aumentada de metade se o crime é cometido mediante uso de inteligência artificial ou de qualquer outro recurso tecnológico que altere imagem ou som da vítima. (Parágrafo único acrescido pela Lei nº 15.123, de 24/4/2025)",
+   "citable_kind": "official_text",
+   "plain_summary": "A pena é aumentada de metade quando o crime é cometido com uso de inteligência artificial ou de qualquer outro recurso tecnológico que altere a imagem ou o som da vítima (por exemplo, montagens e deepfakes).",
+   "scope_notes": [],
+   "topics": [
+    "violencia-psicologica",
+    "violencia-digital"
+   ],
+   "test_questions": [
+    "Ele fez um vídeo falso meu com IA pra me humilhar. Isso é crime?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
+   "version": "Incluído pela Lei nº 14.188/2021; parágrafo único incluído pela Lei nº 15.123, de 24/04/2025 (DOU 25/04/2025). Compilados da Câmara e do Planalto conferidos em 04/11/2026: sem alteração posterior.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cp-art216b-218c#216B",
+   "doc_id": "cp-art216b-218c",
+   "kind": "legislacao",
+   "title": "Código Penal, arts. 216-B e 218-C: registro não autorizado da intimidade e divulgação sem consentimento",
+   "section": "art. 216-B — registrar cena íntima sem autorização",
+   "locator": "Código Penal, art. 216-B, caput e parágrafo único",
+   "citable_text": "Art. 216-B. Produzir, fotografar, filmar ou registrar, por qualquer meio, conteúdo com cena de nudez ou ato sexual ou libidinoso de caráter íntimo e privado sem autorização dos participantes:\n\nPena - detenção, de 6 (seis) meses a 1 (um) ano, e multa.\n\nParágrafo único. Na mesma pena incorre quem realiza montagem em fotografia, vídeo, áudio ou qualquer outro registro com o fim de incluir pessoa em cena de nudez ou ato sexual ou libidinoso de caráter íntimo. (Artigo acrescido pela Lei nº 13.772, de 19/12/2018)",
+   "citable_kind": "official_text",
+   "plain_summary": "É crime produzir, fotografar, filmar ou registrar cena de nudez ou de ato sexual íntimo e privado sem autorização de quem participa. Também é crime fazer montagem (foto, vídeo, áudio) para colocar alguém numa cena íntima. Pena: detenção de 6 meses a 1 ano e multa.",
+   "scope_notes": [],
+   "topics": [
+    "conteudo-intimo",
+    "crime"
+   ],
+   "test_questions": [
+    "Ele me filmou sem eu saber. Isso é crime?",
+    "Montagem com o meu rosto é crime?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
+   "version": "Art. 216-B incluído pela Lei 13.772/2018; art. 218-C incluído pela Lei 13.718/2018, pena alterada pela Lei 15.280/2025. Compilados conferidos em 04/11/2026.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "cp-art216b-218c#218C",
+   "doc_id": "cp-art216b-218c",
+   "kind": "legislacao",
+   "title": "Código Penal, arts. 216-B e 218-C: registro não autorizado da intimidade e divulgação sem consentimento",
+   "section": "art. 218-C — divulgar cena íntima sem consentimento",
+   "locator": "Código Penal, art. 218-C, caput e §§ 1º e 2º",
+   "citable_text": "Art. 218-C. Oferecer, trocar, disponibilizar, transmitir, vender ou expor à venda, distribuir, publicar ou divulgar, por qualquer meio - inclusive por meio de comunicação de massa ou sistema de informática ou telemática -, fotografia, vídeo ou outro registro audiovisual que contenha cena de estupro ou de estupro de vulnerável ou que faça apologia ou induza a sua prática, ou, sem o consentimento da vítima, cena de sexo, nudez ou pornografia: (“Caput” do artigo acrescido pela Lei nº 13.718, de 24/9/2018)\n\nPena - reclusão, de 4 (quatro) a 10 (dez) anos, e multa, se o fato não constitui crime mais grave. (Pena acrescida pela Lei nº 13.718, de 24/9/2018, e com redação dada pela Lei nº 15.280, de 5/12/2025)\n\nAumento de pena\n\n§ 1º A pena é aumentada de 1/3 (um terço) a 2/3 (dois terços) se o crime é praticado por agente que mantém ou tenha mantido relação íntima de afeto com a vítima ou com o fim de vingança ou humilhação. (Parágrafo acrescido pela Lei nº 13.718, de 24/9/2018)\n\nExclusão de ilicitude\n\n§ 2º Não há crime quando o agente pratica as condutas descritas no caput deste artigo em publicação de natureza jornalística, científica, cultural ou acadêmica com a adoção de recurso que impossibilite a identificação da vítima, ressalvada sua prévia autorização, caso seja maior de 18 (dezoito) anos. (Parágrafo acrescido pela Lei nº 13.718, de 24/9/2018)",
+   "citable_kind": "official_text",
+   "plain_summary": "Divulgar, por qualquer meio, inclusive pela internet, cena de sexo, nudez ou pornografia sem o consentimento da vítima é crime, com pena de reclusão de 4 a 10 anos e multa, se não constituir crime mais grave. A pena aumenta de um terço a dois terços quando quem divulga mantém ou manteve relação íntima de afeto com a vítima, ou age por vingança ou para humilhar.",
+   "scope_notes": [
+    "nunca pedir à usuária que envie as imagens. Indicar DEAM, Defensoria/NUDEM e o canal de retirada das plataformas (Decreto 12.976/2026, art. 7º)."
+   ],
+   "topics": [
+    "conteudo-intimo",
+    "crime",
+    "violencia-digital"
+   ],
+   "test_questions": [
+    "Meu ex ameaça espalhar minhas fotos íntimas. O que a lei diz?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm",
+   "version": "Art. 216-B incluído pela Lei 13.772/2018; art. 218-C incluído pela Lei 13.718/2018, pena alterada pela Lei 15.280/2025. Compilados conferidos em 04/11/2026.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-12976-2026#art1-3",
+   "doc_id": "decreto-12976-2026",
+   "kind": "legislacao",
+   "title": "Decreto nº 12.976, de 20 de maio de 2026 (proteção de mulheres na internet e enfrentamento da violência em ambiente digital)",
+   "section": "arts. 1º a 3º — o que o decreto considera violência digital",
+   "locator": "Decreto 12.976/2026, arts. 1º a 3º",
+   "citable_text": "Art. 1º Este Decreto estabelece diretrizes para a proteção de mulheres na internet e para o enfrentamento da violência contra mulheres em ambiente digital.\n\nArt. 2º São princípios que regem a orientação da atuação normativa, fiscalizatória e sancionatória dos órgãos e das entidades competentes e das políticas públicas destinadas à prevenção e ao enfrentamento da violência contra mulheres em ambiente digital:\n\nI - não discriminação em razão da condição do sexo feminino, vedadas quaisquer formas de violência, intimidação ou exposição degradante praticadas em ambiente digital;\n\nII - centralidade da vítima, assegurados o acolhimento adequado, a preservação de provas, a disponibilidade de canais acessíveis de denúncia e a adoção de medidas para a cessação ou a mitigação do dano;\n\nIII - proteção de dados e da privacidade, assegurada a inviolabilidade da intimidade, da vida privada, da honra e da imagem de mulheres;\n\nIV - não revitimização, vedadas novas exposições da mulher pelas autoridades competentes e pelos provedores de aplicações de internet para fins de adoção das medidas para a cessação ou a mitigação do dano; e\n\nV - reconhecimento da discriminação por múltiplos critérios como fator de agravamento da violência contra a mulher.\n\nArt. 3º Para fins do disposto neste Decreto, considera-se:\n\nI - conteúdo íntimo - imagem, vídeo, áudio, mensagem de texto ou qualquer conteúdo por escrito, ou combinação destes, que exponha nudez, seminudez, ato sexual ou contexto sexualizante, ainda que produzido e manipulado, no todo ou em parte, por sistema de inteligência artificial ou recurso tecnológico equivalente; e\n\nII - violência contra mulheres em ambiente digital - crimes ou atos ilícitos contra mulheres, em razão da condição do sexo feminino, consistente em ato, conduta ou omissão que cause morte, dano ou sofrimento físico, sexual, psicológico, político ou econômico, inclusive dano patrimonial, em qualquer esfera de suas vidas, cometido, instigado, facilitado ou agravado, total ou parcialmente, pelo uso de tecnologias digitais, tais como:\n\na) violência doméstica e familiar contra a mulher, inclusive violência psicológica, nos termos do disposto no art. 7º, caput, inciso II, da Lei nº 11.340, de 7 de agosto de 2006, praticada por meio de mensagem, publicação, perseguição digital, vigilância on-line, isolamento ou qualquer outra forma de controle tecnológico;\n\nb) violência política contra a mulher praticada em ambiente digital, nos termos do disposto no art. 326-B da Lei nº 4.737, de 15 de julho de 1965 - Código Eleitoral, que inclua assédio, constrangimento, humilhação, perseguição ou ameaça a candidatas ou titulares de mandato eletivo;\n\nc) ameaça qualificada contra a mulher em razão da condição do sexo feminino, nos termos do disposto no art. 147, § 1º, do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal;\n\nd) perseguição da mulher realizada por meios digitais, nos termos do disposto no art. 147-A do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal, inclusive por monitoramento de redes sociais, envio reiterado de mensagens e uso de tecnologias de rastreamento;\n\ne) violência psicológica contra a mulher, nos termos do disposto no art. 147-B do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal, inclusive quando praticada mediante uso de inteligência artificial ou recurso tecnológico que altere imagem ou som da vítima;\n\nf) divulgação de cena de sexo, nudez ou ato libidinoso, sem consentimento, por meio da internet, nos termos do disposto no art. 218-C do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal;\n\ng) registro não autorizado de cena de nudez ou ato sexual ou libidinoso de caráter íntimo e privado, nos termos do disposto no art. 216-B do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal, inclusive mediante montagem ou uso de inteligência artificial;\n\nh) importunação sexual por meio digital, nos termos do disposto no art. 215- A do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal; e\n\ni) crimes praticados por meio da internet que difundam conteúdo que propague ódio ou aversão às mulheres, nos termos do disposto no art. 1º, caput, inciso VII, da Lei nº 10.446, de 8 de maio de 2002.",
+   "citable_kind": "official_text",
+   "plain_summary": "O decreto define violência contra mulheres em ambiente digital como crimes ou atos ilícitos, cometidos ou facilitados pela tecnologia, que causem dano ou sofrimento físico, sexual, psicológico, político ou econômico. Entre os exemplos estão a violência psicológica por mensagens, vigilância on-line, isolamento ou outro controle tecnológico; a perseguição digital (inclusive monitorar redes e usar rastreamento); a violência psicológica com uso de IA; e a divulgação ou o registro não autorizado de cenas íntimas, inclusive montagens.",
+   "scope_notes": [
+    "o Aurora explica o conceito; não afirma que a situação da usuária se enquadra."
+   ],
+   "topics": [
+    "violencia-digital",
+    "violencia-psicologica",
+    "conceito"
+   ],
+   "test_questions": [
+    "Ele monitora meu celular e minhas redes. Isso tem nome na lei?",
+    "Ameaça por mensagem conta como violência?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12976.htm",
+   "version": "Publicação original; em vigor 60 dias após a publicação (art. 15). Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-12976-2026#art5-6",
+   "doc_id": "decreto-12976-2026",
+   "kind": "legislacao",
+   "title": "Decreto nº 12.976, de 20 de maio de 2026 (proteção de mulheres na internet e enfrentamento da violência em ambiente digital)",
+   "section": "arts. 5º e 6º — denúncia (notificação) às plataformas",
+   "locator": "Decreto 12.976/2026, arts. 5º e 6º",
+   "citable_text": "Art. 5º Sem prejuízo do disposto no art. 4º, os provedores de aplicações de internet que realizem intermediação de conteúdo gerado por terceiro deverão indisponibilizar, em resposta às notificações, os conteúdos que configurem crimes ou atos ilícitos contra as mulheres em ambiente digital.\n\n§ 1º No espaço oferecido pelo provedor para apresentação da notificação, deverá ser exibido, de forma clara e acessível ao usuário, aviso com o número de telefone e os canais da Central de Atendimento à Mulher - Ligue 180.\n\n§ 2º Para fins do disposto no caput, será válida a notificação apresentada por meio de canal oficial e dedicado, disponibilizado pelo provedor de aplicações de internet.\n\n§ 3º A autoridade competente poderá regulamentar:\n\nI - a forma de notificação e de contestação;\n\nII - o prazo para remoção do conteúdo e para resposta ao notificante;\n\nIII - os legitimados a notificar;\n\nIV - o prazo de contestação do responsável pelo conteúdo; e\n\nV - os demais procedimentos necessários.\n\n§ 4º A notificação sobre conteúdo criminoso ou ilícito deverá conter, sob pena de nulidade:\n\nI - elementos que permitam a identificação da possível ilegalidade ou ilicitude;\n\nII - informações que permitam a identificação específica do conteúdo criminoso ou ilícito a ser indisponibilizado; e\n\nIII - identificação do notificante e, quando couber, indicação do fundamento de sua legitimidade.\n\n§ 5º O provedor poderá manter o conteúdo disponível quando, após a análise diligente e fundamentada, concluir existir dúvida razoável sobre o caráter criminoso ou ilícito do conteúdo, considerada a proporcionalidade entre a dúvida e a gravidade do crime ou ato ilícito, hipótese em que comunicará ao notificante as razões da não indisponibilização.\n\nArt. 6º Após o recebimento de notificação, o provedor de aplicações de internet deverá:\n\nI - confirmar ao notificante o recebimento da notificação; e\n\nII - avaliar o teor da notificação e adotar as providências pertinentes, observado o seguinte:\n\na) em caso de remoção, o provedor de aplicações de internet comunicará a decisão ao notificante e ao usuário que publicou o conteúdo e informará o fundamento específico da remoção e os meios de contestá-la;\n\nb) em caso de não remoção do conteúdo objeto de notificação, o provedor de aplicações de internet comunicará ao notificante e informará o fundamento específico da manutenção e os meios de contestá-la; e\n\nc) em caso de reconsideração após contestação, o provedor de aplicações de internet deverá comunicar o usuário que publicou o conteúdo e o notificante, com a respectiva fundamentação.",
+   "citable_kind": "official_text",
+   "plain_summary": "As plataformas que hospedam conteúdo de terceiros devem retirar, após notificação, o conteúdo que configure crime ou ato ilícito contra mulheres, e devem mostrar o telefone e os canais do Ligue 180 no espaço de denúncia. Ao receber a notificação, a plataforma confirma o recebimento e informa à pessoa o que decidiu e por quê, inclusive como contestar.",
+   "scope_notes": [],
+   "topics": [
+    "violencia-digital",
+    "plataformas",
+    "denuncia"
+   ],
+   "test_questions": [
+    "Como peço pra uma rede social tirar um post que me humilha?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12976.htm",
+   "version": "Publicação original; em vigor 60 dias após a publicação (art. 15). Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-12976-2026#art7",
+   "doc_id": "decreto-12976-2026",
+   "kind": "legislacao",
+   "title": "Decreto nº 12.976, de 20 de maio de 2026 (proteção de mulheres na internet e enfrentamento da violência em ambiente digital)",
+   "section": "art. 7º — conteúdo íntimo: retirada em até 2 horas",
+   "locator": "Decreto 12.976/2026, art. 7º",
+   "citable_text": "Art. 7º Os provedores de aplicações de internet indisponibilizarão a exibição não autorizada de conteúdo íntimo gerado por terceiros, no âmbito de seus serviços, após notificação.\n\n§ 1º A indisponibilização de que trata o caput deverá ocorrer no prazo de até duas horas, contado da notificação.\n\n§ 2º A notificação de que trata o caput deverá ser feita pela vítima ou pelo seu representante, com os dados para identificação do notificante e os elementos que especifiquem o conteúdo íntimo a ser indisponibilizado.\n\n§ 3º Em representação da vítima, poderão realizar a notificação de que tratam o caput e o § 1º:\n\nI - os advogados constituídos;\n\nII - as autoridades policiais;\n\nIII - o Ministério Público Federal;\n\nIV - os Ministérios Públicos dos Estados;\n\nV - o Ministério Público do Distrito Federal e Territórios;\n\nVI - as Defensorias Públicas dos Estados e do Distrito Federal; e\n\nVII - a Defensoria Pública da União.\n\n§ 4º O conteúdo íntimo deverá ser indisponibilizado de toda a aplicação e marcado digitalmente para que o seu reenvio seja automaticamente bloqueado, conforme estabelecido em regulamento pela autoridade competente.\n\n§ 5º Os provedores de aplicações de internet disponibilizarão espaço específico, permanente, gratuito, destacado e de fácil acesso destinado ao recebimento de notificação e ao tratamento de denúncia relativa a conteúdo íntimo, com confirmação de recebimento e possibilidade de acompanhamento do caso pela vítima ou pelo seu representante.",
+   "citable_kind": "official_text",
+   "plain_summary": "Conteúdo íntimo divulgado sem autorização deve ser retirado em até duas horas depois da notificação feita pela vítima ou por quem a represente (advogada, polícia, Ministério Público ou Defensoria). O conteúdo deve sair de toda a aplicação e ser marcado para bloquear novos envios. As plataformas devem manter um canal específico, gratuito e fácil de achar para esse tipo de denúncia.",
+   "scope_notes": [
+    "em caso de chantagem com imagens íntimas, a resposta deve incluir os canais de denúncia e não pedir que a usuária envie o material ao Aurora."
+   ],
+   "topics": [
+    "conteudo-intimo",
+    "violencia-digital"
+   ],
+   "test_questions": [
+    "Vazaram fotos íntimas minhas. Em quanto tempo a plataforma tem que tirar?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12976.htm",
+   "version": "Publicação original; em vigor 60 dias após a publicação (art. 15). Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-12976-2026#art9",
+   "doc_id": "decreto-12976-2026",
+   "kind": "legislacao",
+   "title": "Decreto nº 12.976, de 20 de maio de 2026 (proteção de mulheres na internet e enfrentamento da violência em ambiente digital)",
+   "section": "art. 9º — proibição de gerar conteúdo íntimo com IA",
+   "locator": "Decreto 12.976/2026, art. 9º",
+   "citable_text": "Art. 9º Aos provedores de aplicações de internet são vedadas a geração e a modificação de conteúdo íntimo de terceiro mediante uso de inteligência artificial ou de qualquer outro recurso tecnológico que altere imagem ou som da vítima.",
+   "citable_kind": "official_text",
+   "plain_summary": "As plataformas não podem gerar nem modificar conteúdo íntimo de outra pessoa com inteligência artificial ou outro recurso que altere a imagem ou o som da vítima.",
+   "scope_notes": [],
+   "topics": [
+    "inteligencia-artificial",
+    "conteudo-intimo"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12976.htm",
+   "version": "Publicação original; em vigor 60 dias após a publicação (art. 15). Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-12976-2026#art12",
+   "doc_id": "decreto-12976-2026",
+   "kind": "legislacao",
+   "title": "Decreto nº 12.976, de 20 de maio de 2026 (proteção de mulheres na internet e enfrentamento da violência em ambiente digital)",
+   "section": "art. 12 — prazos enquanto não há regulamentação",
+   "locator": "Decreto 12.976/2026, art. 12",
+   "citable_text": "Art. 12. Até que haja regulamentação pela autoridade competente, e ressalvado o prazo de até duas horas para remoção de conteúdo íntimo gerado por terceiros previsto no art. 7º, § 1º, é dever dos provedores de aplicações de internet remover o conteúdo ou comunicar ao notificante o fundamento de sua manutenção e os meios cabíveis para a sua contestação, de acordo com os seguintes prazos, a contar da notificação:\n\nI - seis horas, nos casos de conteúdo manifestamente ilegal, que caracterize os crimes ou os atos ilícitos a que se refere o caput do art. 4º; e\n\nII - vinte e quatro horas, nos demais casos de violência contra a mulher em ambiente digital.\n\nParágrafo único. Recebida a contestação a que se refere o caput, o provedor de aplicações de internet deverá, no prazo de até vinte e quatro horas:\n\nI - restaurar ou remover o conteúdo; e\n\nII - comunicar a decisão ao notificante e ao usuário que publicou o conteúdo.",
+   "citable_kind": "official_text",
+   "plain_summary": "Até que a autoridade competente regulamente, e mantido o prazo de duas horas para conteúdo íntimo, a plataforma deve retirar o conteúdo ou explicar por que o manteve em até seis horas, quando o conteúdo for manifestamente ilegal, e em até vinte e quatro horas nos demais casos de violência contra a mulher em ambiente digital.",
+   "scope_notes": [],
+   "topics": [
+    "plataformas",
+    "prazos"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12976.htm",
+   "version": "Publicação original; em vigor 60 dias após a publicação (art. 15). Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-1973-1996#art1-2",
+   "doc_id": "decreto-1973-1996",
+   "kind": "legislacao",
+   "title": "Decreto nº 1.973, de 1º de agosto de 1996 (promulga a Convenção de Belém do Pará)",
+   "section": "arts. 1º e 2º — definição de violência contra a mulher",
+   "locator": "Convenção Interamericana para Prevenir, Punir e Erradicar a Violência contra a Mulher, arts. 1º e 2º",
+   "citable_text": "Artigo 1\n\nPara os efeitos desta Convenção, entender-se-á por violência contra a mulher qualquer ato ou conduta baseada no gênero, que cause morte, dano ou sofrimento físico, sexual ou psicológico à mulher, tanto na esfera pública como na esfera privada.\n\nArtigo 2\n\nEntende-se que a violência contra a mulher abrange a violência física, sexual e psicológica:\n\na) ocorrido no âmbito da família ou unidade domestica ou em qualquer relação interpessoal, quer o agressor compartilhe, tenha compartilhado ou não a sua residência, incluindo- se, entre outras formas, o estupro, maus-tratos e abuso sexual;\n\nb) ocorrida na comunidade e comedida por qualquer pessoa, incluindo, entre outras formas, o estupro, abuso sexual, tortura, tráfego de mulheres, prostituição forçada, seqüestro e assédio sexual no local de trabalho, bem como em instituições educacionais, serviços de saúde ou qualquer outro local; e\n\nc) perpetra ou tolerada pelo Estado ou seus agente, onde quer que ocorra.",
+   "citable_kind": "official_text",
+   "plain_summary": "Violência contra a mulher é qualquer ato ou conduta baseada no gênero que cause morte, dano ou sofrimento físico, sexual ou psicológico, na esfera pública ou privada. Inclui violência física, sexual e psicológica dentro da família ou de qualquer relação interpessoal (morando junto ou não), na comunidade (trabalho, escola, serviços de saúde) e a praticada ou tolerada pelo Estado.",
+   "scope_notes": [],
+   "topics": [
+    "conceito",
+    "violencia-psicologica"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto/1996/d1973.htm",
+   "version": "Publicação original conferida em 04/11/2026. Aprovada pelo Decreto Legislativo nº 107/1995; em vigor para o Brasil desde 27/12/1995.",
+   "publisher": "Presidência da República; Organização dos Estados Americanos (convenção de 9/6/1994)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-1973-1996#art3-6",
+   "doc_id": "decreto-1973-1996",
+   "kind": "legislacao",
+   "title": "Decreto nº 1.973, de 1º de agosto de 1996 (promulga a Convenção de Belém do Pará)",
+   "section": "arts. 3º a 6º — direitos da mulher",
+   "locator": "Convenção de Belém do Pará, arts. 3º a 6º",
+   "citable_text": "Artigo 3\n\nToda mulher tem direito a uma vida livre de violência, tanto na esfera pública como na esfera privada.\n\nArtigo 4\n\nToda mulher tem direito ao reconhecimento, desfrute, exercício e proteção de todos os direitos humanos e liberdades consagradas em todos os instrumentos regionais e internacionais relativos aos direitos humanos. Estes direitos abrangem, entre outros:\n\na) direitos a que se respeite sua vida;\n\nb) direitos a que se respeite sua integridade física, mental e moral;\n\nc) direitos à liberdade e a segurança pessoais;\n\nd) direito a não ser submetida a tortura;\n\ne) direito a que se respeite a dignidade inerente à sua pessoa e a que se proteja sua família;\n\nf) direito a igual proteção perante a lei e da lei;\n\ng) direito a recurso simples e rápido perante tribunal competente que a proteja contra atos que violem seus direitos;\n\nh) direito de livre associação;\n\ni) direito à liberdade de professar a própria religião e as próprias crenças, de acordo com a lei; e\n\nj) direito a ter igualdade de acesso às funções públicas de seu próprio país e a participar nos assuntos públicos, inclusive na tomada de decisões.\n\nArtigo 5\n\nToda mulher poderá exercer livre e plenamente seus direitos civis, políticos, econômicos, sociais e culturais, e contará com total proteção desses direitos consagrados nos instrumentos regionais e internacionais sobre direitos humanos. Os Estados Partes reconhecem que a violência contra a mulher impede e anula o exercício desses direitos.\n\nArtigo 6\n\nO direito de toda mulher a ser livre de violência abrange, entre outros:\n\na) o direito da mulher a ser livre de todas as formas de discriminação; e\n\nb) o direito da mulher a ser valorizada e educada livre de padrões estereotipados de comportamento de comportamento e costumes sócias e culturais baseados em conceitos de inferioridade ou subordinação.",
+   "citable_kind": "official_text",
+   "plain_summary": "Toda mulher tem direito a uma vida livre de violência, tanto na esfera pública quanto na privada. Isso inclui os direitos à vida, à integridade física, mental e moral, à liberdade, à dignidade, à igual proteção da lei e a um recurso rápido à Justiça, além do direito de ser livre de discriminação e de estereótipos de inferioridade ou subordinação.",
+   "scope_notes": [],
+   "topics": [
+    "direitos-humanos"
+   ],
+   "test_questions": [
+    "Existe algum tratado internacional que protege a mulher da violência?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto/1996/d1973.htm",
+   "version": "Publicação original conferida em 04/11/2026. Aprovada pelo Decreto Legislativo nº 107/1995; em vigor para o Brasil desde 27/12/1995.",
+   "publisher": "Presidência da República; Organização dos Estados Americanos (convenção de 9/6/1994)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "decreto-1973-1996#art7-8",
+   "doc_id": "decreto-1973-1996",
+   "kind": "legislacao",
+   "title": "Decreto nº 1.973, de 1º de agosto de 1996 (promulga a Convenção de Belém do Pará)",
+   "section": "arts. 7º e 8º — deveres do Estado",
+   "locator": "Convenção de Belém do Pará, arts. 7º e 8º",
+   "citable_text": "Artigo 7\n\nOs Estados Partes condenam todas as formas de violência contra a mulher e convêm em adotar, por todos os meios apropriados e sem demora, políticos destinadas a prevenir, punir e erradicar tal violência e a empenhar-se em:\n\na) abster-se de qualquer ato ou prática de violência contra a mulher e velar por que as autoridades, seus funcionários e pessoal, bem como agentes e instruções públicos ajam de conformidade com essa obrigação;\n\nb) agir com o devido zelo para prevenir, investigar e punir a violência contra mulher;\n\nc) incorporar na sua legislação interna normas penais, civis, administrativas e de outra natureza, que sejam necessárias para prevenir, punir e erradicar a violência contra mulher, bem como adotar as medidas administrativas adequadas que forem aplicáveis;\n\nd) adotar medidas jurídicas que exijam do agressor que se abstenha de perseguir, intimidar e ameaçar a mulher ou de fazer uso de qualquer método que danifique ou ponha em perigo sua vida ou integridade ou danifique sua propriedade;\n\ne) tomar todas as medidas adequadas, inclusive legislativas, para modificar ou abolir leis e regulamentos vigentes ou modificar práticas jurídicas ou consuetudinárias que respaldem a persistência e a tolerância da violência contra a mulher;\n\nf) estabelecer procedimentos jurídicos justos e eficazes para a mulher sujeita a violência, inclusive, entre outros, medidas de proteção, juízo oportuno e efetivo acesso a tais processos;\n\ng) estabelecer mecanismos judiciais e administrativos necessários para assegurar que a mulher sujeita a violência tenha efetivo acesso a restituição, reparação do dano e outros meios de compensação justos e eficazes;\n\nh) adotar as medidas legislativas ou de outra natureza necessárias à vigência desta Convenção.\n\nArtigo 8\n\nOs Estados Partes convêm em adotar, progressivamente, medidas especificas, inclusive programas destinados a:\n\na) promover o conhecimento e a observância do direito da mulher a uma vida livre de violência e o direito da mulher a que se respeitem e protejam seus direitos humanos;\n\nb) modificar os padrões sociais e culturais de conduta de homens e mulheres, inclusive a formação de programas formais e não formais adequados a todos os níveis do processo educacionais, a fim de combater preconceitos e costumes e todas as outras práticas baseadas na premissa da inferioridade ou superioridade de qualquer dos gêneros ou nos papeis estereotipados para o homem e a mulher, que legitimem ou exacerbem a violência contra a mulher;\n\nc) promover a educação e treinamento de todo pessoal judiciário e policial e demais funcionários responsáveis pela aplicação da lei, bem como do pessoal encarregado da implementação de políticas de prevenção, punição e erradicação da violência contra a mulher;\n\nd) prestar serviços especializados apropriados a mulher sujeita a violência, por intermédio de entidades dos setores público e privado, inclusive abrigos, serviços de orientação familiar, quando for o caso, e atendimento e custódia dos membros afetados;\n\ne) promover e apoiar programas de educação governamentais e privados, destinados a conscientizar o público para os problemas da violência contra a mulher, recursos jurídicos e reparação relacionadas com essa violência;\n\nf) proporcionar à mulher sujeita a violência acesso a programas eficazes de recuperação e treinamento que lhe permitam participar plenamente da vida pública, privada e social;\n\ng) incentivar os meios de comunicação a que formulem diretrizes adequadas, de divulgação que contribuam para a erradicação da violência contra a mulher em todas as suas formas e enalteçam o respeito pela dignidade da mulher;\n\nh) assegurar a pesquisa e coleta de estagiários e outras informações relevantes concernentes às causas, conseqüências e freqüência da violência contra a mulher, a fim de avaliar a eficiência das medidas tomadas para prevenir, punir e erradicar a violência contra a mulher, bem como formular e implementar as mudanças necessárias; e\n\ni) promover a cooperação internacional para o intercâmbio de idéias e experiências, bem como a execução de programas destinados à proteção da mulher sujeitada a violência.",
+   "citable_kind": "official_text",
+   "plain_summary": "Os Estados se comprometem a agir com a devida diligência para prevenir, investigar e punir a violência contra a mulher; a ter leis e procedimentos legais justos e eficazes, com medidas de proteção e acesso efetivo à Justiça; a oferecer mecanismos de reparação; e, de forma progressiva, a promover educação, capacitar policiais e o sistema de Justiça, oferecer serviços especializados (como abrigos e orientação), fazer campanhas e produzir dados sobre o problema.",
+   "scope_notes": [],
+   "topics": [
+    "deveres-do-estado",
+    "rede-de-atendimento"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/decreto/1996/d1973.htm",
+   "version": "Publicação original conferida em 04/11/2026. Aprovada pelo Decreto Legislativo nº 107/1995; em vigor para o Brasil desde 27/12/1995.",
+   "publisher": "Presidência da República; Organização dos Estados Americanos (convenção de 9/6/1994)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "stj-tema-1249#teses",
+   "doc_id": "stj-tema-1249",
+   "kind": "jurisprudencia",
+   "title": "STJ, Tema Repetitivo 1249: natureza e duração das medidas protetivas de urgência",
+   "section": "Teses fixadas",
+   "locator": "STJ, Terceira Seção, Tema Repetitivo 1249, julgado em 13/11/2024",
+   "citable_text": "I - As medidas protetivas de urgência (MPUs) têm natureza jurídica de tutela inibitória e sua vigência não se subordina à existência (atual ou vindoura) de boletim de ocorrência, inquérito policial, processo cível ou criminal.\n\nII - A duração das MPUs vincula-se à persistência da situação de risco à mulher, razão pela qual devem ser fixadas por prazo temporalmente indeterminado.\n\nIII - Eventual reconhecimento de causa de extinção de punibilidade, arquivamento do inquérito policial ou absolvição do acusado não origina, necessariamente, a extinção da medida protetiva de urgência, máxime pela possibilidade de persistência da situação de risco ensejadora da concessão da medida.\n\nIV - Não se submetem a prazo obrigatório de revisão periódica, mas devem ser reavaliadas pelo magistrado, de ofício ou a pedido do interessado, quando constatado concretamente o esvaziamento da situação de risco. A revogação deve sempre ser precedida de contraditório, com as oitivas da vítima e do suposto agressor. Em caso de extinção da medida, a ofendida deve ser comunicada, nos termos do art. 21 da Lei n. 11.340/2006.",
+   "citable_kind": "official_text",
+   "plain_summary": "A medida protetiva não depende de boletim de ocorrência nem de processo e não tem prazo fixo: vale enquanto houver risco. Mesmo que o processo criminal termine sem condenação, ela não cai automaticamente. Para revogar, o juiz precisa ouvir a mulher, e ela deve ser avisada se a medida acabar.",
+   "scope_notes": [
+    "informação geral; dúvidas sobre a medida concreta vão para a Defensoria/NUDEM ou para a advocacia."
+   ],
+   "topics": [
+    "medidas-protetivas",
+    "prazos"
+   ],
+   "test_questions": [
+    "A medida protetiva tem prazo de validade?",
+    "Se o processo for arquivado, a medida protetiva acaba?"
+   ],
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1249&cod_tema_final=1249",
+   "version": "Teses conferidas no Informativo STJ nº 836 em 04/11/2026; precedente vinculante (art. 927, III, do CPC).",
+   "publisher": "Superior Tribunal de Justiça, Terceira Seção",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-10778-2003#art1",
+   "doc_id": "lei-10778-2003",
+   "kind": "legislacao",
+   "title": "Lei nº 10.778, de 24 de novembro de 2003 (notificação compulsória da violência contra a mulher nos serviços de saúde)",
+   "section": "art. 1º — o que é notificado e o conceito de violência",
+   "locator": "Lei 10.778/2003, art. 1º, caput e §§ 1º a 4º",
+   "citable_text": "Art. 1º. Constituem objeto de notificação compulsória, em todo o território nacional, os casos em que houver indícios ou confirmação de violência contra a mulher atendida em serviços de saúde públicos e privados. (“Caput” do artigo com redação dada pela Lei nº 13.931, de 10/12/2019, publicada no DOU de 11/12/2019, em vigor 90 dias após a publicação)\n\n§ 1º Para os efeitos desta Lei, entende-se por violência contra a mulher qualquer ação ou conduta, baseada no gênero, inclusive decorrente de discriminação ou desigualdade étnica, que cause morte, dano ou sofrimento físico, sexual ou psicológico à mulher, tanto no âmbito público quanto no privado. (Parágrafo com redação dada pela Lei nº 12.288, de 20/7/2010)\n\n§ 2º Entender-se-á que violência contra a mulher inclui violência física, sexual e psicológica e que:\n\nI - tenha ocorrido dentro da família ou unidade doméstica ou em qualquer outra relação interpessoal, em que o agressor conviva ou haja convivido no mesmo domicílio que a mulher e que compreende, entre outros, estupro, violação, maus-tratos e abuso sexual;\n\nII - tenha ocorrido na comunidade e seja perpetrada por qualquer pessoa e que compreende, entre outros, violação, abuso sexual, tortura, maus-tratos de pessoas, tráfico de mulheres, prostituição forçada, seqüestro e assédio sexual no lugar de trabalho, bem como em instituições educacionais, estabelecimentos de saúde ou qualquer outro lugar; e\n\nIII - seja perpetrada ou tolerada pelo Estado ou seus agentes, onde quer que ocorra.\n\n§ 3º Para efeito da definição serão observados também as convenções e acordos internacionais assinados pelo Brasil, que disponham sobre prevenção, punição e erradicação da violência contra a mulher.\n\n§ 4º Os casos em que houver indícios ou confirmação de violência contra a mulher referidos no caput deste artigo serão obrigatoriamente comunicados à autoridade policial no prazo de 24 (vinte e quatro) horas, para as providências cabíveis e para fins estatísticos. (Parágrafo acrescido pela Lei nº 13.931, de 10/12/2019, publicada no DOU de 11/12/2019, em vigor 90 dias após a publicação)",
+   "citable_kind": "official_text",
+   "plain_summary": "Os serviços de saúde públicos e privados devem notificar os casos em que houver indícios ou confirmação de violência contra a mulher atendida. Para essa lei, violência contra a mulher é qualquer ação ou conduta baseada no gênero que cause morte, dano ou sofrimento físico, sexual ou psicológico, em casa, na comunidade ou praticada ou tolerada pelo Estado; a violência psicológica está expressamente incluída. Desde 2019, esses casos devem ser comunicados à autoridade policial em até 24 horas, para as providências cabíveis e para fins estatísticos.",
+   "scope_notes": [],
+   "topics": [
+    "saude",
+    "notificacao-compulsoria"
+   ],
+   "test_questions": [
+    "Se eu contar pro médico o que aconteceu, ele vai avisar a polícia?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.778.htm",
+   "version": "Compilados da Câmara e do Planalto conferidos em 04/11/2026 (alterações: Lei 12.288/2010 e Lei 13.931/2019; nenhuma posterior)",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-10778-2003#art3",
+   "doc_id": "lei-10778-2003",
+   "kind": "legislacao",
+   "title": "Lei nº 10.778, de 24 de novembro de 2003 (notificação compulsória da violência contra a mulher nos serviços de saúde)",
+   "section": "art. 3º — sigilo da notificação",
+   "locator": "Lei 10.778/2003, art. 3º e parágrafo único",
+   "citable_text": "Art. 3º. A notificação compulsória dos casos de violência de que trata esta Lei tem caráter sigiloso, obrigando nesse sentido as autoridades sanitárias que a tenham recebido.\n\nParágrafo único. A identificação da vítima de violência referida nesta Lei, fora do âmbito dos serviços de saúde, somente poderá efetivar-se, em caráter excepcional, em caso de risco à comunidade ou à vítima, a juízo da autoridade sanitária e com conhecimento prévio da vítima ou do seu responsável.",
+   "citable_kind": "official_text",
+   "plain_summary": "A notificação tem caráter sigiloso e obriga as autoridades sanitárias que a recebem. A identificação da vítima fora dos serviços de saúde só pode ocorrer em caráter excepcional, em caso de risco à comunidade ou à própria vítima, a juízo da autoridade sanitária e com conhecimento prévio da vítima ou de seu responsável.",
+   "scope_notes": [
+    "a relação entre o sigilo do art. 3º e a comunicação à polícia do art. 1º, §4º, precisa de explicação revisada pela advogada antes de ir para a base."
+   ],
+   "topics": [
+    "sigilo",
+    "saude"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.778.htm",
+   "version": "Compilados da Câmara e do Planalto conferidos em 04/11/2026 (alterações: Lei 12.288/2010 e Lei 13.931/2019; nenhuma posterior)",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art2",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 2º — direito de viver sem violência",
+   "locator": "Lei 11.340/2006, art. 2º",
+   "citable_text": "Art. 2º Toda mulher, independentemente de classe, raça, etnia, orientação sexual, renda, cultura, nível educacional, idade e religião, goza dos direitos fundamentais inerentes à pessoa humana, sendo-lhe asseguradas as oportunidades e facilidades para viver sem violência, preservar sua saúde física e mental e seu aperfeiçoamento moral, intelectual e social.",
+   "citable_kind": "official_text",
+   "plain_summary": "Toda mulher, qualquer que seja sua classe, raça, etnia, orientação sexual, renda, cultura, escolaridade, idade ou religião, tem garantidas as oportunidades para viver sem violência e preservar sua saúde física e mental. *(Trecho novo em 04/11/2026: base para respostas de acolhimento.)*",
+   "scope_notes": [],
+   "topics": [
+    "direitos",
+    "saude-mental",
+    "principios"
+   ],
+   "test_questions": [
+    "Eu tenho direito de viver sem medo dentro de casa?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art5",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 5º — o que é violência doméstica e familiar contra a mulher",
+   "locator": "Lei 11.340/2006, art. 5º, caput, I a III e parágrafo único",
+   "citable_text": "Art. 5º Para os efeitos desta Lei configura violência doméstica e familiar contra a mulher qualquer ação ou omissão baseada no gênero que lhe cause morte, lesão, sofrimento físico, sexual ou psicológico e dano moral ou patrimonial:\n\nI - no âmbito da unidade doméstica, compreendida como o espaço de convívio permanente de pessoas, com ou sem vínculo familiar, inclusive as esporadicamente agregadas;\n\nII - no âmbito da família, compreendida como a comunidade formada por indivíduos que são ou se consideram aparentados, unidos por laços naturais, por afinidade ou por vontade expressa;\n\nIII - em qualquer relação íntima de afeto, na qual o agressor conviva ou tenha convivido com a ofendida, independentemente de coabitação.\n\nParágrafo único. As relações pessoais enunciadas neste artigo independem de orientação sexual.",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei considera violência doméstica e familiar qualquer ação ou omissão baseada no gênero que cause morte, lesão, sofrimento físico, sexual ou psicológico, ou dano moral ou patrimonial à mulher. Vale em três situações: dentro de casa (inclusive com pessoas que convivem ali sem laço de família), dentro da família (por sangue, afinidade ou escolha) e em qualquer relação íntima de afeto, mesmo sem morar junto. Vale independentemente da orientação sexual.",
+   "scope_notes": [],
+   "topics": [
+    "conceito",
+    "ambito-de-aplicacao"
+   ],
+   "test_questions": [
+    "Meu ex-namorado nunca morou comigo. A Lei Maria da Penha vale pra mim?",
+    "Violência entre duas mulheres entra na Lei Maria da Penha?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-caput",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, caput — as formas de violência",
+   "locator": "Lei 11.340/2006, art. 7º, caput",
+   "citable_text": "Art. 7º São formas de violência doméstica e familiar contra a mulher, entre outras:",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei lista seis formas de violência doméstica e familiar: física, psicológica, sexual, patrimonial, moral e vicária. A lista usa a expressão \"entre outras\", ou seja, não é fechada.",
+   "scope_notes": [],
+   "topics": [
+    "formas-de-violencia"
+   ],
+   "test_questions": [
+    "Quais são os tipos de violência da Lei Maria da Penha?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-I",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, I — violência física",
+   "locator": "Lei 11.340/2006, art. 7º, I",
+   "citable_text": "I - a violência física, entendida como qualquer conduta que ofenda sua integridade ou saúde corporal;",
+   "citable_kind": "official_text",
+   "plain_summary": "Qualquer conduta que ofenda a integridade ou a saúde do corpo da mulher.",
+   "scope_notes": [],
+   "topics": [
+    "formas-de-violencia",
+    "violencia-fisica"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-II",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, II — violência psicológica",
+   "locator": "Lei 11.340/2006, art. 7º, II",
+   "citable_text": "II - a violência psicológica, entendida como qualquer conduta que lhe cause dano emocional e diminuição da autoestima ou que lhe prejudique e perturbe o pleno desenvolvimento ou que vise degradar ou controlar suas ações, comportamentos, crenças e decisões, mediante ameaça, constrangimento, humilhação, manipulação, isolamento, vigilância constante, perseguição contumaz, insulto, chantagem, violação de sua intimidade, ridicularização, exploração e limitação do direito de ir e vir ou qualquer outro meio que lhe cause prejuízo à saúde psicológica e à autodeterminação; (Inciso com redação dada pela Lei nº 13.772, de 19/12/2018)",
+   "citable_kind": "official_text",
+   "plain_summary": "Qualquer conduta que cause dano emocional e diminuição da autoestima, ou que prejudique e perturbe o pleno desenvolvimento da mulher. Também é violência psicológica a conduta que busca controlar ou degradar o que ela faz, como se comporta, no que acredita e o que decide. A lei dá exemplos de meios: ameaça, constrangimento, humilhação, manipulação, isolamento, vigilância constante, perseguição contumaz, insulto, chantagem, violação da intimidade, ridicularização, exploração e limitação do direito de ir e vir, ou qualquer outro meio que prejudique a saúde psicológica e a autodeterminação.",
+   "scope_notes": [
+    "o Aurora informa o que a lei diz; não afirma que a situação da usuária \"é\" violência psicológica (isso seria diagnóstico/parecer individual)."
+   ],
+   "topics": [
+    "formas-de-violencia",
+    "violencia-psicologica"
+   ],
+   "test_questions": [
+    "Meu marido controla meu celular e não deixa eu ver minhas amigas. Isso é violência?",
+    "O que a lei chama de violência psicológica?",
+    "Humilhação constante conta como violência?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-III",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, III — violência sexual",
+   "locator": "Lei 11.340/2006, art. 7º, III",
+   "citable_text": "III - a violência sexual, entendida como qualquer conduta que a constranja a presenciar, a manter ou a participar de relação sexual não desejada, mediante intimidação, ameaça, coação ou uso da força; que a induza a comercializar ou a utilizar, de qualquer modo, a sua sexualidade, que a impeça de usar qualquer método contraceptivo ou que a force ao matrimônio, à gravidez, ao aborto ou à prostituição, mediante coação, chantagem, suborno ou manipulação; ou que limite ou anule o exercício de seus direitos sexuais e reprodutivos;",
+   "citable_kind": "official_text",
+   "plain_summary": "Forçar a mulher a presenciar, manter ou participar de relação sexual que ela não quer, por intimidação, ameaça, coação ou força; obrigá-la a comercializar ou usar sua sexualidade; impedi-la de usar métodos contraceptivos; ou forçá-la ao casamento, à gravidez, ao aborto ou à prostituição.",
+   "scope_notes": [],
+   "topics": [
+    "formas-de-violencia",
+    "violencia-sexual"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-IV",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, IV — violência patrimonial",
+   "locator": "Lei 11.340/2006, art. 7º, IV",
+   "citable_text": "IV - a violência patrimonial, entendida como qualquer conduta que configure retenção, subtração, destruição parcial ou total de seus objetos, instrumentos de trabalho, documentos pessoais, bens, valores e direitos ou recursos econômicos, incluindo os destinados a satisfazer suas necessidades;",
+   "citable_kind": "official_text",
+   "plain_summary": "Reter, tirar ou destruir, total ou parcialmente, objetos, instrumentos de trabalho, documentos, bens, valores, direitos ou recursos econômicos da mulher.",
+   "scope_notes": [],
+   "topics": [
+    "formas-de-violencia",
+    "violencia-patrimonial"
+   ],
+   "test_questions": [
+    "Ele pega todo o meu salário e esconde meus documentos. Tem nome isso?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-V",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, V — violência moral",
+   "locator": "Lei 11.340/2006, art. 7º, V",
+   "citable_text": "V - a violência moral, entendida como qualquer conduta que configure calúnia, difamação ou injúria.",
+   "citable_kind": "official_text",
+   "plain_summary": "Qualquer conduta que configure calúnia, difamação ou injúria.",
+   "scope_notes": [],
+   "topics": [
+    "formas-de-violencia",
+    "violencia-moral"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art7-VI",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 7º, VI — violência vicária",
+   "locator": "Lei 11.340/2006, art. 7º, VI",
+   "citable_text": "VI - a violência vicária, entendida como qualquer forma de violência praticada contra descendente, ascendente, dependente, enteado, parente, pessoa sob guarda ou responsabilidade direta da mulher ou pessoa de sua rede de apoio, com vistas a atingi-la. (Inciso acrescido pela Lei nº 15.384, de 9/4/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "Violência praticada contra pessoas ligadas à mulher (filhos e outros descendentes, pais e outros ascendentes, dependentes, enteados, parentes, pessoas sob sua guarda ou responsabilidade direta, ou alguém da sua rede de apoio) com o objetivo de atingi-la. (A finalidade de causar sofrimento, punição ou controle é exigida no crime de vicaricídio, art. 121-B do Código Penal, e não no conceito.)",
+   "scope_notes": [],
+   "topics": [
+    "formas-de-violencia",
+    "violencia-vicaria",
+    "filhos"
+   ],
+   "test_questions": [
+    "Ele ameaça machucar meus filhos pra me controlar. A lei fala disso?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art9",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 9º — assistência à mulher (SUS, Susp, assistência social)",
+   "locator": "Lei 11.340/2006, art. 9º, caput e §§ 2º, 4º a 8º",
+   "citable_text": "Art. 9º A assistência à mulher em situação de violência doméstica e familiar será prestada em caráter prioritário no Sistema Único de Saúde (SUS) e no Sistema Único de Segurança Pública (Susp), de forma articulada e conforme os princípios e as diretrizes previstos na Lei nº 8.742, de 7 de dezembro de 1993 (Lei Orgânica da Assistência Social), e em outras normas e políticas públicas de proteção, e emergencialmente, quando for o caso. (“Caput” do artigo com redação dada pela Lei nº 14.887, de 12/6/2024)\n\n[…]\n\n§ 2º O juiz assegurará à mulher em situação de violência doméstica e familiar, para preservar sua integridade física e psicológica:\n\nI - acesso prioritário à remoção quando servidora pública, integrante da administração direta ou indireta;\n\nII - manutenção do vínculo trabalhista, quando necessário o afastamento do local de trabalho, por até seis meses;\n\nIII - encaminhamento à assistência judiciária, quando for o caso, inclusive para eventual ajuizamento da ação de separação judicial, de divórcio, de anulação de casamento ou de dissolução de união estável perante o juízo competente. (Inciso acrescido pela Lei nº 13.894, de 29/10/2019)\n\n[…]\n\n§ 4º Aquele que, por ação ou omissão, causar lesão, violência física, sexual ou psicológica e dano moral ou patrimonial a mulher fica obrigado a ressarcir todos os danos causados, inclusive ressarcir ao Sistema Único de Saúde (SUS), de acordo com a tabela SUS, os custos relativos aos serviços de saúde prestados para o total tratamento das vítimas em situação de violência doméstica e familiar, recolhidos os recursos assim arrecadados ao Fundo de Saúde do ente federado responsável pelas unidades de saúde que prestarem os serviços. (Parágrafo acrescido pela Lei nº 13.871, de 17/9/2019, publicada no DOU de 18/9/2019, em vigor 45 dias após a publicação)\n\n§ 5º Os dispositivos de segurança destinados ao uso em caso de perigo iminente e disponibilizados para o monitoramento das vítimas de violência doméstica ou familiar amparadas por medidas protetivas terão seus custos ressarcidos pelo agressor. (Parágrafo acrescido pela Lei nº 13.871, de 17/9/2019, publicada no DOU de 18/9/2019, em vigor 45 dias após a publicação)\n\n§ 6º O ressarcimento de que tratam os §§ 4º e 5º deste artigo não poderá importar ônus de qualquer natureza ao patrimônio da mulher e dos seus dependentes, nem configurar atenuante ou ensejar possibilidade de substituição da pena aplicada. (Parágrafo acrescido pela Lei nº 13.871, de 17/9/2019, publicada no DOU de 18/9/2019, em vigor 45 dias após a publicação)\n\n§ 7º A mulher em situação de violência doméstica e familiar tem prioridade para matricular seus dependentes em instituição de educação básica mais próxima de seu domicílio, ou transferi-los para essa instituição, mediante a apresentação dos documentos comprobatórios do registro da ocorrência policial ou do processo de violência doméstica e familiar em curso. (Parágrafo acrescido pela Lei nº 13.882, de 8/10/2019)\n\n§ 8º Serão sigilosos os dados da ofendida e de seus dependentes matriculados ou transferidos conforme o disposto no § 7º deste artigo, e o acesso às informações será reservado ao juiz, ao Ministério Público e aos órgãos competentes do poder público. (Parágrafo acrescido pela Lei nº 13.882, de 8/10/2019 e republicado no DOU de 11/10/2019)",
+   "citable_kind": "official_text",
+   "plain_summary": "A assistência à mulher em situação de violência deve ser prestada de forma articulada pelo SUS, pelo Sistema Único de Segurança Pública (Susp) e pela assistência social (LOAS). O juiz pode garantir: prioridade de remoção para servidora pública; manutenção do vínculo de emprego por até seis meses quando ela precisar se afastar do trabalho; e orientação à assistência jurídica, inclusive para separação ou divórcio. O agressor deve ressarcir os custos dos serviços de saúde e dos dispositivos de segurança, sem que isso pese sobre a mulher. Os filhos e dependentes têm prioridade de matrícula ou transferência para escola perto de casa, e os dados da mulher e dos dependentes nesse caso são sigilosos.",
+   "scope_notes": [],
+   "topics": [
+    "direitos",
+    "rede-de-atendimento",
+    "saude",
+    "trabalho",
+    "filhos"
+   ],
+   "test_questions": [
+    "Se eu sair de casa por causa da violência, posso perder meu emprego?",
+    "Consigo transferir meus filhos de escola?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art10A",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 10-A — atendimento policial especializado",
+   "locator": "Lei 11.340/2006, art. 10-A, caput e §§ 1º e 2º",
+   "citable_text": "Art. 10-A. É direito da mulher em situação de violência doméstica e familiar o atendimento policial e pericial especializado, ininterrupto e prestado por servidores - preferencialmente do sexo feminino - previamente capacitados.\n\n§ 1º A inquirição de mulher em situação de violência doméstica e familiar ou de testemunha de violência doméstica, quando se tratar de crime contra a mulher, obedecerá às seguintes diretrizes:\n\nI - salvaguarda da integridade física, psíquica e emocional da depoente, considerada a sua condição peculiar de pessoa em situação de violência doméstica e familiar;\n\nII - garantia de que, em nenhuma hipótese, a mulher em situação de violência doméstica e familiar, familiares e testemunhas terão contato direto com investigados ou suspeitos e pessoas a eles relacionadas;\n\nIII - não revitimização da depoente, evitando sucessivas inquirições sobre o mesmo fato nos âmbitos criminal, cível e administrativo, bem como questionamentos sobre a vida privada.\n\n§ 2º Na inquirição de mulher em situação de violência doméstica e familiar ou de testemunha de delitos de que trata esta Lei, adotar-se-á, preferencialmente, o seguinte procedimento:\n\nI - a inquirição será feita em recinto especialmente projetado para esse fim, o qual conterá os equipamentos próprios e adequados à idade da mulher em situação de violência doméstica e familiar ou testemunha e ao tipo e à gravidade da violência sofrida;\n\nII - quando for o caso, a inquirição será intermediada por profissional especializado em violência doméstica e familiar designado pela autoridade judiciária ou policial;\n\nIII - o depoimento será registrado em meio eletrônico ou magnético, devendo a degravação e a mídia integrar o inquérito. (Artigo acrescido pela Lei nº 13.505, de 8/11/2017)",
+   "citable_kind": "official_text",
+   "plain_summary": "A mulher tem direito a atendimento policial e pericial especializado, ininterrupto, feito preferencialmente por servidoras capacitadas. No depoimento, devem ser protegidas sua integridade física, psicológica e emocional, ela não deve ter contato com o investigado, e deve-se evitar a revitimização (perguntas repetidas sobre o mesmo fato). A lei prevê preferência por sala própria e gravação do depoimento.",
+   "scope_notes": [],
+   "topics": [
+    "direitos",
+    "delegacia",
+    "revitimizacao"
+   ],
+   "test_questions": [
+    "Vou ter que contar tudo de novo várias vezes na delegacia?",
+    "Posso ser atendida por uma policial mulher?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art11",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 11 — o que a polícia deve fazer no atendimento",
+   "locator": "Lei 11.340/2006, art. 11, I a V e parágrafo único",
+   "citable_text": "Art. 11. No atendimento à mulher em situação de violência doméstica e familiar, a autoridade policial deverá, entre outras providências:\n\nI - garantir proteção policial, quando necessário, comunicando de imediato ao Ministério Público e ao Poder Judiciário;\n\nII - encaminhar a ofendida ao hospital ou posto de saúde e ao Instituto Médico Legal;\n\nIII - fornecer transporte para a ofendida e seus dependentes para abrigo ou local seguro, quando houver risco de vida;\n\nIV - se necessário, acompanhar a ofendida para assegurar a retirada de seus pertences do local da ocorrência ou do domicílio familiar;\n\nV - informar à ofendida os direitos a ela conferidos nesta Lei e os serviços disponíveis, inclusive os de assistência judiciária para o eventual ajuizamento perante o juízo competente da ação de separação judicial, de divórcio, de anulação de casamento ou de dissolução de união estável. (Inciso com redação dada pela Lei nº 13.894, de 29/10/2019)\n\nParágrafo único. Verificados indícios de redução a condição análoga à de escravo ou outra forma de violência doméstica contra a trabalhadora doméstica, a autoridade policial que tomar conhecimento da ocorrência deverá comunicá-la, em até 48 (quarenta e oito) horas, à unidade regional do Ministério do Trabalho e Emprego e ao Ministério Público do Trabalho. (Parágrafo único acrescido pela Lei nº 15.455, de 1º/7/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "No atendimento, a autoridade policial deve: garantir proteção policial quando necessário e comunicar o Ministério Público e o Judiciário; levar a mulher a hospital, posto de saúde ou IML; fornecer transporte para abrigo ou local seguro quando houver risco de vida; acompanhá-la para retirar seus pertences de casa, se necessário; e informá-la sobre seus direitos e os serviços disponíveis, inclusive assistência jurídica para separação ou divórcio. Desde julho de 2026 (Lei 15.455), se houver indícios de trabalho análogo ao de escravo ou de violência contra trabalhadora doméstica, a polícia deve comunicar o Ministério do Trabalho e Emprego e o Ministério Público do Trabalho em até 48 horas.",
+   "scope_notes": [],
+   "topics": [
+    "delegacia",
+    "direitos",
+    "abrigo"
+   ],
+   "test_questions": [
+    "A polícia pode me acompanhar pra buscar minhas coisas em casa?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art12C",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 12-C — afastamento imediato do agressor",
+   "locator": "Lei 11.340/2006, art. 12-C, I a III, §§ 1º e 2º",
+   "citable_text": "Art. 12-C. Verificada a existência de risco atual ou iminente à vida ou à integridade física, sexual, psicológica, moral ou patrimonial da mulher em situação de violência doméstica e familiar, ou de seus dependentes, o agressor será imediatamente afastado do lar, domicílio ou local de convivência com a ofendida: (“Caput” do artigo acrescido pela Lei nº 13.827, de 13/5/2019, e com redação dada pela Lei nº 15.411, de 20/5/2026)\n\nI - pela autoridade judicial; (Inciso acrescido pela Lei nº 13.827, de 13/5/2019)\n\nII - pelo delegado de polícia, quando o Município não for sede de comarca; ou (Inciso acrescido pela Lei nº 13.827, de 13/5/2019)\n\nIII - pelo policial, quando o Município não for sede de comarca e não houver delegado disponível no momento da denúncia. (Inciso acrescido pela Lei nº 13.827, de 13/5/2019)\n\n§ 1º Nas hipóteses dos incisos II e III do caput deste artigo, o juiz será comunicado no prazo máximo de 24 (vinte e quatro) horas e decidirá, em igual prazo, sobre a manutenção ou a revogação da medida aplicada, devendo dar ciência ao Ministério Público concomitantemente. (Parágrafo acrescido pela Lei nº 13.827, de 13/5/2019)\n\n§ 2º Nos casos de risco à integridade física da ofendida ou à efetividade da medida protetiva de urgência, não será concedida liberdade provisória ao preso. (Parágrafo acrescido pela Lei nº 13.827, de 13/5/2019)",
+   "citable_kind": "official_text",
+   "plain_summary": "Havendo risco atual ou iminente à vida ou à integridade física, sexual, psicológica, moral ou patrimonial da mulher ou de seus dependentes, o agressor deve ser imediatamente afastado do lar ou do local de convivência. (As integridades sexual, moral e patrimonial entraram com a Lei 15.411/2026.) Quem decide é o juiz; onde o município não é sede de comarca, o delegado; e, se também não houver delegado disponível, o policial. Nos dois últimos casos, o juiz é comunicado em até 24 horas e decide, no mesmo prazo, se mantém ou revoga a medida.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas",
+    "afastamento-do-lar"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art12D",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 12-D — monitoramento eletrônico imediato",
+   "locator": "Lei 11.340/2006, art. 12-D",
+   "citable_text": "Art. 12-D. Verificada a existência de risco atual ou iminente à vida ou à integridade física ou psicológica da mulher em situação de violência doméstica e familiar, ou de seus dependentes, o agressor será imediatamente submetido à monitoração eletrônica:\n\nI - pela autoridade judicial;\n\nII - pelo delegado de polícia, quando o Município não for sede de comarca.\n\nParágrafo único. Na hipótese do inciso II do caput deste artigo, o juiz será comunicado no prazo máximo de 24 (vinte e quatro) horas e decidirá, em igual prazo, sobre a manutenção ou a revogação da medida aplicada, devendo dar ciência ao Ministério Público concomitantemente. (Artigo acrescido pela Lei nº 15.383, de 9/4/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "Havendo risco atual ou iminente à vida ou à integridade física ou psicológica da mulher ou de seus dependentes, o agressor será submetido de imediato à monitoração eletrônica (tornozeleira), por decisão do juiz ou, onde o município não é sede de comarca, do delegado, com comunicação ao juiz em 24 horas. O juiz decide em igual prazo se mantém ou revoga. A medida foi regulamentada pelo Decreto 13.084/2026.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas",
+    "monitoramento-eletronico"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art16-16A",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 16 e art. 16-A — retratação e prazo para representar",
+   "locator": "Lei 11.340/2006, art. 16 (e parágrafo único) e art. 16-A",
+   "citable_text": "Art. 16. Nas ações penais públicas condicionadas à representação da ofendida de que trata esta Lei, só será admitida a renúncia à representação perante o juiz, em audiência especialmente designada com tal finalidade, antes do recebimento da denúncia e ouvido o Ministério Público. (Vide ADIN nº 4.424/2010, publicada no DOU de 17/2/2012) (Vide ADI nº 7.267/2022, publicada no DOU de 4/9/2023)\n\nParágrafo único. A audiência prevista no caput deste artigo tem por objetivo confirmar a retratação da vítima, não a representação, e somente será designada pelo juiz mediante manifestação expressa de seu desejo de se retratar, apresentada por escrito ou oralmente antes do recebimento da denúncia, devendo a retratação ser devidamente registrada nos autos. (Parágrafo único acrescido pela Lei nº 15.380, de 6/4/2026)\n\nArt. 16-A. Nos crimes praticados no âmbito de violência doméstica e familiar contra a mulher, a ofendida decai do direito de queixa ou de representação se não o exerce no prazo de 12 (doze) meses, contado do dia em que veio a saber quem é o autor do crime, ou, no caso do § 3º do art. 100 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), do dia em que se esgota o prazo para oferecimento da denúncia. (Artigo acrescido pela Lei nº 15.438, de 18/6/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "Nos crimes que dependem de representação da vítima, ela só pode desistir (renunciar à representação) perante o juiz, em audiência marcada para isso, antes de a denúncia ser recebida e ouvido o Ministério Público. Desde 2026, essa audiência só é marcada a pedido expresso da mulher e serve apenas para confirmar a retratação. O art. 16-A trata do prazo de 12 meses para a queixa ou representação.",
+   "scope_notes": [
+    "tema processual; responder só com informação geral e indicar Defensoria/NUDEM ou advocacia para o caso concreto. Revisão jurídica obrigatória deste trecho (redação muito recente). O prazo de 12 meses vale desde 19/06/2026 (Lei 15.438/2026, que também alterou o art. 103 do Código Penal e o art. 38 do CPP); a aplicação a fatos anteriores é questão de direito intertemporal para a advogada. O STF, na ADI 7.267 (2023), já havia decidido que a audiência do art. 16 não é obrigatória — a Lei 15.380/2026 incorporou isso ao texto."
+   ],
+   "topics": [
+    "processo",
+    "representacao"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art17A",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 17-A — sigilo do nome da vítima no processo",
+   "locator": "Lei 11.340/2006, art. 17-A",
+   "citable_text": "Art. 17-A. O nome da ofendida ficará sob sigilo nos processos em que se apuram crimes praticados no contexto de violência doméstica e familiar contra a mulher.\n\nParágrafo único. O sigilo referido no caput deste artigo não abrange o nome do autor do fato, tampouco os demais dados do processo. (Artigo acrescido pela Lei nº 14.857, de 21/5/2024, publicada no DOU de 22/5/2024, em vigor 180 dias após a publicação)",
+   "citable_kind": "official_text",
+   "plain_summary": "Nos processos por crimes de violência doméstica, o nome da vítima fica em sigilo. O sigilo não alcança o nome do réu nem os demais dados do processo.",
+   "scope_notes": [],
+   "topics": [
+    "privacidade",
+    "processo"
+   ],
+   "test_questions": [
+    "Se eu denunciar, meu nome vai aparecer no processo?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art18",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 18 — o que o juiz faz em até 48 horas",
+   "locator": "Lei 11.340/2006, art. 18, I a IV",
+   "citable_text": "Art. 18. Recebido o expediente com o pedido da ofendida, caberá ao juiz, no prazo de 48 (quarenta e oito) horas:\n\nI - conhecer do expediente e do pedido e decidir sobre as medidas protetivas de urgência;\n\nII - determinar o encaminhamento da ofendida ao órgão de assistência judiciária, quando for o caso, inclusive para o ajuizamento da ação de separação judicial, de divórcio, de anulação de casamento ou de dissolução de união estável perante o juízo competente; (Inciso com redação dada pela Lei nº 13.894, de 29/10/2019)\n\nIII - comunicar ao Ministério Público para que adote as providências cabíveis;\n\nIV - determinar a apreensão imediata de arma de fogo sob a posse do agressor. (Inciso acrescido pela Lei nº 13.880, de 8/10/2019)",
+   "citable_kind": "official_text",
+   "plain_summary": "Recebido o pedido, o juiz tem 48 horas para: decidir sobre as medidas protetivas de urgência; orientar a mulher à assistência jurídica, inclusive para separação ou divórcio; comunicar o Ministério Público; e determinar a apreensão imediata de arma de fogo do agressor.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas",
+    "prazos"
+   ],
+   "test_questions": [
+    "Quanto tempo demora pra sair uma medida protetiva?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art19",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 19 — como as medidas protetivas são concedidas",
+   "locator": "Lei 11.340/2006, art. 19, caput e §§ 1º a 6º",
+   "citable_text": "Art. 19. As medidas protetivas de urgência poderão ser concedidas pelo juiz, a requerimento do Ministério Público ou a pedido da ofendida.\n\n§ 1º As medidas protetivas de urgência poderão ser concedidas de imediato, independentemente de audiência das partes e de manifestação do Ministério Público, devendo este ser prontamente comunicado.\n\n§ 2º As medidas protetivas de urgência serão aplicadas isolada ou cumulativamente, e poderão ser substituídas a qualquer tempo por outras de maior eficácia, sempre que os direitos reconhecidos nesta Lei forem ameaçados ou violados.\n\n§ 3º Poderá o juiz, a requerimento do Ministério Público ou a pedido da ofendida, conceder novas medidas protetivas de urgência ou rever aquelas já concedidas, se entender necessário à proteção da ofendida, de seus familiares e de seu patrimônio, ouvido o Ministério Público.\n\n§ 4º As medidas protetivas de urgência serão concedidas em juízo de cognição sumária a partir do depoimento da ofendida perante a autoridade policial ou da apresentação de suas alegações escritas e poderão ser indeferidas no caso de avaliação pela autoridade de inexistência de risco à integridade física, psicológica, sexual, patrimonial ou moral da ofendida ou de seus dependentes. (Parágrafo acrescido pela Lei nº 14.550, de 19/4/2023)\n\n§ 5º As medidas protetivas de urgência serão concedidas independentemente da tipificação penal da violência, do ajuizamento de ação penal ou cível, da existência de inquérito policial ou do registro de boletim de ocorrência. (Parágrafo acrescido pela Lei nº 14.550, de 19/4/2023)\n\n§ 6º As medidas protetivas de urgência vigorarão enquanto persistir risco à integridade física, psicológica, sexual, patrimonial ou moral da ofendida ou de seus dependentes. (Parágrafo acrescido pela Lei nº 14.550, de 19/4/2023)",
+   "citable_kind": "official_text",
+   "plain_summary": "As medidas protetivas de urgência podem ser pedidas pela própria mulher ou pelo Ministério Público e podem ser concedidas de imediato, sem ouvir as partes antes. Desde 2023: bastam o depoimento da mulher à polícia ou suas alegações por escrito (análise sumária); não é preciso que exista boletim de ocorrência, inquérito, processo ou que o fato já esteja enquadrado como crime; e as medidas valem enquanto durar o risco à integridade física, psicológica, sexual, patrimonial ou moral dela ou de seus dependentes.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas"
+   ],
+   "test_questions": [
+    "Preciso fazer boletim de ocorrência pra pedir medida protetiva?",
+    "A medida protetiva vale só se ele for processado?",
+    "Violência psicológica dá direito a medida protetiva?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art22",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 22 — medidas que obrigam o agressor",
+   "locator": "Lei 11.340/2006, art. 22, I a VIII e §§",
+   "citable_text": "Art. 22. Constatada a prática de violência doméstica e familiar contra a mulher, nos termos desta Lei, o juiz poderá aplicar, de imediato, ao agressor, em conjunto ou separadamente, as seguintes medidas protetivas de urgência, entre outras:\n\nI - suspensão da posse ou restrição do porte de armas, com comunicação ao órgão competente, nos termos da Lei nº 10.826, de 22 de dezembro de 2003;\n\nII - afastamento do lar, domicílio ou local de convivência com a ofendida;\n\nIII - proibição de determinadas condutas, entre as quais:\n\na) aproximação da ofendida, de seus familiares e das testemunhas, fixando o limite mínimo de distância entre estes e o agressor;\n\nb) contato com a ofendida, seus familiares e testemunhas por qualquer meio de comunicação;\n\nc) frequentação de determinados lugares a fim de preservar a integridade física e psicológica da ofendida;\n\nIV - restrição ou suspensão de visitas aos dependentes menores, ouvida a equipe de atendimento multidisciplinar ou serviço similar;\n\nV - prestação de alimentos provisionais ou provisórios;\n\nVI - comparecimento do agressor a programas de recuperação e reeducação; e (Inciso acrescido pela Lei nº 13.984, de 3/4/2020)\n\nVII - acompanhamento psicossocial do agressor, por meio de atendimento individual e/ou em grupo de apoio. (Inciso acrescido pela Lei nº 13.984, de 3/4/2020)\n\nVIII - monitoração eletrônica, disponibilizando-se à vítima aplicação ou dispositivo de segurança que alerte sobre eventual aproximação do agressor. (Inciso acrescido pela Lei nº 15.383, de 9/4/2026)\n\n§ 1º As medidas referidas neste artigo não impedem a aplicação de outras previstas na legislação em vigor, sempre que a segurança da ofendida ou as circunstâncias o exigirem, devendo a providência ser comunicada ao Ministério Público.\n\n§ 2º Na hipótese de aplicação do inciso I, encontrando-se o agressor nas condições mencionadas no caput e incisos do art. 6º da Lei nº 10.826, de 22 de dezembro de 2003, o juiz comunicará ao respectivo órgão, corporação ou instituição as medidas protetivas de urgência concedidas e determinará a restrição do porte de armas, ficando o superior imediato do agressor responsável pelo cumprimento da determinação judicial, sob pena de incorrer nos crimes de prevaricação ou de desobediência, conforme o caso.\n\n§ 3º Para garantir a efetividade das medidas protetivas de urgência, poderá o juiz requisitar, a qualquer momento, auxílio da força policial.\n\n§ 4º Na aplicação das medidas protetivas de urgência, o juiz concederá a tutela específica ou determinará providências que assegurem a obtenção de tutela pelo resultado prático equivalente. (Parágrafo com redação dada pela Lei nº 15.412, de 20/5/2026)\n\n§ 5º (Parágrafo acrescido pela Lei nº 15.125, de 24/4/2025, e revogado pela Lei nº 15.383, de 9/4/2026)\n\n§ 6º A aplicação da medida prevista no inciso VIII do caput deste artigo terá prioridade nos casos em que houver descumprimento de medidas protetivas anteriormente impostas ou quando for verificado risco iminente à integridade física ou psicológica da vítima. (Parágrafo acrescido pela Lei nº 15.383, de 9/4/2026)\n\n§ 7º Para a efetivação da medida prevista no inciso VIII do caput deste artigo, a autoridade competente promoverá a instalação do equipamento e instruirá o agressor sobre o seu funcionamento e as áreas de exclusão onde não poderá circular, conforme definido na decisão da autoridade judicial, devendo a ciência constar de termo nos autos. (Parágrafo acrescido pela Lei nº 15.383, de 9/4/2026)\n\n§ 8º O sistema de monitoração eletrônica de que trata o inciso VIII do caput deste artigo deverá emitir alerta automático e simultâneo à vítima e à unidade policial mais próxima sempre que o agressor romper o perímetro de exclusão fixado judicialmente. (Parágrafo acrescido pela Lei nº 15.383, de 9/4/2026)\n\n§ 9º Nos casos previstos no § 6º deste artigo, a decisão judicial que deixar de aplicar a medida protetiva de monitoração eletrônica deverá apresentar fundamentação expressa quanto às razões da não aplicação da medida. (Parágrafo acrescido pela Lei nº 15.383, de 9/4/2026)\n\n§ 10 As medidas protetivas de natureza cível, inclusive as de prestação de alimentos provisionais ou provisórios, constituem título executivo judicial de pleno direito, dispensando a propositura de ação principal. (Parágrafo acrescido pela Lei nº 15.412, de 20/5/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "O juiz pode, entre outras medidas: suspender ou restringir a posse ou o porte de arma do agressor; afastá-lo do lar; proibi-lo de se aproximar da mulher, de seus familiares e testemunhas (com distância mínima), de manter contato por qualquer meio e de frequentar certos lugares; restringir ou suspender visitas aos filhos menores; fixar alimentos provisórios; obrigá-lo a frequentar programas de recuperação e reeducação e a ter acompanhamento psicossocial; e determinar monitoramento eletrônico com dispositivo de alerta para a mulher. As medidas cíveis, como os alimentos provisórios, valem como título executivo.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas"
+   ],
+   "test_questions": [
+    "O que a medida protetiva pode proibir ele de fazer?",
+    "Ele pode ser proibido de mandar mensagem?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art23",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 23 — medidas de proteção à mulher",
+   "locator": "Lei 11.340/2006, art. 23, I a VI",
+   "citable_text": "Art. 23. Poderá o juiz, quando necessário, sem prejuízo de outras medidas:\n\nI - encaminhar a ofendida e seus dependentes a programa oficial ou comunitário de proteção ou de atendimento;\n\nII - determinar a recondução da ofendida e a de seus dependentes ao respectivo domicílio, após afastamento do agressor;\n\nIII - determinar o afastamento da ofendida do lar, sem prejuízo dos direitos relativos a bens, guarda dos filhos e alimentos;\n\nIV - determinar a separação de corpos;\n\nV - determinar a matrícula dos dependentes da ofendida em instituição de educação básica mais próxima do seu domicílio, ou a transferência deles para essa instituição, independentemente da existência de vaga; (Inciso acrescido pela Lei nº 13.882, de 8/10/2019)\n\nVI - conceder à ofendida auxílio-aluguel, com valor fixado em função de sua situação de vulnerabilidade social e econômica, por período não superior a 6 (seis) meses. (Inciso acrescido pela Lei nº 14.674, de 14/9/2023)",
+   "citable_kind": "official_text",
+   "plain_summary": "O juiz pode: encaminhar a mulher e os dependentes a programa de proteção ou atendimento; determinar a volta dela e dos dependentes para casa depois de o agressor ser afastado; autorizar que ela saia de casa sem perder direitos sobre bens, guarda dos filhos e alimentos; determinar a separação de corpos; garantir matrícula dos filhos em escola perto do novo endereço, mesmo sem vaga; e conceder auxílio-aluguel por até seis meses.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas",
+    "abrigo",
+    "filhos",
+    "auxilio-aluguel"
+   ],
+   "test_questions": [
+    "Se eu sair de casa, perco a guarda ou meus direitos?",
+    "Existe ajuda pra pagar aluguel?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art24",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 24 — proteção do patrimônio",
+   "locator": "Lei 11.340/2006, art. 24, I a IV e parágrafo único",
+   "citable_text": "Art. 24. Para a proteção patrimonial dos bens da sociedade conjugal ou daqueles de propriedade particular da mulher, o juiz poderá determinar, liminarmente, as seguintes medidas, entre outras:\n\nI - restituição de bens indevidamente subtraídos pelo agressor à ofendida;\n\nII - proibição temporária para a celebração de atos e contratos de compra, venda e locação de propriedade em comum, salvo expressa autorização judicial;\n\nIII - suspensão das procurações conferidas pela ofendida ao agressor;\n\nIV - prestação de caução provisória, mediante depósito judicial, por perdas e danos materiais decorrentes da prática de violência doméstica e familiar contra a ofendida.\n\nParágrafo único. Deverá o juiz oficiar ao cartório competente para os fins previstos nos incisos II e III deste artigo.",
+   "citable_kind": "official_text",
+   "plain_summary": "Para proteger os bens do casal ou da mulher, o juiz pode, de forma provisória: mandar devolver bens tomados indevidamente; proibir a compra, venda ou locação de bens comuns sem autorização judicial; suspender procurações dadas ao agressor; e exigir caução (depósito judicial) por perdas e danos.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas",
+    "violencia-patrimonial"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art24A",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 24-A — crime de descumprir medida protetiva",
+   "locator": "Lei 11.340/2006, art. 24-A, §§ 1º a 4º",
+   "citable_text": "Art. 24-A. Descumprir decisão judicial que defere medidas protetivas de urgência previstas nesta Lei: (“Caput” do artigo acrescido pela Lei nº 13.641, de 3/4/2018)\n\nPena - reclusão, de 2 (dois) a 5 (cinco) anos, e multa. (Pena acrescida pela Lei nº 13.641, de 3/4/2018, e com redação dada pela Lei nº 14.994, de 9/10/2024)\n\n§ 1º A configuração do crime independe da competência civil ou criminal do juiz que deferiu as medidas. (Parágrafo acrescido pela Lei nº 13.641, de 3/4/2018)\n\n§ 2º Na hipótese de prisão em flagrante, apenas a autoridade judicial poderá conceder fiança. (Parágrafo acrescido pela Lei nº 13.641, de 3/4/2018)\n\n§ 3º O disposto neste artigo não exclui a aplicação de outras sanções cabíveis. (Parágrafo acrescido pela Lei nº 13.641, de 3/4/2018)\n\n§ 4º A pena será aumentada de 1/3 (um terço) até a metade se o descumprimento decorrer da violação das áreas de exclusão monitoradas eletronicamente ou da remoção, violação ou alteração do dispositivo de monitoração sem autorização judicial. (Parágrafo acrescido pela Lei nº 15.383, de 9/4/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "Descumprir decisão judicial que concedeu medida protetiva é crime, com pena de reclusão de 2 a 5 anos e multa. Em caso de prisão em flagrante, só o juiz pode conceder fiança. A pena aumenta de um terço até a metade se o agressor violar as áreas de exclusão do monitoramento eletrônico ou mexer no equipamento sem autorização.",
+   "scope_notes": [],
+   "topics": [
+    "medidas-protetivas",
+    "crime"
+   ],
+   "test_questions": [
+    "O que acontece se ele desrespeitar a medida protetiva?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art27-28",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "arts. 27 e 28 — assistência jurídica e Defensoria Pública",
+   "locator": "Lei 11.340/2006, arts. 27 e 28",
+   "citable_text": "Art. 27. Em todos os atos processuais, cíveis e criminais, a mulher em situação de violência doméstica e familiar deverá estar acompanhada de advogado, ressalvado o previsto no art. 19 desta Lei.\n\nArt. 28. É garantido a toda mulher em situação de violência doméstica e familiar o acesso aos serviços de Defensoria Pública ou de Assistência Judiciária Gratuita, nos termos da lei, em sede policial e judicial, mediante atendimento específico e humanizado.",
+   "citable_kind": "official_text",
+   "plain_summary": "Em todos os atos do processo a mulher deve estar acompanhada de advogado ou advogada, ressalvado o pedido de medida protetiva, que ela pode fazer sozinha. É garantido o acesso à Defensoria Pública ou à assistência judiciária gratuita, na delegacia e na Justiça, com atendimento específico e humanizado.",
+   "scope_notes": [],
+   "topics": [
+    "direitos",
+    "defensoria",
+    "assistencia-juridica"
+   ],
+   "test_questions": [
+    "Não tenho dinheiro pra advogado. Como faço?",
+    "Preciso de advogado pra pedir medida protetiva?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art35",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 35 — serviços que o poder público pode criar",
+   "locator": "Lei 11.340/2006, art. 35, I a V e parágrafo único",
+   "citable_text": "Art. 35. A União, o Distrito Federal, os Estados e os Municípios poderão criar e promover, no limite das respectivas competências:\n\nI - centros de atendimento integral e multidisciplinar para mulheres e respectivos dependentes em situação de violência doméstica e familiar;\n\nII - casas-abrigos para mulheres e respectivos dependentes menores em situação de violência doméstica e familiar;\n\nIII - delegacias, núcleos de defensoria pública, serviços de saúde e centros de perícia médico-legal especializados no atendimento à mulher em situação de violência doméstica e familiar;\n\nIV - programas e campanhas de enfrentamento da violência doméstica e familiar;\n\nV - centros de educação e de reabilitação para os agressores.\n\nParágrafo único. As campanhas a que se refere o inciso IV do caput deste artigo deverão contemplar informações sobre procedimentos e abordagens policiais, prevenção à revitimização, funcionamento das medidas protetivas de urgência e mecanismos de monitoração eletrônica. (Parágrafo único acrescido pela Lei nº 15.383, de 9/4/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "União, estados e municípios podem criar: centros de atendimento integral e multidisciplinar; casas-abrigo para mulheres e filhos menores; delegacias, núcleos de defensoria, serviços de saúde e centros de perícia especializados; programas e campanhas; e centros de educação e reabilitação para agressores. A lei usa \"poderão\", então a existência desses serviços varia de cidade para cidade.",
+   "scope_notes": [
+    "para indicar um serviço concreto, usar o catálogo verificado, não este trecho."
+   ],
+   "topics": [
+    "rede-de-atendimento",
+    "abrigo",
+    "delegacia"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-11340-2006#art40A",
+   "doc_id": "lei-11340-2006",
+   "kind": "legislacao",
+   "title": "Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha)",
+   "section": "art. 40-A — a lei vale qualquer que seja o motivo",
+   "locator": "Lei 11.340/2006, art. 40-A",
+   "citable_text": "Art. 40-A. Esta Lei será aplicada a todas as situações previstas no seu art. 5º, independentemente da causa ou da motivação dos atos de violência e da condição do ofensor ou da ofendida. (Artigo acrescido pela Lei nº 14.550, de 19/4/2023)",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei se aplica a todas as situações do art. 5º, independentemente da causa ou do motivo da violência e da condição de quem agride ou de quem sofre a agressão.",
+   "scope_notes": [],
+   "topics": [
+    "ambito-de-aplicacao"
+   ],
+   "test_questions": [
+    "Ele diz que só fez isso porque estava bêbado. Ainda vale a Lei Maria da Penha?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+   "version": "Compilado da Câmara (CEDI) e do Planalto conferidos em 04/11/2026; última alteração: Lei nº 15.455, de 01/07/2026 (art. 11, parágrafo único). Nenhuma alteração posterior encontrada.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-13431-2017#art4-II",
+   "doc_id": "lei-13431-2017",
+   "kind": "legislacao",
+   "title": "Lei nº 13.431, de 4 de abril de 2017 (sistema de garantia de direitos da criança e do adolescente vítima ou testemunha de violência)",
+   "section": "art. 4º, II — formas de violência psicológica (foco na alínea \"c\")",
+   "locator": "Lei 13.431/2017, art. 4º, caput e inciso II, alínea \"c\" (as alíneas \"a\" e \"b\" ficam fora; ver observações)",
+   "citable_text": "Art. 4º Para os efeitos desta Lei, sem prejuízo da tipificação das condutas criminosas, são formas de violência:\n\n[…]\n\nII - violência psicológica:\n\n[…]\n\nc) qualquer conduta que exponha a criança ou o adolescente, direta ou indiretamente, a crime violento contra membro de sua família ou de sua rede de apoio, independentemente do ambiente em que cometido, particularmente quando isto a torna testemunha;",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei considera violência psicológica contra criança ou adolescente, entre outras condutas, expô-los, direta ou indiretamente, a crime violento contra alguém da família ou da rede de apoio, especialmente quando isso os torna testemunhas.",
+   "scope_notes": [
+    "não usar a alínea \"b\" (alienação parental) em respostas sem validação das especialistas. Se houver risco atual às crianças, a triagem de emergência tem precedência."
+   ],
+   "topics": [
+    "criancas",
+    "violencia-psicologica",
+    "testemunha"
+   ],
+   "test_questions": [
+    "Meus filhos viram tudo. Isso também faz mal pra eles?",
+    "Criança que presencia violência em casa também é vítima?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13431.htm",
+   "version": "Texto compilado da Câmara conferido em 04/11/2026 (art. 4º, II).",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14149-2021#formulario",
+   "doc_id": "lei-14149-2021",
+   "kind": "legislacao",
+   "title": "Lei nº 14.149, de 5 de maio de 2021 (Formulário Nacional de Avaliação de Risco)",
+   "section": "arts. 1º a 3º — para que serve e quem aplica",
+   "locator": "Lei 14.149/2021, arts. 1º a 3º",
+   "citable_text": "Art. 1º Esta Lei institui o Formulário Nacional de Avaliação de Risco, a ser aplicado à mulher vítima de violência doméstica e familiar, observado o disposto na Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha).\n\nArt. 2º É instituído o Formulário Nacional de Avaliação de Risco para a prevenção e o enfrentamento de crimes e de demais atos de violência doméstica e familiar praticados contra a mulher, conforme modelo aprovado por ato normativo conjunto do Conselho Nacional de Justiça e do Conselho Nacional do Ministério Público.\n\n§ 1º O Formulário Nacional de Avaliação de Risco tem por objetivo identificar os fatores que indicam o risco de a mulher vir a sofrer qualquer forma de violência no âmbito das relações domésticas, para subsidiar a atuação dos órgãos de segurança pública, do Ministério Público, do Poder Judiciário e dos órgãos e das entidades da rede de proteção na gestão do risco identificado, devendo ser preservado, em qualquer hipótese, o sigilo das informações.\n\n§ 2º O Formulário Nacional de Avaliação de Risco deve ser preferencialmente aplicado pela Polícia Civil no momento de registro da ocorrência ou, em sua impossibilidade, pelo Ministério Público ou pelo Poder Judiciário, por ocasião do primeiro atendimento aÌ mulher vítima de violência doméstica e familiar.\n\n§ 3º É facultada a utilização do modelo de Formulário Nacional de Avaliação de Risco por outros órgãos e entidades públicas ou privadas que atuem na área de prevenção e de enfrentamento da violência doméstica e familiar contra a mulher.\n\nArt. 3º Aplica-se às disposições previstas nesta Lei o disposto na Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha).",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei instituiu um formulário nacional, com modelo aprovado pelo CNJ e pelo CNMP, para identificar fatores que indicam risco de a mulher sofrer novas violências nas relações domésticas. Ele ajuda polícia, Ministério Público, Judiciário e a rede de proteção a gerenciar esse risco, e as informações devem ser mantidas em sigilo. É aplicado preferencialmente pela Polícia Civil no registro da ocorrência ou, se não for possível, pelo Ministério Público ou pelo Judiciário no primeiro atendimento. Outros órgãos e entidades da área podem usar o mesmo modelo.",
+   "scope_notes": [
+    "o Aurora não aplica o formulário nem calcula risco; só explica que ele existe."
+   ],
+   "topics": [
+    "avaliacao-de-risco",
+    "delegacia"
+   ],
+   "test_questions": [
+    "Na delegacia vão me fazer um questionário? Pra quê?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14149.htm",
+   "version": "Publicação original; sem alteração posterior (Planalto e Câmara conferidos em 04/11/2026)",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14188-2021#sinal-vermelho",
+   "doc_id": "lei-14188-2021",
+   "kind": "legislacao",
+   "title": "Lei nº 14.188, de 28 de julho de 2021 (Programa Sinal Vermelho contra a Violência Doméstica)",
+   "section": "arts. 2º e 3º — como funciona o Sinal Vermelho",
+   "locator": "Lei 14.188/2021, arts. 2º e 3º",
+   "citable_text": "Art. 2º Fica autorizada a integração entre o Poder Executivo, o Poder Judiciário, o Ministério Público, a Defensoria Pública, os órgãos de segurança pública e as entidades privadas, para a promoção e a realização do programa Sinal Vermelho contra a Violência Doméstica como medida de ajuda à mulher vítima de violência doméstica e familiar, conforme os incisos I, V e VII do caput do art. 8º da Lei nº 11.340, de 7 de agosto de 2006.\n\nParágrafo único. Os órgãos mencionados no caput deste artigo deverão estabelecer um canal de comunicação imediata com as entidades privadas de todo o País participantes do programa, a fim de viabilizar assistência e segurança à vítima, a partir do momento em que houver sido efetuada a denúncia por meio do código “sinal em formato de X”, preferencialmente feito na mão e na cor vermelha.\n\nArt. 3º A identificação do código referido no parágrafo único do art. 2º desta Lei poderá ser feita pela vítima pessoalmente em repartições públicas e entidades privadas de todo o País e, para isso, deverão ser realizadas campanha informativa e capacitação permanente dos profissionais pertencentes ao programa, conforme dispõe o inciso VII do caput do art. 8º da Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), para encaminhamento da vítima ao atendimento especializado na localidade.",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei criou o programa de cooperação Sinal Vermelho contra a Violência Doméstica, válido em todo o país. A mulher pode pedir ajuda mostrando um \"X\", de preferência desenhado na mão e em vermelho, em órgãos públicos e em estabelecimentos privados que participam do programa. Quem recebe o sinal deve acionar os canais de comunicação combinados com a polícia e a rede de proteção, para que ela receba assistência e segurança. A lei prevê campanhas informativas e capacitação permanente das pessoas que atuam no programa.",
+   "scope_notes": [
+    "o Aurora não sabe quais estabelecimentos aderiram em cada cidade; não indicar um local específico sem dado verificado do catálogo."
+   ],
+   "topics": [
+    "pedido-de-ajuda",
+    "sinal-vermelho"
+   ],
+   "test_questions": [
+    "Existe um jeito discreto de pedir ajuda numa farmácia?",
+    "O que é o sinal vermelho na mão?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14188.htm",
+   "version": "Publicação original (DOU 29/07/2021); arts. 2º e 3º sem alteração posterior (Planalto conferido em 04/11/2026)",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14541-2023#deam",
+   "doc_id": "lei-14541-2023",
+   "kind": "legislacao",
+   "title": "Lei nº 14.541, de 3 de abril de 2023 (funcionamento ininterrupto das DEAMs)",
+   "section": "arts. 2º a 4º — atendimento nas DEAMs",
+   "locator": "Lei 14.541/2023, arts. 2º, 3º (e §§ 1º a 3º) e 4º",
+   "citable_text": "Art. 2º Além das funções de atendimento policial especializado para as mulheres e de polícia judiciária, o Poder Público prestará, por meio da Delegacia Especializada de Atendimento à Mulher (Deam), e mediante convênio com a Defensoria Pública, os órgãos do Sistema Único de Assistência Social e os Juizados de Violência Doméstica e Familiar contra a Mulher ou varas criminais competentes, a assistência psicológica e jurídica à mulher vítima de violência.\n\nArt. 3º As Delegacias Especializadas de Atendimento à Mulher (Deam) têm como finalidade o atendimento de todas as mulheres que tenham sido vítimas de violência doméstica e familiar, crimes contra a dignidade sexual e feminicídios, e funcionarão ininterruptamente, inclusive em feriados e finais de semana.\n\n§ 1º O atendimento às mulheres nas delegacias será realizado em sala reservada e, preferencialmente, por policiais do sexo feminino.\n\n§ 2º Os policiais encarregados do atendimento a que se refere o § 1º deste artigo deverão receber treinamento adequado para permitir o acolhimento das vítimas de maneira eficaz e humanitária.\n\n§ 3º As Delegacias Especializadas disponibilizarão número de telefone ou outro mensageiro eletrônico destinado ao acionamento imediato da polícia em casos de violência contra a mulher.\n\nArt. 4º Nos Municípios onde não houver Delegacia Especializada de Atendimento à Mulher (Deam), a delegacia existente deverá priorizar o atendimento da mulher vítima de violência por agente feminina especializada.",
+   "citable_kind": "official_text",
+   "plain_summary": "As DEAMs atendem mulheres vítimas de violência doméstica e familiar, crimes contra a dignidade sexual e feminicídio, e devem funcionar sem interrupção, inclusive em feriados e fins de semana. O atendimento deve ser em sala reservada e, de preferência, por policiais mulheres capacitadas para um acolhimento humanizado. As DEAMs devem oferecer telefone ou outro canal eletrônico para acionar a polícia de imediato. Também deve haver assistência psicológica e jurídica, em parceria com a Defensoria Pública, a assistência social e os juizados de violência doméstica. Onde não houver DEAM, a delegacia comum deve priorizar o atendimento à mulher, de preferência com policial mulher especializada.",
+   "scope_notes": [
+    "para endereço e horário real, usar só o catálogo verificado."
+   ],
+   "topics": [
+    "delegacia",
+    "deam",
+    "direitos"
+   ],
+   "test_questions": [
+    "A delegacia da mulher funciona de madrugada e no fim de semana?",
+    "Na minha cidade não tem delegacia da mulher. Onde eu vou?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14541.htm",
+   "version": "Publicação original; sem alteração posterior (Planalto e Câmara conferidos em 04/11/2026)",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14713-2023#cc-1584",
+   "doc_id": "lei-14713-2023",
+   "kind": "legislacao",
+   "title": "Lei nº 14.713, de 30 de outubro de 2023 (risco de violência doméstica impede a guarda compartilhada)",
+   "section": "Código Civil, art. 1.584, § 2º — guarda compartilhada e risco de violência",
+   "locator": "Código Civil (Lei 10.406/2002), art. 1.584, § 2º, com redação da Lei 14.713/2023",
+   "citable_text": "Art. 1.584 A guarda, unilateral ou compartilhada, poderá ser: (“Caput” do artigo com redação dada pela Lei nº 11.698, de 13/6/2008, publicada no DOU de 16/6/2008, em vigor 60 dias após sua publicação)\n\n[…]\n\n§ 2º Quando não houver acordo entre a mãe e o pai quanto à guarda do filho, encontrando-se ambos os genitores aptos a exercer o poder familiar, será aplicada a guarda compartilhada, salvo se um dos genitores declarar ao magistrado que não deseja a guarda da criança ou do adolescente ou quando houver elementos que evidenciem a probabilidade de risco de violência doméstica ou familiar. (Parágrafo acrescido pela Lei nº 11.698, de 13/6/2008, e com nova redação dada pela Lei nº 14.713, de 30/10/2023)",
+   "citable_kind": "official_text",
+   "plain_summary": "Quando os pais não chegam a acordo sobre a guarda, a regra é a guarda compartilhada. Ela não se aplica quando um dos dois diz ao juiz que não quer a guarda ou quando há elementos que mostrem a probabilidade de risco de violência doméstica ou familiar.",
+   "scope_notes": [
+    "cada caso é decidido pelo juiz; o Aurora indica Defensoria/NUDEM ou advocacia."
+   ],
+   "topics": [
+    "filhos",
+    "guarda"
+   ],
+   "test_questions": [
+    "Se eu denunciar, ele vai ficar com a guarda compartilhada dos meus filhos?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14713.htm",
+   "version": "Altera o Código Civil (art. 1.584, § 2º) e o CPC (art. 699-A). Compilados conferidos em 04/11/2026.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14713-2023#cpc-699A",
+   "doc_id": "lei-14713-2023",
+   "kind": "legislacao",
+   "title": "Lei nº 14.713, de 30 de outubro de 2023 (risco de violência doméstica impede a guarda compartilhada)",
+   "section": "CPC, art. 699-A — o juiz pergunta sobre risco de violência nas ações de guarda",
+   "locator": "Código de Processo Civil (Lei 13.105/2015), art. 699-A",
+   "citable_text": "Art. 699-A. Nas ações de guarda, antes de iniciada a audiência de mediação e conciliação de que trata o art. 695 deste Código, o juiz indagará às partes e ao Ministério Público se há risco de violência doméstica ou familiar, fixando o prazo de 5 (cinco) dias para a apresentação de prova ou de indícios pertinentes. (Artigo acrescido pela Lei nº 14.713, de 30/10/2023)",
+   "citable_kind": "official_text",
+   "plain_summary": "Nas ações de guarda, antes da audiência de mediação e conciliação, o juiz deve perguntar às partes e ao Ministério Público se há risco de violência doméstica ou familiar e dar 5 dias para que apresentem provas ou indícios.",
+   "scope_notes": [],
+   "topics": [
+    "filhos",
+    "guarda",
+    "processo"
+   ],
+   "test_questions": [],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14713.htm",
+   "version": "Altera o Código Civil (art. 1.584, § 2º) e o CPC (art. 699-A). Compilados conferidos em 04/11/2026.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14994-2024#cp-art121A",
+   "doc_id": "lei-14994-2024",
+   "kind": "legislacao",
+   "title": "Lei nº 14.994, de 9 de outubro de 2024 (Pacote Antifeminicídio)",
+   "section": "Código Penal, art. 121-A — feminicídio como crime autônomo",
+   "locator": "Código Penal, art. 121-A, caput e §§ 1º a 3º (incluído pelo art. 2º da Lei 14.994/2024)",
+   "citable_text": "Art. 121-A. Matar mulher por razões da condição do sexo feminino: (“Caput” do artigo acrescido pela Lei nº 14.994, de 9/10/2024)\n\nPena - reclusão, de 20 (vinte) a 40 (quarenta) anos. (Pena acrescida pela Lei nº 14.994, de 9/10/2024)\n\n§ 1º Considera-se que há razões da condição do sexo feminino quando o crime envolve:\n\nI - violência doméstica e familiar;\n\nII - menosprezo ou discriminação à condição de mulher. (Parágrafo acrescido pela Lei nº 14.994, de 9/10/2024)\n\n§ 2º A pena do feminicídio é aumentada de 1/3 (um terço) até a metade se o crime é praticado:\n\nI - durante a gestação, nos 3 (três) meses posteriores ao parto ou se a vítima é a mãe ou a responsável por criança, adolescente ou pessoa com deficiência de qualquer idade;\n\nII - contra pessoa menor de 14 (catorze) anos, maior de 60 (sessenta) anos, com deficiência ou portadora de doenças degenerativas que acarretem condição limitante ou de vulnerabilidade física ou mental;\n\nIII - na presença física ou virtual de descendente ou de ascendente da vítima;\n\nIV - em descumprimento das medidas protetivas de urgência previstas nos incisos I, II e III do caput do art. 22 da Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha);\n\nV - nas circunstâncias previstas nos incisos III, IV e VIII do § 2º do art. 121 deste Código. (Parágrafo acrescido pela Lei nº 14.994, de 9/10/2024)\n\nCoautoria (Nome jurídico acrescido pela Lei nº 14.994, de 9/10/2024)\n\n§ 3º Comunicam-se ao coautor ou partícipe as circunstâncias pessoais elementares do crime previstas no § 1º deste artigo. (Parágrafo acrescido pela Lei nº 14.994, de 9/10/2024)",
+   "citable_kind": "official_text",
+   "plain_summary": "Matar mulher por razões da condição do sexo feminino passou a ser crime próprio (antes era uma qualificadora do homicídio). Pena: reclusão de 20 a 40 anos. Há razões da condição do sexo feminino quando o crime envolve violência doméstica e familiar ou menosprezo ou discriminação à condição de mulher. A pena aumenta de um terço até a metade em casos como: durante a gestação, nos 3 meses após o parto ou quando a vítima é mãe ou responsável por criança, adolescente ou pessoa com deficiência; contra menor de 14 anos, maior de 60, pessoa com deficiência ou doença degenerativa; na presença física ou virtual de descendente ou ascendente da vítima; ou em descumprimento de medida protetiva.",
+   "scope_notes": [],
+   "topics": [
+    "feminicidio",
+    "crime"
+   ],
+   "test_questions": [
+    "O que é feminicídio na lei?",
+    "Feminicídio é crime hediondo?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14994.htm",
+   "version": "Publicação original conferida em 04/11/2026. O trecho do art. 121-A traz o texto compilado atual do Código Penal (já com o vicaricídio, art. 121-B, logo depois).",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14994-2024#outras-cp",
+   "doc_id": "lei-14994-2024",
+   "kind": "legislacao",
+   "title": "Lei nº 14.994, de 9 de outubro de 2024 (Pacote Antifeminicídio)",
+   "section": "Outras mudanças no Código Penal",
+   "locator": "Lei 14.994/2024, art. 1º (arts. 92, 129 §13, 141 §3º e 147 §§1º–2º do Código Penal) e art. 9º (revogações)",
+   "citable_text": "Art. 1º Os arts. 92, 129, 141 e 147 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), passam a vigorar com a seguinte redação:\n\n\"Art. 92. .......................................................................................................................\n\n.......................................................................................................................................\n\nII - a incapacidade para o exercício do poder familiar, da tutela ou da curatela nos crimes dolosos sujeitos à pena de reclusão cometidos contra outrem igualmente titular do mesmo poder familiar, contra filho, filha ou outro descendente, tutelado ou curatelado, bem como nos crimes cometidos contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A deste Código;\n\n.......................................................................................................................................\n\n§ 1º Os efeitos de que trata este artigo não são automáticos, devendo ser motivadamente declarados na sentença pelo juiz, mas independem de pedido expresso da acusação, observado o disposto no inciso III do § 2º deste artigo.\n\n§ 2º Ao condenado por crime praticado contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A deste Código serão:\n\nI - aplicados os efeitos previstos nos incisos I e II do caput deste artigo;\n\nII - vedadas a sua nomeação, designação ou diplomação em qualquer cargo, função pública ou mandato eletivo entre o trânsito em julgado da condenação até o efetivo cumprimento da pena;\n\nIII - automáticos os efeitos dos incisos I e II do caput e do inciso II do § 2º deste artigo.\" (NR)\n\n\"Lesão corporal\n\nArt. 129. .......................................................................................................................\n\n.......................................................................................................................................\n\nViolência doméstica\n\n§ 9º ..............................................................................................................................\n\nPena - reclusão, de 2 (dois) a 5 (cinco) anos.\n\n.......................................................................................................................................\n\n§ 13. Se a lesão é praticada contra a mulher, por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A deste Código:\n\nPena - reclusão, de 2 (dois) a 5 (cinco) anos.\" (NR)\n\n\"Disposições comuns\n\nArt. 141. .....................................................................................................................\n\n......................................................................................................................................\n\n§ 3º Se o crime é cometido contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A deste Código, aplica-se a pena em dobro.\" (NR)\n\n\"Ameaça\n\nArt. 147. ......................................................................................................................\n\n......................................................................................................................................\n\n§ 1º Se o crime é cometido contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A deste Código, aplica-se a pena em dobro.\n\n§ 2º Somente se procede mediante representação, exceto na hipótese prevista no § 1º deste artigo.\" (NR)\n\n[…]\n\nArt. 9º Revogam-se o inciso VI do § 2º e os §§ 2º-A e 7º, todos do art. 121 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal).",
+   "citable_kind": "official_text",
+   "plain_summary": "Lesão corporal contra mulher por razões da condição do sexo feminino: reclusão de 2 a 5 anos. Crimes contra a honra (calúnia, difamação, injúria) nesse contexto: pena em dobro. Ameaça contra mulher por razões da condição do sexo feminino: pena em dobro, e o processo não depende de representação da vítima. O condenado pode perder o poder familiar, a tutela ou a curatela, e fica impedido de assumir cargo público ou mandato eletivo até cumprir a pena.",
+   "scope_notes": [],
+   "topics": [
+    "crime",
+    "penas",
+    "ameaca",
+    "lesao-corporal"
+   ],
+   "test_questions": [
+    "Ameaça contra mulher precisa que eu dê representação?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14994.htm",
+   "version": "Publicação original conferida em 04/11/2026. O trecho do art. 121-A traz o texto compilado atual do Código Penal (já com o vicaricídio, art. 121-B, logo depois).",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-14994-2024#outras-leis",
+   "doc_id": "lei-14994-2024",
+   "kind": "legislacao",
+   "title": "Lei nº 14.994, de 9 de outubro de 2024 (Pacote Antifeminicídio)",
+   "section": "Lei Maria da Penha, Crimes Hediondos, Execução Penal e Processo Penal",
+   "locator": "Lei 14.994/2024, arts. 3º a 8º",
+   "citable_text": "Art. 3º O art. 21 do Decreto-Lei nº 3.688, de 3 de outubro de 1941 (Lei das Contravenções Penais), passa a vigorar com a seguinte redação, numerando-se o atual parágrafo único como § 1º:\n\n\"Art. 21. .................................................................................................................\n\n................................................................................................................................\n\n§ 1º .........................................................................................................................\n\n§ 2º Se a contravenção é praticada contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), aplica-se a pena em triplo.\" (NR)\n\nArt. 4º Os arts. 41, 86 e 112 da Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), passam a vigorar com a seguinte redação:\n\n\"Art. 41. .......................................................................................................................\n\n.......................................................................................................................................\n\n§ 1º Os direitos previstos nos incisos V, X e XV poderão ser suspensos ou restringidos mediante ato motivado do juiz da execução penal.\n\n§ 2º O preso condenado por crime contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), não poderá usufruir do direito previsto no inciso X em relação à visita íntima ou conjugal.\" (NR)\n\n\"Art. 86. .......................................................................................................................\n\n.......................................................................................................................................\n\n§ 4º Será transferido para estabelecimento penal distante do local de residência da vítima, ainda que localizado em outra unidade federativa, inclusive da União, o condenado ou preso provisório que, tendo cometido crime de violência doméstica e familiar contra a mulher, ameace ou pratique violência contra a vítima ou seus familiares durante o cumprimento da pena.\" (NR)\n\n\"Art. 112. ....................................................................................................................\n\n......................................................................................................................................\n\nVI-A - 55% (cinquenta e cinco por cento) da pena, se o apenado for condenado pela prática de feminicídio, se for primário, vedado o livramento condicional;\n\n....................................................................................................................................\" (NR)\n\nArt. 5º A Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), passa a vigorar acrescida do seguinte art. 146-E:\n\n\"Art. 146-E. O condenado por crime contra a mulher por razões da condição do sexo feminino, nos termos do § 1º do art. 121-A do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), ao usufruir de qualquer benefício em que ocorra a sua saída de estabelecimento penal, será fiscalizado por meio de monitoração eletrônica.\"\n\nArt. 6º O art. 1º da Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos), passa a vigorar com a seguinte redação:\n\n\"Art. 1º ........................................................................................................................\n\nI - homicídio (art. 121), quando praticado em atividade típica de grupo de extermínio, ainda que cometido por 1 (um) só agente, e homicídio qualificado (art. 121, § 2º, incisos I, II, III, IV, V, VII, VIII e IX);\n\n......................................................................................................................................\n\nI-B - feminicídio (art. 121-A);\n\n....................................................................................................................................\" (NR)\n\nArt. 7º O art. 24-A da Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), passa a vigorar com a seguinte redação:\n\n\"Art. 24-A. ................................................................................................................\n\nPena - reclusão, de 2 (dois) a 5 (cinco) anos, e multa.\n\n..................................................................................................................................\" (NR)\n\nArt. 8º O art. 394-A do Decreto-Lei nº 3.689, de 3 de outubro de 1941 (Código de Processo Penal), passa a vigorar com a seguinte redação:\n\n\"Art. 394-A. Os processos que apurem a prática de crime hediondo ou violência contra a mulher terão prioridade de tramitação em todas as instâncias.\n\n§ 1º Os processos que apurem violência contra a mulher independerão do pagamento de custas, taxas ou despesas processuais, salvo em caso de má-fé.\n\n§ 2º As isenções de que trata o § 1º deste artigo aplicam-se apenas à vítima e, em caso de morte, ao cônjuge, ascendente, descendente ou irmão, quando a estes couber o direito de representação ou de oferecer queixa ou prosseguir com a ação.\" (NR)",
+   "citable_kind": "official_text",
+   "plain_summary": "O feminicídio passou a constar como crime hediondo. Descumprir medida protetiva passou a ter pena de 2 a 5 anos. Processos de violência contra a mulher têm prioridade de tramitação em todas as instâncias, e a vítima fica isenta de custas e despesas processuais (salvo má-fé). Condenados por crimes contra a mulher por razões da condição do sexo feminino têm restrições na execução da pena, como monitoramento eletrônico ao sair do presídio e proibição de visita íntima.",
+   "scope_notes": [],
+   "topics": [
+    "penas",
+    "processo",
+    "hediondo"
+   ],
+   "test_questions": [
+    "Tenho que pagar alguma coisa pra processar o agressor?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14994.htm",
+   "version": "Publicação original conferida em 04/11/2026. O trecho do art. 121-A traz o texto compilado atual do Código Penal (já com o vicaricídio, art. 121-B, logo depois).",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-15384-2026#visao-geral",
+   "doc_id": "lei-15384-2026",
+   "kind": "legislacao",
+   "title": "Lei nº 15.384, de 9 de abril de 2026 (violência vicária e vicaricídio)",
+   "section": "Visão geral da lei",
+   "locator": "Lei 15.384/2026, arts. 1º a 5º",
+   "citable_text": "Art. 1º Esta Lei altera a Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), e a Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos), para prever a violência vicária entre as formas de violência doméstica e familiar, criar o tipo penal do vicaricídio e incluí-lo no rol dos crimes hediondos.\n\nArt. 2º O caput do art. 7º da Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), passa a vigorar acrescido do seguinte inciso VI:\n\n\"Art. 7º ................................................................................................................\n\n..............................................................................................................................\n\nVI - a violência vicária, entendida como qualquer forma de violência praticada contra descendente, ascendente, dependente, enteado, parente, pessoa sob guarda ou responsabilidade direta da mulher ou pessoa de sua rede de apoio, com vistas a atingi-la.\"(NR)\n\nArt. 3º O Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), passa a vigorar acrescido do seguinte art. 121-B:\n\n\"Vicaricídio\n\nArt. 121-B. Matar descendente, ascendente, dependente, enteado ou pessoa sob guarda ou responsabilidade direta da mulher, com o fim específico de causar-lhe sofrimento, punição ou controle, no contexto de violência doméstica e familiar.\n\nPena - reclusão, de 20 (vinte) a 40 (quarenta) anos.\n\nParágrafo único. A pena do vicaricídio é aumentada de 1/3 (um terço) até a metade se o crime for praticado:\n\nI - na presença da mulher a quem se pretende causar sofrimento, punição ou controle;\n\nII - contra criança ou adolescente ou pessoa idosa ou com deficiência;\n\nIII - em descumprimento de medida protetiva de urgência.\"\n\nArt. 4º O art. 1º da Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos), passa a vigorar acrescido do seguinte inciso I-C:\n\n\"Art. 1º ................................................................................................................\n\n..............................................................................................................................\n\nI-C - vicaricídio (art. 121-B);\n\n...............................................................................................................................\" (NR)\n\nArt. 5º Esta Lei entra em vigor na data de sua publicação.",
+   "citable_kind": "official_text",
+   "plain_summary": "A lei fez três coisas: incluiu a violência vicária entre as formas de violência doméstica e familiar da Lei Maria da Penha (art. 7º, VI); criou o crime de vicaricídio no Código Penal (art. 121-B); e incluiu o vicaricídio entre os crimes hediondos. Entrou em vigor na data da publicação.",
+   "scope_notes": [],
+   "topics": [
+    "violencia-vicaria"
+   ],
+   "test_questions": [],
+   "url": "https://planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15384.htm",
+   "version": "Texto atualizado da Câmara (com retificação no DOU de 15/04/2026) e Planalto conferidos em 04/11/2026",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-15384-2026#cp-art121B",
+   "doc_id": "lei-15384-2026",
+   "kind": "legislacao",
+   "title": "Lei nº 15.384, de 9 de abril de 2026 (violência vicária e vicaricídio)",
+   "section": "Código Penal, art. 121-B — vicaricídio",
+   "locator": "Código Penal, art. 121-B, caput e parágrafo único (incluído pelo art. 3º da Lei 15.384/2026)",
+   "citable_text": "Art. 121-B. Matar descendente, ascendente, dependente, enteado ou pessoa sob guarda ou responsabilidade direta da mulher, com o fim específico de causar-lhe sofrimento, punição ou controle, no contexto de violência doméstica e familiar.\n\nPena - reclusão, de 20 (vinte) a 40 (quarenta) anos.\n\nParágrafo único. A pena do vicaricídio é aumentada de 1/3 (um terço) até a metade se o crime for praticado:\n\nI - na presença da mulher a quem se pretende causar sofrimento, punição ou controle;\n\nII - contra criança ou adolescente ou pessoa idosa ou com deficiência;\n\nIII - em descumprimento de medida protetiva de urgência. (Artigo acrescido pela Lei nº 15.384, de 9/4/2026)",
+   "citable_kind": "official_text",
+   "plain_summary": "É crime matar descendente, ascendente, dependente, enteado ou pessoa sob guarda ou responsabilidade direta da mulher, no contexto de violência doméstica e familiar, com o fim específico de causar-lhe sofrimento, punição ou controle. Pena: reclusão de 20 a 40 anos, aumentada de um terço até a metade se o crime for praticado na presença da mulher; contra criança, adolescente, pessoa idosa ou com deficiência; ou em descumprimento de medida protetiva.",
+   "scope_notes": [
+    "tema de alta carga emocional. Se a mensagem da usuária indicar ameaça atual aos filhos, a triagem de risco agudo tem precedência sobre esta resposta informativa.",
+    "o art. 121-B não repete \"parente\" nem \"pessoa de sua rede de apoio\", que aparecem no conceito de violência vicária do art. 7º, VI, da Lei Maria da Penha. O conceito de proteção é mais amplo que o tipo penal; não tratar os dois como sinônimos."
+   ],
+   "topics": [
+    "violencia-vicaria",
+    "crime"
+   ],
+   "test_questions": [],
+   "url": "https://planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15384.htm",
+   "version": "Texto atualizado da Câmara (com retificação no DOU de 15/04/2026) e Planalto conferidos em 04/11/2026",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-15410-2026#tortura",
+   "doc_id": "lei-15410-2026",
+   "kind": "legislacao",
+   "title": "Lei nº 15.410, de 20 de maio de 2026 (Lei Barbara Penna)",
+   "section": "art. 3º — tortura por sofrimento físico ou mental reiterado (Lei 9.455/1997, art. 1º, III)",
+   "locator": "Lei 15.410/2026, art. 3º (acrescenta o inciso III ao art. 1º da Lei 9.455/1997)",
+   "citable_text": "Art. 3º O caput do art. 1º da Lei nº 9.455, de 7 de abril de 1997 (Lei dos Crimes de Tortura), passa a vigorar acrescido do seguinte inciso III:\n\n\"Art. 1º ...................................................................................................................\n\n................................................................................................................................\n\nIII - submeter mulher, reiteradamente, a intenso sofrimento físico ou mental, no contexto de violência doméstica e familiar, sem prejuízo da aplicação das penas correspondentes a outras infrações penais.",
+   "citable_kind": "official_text",
+   "plain_summary": "Desde 21/05/2026, submeter uma mulher, de forma repetida, a intenso sofrimento físico ou mental, no contexto de violência doméstica e familiar, passou a ser uma modalidade de crime de tortura. A pena prevista na Lei de Tortura para o caput do art. 1º é de reclusão de 2 a 8 anos, sem prejuízo das penas de outros crimes cometidos junto.",
+   "scope_notes": [
+    "o Aurora não diz se a situação da usuária \"é tortura\". Ele informa que a lei existe e indica Defensoria/NUDEM, DEAM ou advocacia. Em risco agudo, a triagem de emergência tem precedência."
+   ],
+   "topics": [
+    "violencia-psicologica",
+    "sofrimento-mental",
+    "crime"
+   ],
+   "test_questions": [
+    "Sofrimento psicológico constante pode ser considerado tortura?",
+    "Existe lei sobre tortura psicológica dentro de casa?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15410.htm",
+   "version": "Publicação original; vigência imediata. Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "lei-15410-2026#lep",
+   "doc_id": "lei-15410-2026",
+   "kind": "legislacao",
+   "title": "Lei nº 15.410, de 20 de maio de 2026 (Lei Barbara Penna)",
+   "section": "art. 2º — proteção na execução da pena (Lei de Execução Penal)",
+   "locator": "Lei 15.410/2026, art. 2º (arts. 50, 52 e 86 da Lei 7.210/1984)",
+   "citable_text": "Art. 2º Os arts. 50, 52 e 86 da Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), passam a vigorar com as seguintes alterações:\n\n\"Art. 50. .................................................................................................................\n\n.................................................................................................................................\n\nIX - se aproximar da residência ou do local de trabalho da vítima ou de seus familiares durante o cumprimento de pena em regime aberto ou semiaberto, ou ainda no gozo de qualquer benefício que lhe autorize a saída do estabelecimento penal, uma vez estabelecidas as medidas protetivas previstas nos incisos II e III do caput do art. 22 da Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), nos casos de condenação por crime de violência doméstica e familiar contra a mulher.\n\n................................................................................................................................\" (NR)\n\n\"Art. 52. .................................................................................................................\n\n.................................................................................................................................\n\n§ 8º Também estará sujeito ao regime disciplinar diferenciado, nos termos do caput deste artigo, o preso que, tendo cometido crime de violência doméstica e familiar contra a mulher, ameace ou pratique violência contra a vítima ou seus familiares.\" (NR)\n\n\"Art. 86. ...................................................................................................................\n\n..................................................................................................................................\n\n§ 4º Será transferido para estabelecimento penal localizado em outra unidade federativa, inclusive da União, o condenado ou preso provisório que, tendo cometido crime de violência doméstica e familiar contra a mulher, ameace ou pratique violência contra a vítima ou seus familiares durante o cumprimento da pena.",
+   "citable_kind": "official_text",
+   "plain_summary": "Para quem foi condenado por violência doméstica e familiar contra a mulher: aproximar-se da casa ou do trabalho da vítima ou de seus familiares, durante saídas ou nos regimes aberto e semiaberto, quando houver medida protetiva de afastamento do lar ou de proibição de aproximação e contato, passa a ser falta grave. O preso que ameaçar ou praticar violência contra a vítima ou seus familiares fica sujeito ao regime disciplinar diferenciado e deve ser transferido para presídio de outra unidade da federação, inclusive federal.",
+   "scope_notes": [
+    "informação geral; a providência no caso concreto é do juízo da execução, a pedido do MP ou da Defensoria."
+   ],
+   "topics": [
+    "execucao-penal",
+    "protecao",
+    "medidas-protetivas"
+   ],
+   "test_questions": [
+    "Ele está preso e continua me ameaçando. A lei prevê alguma coisa?"
+   ],
+   "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15410.htm",
+   "version": "Publicação original; vigência imediata. Planalto e Câmara conferidos em 04/11/2026.",
+   "publisher": "Presidência da República / Congresso Nacional",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "dokkedahl-2022#achados",
+   "doc_id": "dokkedahl-2022",
+   "kind": "literatura-cientifica",
+   "title": "The psychological subtype of intimate partner violence and its effect on mental health: a systematic review with meta-analyses",
+   "section": "Principais achados",
+   "locator": "resumo e seção \"Results\"",
+   "citable_text": "A violência psicológica é considerada a forma mais comum de violência por parceiro íntimo. A revisão encontrou associação forte entre violência psicológica e estresse pós-traumático, depressão e ansiedade, mais intensa para o estresse pós-traumático. Entre mulheres, o controle coercitivo esteve especialmente ligado ao estresse pós-traumático; a violência verbal e emocional e a dominação ou isolamento tiveram a associação mais forte com depressão. Os autores avaliam a certeza da evidência como baixa e pedem mais estudos.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "A violência psicológica é considerada a forma mais comum de violência por parceiro íntimo. A revisão encontrou associação forte entre violência psicológica e estresse pós-traumático, depressão e ansiedade, mais intensa para o estresse pós-traumático. Entre mulheres, o controle coercitivo esteve especialmente ligado ao estresse pós-traumático; a violência verbal e emocional e a dominação ou isolamento tiveram a associação mais forte com depressão. Os autores avaliam a certeza da evidência como baixa e pedem mais estudos.",
+   "scope_notes": [
+    "nunca usar para sugerir diagnóstico (TEPT, depressão); indicar avaliação profissional (Acolhe Mais, CAPS, psicóloga) e, em sofrimento agudo, a rota de emergência.",
+    "sustenta a mensagem de psicoeducação de que a violência psicológica pode afetar a saúde mental e de que o sofrimento sentido é legítimo."
+   ],
+   "topics": [
+    "violencia-psicologica",
+    "saude-mental"
+   ],
+   "test_questions": [
+    "Violência psicológica pode causar depressão?",
+    "É normal eu me sentir assim depois de tudo o que ele fala?"
+   ],
+   "url": "https://doi.org/10.1186/s13643-022-02025-z",
+   "version": null,
+   "publisher": "Dokkedahl SB, Kirubakaran R, Bech-Hansen D, Kristensen TR, Elklit A — Systematic Reviews, 11:163 (2022)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "stark-hester-2019#conceito",
+   "doc_id": "stark-hester-2019",
+   "kind": "literatura-cientifica",
+   "title": "Coercive Control: Update and Review",
+   "section": "O que é controle coercitivo",
+   "locator": "introdução e seção sobre a relação entre \"controle\" e \"violência\"",
+   "citable_text": "Controle coercitivo é um padrão contínuo de dominação: vigiar, isolar, humilhar, controlar dinheiro, rotina e decisões, ameaçar — com ou sem agressão física. Os autores afirmam que ele não é só mais um \"tipo\" de violência, e que o grau de controle prevê desfechos graves antes associados à agressão física, inclusive violência depois da separação e violência sexual. O artigo também revisa evidências sobre controle coercitivo em casais do mesmo sexo, formas de medi-lo e a experiência dos filhos.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Controle coercitivo é um padrão contínuo de dominação: vigiar, isolar, humilhar, controlar dinheiro, rotina e decisões, ameaçar — com ou sem agressão física. Os autores afirmam que ele não é só mais um \"tipo\" de violência, e que o grau de controle prevê desfechos graves antes associados à agressão física, inclusive violência depois da separação e violência sexual. O artigo também revisa evidências sobre controle coercitivo em casais do mesmo sexo, formas de medi-lo e a experiência dos filhos.",
+   "scope_notes": [
+    "\"controle coercitivo\" não é crime autônomo no Brasil; aqui, a conduta se aproxima da violência psicológica (LMP, art. 7º, II; CP, art. 147-B).",
+    "explicar que a violência psicológica pode ser um padrão constante, sem fases nem explosões, e complementar o \"ciclo da violência\"."
+   ],
+   "topics": [
+    "controle-coercitivo",
+    "violencia-psicologica"
+   ],
+   "test_questions": [
+    "Ele nunca me bateu, mas controla tudo na minha vida. Isso é violência?"
+   ],
+   "url": "https://doi.org/10.1177/1077801218816191",
+   "version": null,
+   "publisher": "Stark E, Hester M — Violence Against Women, 25(1):81–104 (2019)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "sweet-2019#conceito",
+   "doc_id": "sweet-2019",
+   "kind": "literatura-cientifica",
+   "title": "The Sociology of Gaslighting",
+   "section": "O que é gaslighting e por que funciona",
+   "locator": "resumo e seção \"Toward a sociological theory of gaslighting\"",
+   "citable_text": "Gaslighting é um tipo de abuso psicológico que busca fazer a pessoa parecer ou se sentir \"louca\", criando um ambiente em que ela passa a duvidar da própria percepção. A autora mostra que ele se torna mais eficaz quando o agressor usa contra a vítima estereótipos de gênero (como associar o feminino à irracionalidade), vulnerabilidades ligadas a raça, nacionalidade e sexualidade, e desigualdades institucionais. Acontece dentro de relações íntimas marcadas por desigualdade de poder.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Gaslighting é um tipo de abuso psicológico que busca fazer a pessoa parecer ou se sentir \"louca\", criando um ambiente em que ela passa a duvidar da própria percepção. A autora mostra que ele se torna mais eficaz quando o agressor usa contra a vítima estereótipos de gênero (como associar o feminino à irracionalidade), vulnerabilidades ligadas a raça, nacionalidade e sexualidade, e desigualdades institucionais. Acontece dentro de relações íntimas marcadas por desigualdade de poder.",
+   "scope_notes": [
+    "não usar o termo como rótulo para a relação da usuária; descrever o padrão e indicar apoio.",
+    "nomear a experiência (\"duvidar de si mesma\") e diferenciá-la de desentendimentos pontuais."
+   ],
+   "topics": [
+    "gaslighting",
+    "manipulacao"
+   ],
+   "test_questions": [
+    "Ele sempre diz que eu estou exagerando e que nada disso aconteceu."
+   ],
+   "url": "https://doi.org/10.1177/0003122419874843",
+   "version": null,
+   "publisher": "Sweet PL — American Sociological Review, 84(5):851–875 (2019)",
+   "status": "pendente",
+   "internal": false
+  },
+  {
+   "id": "uvelli-2025#achados",
+   "doc_id": "uvelli-2025",
+   "kind": "literatura-cientifica",
+   "title": "When Adverse Experiences Influence the Interpretation of Ourselves, Others and the World: A Systematic Review and Meta-Analysis of Maladaptive Schemas in Victims of Violence",
+   "section": "Principais achados",
+   "locator": "resumo e resultados (20 estudos incluídos)",
+   "citable_text": "Entre sobreviventes de violência por parceiro íntimo, os esquemas mais frequentes foram subjugação, privação emocional, desconfiança/abuso e isolamento social. Meta-regressões indicaram que idade, gênero e país influenciaram alguns esquemas.",
+   "citable_kind": "curated_summary",
+   "plain_summary": "Entre sobreviventes de violência por parceiro íntimo, os esquemas mais frequentes foram subjugação, privação emocional, desconfiança/abuso e isolamento social. Meta-regressões indicaram que idade, gênero e país influenciaram alguns esquemas.",
+   "scope_notes": [
+    "fundamentação para a psicóloga e para a justificativa do projeto. Conteúdo clínico: o Aurora não identifica nem nomeia esquemas na usuária (escopo excluído: diagnóstico e psicoterapia)."
+   ],
+   "topics": [
+    "saude-mental",
+    "esquemas"
+   ],
+   "test_questions": [],
+   "url": "https://doi.org/10.1002/cpp.70114",
+   "version": null,
+   "publisher": "Uvelli A, Floridi M, Agrusti G, Franquillo AC, Fiumalbi L, Micheloni T, Arcuri A, Iazzetta S, Gragnani A — Clinical Psychology & Psychotherapy, 32(4):e70114 (2025)",
+   "status": "pendente",
+   "internal": true
+  }
+ ]
+}

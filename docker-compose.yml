@@ -2,6 +2,11 @@ services:
   backend:
     build:
       context: ./src/backend
+    # Motor do chat e provedor de LLM (AURORA_CHAT_ENGINE, AURORA_LLM_*, chaves).
+    # Opcional: sem o arquivo, o backend sobe com as fixtures do protótipo.
+    env_file:
+      - path: ./src/backend/.env
+        required: false
     ports:
       - "127.0.0.1:8000:8000"
     healthcheck:

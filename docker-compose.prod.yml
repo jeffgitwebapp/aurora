@@ -2,6 +2,12 @@ services:
   backend:
     image: ghcr.io/${IMAGE_OWNER:?Set IMAGE_OWNER}/aurora-backend:${IMAGE_TAG:-latest}
     restart: unless-stopped
+    # Motor do chat e LLM (AURORA_CHAT_ENGINE, AURORA_LLM_*, chave do provedor).
+    # Criado à mão na EC2 (root, chmod 600) e nunca reescrito pelo workflow.
+    # Sem o arquivo, o backend sobe com as fixtures do protótipo.
+    env_file:
+      - path: backend.env
+        required: false
     expose:
       - "8000"
     healthcheck:
