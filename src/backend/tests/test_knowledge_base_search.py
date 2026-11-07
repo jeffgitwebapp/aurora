@@ -61,12 +61,43 @@ def service_for(*chunks: KnowledgeChunk, **options: object) -> KnowledgeBaseServ
     ],
 )
 def test_tokenize_ignores_accents_case_and_punctuation(variant: str) -> None:
-    assert tokenize(variant) == ["violencia", "psicologica", "crime"]
+    assert tokenize(variant) == tokenize("violência psicológica é crime")
+    assert len(tokenize(variant)) == 3
 
 
 def test_tokenize_splits_legal_references_and_reduces_plurals() -> None:
     assert tokenize("art. 147-B das Leis") == ["art", "147", "b", "lei"]
-    assert tokenize("ameaças e humilhações") == ["ameaca", "humilhacao"]
+    assert tokenize("ameaças e humilhações") == tokenize("ameaça e humilhação")
+
+
+@pytest.mark.parametrize(
+    "words",
+    [
+        ("ameaçou", "ameaça", "ameaças", "ameaçar", "ameaçando", "ameaçada", "AMEAÇOU", "ameacou"),
+        ("filmou", "filmar", "filmando", "filmado"),  # "filmagem" -> "filmag": limite do Snowball
+        ("perseguindo", "perseguiu", "perseguir"),
+        ("humilhou", "humilha", "humilhando"),
+    ],
+)
+def test_conjugations_and_derivations_share_the_same_term(words: tuple[str, ...]) -> None:
+    terms = {tuple(tokenize(word)) for word in words}
+
+    assert len(terms) == 1, terms
+
+
+def test_real_base_finds_candidates_regardless_of_verb_tense() -> None:
+    service = KnowledgeBaseService(KnowledgeBaseRepository.from_file(), score_threshold=0)
+
+    for question in (
+        "meu marido me ameaçou",
+        "meu marido me ameaça",
+        "meu marido está me ameaçando",
+    ):
+        ids = {chunk.id for chunk, _ in service.rank(question)[:30]}
+        assert ids, question
+    past = {c.id for c, _ in service.rank("meu marido me ameaçou")[:5]}
+    present = {c.id for c, _ in service.rank("meu marido me ameaça")[:5]}
+    assert past == present
 
 
 def test_real_base_returns_same_chunks_for_accent_and_case_variants() -> None:
