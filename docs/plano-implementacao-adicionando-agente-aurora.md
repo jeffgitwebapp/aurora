@@ -220,7 +220,9 @@ src/backend/src/aurora_backend/contexts/conversation/services/
 │   ├── versioning.py               # localizar a versão vigente vX.YY (seção 5.3)
 │   ├── ingestion.py                # parser Markdown → chunks (usado pelo script e pelos testes)
 │   ├── repository.py               # KnowledgeBaseRepository: chunks por id, resumo, "Atenção"
-│   ├── service.py                  # KnowledgeBaseService implementa KnowledgeRetriever (BM25 + limiar)
+│   ├── search.py                   # normalização pt-BR (D-03) + índice BM25
+│   ├── selector.py                 # ChunkSelector / ClaudeChunkSelector (D-12)
+│   ├── service.py                  # KnowledgeBaseService implementa KnowledgeRetriever (BM25 → seleção)
 │   └── data/knowledge_base.json    # snapshot gerado (versão, hash, chunks)
 ├── grounded_answer/                # NOVO
 │   ├── models.py                   # GroundedAnswer, AnswerSegment
@@ -247,7 +249,7 @@ src/backend/tests/test_knowledge_base*.py, test_grounded_answer*.py, test_answer
 | `main.py` | Selecionar o motor por `AURORA_CHAT_ENGINE` | §5.1 |
 | `tests/test_send_message.py` | Ajustar asserções de atraso e de texto da fixture | consequência de U-02/U-03 |
 | `frontend/src/features/chat/components/MessageList.tsx` (+ componente de marcador e estilos, se necessário) | Numerar a lista **Fontes**; transformar `[n]` do texto em referência acessível (link para âncora da fonte `n`, com `aria-label` "Fonte n: título"); `[n]` sem fonte correspondente é exibido como texto, sem link | U-06 |
-| `pyproject.toml` / `uv.lock` | Adicionar `anthropic` (e, se usado, `rank-bm25`) | F1/F2 |
+| `pyproject.toml` / `uv.lock` | `anthropic` (produção) e `pyyaml` (só dev, para a ingestão). BM25 implementado sem dependência | F1 |
 
 ### 5.3 Versão vigente da base (U-04, R-11)
 
@@ -311,7 +313,9 @@ Funções puras, cada uma testada com respostas violadoras sintéticas (CA-03 M4
 
 Um evento JSON por turno informativo: `request_id` efêmero, desfecho, duração por etapa, `kb_version`, `prompt_version` (hash), `guardrail_version`, modelo, tokens (entrada, saída, cache), `stop_reason`, ids e scores dos chunks, regras do guardrail reprovadas. **Nunca** mensagem, `reply`, `cited_text` ou corpo HTTP. Um teste planta um marcador na mensagem e verifica que ele não aparece em nenhum log capturado (CA-01).
 
-### 5.8 Recuperação: BM25 em vez de base vetorial (D-03)
+### 5.8 Recuperação: BM25 em vez de base vetorial (D-03), com seleção pelo Claude (D-12)
+
+> **Atualização F1 (07/11/2026):** BM25 sozinho ficou abaixo da meta (recall@5 64%). Pela decisão D-12, o BM25 passa a gerar até 30 candidatos e o Claude escolhe os relevantes. O limiar absoluto só vale no modo sem seletor (`DEFAULT_SCORE_THRESHOLD = 2.0`).
 
 - BM25 em memória sobre texto oficial + título + temas + resumo. Top-k (k ≈ 5) e **limiar** calibrado na F1 para M5.
 - **Normalização obrigatória (exigência da usuária em D-03)**, aplicada pela **mesma função** no índice e na consulta:
@@ -341,7 +345,7 @@ Mesmo critério do [plano da jornada §3](./jornada-usuario/plano-implementacao-
 | Ordem | ID | Fase | Depende de | Status |
 |---:|---|---|---|---|
 | 0 | F0 | Preparação: decisões abertas, versionar a base, recursos do Claude Code, dataset de avaliação | — | Desenvolvimento concluído localmente — aguardando revisão do dataset pela usuária e commit (a base entra no commit, D-06) |
-| 1 | F1 | Base vigente: versionamento `vX.YY`, ingestão, snapshot, BM25, limiar, gate da CI | F0 | Não iniciada |
+| 1 | F1 | Base vigente: versionamento `vX.YY`, ingestão, snapshot, BM25 + seleção pelo Claude (D-12), gate da CI | F0 | Desenvolvimento concluído localmente — falta medir a seleção com a API (sem credencial nesta máquina) e commit |
 | 2 | F2 | Motor v1.2 + ajustes autorizados (sem atraso, `[n]` nas fixtures, `503`) | F1 | Não iniciada |
 | 3 | F3 | Avaliação (gate CA-03, latência, custo) | F2 | Não iniciada |
 | 4 | F4 | (Condicional) Busca agêntica limitada (tool de busca, ReAct com teto) | F3 com lacuna de recall | Não iniciada |
@@ -439,6 +443,7 @@ U-01 a U-06 (seção 1.1), em 07/11/2026, e as decisões abaixo.
 | D-03 | BM25 em vez de base vetorial | **Seguir**, com a exigência de reconhecer palavras **sem acento** e com **qualquer combinação de maiúsculas e minúsculas** | Normalização obrigatória e idêntica no índice e na consulta (seção 5.8); testes dedicados na F1 |
 | D-06 | Versionar `docs/aurora-base-rag/` no git | **Sim, nos próximos commits** | Entra no primeiro commit da implementação (F0/F1) |
 | D-07 | Envio do texto da usuária à Anthropic | **Liberado sem restrição** nesta fase de demonstração, inclusive na AWS | Não bloqueia F2 nem F5. **Ponto de atenção futuro (registrado na seção 11):** antes de uso com pessoas reais, fazer revisão de privacidade/LGPD (retenção de dados, ZDR, termos do provedor, região, minimização do texto enviado) |
+| D-12 | Estratégia de recuperação (descoberta na F1: BM25 puro dá recall@5 de 64% e nenhum limiar separa as perguntas fora da base) | **BM25 traz até 30 candidatos e o Claude (`claude-opus-5-5`) escolhe até 5 que respondem à mensagem, ou nenhum** | Implementado no `KnowledgeBaseService` por um `ChunkSelector` (`ClaudeChunkSelector`): saída estruturada, `effort: low`, `fallbacks: "default"`, timeout 8 s. O seletor só escolhe ids entre os candidatos (o código descarta ids estranhos). Sem candidato ou seleção vazia → `no_source` sem chamar a redação. Falha do seletor → `KnowledgeUnavailableError` → `503` (o router atual já faz esse mapeamento). Duas chamadas ao Claude por pergunta informativa. Teto de recall = recall@30 do BM25 (86% na v0.03) |
 
 ### 7.2 Abertas
 
@@ -526,3 +531,4 @@ U-01 a U-06 (seção 1.1), em 07/11/2026, e as decisões abaixo.
 | 07/11/2026 | — | U-06: front autorizado a mudar só para exibir a fonte por trecho (lista Fontes numerada + `[n]` clicável) | Este arquivo | Claude Code + usuária |
 | 07/11/2026 | — | Decisões D-01, D-02, D-03 (com normalização sem acento e sem diferença de caixa), D-06 e D-07 resolvidas pela usuária; pontos de atenção futuros registrados (exigir `aprovado` e revisão LGPD antes de uso real) | Seção 7.1 | Claude Code + usuária |
 | 07/11/2026 | F0 | (1) Hook `PreToolUse` em `.claude/settings.json` + `.claude/hooks/protect-paths.js`: pede confirmação ao editar `src/frontend/**`, `services/{triage,guardrail,knowledge,content_offer}/**` e `docs/jornada-usuario/**`. Testado por pipe com caminhos Windows reais; passa a valer após `/hooks` ou reinício da sessão. (2) Skill `.claude/skills/aurora-agente-rag/SKILL.md`. (3) Dataset `src/backend/evals/v1_2/dataset.jsonl` (base v0.03, 338 casos): 78 perguntas de teste da base (cobrem 55 dos 81 chunks) + 156 variantes sem acento/maiúsculas + 60 adversariais + 30 fora da base + 10 de risco + 4 fixtures de escopo. Gerado por `evals/v1_2/build_dataset.py` (lê sempre a versão vigente) a partir de `cases_manual.jsonl`. (4) Suíte existente intacta: 166 testes, ruff check/format ok. O método de correção e o custo da avaliação com API (`/claude-api build-eval`) ficam para a F3 | Arquivos não commitados na branch | Claude Code |
+| 07/11/2026 | F1 | **Implementado em `services/knowledge_base/`:** `versioning` (maior `vX.YY`; hash SHA-256 com fins de linha normalizados), `ingestion` (YAML via PyYAML só em dev; validação estrita), `repository`, `search` (normalização D-03 + BM25 próprio), `selector` (`ClaudeChunkSelector`, D-12) e `service` (`KnowledgeBaseService`, porta `KnowledgeRetriever`). Também `scripts/build_knowledge_snapshot.py` e `evals/v1_2/run_retrieval_eval.py`. **Snapshot v0.03 (`8222eba1fafd`):** 81 chunks, 78 pesquisáveis (55 com texto oficial, 7 com dados, 16 com resumo da curadoria, porque os 13 "Trecho da fonte" dos guias são placeholders `[colar…]` e a literatura só tem resumo) e 3 internos (`uso: INTERNO`). **Medições BM25 (sem rede):** recall@1 35,9%, @5 64,1%, @30 85,9%. Variantes sem acento e em maiúsculas têm **exatamente** o mesmo recall (D-03 ok). Nenhum limiar absoluto ou relativo separa as perguntas fora da base sem perder ~40% do recall → decisão D-12. **Seleção pelo Claude:** não medida (sem `ANTHROPIC_API_KEY` nesta máquina); rodar `uv run python evals/v1_2/run_retrieval_eval.py --claude` (~108 chamadas). **Testes:** 209 passando (43 novos da base); ruff check/format e compileall ok. Gate da CI `test_snapshot_matches_latest_base` ativo. Ambiente: o diretório `.venv/.../aurora_backend-0.1.0.dist-info` estava somente leitura e travava o `uv`; o atributo foi removido | Arquivos não commitados | Claude Code |

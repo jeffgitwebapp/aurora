@@ -71,7 +71,7 @@ stateDiagram-v2
 | 1 | Triagem | `TriageService` (existente, determinístico, U-01) | — (regra do projeto: segurança antes do LLM) | Frases-fixture; o LLM nunca vê mensagens de risco | `triage_status: acute/indeterminate` + `guidance` |
 | 2 | Limite de escopo | `GuardrailService` (existente, determinístico, U-01) | System prompt com escopo explícito (S1) como reforço, não como substituto | Pedido de diagnóstico, prescrição ou parecer é parado antes de gerar | `scope_status: out_of_scope` + categoria |
 | 3 | Oferta | `ContentOfferService` (existente) | — | Sem mudança | `offer: safety_guide` |
-| 4 | Recuperação | `KnowledgeBaseService` (novo, porta `KnowledgeRetriever`) | "Carregar trechos do documento como contexto" (S2); escalonamento por limiar (S6) | BM25 sobre os chunks da **versão vigente** (§7); top-k com score; abaixo do limiar, para | `knowledge_status: no_source`, `reply: null` |
+| 4 | Recuperação | `KnowledgeBaseService` (novo, porta `KnowledgeRetriever`) | "Carregar trechos do documento como contexto" (S2); escalonamento (S6) | BM25 sobre a **versão vigente** (§7) traz até 30 candidatos; o `ClaudeChunkSelector` escolhe até 5 que respondem à mensagem, ou nenhum (D-12). Sem candidato ou seleção vazia, para | `knowledge_status: no_source`, `reply: null`; falha do seletor → `503` |
 | 5 | Geração | `GroundedAnswerService` (novo, porta `ChatResponseGenerator`) | API + system prompt + few-shot de forma (S1); citações; *adaptive thinking* no lugar do CoT explícito (S1) | Uma chamada ao Claude; trechos como `search_result` com citações; resumo e "Atenção" como apoio não citável | — |
 | 5' | (F4) Busca agêntica | idem + tool | ReAct limitado (S3); tool use `strict` (S2) | Até 2–3 buscas só de leitura; cada passo no trace | — |
 | 6 | Marcação de fontes | `GroundedAnswerService` / `ChatResponseService` (U-03) | Resposta com fonte explícita (S4) | Citações → `[n]` na ordem de `sources` | `reply` com `[n]` + `sources` |
@@ -271,4 +271,5 @@ class KnowledgeBaseSnapshot:
 | Data | Alteração |
 |---|---|
 | 07/11/2026 | Criação |
+| 07/11/2026 | F1: recuperação em duas etapas (BM25 → seleção pelo Claude, D-12) |
 | 07/11/2026 | Revisão 2: livro H-ACD fora do escopo; sem endpoint novo (o motor v1.2 entra pelas portas existentes); triagem e escopo determinísticos; marcadores `[n]` nos dois motores; front ajustado só para exibir as fontes (U-06); base em `docs/aurora-base-rag/vX.YY` com releitura automática |

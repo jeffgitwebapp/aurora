@@ -20,7 +20,7 @@ description: Use when working on the Aurora v1.2 chat engine (Claude API + RAG o
 - **Sem trecho acima do limiar → `no_source`, sem chamar o LLM.** Falha/recusa/guardrail reprovado → 503 (fail-closed).
 - **Logs/trace só com metadados** — nunca mensagem, resposta, trecho citado ou corpo HTTP.
 - **Base vigente:** maior pasta `docs/aurora-base-rag/vX.YY` (ordem numérica). Nunca fixe `v0.03`. Nova versão ⇒ regenerar o snapshot (`scripts/build_knowledge_snapshot.py`); a CI deve falhar se o snapshot estiver desatualizado.
-- **Busca:** BM25 com normalização idêntica no índice e na consulta — sem acentos (NFKD), `casefold`, pontuação como separador, stopwords pt-BR. "violência" = "violencia" = "VIOLÊNCIA".
+- **Busca (D-12):** BM25 gera até 30 candidatos e o `ClaudeChunkSelector` escolhe até 5 (ou nenhum → `no_source`); falha do seletor → 503. O BM25 usa normalização idêntica no índice e na consulta — sem acentos (NFKD), `casefold`, pontuação como separador, stopwords pt-BR. "violência" = "violencia" = "VIOLÊNCIA".
 - Projeto em **modo demonstração**: trechos `pendente` são aceitos com `demo: true`; envio ao provedor liberado. Pontos de atenção futuros: exigir `aprovado` e revisão LGPD antes de uso real.
 - Modelo: `claude-opus-5-5`, effort `low`, configurável por `AURORA_LLM_MODEL`. Antes de escrever código do SDK, consulte a skill `claude-api`.
 
