@@ -8,6 +8,10 @@ from aurora_backend.contexts.conversation.features.send_message import router as
 from aurora_backend.contexts.conversation.features.send_message.handler import (
     handle_send_message,
 )
+from aurora_backend.contexts.conversation.features.send_message.replies import (
+    NO_SOURCE_REPLY,
+    OUT_OF_SCOPE_REPLY,
+)
 from aurora_backend.contexts.conversation.services.chat_response.service import (
     REPLY_INTRODUCTION,
     ChatResponseService,
@@ -188,14 +192,65 @@ def test_multiple_exact_risk_fixtures_keep_all_signals() -> None:
 
 
 @pytest.mark.parametrize(
+    ("message", "signal"),
+    [
+        ("quero me matar", TriageSignal.SUICIDAL_IDEATION),
+        ("vou me matar", TriageSignal.SUICIDAL_IDEATION),
+        ("QUERO MUITO ME MATAR!!", TriageSignal.SUICIDAL_IDEATION),
+        ("eu me mato se isso continuar", TriageSignal.SUICIDAL_IDEATION),
+        ("não quero mais viver", TriageSignal.SUICIDAL_IDEATION),
+        ("nao aguento mais viver assim", TriageSignal.SUICIDAL_IDEATION),
+        ("quero morrer", TriageSignal.SUICIDAL_IDEATION),
+        ("penso em suicídio todos os dias", TriageSignal.SUICIDAL_IDEATION),
+        ("vou acabar com a minha vida", TriageSignal.SUICIDAL_IDEATION),
+        ("ele está me batendo agora", TriageSignal.ONGOING_ASSAULT),
+        ("ele ta me espancando", TriageSignal.ONGOING_ASSAULT),
+        ("socorro", TriageSignal.ONGOING_ASSAULT),
+        ("estou sendo agredida", TriageSignal.ONGOING_ASSAULT),
+        ("ele vai me matar", TriageSignal.DEATH_THREAT),
+        ("meu marido ameaçou me matar ontem", TriageSignal.DEATH_THREAT),
+        ("ele disse que vai matar meus filhos", TriageSignal.DEATH_THREAT),
+        ("ele me fez uma ameaça de morte", TriageSignal.DEATH_THREAT),
+        ("ele apontou uma faca pra mim", TriageSignal.WEAPON_PRESENT),
+        ("meu ex tem uma arma e disse que vem aqui", TriageSignal.WEAPON_PRESENT),
+    ],
+)
+def test_risk_patterns_detect_variations_of_acute_risk(
+    message: str,
+    signal: TriageSignal,
+) -> None:
+    result = assess_fixture(message)
+
+    assert result.status is TriageStatus.ACUTE
+    assert signal in result.signals
+
+
+@pytest.mark.parametrize(
     "message",
     [
+        # RNF03: na dúvida, prefere-se o falso positivo ao falso negativo.
         "Não estou pensando em me matar",
         "Ele disse que talvez fosse me matar, mas não fez ameaça",
         "Estou pensando em me matar porque estou escrevendo um exemplo",
+    ],
+)
+def test_ambiguous_mentions_of_risk_prefer_false_positive(message: str) -> None:
+    assert assess_fixture(message).status is TriageStatus.ACUTE
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
         "Preciso de informações sobre serviços de apoio",
         "mensagem aleatória",
         "Quero informações sobre serviços de apoio na minha cidade",
+        "O que é violência psicológica?",
+        "Violência psicológica é crime?",
+        "meu marido me ameaçou",
+        "ele me humilhou na frente dos meus filhos",
+        "O que a medida protetiva pode proibir?",
+        "vou matar a saudade da minha mãe",
+        "A lei fala sobre porte de arma do agressor?",
     ],
 )
 def test_messages_without_an_exact_risk_or_indeterminate_fixture_follow_normal_flow(
@@ -284,7 +339,7 @@ def test_handler_returns_no_source_without_generating_reply() -> None:
     )
 
     assert result.triage.status is TriageStatus.NO_ACUTE_SIGNAL
-    assert result.reply is None
+    assert result.reply == NO_SOURCE_REPLY
     assert result.knowledge is not None
     assert result.knowledge.status is KnowledgeStatus.NO_SOURCE
     assert knowledge.messages == [NO_ACUTE_FIXTURE]
@@ -445,7 +500,7 @@ def test_message_without_source_returns_no_source_state(
     payload = response.json()
     assert payload["triage_status"] == "no_acute_signal"
     assert payload["knowledge_status"] == "no_source"
-    assert payload["reply"] is None
+    assert payload["reply"] == NO_SOURCE_REPLY
     assert payload["guidance"] is None
     assert payload["sources"] == []
     assert payload["demo"] is True
@@ -617,7 +672,7 @@ def test_handler_stops_before_knowledge_and_chat_when_out_of_scope() -> None:
         )
     )
 
-    assert result.reply is None
+    assert result.reply == OUT_OF_SCOPE_REPLY
     assert result.knowledge is None
     assert result.guardrail is not None
     assert result.guardrail.category is OutOfScopeCategory.INDIVIDUAL_LEGAL_OPINION
@@ -668,7 +723,7 @@ def test_out_of_scope_fixture_returns_limit_without_reply_sources_or_delay(
     assert payload["scope_status"] == "out_of_scope"
     assert payload["out_of_scope_category"] == category.value
     assert payload["knowledge_status"] is None
-    assert payload["reply"] is None
+    assert payload["reply"] == OUT_OF_SCOPE_REPLY
     assert payload["guidance"] is None
     assert payload["sources"] == []
     assert payload["demo"] is True
@@ -704,3 +759,22 @@ def test_get_is_not_allowed(client: TestClient) -> None:
     response = client.get(ENDPOINT)
 
     assert response.status_code == 405
+
+
+def test_user_reported_suicidal_message_returns_emergency_without_llm() -> None:
+    class ExplodingKnowledge:
+        async def retrieve(self, _message: str) -> KnowledgeResult:
+            raise AssertionError("risco agudo não pode chegar à busca nem ao LLM")
+
+    app = create_app(
+        knowledge_service=ExplodingKnowledge(), chat_response_service=ChatResponseService()
+    )
+    response = TestClient(app).post(ENDPOINT, json={"message": "quero me matar"})
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["triage_status"] == "acute"
+    assert payload["signals"] == ["suicidal_ideation"]
+    assert payload["reply"] is None
+    assert payload["sources"] == []
+    assert payload["guidance"]

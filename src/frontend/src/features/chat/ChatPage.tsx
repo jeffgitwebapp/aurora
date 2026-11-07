@@ -17,13 +17,7 @@ import { MessageComposer } from "./components/MessageComposer";
 import { MessageList } from "./components/MessageList";
 import type { ChatMessage } from "./types";
 
-const NO_SOURCE_MESSAGE =
-  "Não encontrei uma fonte confiável para responder a isso. Prefiro dizer que não sei a inventar uma resposta.";
-const OUT_OF_SCOPE_MESSAGE =
-  "Não posso dar um diagnóstico nem um parecer sobre o seu caso. Isso precisa de uma profissional que te escute com calma.\n\nPosso explicar o que a lei diz sobre isso e indicar quem pode te orientar de graça.";
 const LAW_QUESTION = "O que é violência psicológica?";
-const SAFETY_GUIDE_OFFER =
-  "Se quiser, há um guia de segurança na área logada, com canais de apoio e um espaço para seus contatos de confiança e anotações. É opcional: você decide se e quando abrir.";
 
 /** Canal destacado por sinal de risco; regra provisória de produto (C-03). */
 function priorityNumbers(signals: TriageSignal[]): EmergencyNumber[] {
@@ -86,12 +80,16 @@ export function ChatPage() {
 
       setRiskScreen(null);
       const id = `message-${nextMessageId.current++}`;
+      // Texto decidido pelo backend em todos os desfechos; o front só exibe.
+      const reply = result.reply ?? "";
       let assistantMessage: ChatMessage;
-      if (result.offer !== null) {
+      if (result.conversation !== null) {
+        assistantMessage = { id, role: "assistant", text: reply };
+      } else if (result.offer !== null) {
         assistantMessage = {
           id,
           role: "assistant",
-          text: SAFETY_GUIDE_OFFER,
+          text: reply,
           offer: result.offer,
           demo: result.demo,
         };
@@ -99,15 +97,15 @@ export function ChatPage() {
         assistantMessage = {
           id,
           role: "assistant",
-          text: OUT_OF_SCOPE_MESSAGE,
+          text: reply,
           outOfScopeCategory: result.outOfScopeCategory,
           demo: result.demo,
         };
-      } else if (result.knowledgeStatus === "found" && result.reply !== null) {
+      } else if (result.knowledgeStatus === "found") {
         assistantMessage = {
           id,
           role: "assistant",
-          text: result.reply,
+          text: reply,
           knowledgeStatus: "found",
           sources: result.sources,
           demo: result.demo,
@@ -116,7 +114,7 @@ export function ChatPage() {
         assistantMessage = {
           id,
           role: "assistant",
-          text: NO_SOURCE_MESSAGE,
+          text: reply,
           knowledgeStatus: "no_source",
           demo: result.demo,
         };

@@ -197,7 +197,7 @@ npm run dev -- --host 127.0.0.1
 
 ### Publicar na EC2 com GitHub Actions
 
-O workflow [deploy.yml](./.github/workflows/deploy.yml) testa o backend e compila o frontend em cada push para `develop` e em cada tag `v*`. Se os testes passarem, publica as imagens privadas `ghcr.io/jeffgitwebapp/aurora-backend` e `ghcr.io/jeffgitwebapp/aurora-frontend` no GHCR. Pushes para `develop` também implantam automaticamente a versão na EC2; tags de release publicam as imagens sem alterar o deploy contínuo.
+O workflow [deploy.yml](./.github/workflows/deploy.yml) testa o backend e compila o frontend em cada push para `develop` ou `release`, em cada PR para `release` e em cada tag `v*`. Pushes para `develop` e PRs só rodam essas verificações. No push para `release` (merge do PR `develop` → `release`) e nas tags `v*`, se os testes passarem, publica as imagens privadas `ghcr.io/jeffgitwebapp/aurora-backend` e `ghcr.io/jeffgitwebapp/aurora-frontend` no GHCR. Só o push para `release` implanta a versão na EC2; tags de release publicam as imagens sem implantar.
 
 #### Preparar a instância Amazon Linux
 
@@ -220,7 +220,7 @@ Crie o environment **`production`** em **Settings → Environments** e cadastre 
 
 Não coloque a chave SSH ou o token no repositório, no workflow ou em mensagens. Para obter a entrada de `EC2_KNOWN_HOSTS`, use `ssh-keyscan` e confirme a impressão digital da chave por um canal confiável antes de cadastrá-la. Se o SSH da instância não puder aceitar conexões dos runners do GitHub de forma restrita, use um runner com IP de saída fixo ou AWS Systems Manager em vez de abrir a porta 22 para a internet.
 
-Depois de adicionar os secrets, faça push para `develop`. Acompanhe o workflow em **Actions**; após a publicação, a aplicação ficará em `http://ec2-3-137-205-13.us-east-2.compute.amazonaws.com`. O Compose de produção publica apenas o frontend na porta 80 e mantém o backend acessível pela rede interna. O arquivo [`docker-compose.prod.yml`](./docker-compose.prod.yml) é separado do Compose local para preservar a execução de desenvolvimento.
+Depois de adicionar os secrets, faça o merge de um PR de `develop` para `release`. Acompanhe o workflow em **Actions**; após a publicação, a aplicação ficará em `http://ec2-3-137-205-13.us-east-2.compute.amazonaws.com`. O Compose de produção publica apenas o frontend na porta 80 e mantém o backend acessível pela rede interna. O arquivo [`docker-compose.prod.yml`](./docker-compose.prod.yml) é separado do Compose local para preservar a execução de desenvolvimento.
 
 Para o passo a passo completo da instância, Docker/Compose, SSH, GHCR, secrets e publicação, consulte o [guia de deploy na EC2](./DEPLOY-EC2.md).
 

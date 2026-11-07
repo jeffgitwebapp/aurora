@@ -1,17 +1,24 @@
 name: Build and deploy Aurora
 
+# develop e PRs para release: só testes e build (CI), sem imagens nem deploy.
+# release (merge do PR develop -> release): imagens com tag latest e deploy na EC2.
+# Tags v*: imagens versionadas, sem deploy.
 on:
   push:
     branches:
       - develop
+      - release
     tags:
       - "v*"
+  pull_request:
+    branches:
+      - release
 
 permissions:
   contents: read
 
 concurrency:
-  group: aurora-ec2-deploy
+  group: ${{ github.event_name == 'push' && github.ref == 'refs/heads/release' && 'aurora-ec2-deploy' || format('aurora-ci-{0}', github.ref) }}
   cancel-in-progress: false
 
 jobs:
@@ -56,6 +63,9 @@ jobs:
         run: npm run build
 
   publish-images:
+    if: >-
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/release' || startsWith(github.ref, 'refs/tags/v'))
     needs:
       - backend-tests
       - frontend-build
@@ -87,7 +97,7 @@ jobs:
           tags: |
             type=sha,prefix=sha-
             type=ref,event=tag
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/develop' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/release' }}
 
       - name: Build and publish backend image
         uses: docker/build-push-action@v6
@@ -107,7 +117,7 @@ jobs:
           tags: |
             type=sha,prefix=sha-
             type=ref,event=tag
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/develop' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/release' }}
 
       - name: Build and publish frontend image
         uses: docker/build-push-action@v6
@@ -120,7 +130,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=frontend
 
   deploy-ec2:
-    if: github.ref == 'refs/heads/develop'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/release'
     needs: publish-images
     runs-on: ubuntu-latest
     environment: production

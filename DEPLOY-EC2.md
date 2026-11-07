@@ -23,7 +23,7 @@ publica duas imagens privadas no GHCR:
 - `ghcr.io/jeffgitwebapp/aurora-backend`
 - `ghcr.io/jeffgitwebapp/aurora-frontend`
 
-Em pushes para `develop`, o workflow também se conecta à EC2 por SSH, copia
+Em pushes para `release` (merge do PR `develop` → `release`), o workflow também se conecta à EC2 por SSH, copia
 [`docker-compose.prod.yml`](./docker-compose.prod.yml), autentica a instância no
 GHCR e atualiza os containers. As imagens implantadas recebem uma tag
 correspondente ao SHA do commit. Tags de release no formato `v*` publicam
@@ -151,14 +151,17 @@ declara `environment: production`. Nunca salve chave privada ou token em
 
 O workflow é acionado por:
 
-- push para a branch `develop`: executa verificações, publica as imagens e
-  realiza deploy na EC2;
+- push para a branch `develop` e PRs para `release`: só executam as verificações
+  (`backend-tests` e `frontend-build`), sem publicar imagens nem implantar;
+- push para a branch `release` (merge do PR `develop` → `release`): executa
+  verificações, publica as imagens com a tag `latest` e realiza deploy na EC2;
 - push de uma tag `v*`: executa verificações e publica imagens, sem implantar
   automaticamente na EC2.
 
 Para publicar uma alteração:
 
-1. Faça commit e push para `develop`.
+1. Faça commit e push para `develop` e abra um PR de `develop` para `release`;
+   o merge do PR dispara o deploy.
 2. No GitHub, abra **Actions → Build and deploy Aurora**.
 3. Confirme a aprovação dos jobs `backend-tests` e `frontend-build`.
 4. Confirme a conclusão de `publish-images` e `deploy-ec2`.
@@ -227,6 +230,12 @@ GEMINI_API_KEY=<chave criada em https://aistudio.google.com/apikey>
 Para usar o Claude no lugar do Gemini, troque as três últimas linhas por
 `AURORA_LLM_PROVIDER=claude`, `AURORA_LLM_MODEL=claude-opus-5-5` e
 `ANTHROPIC_API_KEY=<chave>`. Nada no código muda.
+
+Busca reformulada (F4, opcional, desligada por padrão): acrescente
+`AURORA_AGENTIC_SEARCH=true` para o modelo poder pedir até 2 buscas extras com
+termos técnicos quando a mensagem usa palavras do dia a dia. Cada busca extra é
+mais uma chamada ao LLM (mais latência e mais consumo da cota). Valores aceitos:
+`true`/`1` ou `false`/`0`; outro valor impede a subida do backend.
 
 Aplicar uma mudança no arquivo sem novo deploy:
 

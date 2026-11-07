@@ -8,6 +8,7 @@ dependencies = [
     "cryptography>=50.0.2",
     "fastapi",
     "google-genai>=3.0.0,<4",
+    "snowballstemmer>=3",
     "uvicorn[standard]",
 ]
 

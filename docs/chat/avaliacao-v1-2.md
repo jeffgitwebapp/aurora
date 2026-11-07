@@ -35,8 +35,6 @@ Base `v0.03`, `gemini/gemini-3.5-flash-lite`, juiz = mesmo modelo.
 - **Latência acima da meta** (duas chamadas ao LLM no plano gratuito): ponto a tratar antes de uso real (modelo pago, cache, ou uma única chamada para seleção e redação).
 - **Juiz = gerador:** há viés de autoaprovação. O CA-03 exige revisar à mão 20% das avaliações do modo completo para calibrar o juiz.
 
-## Pendências
+## Encerramento da F3 (07/11/2026)
 
-1. Rodar o modo completo quando houver janela (ou cota paga) e registrar aqui.
-2. Revisão humana de 20% das respostas julgadas.
-3. Decidir o tratamento da latência antes de ativar o `llm` em produção (D-09).
+A usuária deu a F3 por concluída com o modo rápido. A avaliação completa, a revisão humana de 20% das respostas julgadas e os demais testes passam a ser feitos manualmente pelo time de produto. A latência atual foi aceita para a demonstração.
