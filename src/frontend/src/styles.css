@@ -608,6 +608,8 @@ textarea:focus-visible {
   margin: 0 auto;
   padding: 0 2rem 2rem;
   overflow: hidden;
+  /* clip não pode ser rolado por foco ou âncora: o cabeçalho nunca sai da tela (U-09). */
+  overflow: clip;
 }
 
 .conversation-header {
@@ -640,6 +642,8 @@ textarea:focus-visible {
   min-height: 0;
   flex: 1;
   grid-template-columns: minmax(0, 1fr) 270px;
+  /* A linha não cresce além da tela; o que não couber rola dentro da própria coluna. */
+  grid-template-rows: minmax(0, 1fr);
   align-items: stretch;
   gap: 1.25rem;
 }
@@ -998,8 +1002,16 @@ textarea:focus-visible {
 
 .chat-page__sidebar {
   display: flex;
+  min-height: 0;
   flex-direction: column;
   gap: 0.875rem;
+  /* Em janelas baixas, contatos e avisos rolam aqui sem empurrar a conversa (U-09). */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.chat-page__sidebar > * {
+  flex-shrink: 0;
 }
 
 .emergency-card {
@@ -1947,6 +1959,7 @@ body.conversation-mode {
 
   .chat-page__sidebar {
     display: grid;
+    max-height: 30dvh;
     grid-template-columns: minmax(0, 1fr);
     gap: 0.5rem;
   }
