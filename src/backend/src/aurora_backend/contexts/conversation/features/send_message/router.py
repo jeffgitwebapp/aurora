@@ -1,7 +1,5 @@
 """Adaptador HTTP da feature EnviarMensagem."""
 
-import asyncio
-
 from fastapi import APIRouter, HTTPException, status
 
 from aurora_backend.contexts.conversation.features.send_message.handler import (
@@ -15,6 +13,7 @@ from aurora_backend.contexts.conversation.features.send_message.schemas import (
 )
 from aurora_backend.contexts.conversation.services.chat_response.port import (
     ChatResponseGenerator,
+    ChatResponseUnavailableError,
 )
 from aurora_backend.contexts.conversation.services.content_offer.port import (
     ContentOfferProvider,
@@ -30,7 +29,6 @@ from aurora_backend.contexts.conversation.services.knowledge.port import (
 )
 from aurora_backend.contexts.conversation.services.triage.port import TriageEvaluator
 
-SIMULATED_PROCESSING_DELAY_SECONDS = 5
 _SCOPE_STATUS = {
     ScopeDecision.ALLOW: "allowed",
     ScopeDecision.OUT_OF_SCOPE: "out_of_scope",
@@ -63,7 +61,11 @@ def create_send_message_router(
                 status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                 detail=str(exc),
             ) from exc
-        except (GuardrailUnavailableError, KnowledgeUnavailableError) as exc:
+        except (
+            GuardrailUnavailableError,
+            KnowledgeUnavailableError,
+            ChatResponseUnavailableError,
+        ) as exc:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="O serviço de informações está indisponível no momento.",
@@ -71,8 +73,6 @@ def create_send_message_router(
 
         guardrail = result.guardrail
         knowledge = result.knowledge
-        if knowledge is not None:
-            await asyncio.sleep(SIMULATED_PROCESSING_DELAY_SECONDS)
         return SendMessageResponse(
             reply=result.reply,
             guidance=result.triage.guidance,

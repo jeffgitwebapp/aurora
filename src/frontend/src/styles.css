@@ -801,9 +801,35 @@ textarea:focus-visible {
   flex-direction: column;
   gap: 0.5rem;
   margin: 0;
-  padding-left: 1.1rem;
+  padding-left: 0;
+  list-style: none;
   font-size: 0.8125rem;
   line-height: 1.5;
+}
+
+.message-sources__list li:target {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.message-sources__number {
+  color: var(--color-coffee-muted);
+  font-weight: 600;
+}
+
+.message-citation {
+  color: var(--color-terracotta);
+  font-size: 0.8em;
+  font-weight: 600;
+  text-decoration: none;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.message-citation:hover,
+.message-citation:focus-visible {
+  text-decoration: underline;
 }
 
 .message-sources__list a {

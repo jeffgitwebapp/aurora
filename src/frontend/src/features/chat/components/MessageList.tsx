@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 
 import type { ChatMessage } from "../types";
+import { CitedText, sourceAnchorId } from "./CitedText";
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -62,7 +63,17 @@ export function MessageList({
                     Fora do que eu posso fazer
                   </h2>
                 )}
-                <p className="message-item__text">{message.text}</p>
+                <p className="message-item__text">
+                  {message.sources && message.sources.length > 0 ? (
+                    <CitedText
+                      text={message.text}
+                      sources={message.sources}
+                      anchorPrefix={message.id}
+                    />
+                  ) : (
+                    message.text
+                  )}
+                </p>
                 {isOutOfScope && (
                   <>
                     <div className="message-item__actions">
@@ -110,9 +121,12 @@ export function MessageList({
                     aria-label="Fontes desta resposta"
                   >
                     <h2 className="message-sources__title">Fontes</h2>
-                    <ul className="message-sources__list">
-                      {message.sources.map((source) => (
-                        <li key={source.id}>
+                    <ol className="message-sources__list">
+                      {message.sources.map((source, index) => (
+                        <li key={source.id} id={sourceAnchorId(message.id, index + 1)}>
+                          <span className="message-sources__number" aria-hidden="true">
+                            [{index + 1}]
+                          </span>{" "}
                           <a href={source.url} target="_blank" rel="noreferrer">
                             {source.title}, {source.locator}
                           </a>
@@ -122,7 +136,7 @@ export function MessageList({
                           </span>
                         </li>
                       ))}
-                    </ul>
+                    </ol>
                   </section>
                 )}
                 {message.demo && (
@@ -132,8 +146,8 @@ export function MessageList({
                       : isOutOfScope
                         ? "Demonstração: o limite é acionado por frases de teste e não identifica pedidos reais."
                         : message.knowledgeStatus === "found"
-                          ? "Demonstração: trecho de fonte oficial escolhido para teste do protótipo, com revisão jurídica pendente. Não é orientação sobre o seu caso."
-                          : "Demonstração: o protótipo só responde a perguntas de teste com fonte aprovada."}
+                          ? "Demonstração: resposta baseada nas fontes listadas, que ainda estão em revisão jurídica e técnica. Pode conter erros e não é orientação sobre o seu caso."
+                          : "Demonstração: a base de fontes do protótipo ainda está em revisão e pode não cobrir esta pergunta."}
                   </p>
                 )}
               </li>

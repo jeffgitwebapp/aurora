@@ -1,15 +1,15 @@
 """Composição da aplicação FastAPI."""
 
+import logging
+
 from fastapi import FastAPI
 
 from aurora_backend.contexts import accounts, conversation, learning, questionnaire, referral
 from aurora_backend.contexts.accounts.services.accounts.port import Accounts
 from aurora_backend.contexts.accounts.services.accounts.service import AccountService
+from aurora_backend.contexts.conversation.engine import build_conversation_engine
 from aurora_backend.contexts.conversation.services.chat_response.port import (
     ChatResponseGenerator,
-)
-from aurora_backend.contexts.conversation.services.chat_response.service import (
-    ChatResponseService,
 )
 from aurora_backend.contexts.conversation.services.content_offer.port import (
     ContentOfferProvider,
@@ -20,7 +20,6 @@ from aurora_backend.contexts.conversation.services.content_offer.service import 
 from aurora_backend.contexts.conversation.services.guardrail.port import ScopeGuardrail
 from aurora_backend.contexts.conversation.services.guardrail.service import GuardrailService
 from aurora_backend.contexts.conversation.services.knowledge.port import KnowledgeRetriever
-from aurora_backend.contexts.conversation.services.knowledge.service import KnowledgeService
 from aurora_backend.contexts.conversation.services.triage.port import TriageEvaluator
 from aurora_backend.contexts.conversation.services.triage.service import TriageService
 from aurora_backend.contexts.learning.services.modules.port import ModuleCatalog
@@ -33,6 +32,9 @@ from aurora_backend.contexts.questionnaire.services.questionnaire.service import
 )
 from aurora_backend.contexts.referral.services.catalog.port import ServiceCatalog
 from aurora_backend.contexts.referral.services.catalog.service import CatalogService
+
+# Filho de "uvicorn.error" para que o motor ativo apareça no log de subida do uvicorn.
+logger = logging.getLogger("uvicorn.error.aurora")
 
 
 def create_app(
@@ -63,12 +65,14 @@ def create_app(
     composed_guardrail_service = (
         guardrail_service if guardrail_service is not None else GuardrailService()
     )
-    composed_knowledge_service = (
-        knowledge_service if knowledge_service is not None else KnowledgeService()
-    )
-    composed_chat_response_service = (
-        chat_response_service if chat_response_service is not None else ChatResponseService()
-    )
+    if knowledge_service is None or chat_response_service is None:
+        # AURORA_CHAT_ENGINE escolhe fixtures, base ou llm; serviços injetados têm precedência.
+        conversation_engine = build_conversation_engine()
+        logger.info("aurora.chat_engine: %s", conversation_engine.description)
+        knowledge_service = knowledge_service or conversation_engine.knowledge_service
+        chat_response_service = chat_response_service or conversation_engine.chat_response_service
+    composed_knowledge_service = knowledge_service
+    composed_chat_response_service = chat_response_service
     for router in conversation.create_routers(
         triage_service=composed_triage_service,
         guardrail_service=composed_guardrail_service,
