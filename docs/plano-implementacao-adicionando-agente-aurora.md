@@ -376,7 +376,7 @@ Mesmo critério do [plano da jornada §3](./jornada-usuario/plano-implementacao-
 | 1 | F1 | Base vigente: versionamento `vX.YY`, ingestão, snapshot, BM25 + seleção pelo LLM (D-12/D-13), gate da CI | F0 | Concluída e publicada (com o radical Snowball) |
 | 2 | F2 | Motor v1.2 + ajustes autorizados (sem atraso, `[n]` nas fixtures, `503`) | F1 | Concluída e publicada na AWS com o motor `llm` |
 | 3 | F3 | Avaliação (gate CA-03, latência, custo) | F2 | **Concluída por decisão da usuária (07/11/2026):** modo rápido executado; avaliação completa, revisão de 20% e demais testes ficam com o time de produto, manualmente. Latência atual (2–12 s no Gemini gratuito) aceita |
-| 4 | F4 | (Condicional) Busca agêntica limitada (tool de busca, ReAct com teto) | F3 com lacuna de recall | Não iniciada — sem gatilho medido; reavaliar se os testes do time de produto mostrarem falta de recall |
+| 4 | F4 | Busca agêntica limitada (busca reformulada pelo LLM, até 2 buscas extras) | Decisão da usuária | Desenvolvimento concluído localmente, desligado por padrão (`AURORA_AGENTIC_SEARCH`) — falta commit, publicação e a comparação manual pelo time de produto |
 | 5 | F5 | CI/CD e publicação (motor `fixtures` por padrão; `llm` por `backend.env`) | F3 (M4 e M5 ok), D-09 | Em andamento — `docker-compose.prod.yml` com `env_file` opcional e guia no `DEPLOY-EC2.md`; a usuária decidiu testar o `llm` na AWS (07/11/2026) |
 
 ### F0 — Preparação
@@ -442,9 +442,9 @@ Mesmo critério do [plano da jornada §3](./jornada-usuario/plano-implementacao-
 
 ### F4 — (Condicional) Busca agêntica limitada
 
-**Gatilho:** F3 com recall/M1 abaixo da meta, causado por vocabulário coloquial.
-**Escopo:** a tool `buscar_base_conhecimento(consulta)` (`strict: true`, só leitura, no máximo 2–3 chamadas, loop manual com cada passo no trace) dentro do `GroundedAnswerService`. A porta e o contrato não mudam.
-**Aceite:** comparação com a F2 no mesmo dataset; adotar só se o recall/M1 melhorar sem piorar M3/M4 e com p95 ≤5 s.
+**Gatilho:** F3 com recall/M1 abaixo da meta, causado por vocabulário coloquial. **Iniciada por decisão da usuária em 07/11/2026**, sem a medição do gatilho.
+**Escopo (revisado em 07/11/2026):** o seletor de trechos pode devolver, em vez dos ids, um pedido de nova busca com termos técnicos (`action: "search"`). O `KnowledgeBaseService` roda o BM25 com esses termos (só leitura, base vigente), soma até 15 candidatos novos e pergunta de novo; no máximo 2 buscas extras, e no último passo a busca não é oferecida. A "ferramenta" é uma ação no JSON da porta `LanguageModel` (`generate_json`), **não** o tool calling nativo de um provedor, para manter Gemini e Claude trocáveis (decisão F4-A). Ligada por `AURORA_AGENTIC_SEARCH=true`, só no motor `llm`; desligada por padrão. Trace e logs registram só contagens (buscas extras, candidatos, ação), nunca a consulta reformulada, que deriva da mensagem da vítima. A triagem, o escopo, o contrato HTTP e o front não mudam.
+**Aceite (revisado em 07/11/2026):** testes sem rede (laço, limite, consulta repetida, falha fechada, schema inválido, logs sem conteúdo). A comparação com a F2 fica com o time de produto, por testes manuais; não rodar a avaliação de 108 chamadas (decisão F4-B). O critério de p95 ≤5 s foi retirado (decisão F4-C).
 
 ### F5 — CI/CD e publicação
 
@@ -576,3 +576,4 @@ U-01 a U-06 (seção 1.1), em 07/11/2026, e as decisões abaixo.
 | 07/11/2026 | U-11 | Publicada (commit `dac68a4`, workflow com sucesso). Verificado na API pública da EC2: 'oi', 'obrigada' e 'tchau' → `conversation` + texto do backend, sem fontes; 'oi, quero me matar' → triagem aguda; 'meu marido me ameaçou' → motor `llm` com 5 fontes | Respostas da API em produção | Claude Code |
 | 07/11/2026 | F3 | Encerrada por decisão da usuária: os testes restantes serão manuais, feitos pelo time de produto; latência mantida como está | Este arquivo | Usuária |
 | 07/11/2026 | U-12 | Textos de 'sem fonte', 'fora do escopo' e oferta do guia movidos para o backend (`replies.py`); handler devolve `reply` nesses desfechos; `chatApi.ts` exige `reply` em texto; `ChatPage.tsx` só exibe. 341 testes, ruff, `npm run check` e `npm run build` passando. Verificado no navegador headless (motor `fixtures`): os 4 desfechos mostram o texto do backend com os mesmos botões | Captura de tela da verificação | Claude Code |
+| 07/11/2026 | F4 | Decisões da usuária: F4-A reformulação via JSON na porta atual (não tool calling nativo); F4-B sem a avaliação de 108 chamadas, comparação manual pelo time de produto; F4-C critério de p95 ≤5 s retirado. Implementado: `knowledge_base/agentic_selector.py` (`LanguageModelAgenticChunkSelector`, ação `select`/`search`, consulta normalizada e limitada a 200 caracteres), laço limitado no `KnowledgeBaseService` (até 2 buscas extras, 15 candidatos novos por busca), `AURORA_AGENTIC_SEARCH` no `engine.py` (padrão false; valor inválido impede a subida), seção no `DEPLOY-EC2.md`. 369 testes passando (28 novos). Fumaça com o Gemini real: 'ele controla tudo, até meu celular' → 3 fontes (Cartilha LMP, Stark, art. 7º, II) em 4,4 s; as demais mensagens pararam na cota diária gratuita da chave local (500 requisições/dia), sem efeito na produção | Testes locais | Claude Code |

@@ -228,6 +228,12 @@ Para usar o Claude no lugar do Gemini, troque as três últimas linhas por
 `AURORA_LLM_PROVIDER=claude`, `AURORA_LLM_MODEL=claude-opus-5-5` e
 `ANTHROPIC_API_KEY=<chave>`. Nada no código muda.
 
+Busca reformulada (F4, opcional, desligada por padrão): acrescente
+`AURORA_AGENTIC_SEARCH=true` para o modelo poder pedir até 2 buscas extras com
+termos técnicos quando a mensagem usa palavras do dia a dia. Cada busca extra é
+mais uma chamada ao LLM (mais latência e mais consumo da cota). Valores aceitos:
+`true`/`1` ou `false`/`0`; outro valor impede a subida do backend.
+
 Aplicar uma mudança no arquivo sem novo deploy:
 
 ```bash

@@ -3,7 +3,12 @@
 BM25 traz até 30 candidatos; com um seletor (D-12), o Claude escolhe entre eles os
 trechos que respondem à mensagem. Sem candidatos ou sem escolha, o resultado é
 "sem fonte" e o LLM de resposta não é chamado. Falha do seletor é falha fechada.
+
+Com um seletor agêntico (F4), o LLM pode pedir até `max_extra_searches` buscas com
+termos técnicos; o serviço roda o BM25 com esses termos e soma os candidatos.
 """
+
+import logging
 
 from aurora_backend.contexts.conversation.services.knowledge.models import (
     KnowledgePassage,
@@ -13,6 +18,9 @@ from aurora_backend.contexts.conversation.services.knowledge.models import (
 )
 from aurora_backend.contexts.conversation.services.knowledge.port import (
     KnowledgeUnavailableError,
+)
+from aurora_backend.contexts.conversation.services.knowledge_base.agentic_selector import (
+    AgenticChunkSelector,
 )
 from aurora_backend.contexts.conversation.services.knowledge_base.models import (
     CitableKind,
@@ -31,8 +39,13 @@ from aurora_backend.contexts.conversation.services.knowledge_base.selector impor
     ChunkSelector,
 )
 
+logger = logging.getLogger(__name__)
+
 DEFAULT_TOP_K = 5
 DEFAULT_CANDIDATES = 30
+DEFAULT_MAX_EXTRA_SEARCHES = 2
+# Por busca extra entram no máximo estes candidatos novos (o prompt cresce a cada passo).
+EXTRA_SEARCH_CANDIDATES = 15
 # Só para o modo sem seletor (BM25 puro); ver registro de execução da F1 no plano.
 DEFAULT_SCORE_THRESHOLD = 2.0
 CURATED_SUMMARY_LABEL = "resumo da curadoria Aurora, não é o texto da fonte"
@@ -78,11 +91,12 @@ class KnowledgeBaseService:
         self,
         repository: KnowledgeBaseRepository,
         *,
-        selector: ChunkSelector | None = None,
+        selector: ChunkSelector | AgenticChunkSelector | None = None,
         top_k: int = DEFAULT_TOP_K,
         candidates: int = DEFAULT_CANDIDATES,
         score_threshold: float = DEFAULT_SCORE_THRESHOLD,
         allow_pending: bool = True,
+        max_extra_searches: int = DEFAULT_MAX_EXTRA_SEARCHES,
     ):
         self._chunks = repository.searchable_chunks(allow_pending=allow_pending)
         self._index = BM25Index([tokenize(_index_text(chunk)) for chunk in self._chunks])
@@ -90,6 +104,7 @@ class KnowledgeBaseService:
         self._top_k = top_k
         self._candidates = candidates
         self._threshold = score_threshold
+        self._max_extra_searches = max_extra_searches
         self.kb_version = repository.kb_version
 
     def rank(self, message: str) -> list[tuple[KnowledgeChunk, float]]:
@@ -101,7 +116,11 @@ class KnowledgeBaseService:
 
     async def retrieve(self, message: str) -> KnowledgeResult:
         ranked = self.rank(message)
-        if self._selector is None:
+        if isinstance(self._selector, AgenticChunkSelector):
+            selected = await self._select_with_search(
+                message, self._selector, [chunk for chunk, _ in ranked]
+            )
+        elif self._selector is None:
             selected = [chunk for chunk, score in ranked[: self._top_k] if score >= self._threshold]
         else:
             selected = await self._select(message, [chunk for chunk, _ in ranked])
@@ -123,3 +142,37 @@ class KnowledgeBaseService:
             raise KnowledgeUnavailableError("Seleção de trechos indisponível.") from exc
         by_id = {chunk.id: chunk for chunk in candidates}
         return [by_id[chunk_id] for chunk_id in selected_ids if chunk_id in by_id][: self._top_k]
+
+    async def _select_with_search(
+        self, message: str, selector: AgenticChunkSelector, ranked: list[KnowledgeChunk]
+    ) -> list[KnowledgeChunk]:
+        """Laço limitado: escolher ou pedir nova busca; sem escolha útil, sem fonte."""
+        candidates = list(ranked[: self._candidates])
+        queries: list[str] = []
+        try:
+            while True:
+                can_search = len(queries) < self._max_extra_searches
+                if not candidates and not can_search:
+                    return []
+                decision = await selector.decide(
+                    message,
+                    tuple(candidates),
+                    can_search=can_search,
+                    previous_queries=tuple(queries),
+                )
+                query = decision.search_query
+                if query is None or not can_search or query in queries:
+                    break
+                queries.append(query)
+                known = {chunk.id for chunk in candidates}
+                new = [chunk for chunk, _ in self.rank(query) if chunk.id not in known]
+                candidates.extend(new[:EXTRA_SEARCH_CANDIDATES])
+        except ChunkSelectionUnavailableError as exc:
+            raise KnowledgeUnavailableError("Seleção de trechos indisponível.") from exc
+        logger.info(
+            "knowledge_base.agentic_search",
+            extra={"extra_searches": len(queries), "candidates": len(candidates)},
+        )
+        by_id = {chunk.id: chunk for chunk in candidates}
+        ids = decision.relevant_ids if decision.search_query is None else ()
+        return [by_id[chunk_id] for chunk_id in ids if chunk_id in by_id][: self._top_k]

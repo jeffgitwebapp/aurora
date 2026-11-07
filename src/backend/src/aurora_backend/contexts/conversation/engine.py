@@ -5,6 +5,9 @@ AURORA_CHAT_ENGINE:
 - base: base curada vigente, só BM25, sem LLM (KnowledgeBaseService + SourceReplyService);
 - llm: base curada com seleção de trechos pelo LLM do AURORA_LLM_PROVIDER (D-12/D-13).
 
+AURORA_AGENTIC_SEARCH (só no motor llm; padrão false): com true, o LLM pode pedir
+até 2 buscas extras com termos técnicos antes de escolher os trechos (F4).
+
 Triagem, escopo e oferta continuam determinísticos em todos os motores (U-01).
 Configuração inválida impede a subida do app; nunca há troca silenciosa de motor.
 """
@@ -56,6 +59,17 @@ def engine_from_env(env: Mapping[str, str] = os.environ) -> ChatEngine:
         ) from exc
 
 
+def agentic_search_from_env(env: Mapping[str, str] = os.environ) -> bool:
+    raw = env.get("AURORA_AGENTIC_SEARCH", "false").strip().lower()
+    if raw in ("true", "1"):
+        return True
+    if raw in ("false", "0", ""):
+        return False
+    raise ChatEngineConfigurationError(
+        f"AURORA_AGENTIC_SEARCH inválido: {raw!r} (use true ou false)"
+    )
+
+
 def build_conversation_engine(env: Mapping[str, str] = os.environ) -> ConversationEngine:
     engine = engine_from_env(env)
     if engine is ChatEngine.FIXTURES:
@@ -88,6 +102,9 @@ def build_conversation_engine(env: Mapping[str, str] = os.environ) -> Conversati
     from aurora_backend.contexts.conversation.services.grounded_answer.service import (
         GroundedAnswerService,
     )
+    from aurora_backend.contexts.conversation.services.knowledge_base.agentic_selector import (
+        LanguageModelAgenticChunkSelector,
+    )
     from aurora_backend.contexts.conversation.services.knowledge_base.selector import (
         LanguageModelChunkSelector,
     )
@@ -97,6 +114,7 @@ def build_conversation_engine(env: Mapping[str, str] = os.environ) -> Conversati
         create_language_model,
     )
 
+    agentic_search = agentic_search_from_env(env)
     try:
         settings = LanguageModelSettings.from_env(env)
         language_model = create_language_model(settings, env)
@@ -105,7 +123,12 @@ def build_conversation_engine(env: Mapping[str, str] = os.environ) -> Conversati
     return ConversationEngine(
         engine=engine,
         knowledge_service=KnowledgeBaseService(
-            repository, selector=LanguageModelChunkSelector(language_model)
+            repository,
+            selector=(
+                LanguageModelAgenticChunkSelector(language_model)
+                if agentic_search
+                else LanguageModelChunkSelector(language_model)
+            ),
         ),
         chat_response_service=GroundedAnswerService(
             language_model, repository, AnswerGuardrailService()
@@ -113,5 +136,6 @@ def build_conversation_engine(env: Mapping[str, str] = os.environ) -> Conversati
         description=(
             f"base {repository.kb_version}, BM25 + seleção e redação por "
             f"{settings.provider}/{settings.model}"
+            + (" com busca reformulada (até 2 buscas extras)" if agentic_search else "")
         ),
     )
