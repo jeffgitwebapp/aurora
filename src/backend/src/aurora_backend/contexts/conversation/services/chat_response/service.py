@@ -17,8 +17,12 @@ class ChatResponseService:
         del message
         if not passages:
             raise ValueError("A resposta exige ao menos um trecho de fonte.")
+        numbers: dict[str, int] = {}
+        for passage in passages:
+            numbers.setdefault(passage.source.id, len(numbers) + 1)
         quotes = (
-            f"{passage.source.title}, {passage.source.locator}: “{passage.text}”"
+            f"{passage.source.title}, {passage.source.locator}: “{passage.text}” "
+            f"[{numbers[passage.source.id]}]"
             for passage in passages
         )
         return "\n\n".join((REPLY_INTRODUCTION, *quotes))

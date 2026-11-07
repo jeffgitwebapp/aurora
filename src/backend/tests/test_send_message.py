@@ -139,6 +139,7 @@ def processing_delays(monkeypatch: pytest.MonkeyPatch) -> list[float]:
         send_message_router,
         "asyncio",
         SimpleNamespace(sleep=record_processing_delay),
+        raising=False,
     )
     return sleep_durations
 
@@ -378,7 +379,7 @@ def test_chat_response_quotes_only_received_passages() -> None:
     reply = asyncio.run(ChatResponseService().generate_reply("pergunta", (TEST_PASSAGE,)))
 
     assert reply.startswith(REPLY_INTRODUCTION)
-    assert "Fonte sintética de teste, seção 1: “Trecho sintético.”" in reply
+    assert "Fonte sintética de teste, seção 1: “Trecho sintético.” [1]" in reply
 
 
 def test_chat_response_refuses_to_answer_without_passages() -> None:
@@ -406,7 +407,7 @@ def test_missing_message_field_is_rejected(client: TestClient) -> None:
         (CRIME_QUESTION, "codigo-penal-art-147-b"),
     ],
 )
-def test_knowledge_fixture_returns_reply_with_sources_after_five_seconds(
+def test_knowledge_fixture_returns_reply_with_sources_without_simulated_delay(
     client: TestClient,
     processing_delays: list[float],
     message: str,
@@ -431,7 +432,7 @@ def test_knowledge_fixture_returns_reply_with_sources_after_five_seconds(
         "url",
         "version",
     }
-    assert processing_delays == [5]
+    assert processing_delays == []
 
 
 def test_message_without_source_returns_no_source_state(
@@ -448,7 +449,7 @@ def test_message_without_source_returns_no_source_state(
     assert payload["guidance"] is None
     assert payload["sources"] == []
     assert payload["demo"] is True
-    assert processing_delays == [5]
+    assert processing_delays == []
 
 
 def test_knowledge_failure_returns_503_without_reply(
@@ -500,6 +501,7 @@ def test_acute_fixture_returns_service_guidance_without_chat_or_delay(
         send_message_router,
         "asyncio",
         SimpleNamespace(sleep=record_processing_delay),
+        raising=False,
     )
     response = client.post(ENDPOINT, json={"message": message})
 
@@ -529,6 +531,7 @@ def test_exact_indeterminate_fixture_returns_service_guidance_without_chat_or_de
         send_message_router,
         "asyncio",
         SimpleNamespace(sleep=record_processing_delay),
+        raising=False,
     )
     response = client.post(ENDPOINT, json={"message": "frase incerta"})
 
@@ -682,7 +685,7 @@ def test_allowed_message_reports_allowed_scope(
     assert payload["scope_status"] == "allowed"
     assert payload["out_of_scope_category"] is None
     assert payload["knowledge_status"] == "found"
-    assert processing_delays == [5]
+    assert processing_delays == []
 
 
 def test_guardrail_failure_returns_503_without_reply(

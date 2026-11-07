@@ -139,7 +139,7 @@ Forma
 2. A conversão das citações nativas em `[n]` acontece no backend:
    - para cada bloco de texto citado, acrescentar `[n]` no fim (ou `[n][m]`, se ele citar mais de um trecho);
    - a lista `sources` contém só as fontes efetivamente citadas, em ordem de primeira citação.
-3. O guardrail verifica que todo `[n]` existe em `sources` e que toda fonte de `sources` é citada.
+3. O guardrail verifica que todo id citado está entre os trechos enviados. Como `sources` traz todos os trechos recuperados (o handler não muda), pode haver fonte listada sem `[n]` no texto.
 4. Nas fixtures, cada citação literal ganha `[n]` ao final: `Lei nº 11.340…, art. 7º, II: “…” [1]`.
 
 **Front (U-06), só apresentação:**
@@ -270,6 +270,7 @@ class KnowledgeBaseSnapshot:
 | Data | Alteração |
 |---|---|
 | 07/11/2026 | Criação |
+| 07/11/2026 | F2: redação pelo LLM (`GroundedAnswerService`), guardrail de saída `answer_guardrail@1`, trace com lista branca, `[n]` clicável no front |
 | 07/11/2026 | D-13: porta de LLM independente de provedor (Gemini na demonstração, Claude por ambiente); resposta em JSON de segmentos |
 | 07/11/2026 | F1: recuperação em duas etapas (BM25 → seleção pelo Claude, D-12) |
 | 07/11/2026 | Revisão 2: livro H-ACD fora do escopo; sem endpoint novo (o motor v1.2 entra pelas portas existentes); triagem e escopo determinísticos; marcadores `[n]` nos dois motores; front ajustado só para exibir as fontes (U-06); base em `docs/aurora-base-rag/vX.YY` com releitura automática |

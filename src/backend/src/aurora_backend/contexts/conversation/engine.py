@@ -82,6 +82,12 @@ def build_conversation_engine(env: Mapping[str, str] = os.environ) -> Conversati
             description=f"base {repository.kb_version}, BM25 sem LLM",
         )
 
+    from aurora_backend.contexts.conversation.services.answer_guardrail.service import (
+        AnswerGuardrailService,
+    )
+    from aurora_backend.contexts.conversation.services.grounded_answer.service import (
+        GroundedAnswerService,
+    )
     from aurora_backend.contexts.conversation.services.knowledge_base.selector import (
         LanguageModelChunkSelector,
     )
@@ -101,8 +107,11 @@ def build_conversation_engine(env: Mapping[str, str] = os.environ) -> Conversati
         knowledge_service=KnowledgeBaseService(
             repository, selector=LanguageModelChunkSelector(language_model)
         ),
-        chat_response_service=SourceReplyService(),
+        chat_response_service=GroundedAnswerService(
+            language_model, repository, AnswerGuardrailService()
+        ),
         description=(
-            f"base {repository.kb_version}, BM25 + seleção por {settings.provider}/{settings.model}"
+            f"base {repository.kb_version}, BM25 + seleção e redação por "
+            f"{settings.provider}/{settings.model}"
         ),
     )

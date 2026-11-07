@@ -1,7 +1,6 @@
 """Roteamento do motor da conversa por AURORA_CHAT_ENGINE (fixtures | base | llm)."""
 
 import asyncio
-from types import SimpleNamespace
 
 import pytest
 from fastapi.testclient import TestClient
@@ -11,13 +10,15 @@ from aurora_backend.contexts.conversation.engine import (
     ChatEngineConfigurationError,
     build_conversation_engine,
 )
-from aurora_backend.contexts.conversation.features.send_message import router as send_message_router
 from aurora_backend.contexts.conversation.services.chat_response.service import (
     ChatResponseService,
 )
 from aurora_backend.contexts.conversation.services.chat_response.source_reply import (
     SOURCE_REPLY_INTRODUCTION,
     SourceReplyService,
+)
+from aurora_backend.contexts.conversation.services.grounded_answer.service import (
+    GroundedAnswerService,
 )
 from aurora_backend.contexts.conversation.services.knowledge.models import (
     KnowledgePassage,
@@ -59,6 +60,7 @@ def test_llm_engine_uses_selector_from_configured_provider() -> None:
     assert engine.engine is ChatEngine.LLM
     assert isinstance(engine.knowledge_service, KnowledgeBaseService)
     assert isinstance(engine.knowledge_service._selector, LanguageModelChunkSelector)
+    assert isinstance(engine.chat_response_service, GroundedAnswerService)
     assert "gemini/" in engine.description
     assert "teste" not in engine.description
 
@@ -84,11 +86,7 @@ def test_create_app_fails_instead_of_falling_back(monkeypatch: pytest.MonkeyPatc
 def test_base_engine_answers_through_existing_http_contract(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    async def no_delay(_: float) -> None:
-        return None
-
     monkeypatch.setenv("AURORA_CHAT_ENGINE", "base")
-    monkeypatch.setattr(send_message_router, "asyncio", SimpleNamespace(sleep=no_delay))
     client = TestClient(create_app())
 
     payload = client.post(
