@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-paths.js\"",
+            "timeout": 10,
+            "statusMessage": "Verificando caminhos protegidos (plano v1.2)"
+          }
+        ]
+      }
+    ]
+  }
+}
