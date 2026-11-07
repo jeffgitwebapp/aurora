@@ -87,7 +87,10 @@ export function ChatPage() {
       setRiskScreen(null);
       const id = `message-${nextMessageId.current++}`;
       let assistantMessage: ChatMessage;
-      if (result.offer !== null) {
+      if (result.conversation !== null && result.reply !== null) {
+        // Texto decidido pelo backend; o front só exibe.
+        assistantMessage = { id, role: "assistant", text: result.reply };
+      } else if (result.offer !== null) {
         assistantMessage = {
           id,
           role: "assistant",

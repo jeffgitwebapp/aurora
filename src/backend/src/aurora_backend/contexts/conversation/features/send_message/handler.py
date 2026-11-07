@@ -19,6 +19,11 @@ from aurora_backend.contexts.conversation.services.knowledge.models import (
     KnowledgeStatus,
 )
 from aurora_backend.contexts.conversation.services.knowledge.port import KnowledgeRetriever
+from aurora_backend.contexts.conversation.services.small_talk.port import SmallTalkDetector
+from aurora_backend.contexts.conversation.services.small_talk.service import (
+    ConversationKind,
+    SmallTalkService,
+)
 from aurora_backend.contexts.conversation.services.triage.models import (
     TriageResult,
     TriageStatus,
@@ -33,6 +38,7 @@ class SendMessageResult:
     guardrail: GuardrailResult | None = None
     knowledge: KnowledgeResult | None = None
     offer: ContentOffer | None = None
+    conversation: ConversationKind | None = None
 
 
 class EmptyMessageError(ValueError):
@@ -47,6 +53,7 @@ async def handle_send_message(
     offer_service: ContentOfferProvider,
     knowledge_service: KnowledgeRetriever,
     chat_response_service: ChatResponseGenerator,
+    small_talk_service: SmallTalkDetector | None = None,
 ) -> SendMessageResult:
     if not message.strip():
         raise EmptyMessageError("A mensagem não pode estar vazia.")
@@ -58,6 +65,15 @@ async def handle_send_message(
     guardrail = await guardrail_service.check_request(message)
     if guardrail.decision is not ScopeDecision.ALLOW:
         return SendMessageResult(reply=None, triage=triage, guardrail=guardrail)
+
+    small_talk = await (small_talk_service or SmallTalkService()).respond(message)
+    if small_talk is not None:
+        return SendMessageResult(
+            reply=small_talk.text,
+            triage=triage,
+            guardrail=guardrail,
+            conversation=small_talk.kind,
+        )
 
     offer = await offer_service.suggest(message)
     if offer is not None:
