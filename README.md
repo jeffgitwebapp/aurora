@@ -254,7 +254,7 @@ Para o passo a passo completo da instância, Docker/Compose, SSH, GHCR, secrets 
   {"message": "mensagem enviada pela pessoa usuária"}
   ```
 - **Resposta para mensagem válida (200 OK):**
-  A API aguarda 10 segundos para simular o processamento antes de responder.
+  Exemplo simplificado; os campos completos estão em [Motor de chat v1.2](#motor-de-chat-v12).
   ```http
   HTTP/1.1 200 OK
   Content-Type: application/json
@@ -268,6 +268,40 @@ Para o passo a passo completo da instância, Docker/Compose, SSH, GHCR, secrets 
 
   {"detail": "A mensagem não pode ser vazia."}
   ```
+
+### Motor de chat v1.2
+
+O backend decide o que responder; o frontend só exibe o texto de `reply`, as fontes e os botões de navegação. A triagem de risco, o limite de escopo, a oferta do guia e as respostas de saudação continuam determinísticos e sem LLM em todos os motores. O motor é escolhido só por variável de ambiente (local: `src/backend/.env`, fora do git; EC2: `/opt/aurora/backend.env`, ver [DEPLOY-EC2.md](./DEPLOY-EC2.md)):
+
+| Variável | Valores | Efeito |
+|---|---|---|
+| `AURORA_CHAT_ENGINE` | `fixtures` (padrão), `base`, `llm` | `fixtures`: frases de teste do protótipo; `base`: base curada com busca BM25, sem LLM; `llm`: BM25 + seleção de trechos e redação pelo LLM, com guardrail de saída |
+| `AURORA_LLM_PROVIDER` | `gemini` (padrão), `claude` | Provedor do LLM no motor `llm`; trocar não exige mudança de código |
+| `AURORA_LLM_MODEL` | padrão `gemini-3.5-flash-lite` | Modelo do provedor (ex.: `claude-opus-5-5`) |
+| `GEMINI_API_KEY` / `ANTHROPIC_API_KEY` | chave | Chave do provedor escolhido; nunca no repositório |
+| `AURORA_AGENTIC_SEARCH` | `false` (padrão), `true` | Só no motor `llm`: o LLM pode pedir até 2 buscas extras com termos técnicos quando a mensagem usa palavras do dia a dia |
+
+Valor inválido ou chave ausente impedem a subida do backend; não há troca silenciosa de motor. O log de subida mostra o motor ativo (`aurora.chat_engine: ...`).
+
+**Base de conhecimento.** A versão vigente é a pasta `docs/aurora-base-rag/vX.YY` de maior número (ex.: `v0.03`). O backend lê um snapshot JSON gerado a partir dela; sempre que a base mudar ou uma nova versão for criada, regenere-o:
+
+```powershell
+cd src/backend
+uv run python scripts/build_knowledge_snapshot.py
+```
+
+A CI falha se o snapshot não corresponder à versão vigente (`test_snapshot_matches_latest_base`).
+
+**Respostas.** Com fonte, `reply` traz marcadores `[1]`, `[2]`… na ordem da lista `sources`. Sem fonte, fora do escopo, oferta do guia e saudação também trazem o texto em `reply`. Em risco agudo, `reply` é `null` e o frontend abre a tela de emergência. Falha do LLM ou do guardrail de saída devolve `503`, nunca uma resposta sem verificação.
+
+**Avaliação.** Testes offline (sem rede) rodam na CI em todo push. O teste essencial com o LLM real ([eval-v1-2.yml](./.github/workflows/eval-v1-2.yml): 1 caso por categoria, menos de 2 minutos) roda nos PRs para `release` e sob demanda, e exige o secret `GEMINI_API_KEY` no repositório; sem ele, o job só emite um aviso. Localmente:
+
+```powershell
+cd src/backend
+uv run --env-file .env python evals/v1_2/run_answer_eval.py --check
+```
+
+Plano e decisões: [plano-implementacao-adicionando-agente-aurora.md](./docs/plano-implementacao-adicionando-agente-aurora.md).
 
 ---
 
