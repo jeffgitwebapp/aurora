@@ -1,4 +1,6 @@
-import { useState, type FormEvent, type KeyboardEvent } from "react";
+import { useState, type FormEvent } from "react";
+
+import { submitOnEnter } from "../../../shared/forms/submitOnEnter";
 
 interface MessageComposerProps {
   onSendMessage: (message: string) => Promise<void> | void;
@@ -24,15 +26,6 @@ export function MessageComposer({
     await onSendMessage(trimmed);
   };
 
-  // Enter envia; Shift+Enter quebra linha; durante composição (acentos/IME) não envia.
-  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key !== "Enter" || event.shiftKey || event.nativeEvent.isComposing) {
-      return;
-    }
-    event.preventDefault();
-    event.currentTarget.form?.requestSubmit();
-  };
-
   const isSubmitDisabled = disabled || text.trim() === "";
 
   return (
@@ -48,7 +41,7 @@ export function MessageComposer({
           placeholder="Escreva aqui…"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={handleKeyDown}
+          onKeyDown={submitOnEnter}
           disabled={disabled}
         />
         <button
