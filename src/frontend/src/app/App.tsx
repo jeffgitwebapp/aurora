@@ -37,7 +37,7 @@ const ACCOUNT_SECTIONS: readonly AccountSection[] = [
 ];
 
 const PAGE_TITLES = {
-  welcome: "Aurora — protótipo local",
+  welcome: "Aurora",
   conversation: "Notas",
   account: "Conta — Aurora",
   recipes: "Receitas",
