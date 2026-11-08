@@ -37,7 +37,7 @@ const ACCOUNT_SECTIONS: readonly AccountSection[] = [
 ];
 
 const PAGE_TITLES = {
-  welcome: "Aurora — protótipo local",
+  welcome: "Aurora",
   conversation: "Notas",
   account: "Conta — Aurora",
   recipes: "Receitas",
@@ -82,7 +82,7 @@ function CurrentPage() {
     <div className="app app--conversation">
       <header className="conversation-header">
         <a className="conversation-header__brand" href="/">
-          Notas
+          Aurora
         </a>
         <nav className="conversation-header__actions" aria-label="Ações de segurança">
           <a className="conversation-header__emergency" href="tel:190">

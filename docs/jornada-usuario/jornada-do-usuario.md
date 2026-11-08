@@ -63,7 +63,9 @@ usuária.
 8. **Mensagens e avisos sem modal por padrão.** Mensagens de estado e avisos,
    tenham ações ou não, devem permanecer no fluxo/tela sem bloquear a interação.
    Os resultados de triagem aguda e incerta são exceções explícitas: abrem como
-   modal sobre a conversa para manter o contexto visível.
+   modal sobre a conversa para manter o contexto visível. A lista de **Fontes**
+   de uma resposta também abre em modal, pelo link "Fontes (n)" ou por um
+   marcador `[n]` (exceção acrescentada em 08/11/2026, plano v1.2, U-13).
 
 ## 3. Ações independentes, priorizadas
 
@@ -375,7 +377,8 @@ cortar informações ou ações.
 **Padrão para mensagens e avisos:** os estados de erro, orientação e aviso que
 não exigem interrupção da conversa devem ser apresentados no fluxo ou em tela
 própria, sem janela modal, tenham ações ou não. Os modais de risco agudo e de
-resultado incerto são exceções específicas dos resultados de triagem.
+resultado incerto são exceções específicas dos resultados de triagem; o modal
+de Fontes da resposta é a terceira exceção (08/11/2026, plano v1.2, U-13).
 
 **[GAP]** Os critérios exatos que escolhem quais números destacar para cada
 sinal não estão completamente apresentados nas telas. O backlog menciona 190

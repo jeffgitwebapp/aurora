@@ -37,6 +37,12 @@ jobs:
         working-directory: src/backend
         run: uv sync --locked --all-groups
 
+      - name: Check backend lint and format
+        working-directory: src/backend
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
       - name: Run backend tests
         working-directory: src/backend
         run: uv run pytest

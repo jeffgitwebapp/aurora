@@ -1,7 +1,8 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import type { ChatMessage } from "../types";
-import { CitedText, sourceAnchorId } from "./CitedText";
+import { CitedText } from "./CitedText";
+import { SourcesModal } from "./SourcesModal";
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -9,6 +10,11 @@ interface MessageListProps {
   onAskLaw: () => void;
   onOpenContacts: () => void;
   onOpenSafetyGuide: () => void;
+  onQuickExit: () => void;
+}
+
+function sourcesButtonId(messageId: string): string {
+  return `${messageId}-sources-button`;
 }
 
 export function MessageList({
@@ -17,8 +23,26 @@ export function MessageList({
   onAskLaw,
   onOpenContacts,
   onOpenSafetyGuide,
+  onQuickExit,
 }: MessageListProps) {
   const containerRef = useRef<HTMLElement | null>(null);
+  const [openSources, setOpenSources] = useState<{
+    messageId: string;
+    highlighted: number | null;
+  } | null>(null);
+  const sourcesMessage = openSources
+    ? messages.find((message) => message.id === openSources.messageId)
+    : undefined;
+
+  const handleCloseSources = () => {
+    const messageId = openSources?.messageId;
+    setOpenSources(null);
+    if (messageId) {
+      window.requestAnimationFrame(() => {
+        document.getElementById(sourcesButtonId(messageId))?.focus();
+      });
+    }
+  };
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -68,7 +92,9 @@ export function MessageList({
                     <CitedText
                       text={message.text}
                       sources={message.sources}
-                      anchorPrefix={message.id}
+                      onOpenSource={(number) =>
+                        setOpenSources({ messageId: message.id, highlighted: number })
+                      }
                     />
                   ) : (
                     message.text
@@ -116,28 +142,17 @@ export function MessageList({
                   </div>
                 )}
                 {message.sources && message.sources.length > 0 && (
-                  <section
-                    className="message-sources"
-                    aria-label="Fontes desta resposta"
+                  <button
+                    type="button"
+                    id={sourcesButtonId(message.id)}
+                    className="message-sources__link"
+                    aria-haspopup="dialog"
+                    onClick={() =>
+                      setOpenSources({ messageId: message.id, highlighted: null })
+                    }
                   >
-                    <h2 className="message-sources__title">Fontes</h2>
-                    <ol className="message-sources__list">
-                      {message.sources.map((source, index) => (
-                        <li key={source.id} id={sourceAnchorId(message.id, index + 1)}>
-                          <span className="message-sources__number" aria-hidden="true">
-                            [{index + 1}]
-                          </span>{" "}
-                          <a href={source.url} target="_blank" rel="noreferrer">
-                            {source.title}, {source.locator}
-                          </a>
-                          <span className="message-sources__meta">
-                            {source.publisher}
-                            {source.version ? ` · ${source.version}` : ""}
-                          </span>
-                        </li>
-                      ))}
-                    </ol>
-                  </section>
+                    Fontes ({message.sources.length})
+                  </button>
                 )}
                 {message.demo && (
                   <p className="message-item__demo" role="note">
@@ -146,7 +161,7 @@ export function MessageList({
                       : isOutOfScope
                         ? "Demonstração: o limite é acionado por frases de teste e não identifica pedidos reais."
                         : message.knowledgeStatus === "found"
-                          ? "Demonstração: resposta baseada nas fontes listadas, que ainda estão em revisão jurídica e técnica. Pode conter erros e não é orientação sobre o seu caso."
+                          ? "Resposta baseada nas fontes indicadas. É informação geral e não substitui orientação sobre o seu caso."
                           : "Demonstração: a base de fontes do protótipo ainda está em revisão e pode não cobrir esta pergunta."}
                   </p>
                 )}
@@ -169,6 +184,14 @@ export function MessageList({
             </li>
           )}
         </ol>
+      )}
+      {sourcesMessage?.sources && sourcesMessage.sources.length > 0 && (
+        <SourcesModal
+          sources={sourcesMessage.sources}
+          highlighted={openSources?.highlighted ?? null}
+          onClose={handleCloseSources}
+          onQuickExit={onQuickExit}
+        />
       )}
     </section>
   );

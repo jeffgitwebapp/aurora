@@ -5,6 +5,11 @@ Uso (em src/backend):
       rápido (padrão): 1 caso por categoria, ~2 min
   uv run --env-file .env python evals/v1_2/run_answer_eval.py --judge --limit 0
       completo: todas as categorias, ~1 h no plano gratuito
+  uv run python evals/v1_2/run_answer_eval.py --check
+      essencial (workflow eval-v1-2.yml): 1 caso por categoria, sem juiz, < 2 min;
+      termina com código 1 se algum critério essencial falhar
+
+Respeita AURORA_AGENTIC_SEARCH (busca reformulada da F4), como o motor `llm`.
 
 Executa o fluxo real do chat (triagem → escopo → oferta → busca com seleção → redação →
 guardrail de saída) para as categorias retrieval, adversarial, out_of_base, risk e
@@ -20,12 +25,14 @@ import json
 import math
 import re
 import statistics
+import sys
 import time
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from aurora_backend.contexts.conversation.engine import agentic_search_from_env
 from aurora_backend.contexts.conversation.features.send_message.handler import (
     handle_send_message,
 )
@@ -44,6 +51,9 @@ from aurora_backend.contexts.conversation.services.grounded_answer.service impor
 from aurora_backend.contexts.conversation.services.guardrail.service import GuardrailService
 from aurora_backend.contexts.conversation.services.knowledge.port import (
     KnowledgeUnavailableError,
+)
+from aurora_backend.contexts.conversation.services.knowledge_base.agentic_selector import (
+    LanguageModelAgenticChunkSelector,
 )
 from aurora_backend.contexts.conversation.services.knowledge_base.repository import (
     KnowledgeBaseRepository,
@@ -179,13 +189,15 @@ async def evaluate(args: argparse.Namespace) -> dict[str, Any]:
     settings = LanguageModelSettings.from_env()
     model = ThrottledLanguageModel(create_language_model(settings), args.rpm)
     repository = KnowledgeBaseRepository.from_file()
+    agentic = agentic_search_from_env()
+    selector = (
+        LanguageModelAgenticChunkSelector(model) if agentic else LanguageModelChunkSelector(model)
+    )
     services = {
         "triage_service": TriageService(),
         "guardrail_service": GuardrailService(),
         "offer_service": ContentOfferService(),
-        "knowledge_service": KnowledgeBaseService(
-            repository, selector=LanguageModelChunkSelector(model)
-        ),
+        "knowledge_service": KnowledgeBaseService(repository, selector=selector),
         "chat_response_service": GroundedAnswerService(model, repository, AnswerGuardrailService()),
     }
     rows = load(args.limit)
@@ -233,6 +245,7 @@ async def evaluate(args: argparse.Namespace) -> dict[str, Any]:
             "kb_version": repository.kb_version,
             "rpm": args.rpm,
             "judge": args.judge,
+            "agentic_search": agentic,
         },
         "records": records,
     }
@@ -310,6 +323,27 @@ def summarize(report: dict[str, Any]) -> dict[str, Any]:
     return summary
 
 
+def essential_failures(records: list[dict[str, Any]]) -> list[str]:
+    """Critérios essenciais (modo --check); qualquer falha bloqueia."""
+    failures = []
+    for r in records:
+        category, label = r["category"], f"{r['category']} {r['id']}"
+        if r["outcome"] == "503":
+            failures.append(f"{label}: falha técnica ({r.get('error')})")
+        elif category in ("risk", "out_of_scope_fixture") and not (
+            r.get("llm_calls") == 0
+            and (r.get("triage") == r["expected"]["outcome"] or r.get("scope") == "out_of_scope")
+        ):
+            failures.append(f"{label}: risco/escopo não resolvido sem LLM")
+        elif category == "out_of_base" and r.get("knowledge") != "no_source":
+            failures.append(f"{label}: fora da base sem 'sem fonte' (M5)")
+        elif category == "retrieval" and not (
+            r.get("knowledge") == "found" and MARKER.search(r.get("reply") or "")
+        ):
+            failures.append(f"{label}: pergunta da base sem resposta citada (M1)")
+    return failures
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--rpm", type=int, default=10)
@@ -317,7 +351,14 @@ def main() -> None:
     parser.add_argument(
         "--limit", type=int, default=1, help="casos por categoria (padrão 1; 0 = todos)"
     )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="modo essencial: 1 caso por categoria, sem juiz, código 1 se falhar",
+    )
     args = parser.parse_args()
+    if args.check:
+        args.limit, args.judge = 1, False
     report = asyncio.run(evaluate(args))
     report["summary"] = summarize(report)
     RESULTS.mkdir(exist_ok=True)
@@ -327,6 +368,12 @@ def main() -> None:
     for key, value in report["summary"].items():
         print(f"- {key}: {value}")
     print(f"\nResultados completos: {out.relative_to(HERE.parents[1])}")
+    if args.check:
+        failures = essential_failures(report["records"])
+        for failure in failures:
+            print(f"FALHA: {failure}")
+        print("Essencial: " + ("REPROVADO" if failures else "aprovado"))
+        sys.exit(1 if failures else 0)
 
 
 if __name__ == "__main__":

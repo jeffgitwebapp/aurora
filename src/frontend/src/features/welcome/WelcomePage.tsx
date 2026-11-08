@@ -2,6 +2,7 @@ import { useRef, useState, type FormEvent } from "react";
 
 import { EmergencyContacts } from "../../shared/components/EmergencyContacts";
 import { useRedirects } from "../../shared/redirectsManagement/RedirectsProvider";
+import { submitOnEnter } from "../../shared/forms/submitOnEnter";
 import { useSession } from "../../shared/session/SessionProvider";
 
 const suggestedMessages = [
@@ -78,6 +79,7 @@ export function WelcomePage() {
               placeholder="Escreva o que quiser…"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={submitOnEnter}
             />
             <div className="welcome-composer__footer">
               <span>
