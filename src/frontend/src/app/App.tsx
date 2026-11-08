@@ -82,7 +82,7 @@ function CurrentPage() {
     <div className="app app--conversation">
       <header className="conversation-header">
         <a className="conversation-header__brand" href="/">
-          Notas
+          Aurora
         </a>
         <nav className="conversation-header__actions" aria-label="Ações de segurança">
           <a className="conversation-header__emergency" href="tel:190">

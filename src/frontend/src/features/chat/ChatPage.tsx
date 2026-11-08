@@ -241,6 +241,7 @@ export function ChatPage() {
           onAskLaw={handleAskLaw}
           onOpenContacts={() => redirect("emergencyContacts")}
           onOpenSafetyGuide={() => redirect("safetyGuide")}
+          onQuickExit={() => redirect("quickExit")}
         />
 
         <MessageComposer

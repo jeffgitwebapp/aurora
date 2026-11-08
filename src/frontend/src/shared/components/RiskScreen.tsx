@@ -9,7 +9,7 @@ interface RiskScreenProps {
   onQuickExit: () => void;
 }
 
-/** Modal de risco sobre a tela atual; é a única exceção à regra de não usar modais. */
+/** Modal de risco sobre a tela atual; junto com o modal de fontes do chat, é exceção à regra de não usar modais. */
 export function RiskScreen({
   kind,
   priorityNumbers = [],
