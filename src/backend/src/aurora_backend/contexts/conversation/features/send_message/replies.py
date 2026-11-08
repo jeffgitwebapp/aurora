@@ -5,6 +5,17 @@ NO_SOURCE_REPLY = (
     "Prefiro dizer que não sei a inventar uma resposta."
 )
 
+# Relato pessoal sem fonte (U-14): acolhe sem afirmar fatos e indica os canais da tela.
+DISCLOSURE_NO_SOURCE_REPLY = (
+    "Sinto muito que você esteja passando por isso. O que você sente importa, "
+    "e você não precisa enfrentar isso sozinha.\n\n"
+    "Não encontrei na minha base um texto que trate exatamente disso, então prefiro "
+    "não afirmar nada sem fonte. Se quiser, conte um pouco mais ou pergunte, por exemplo: "
+    "O que é violência psicológica?\n\n"
+    'Em "Onde buscar ajuda" há serviços gratuitos, e os contatos de emergência '
+    "estão nesta tela."
+)
+
 OUT_OF_SCOPE_REPLY = (
     "Não posso dar um diagnóstico nem um parecer sobre o seu caso. "
     "Isso precisa de uma profissional que te escute com calma.\n\n"
