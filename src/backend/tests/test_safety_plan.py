@@ -11,6 +11,9 @@ from aurora_backend.contexts.accounts.services.accounts.service import AccountSe
 from aurora_backend.contexts.conversation.features.send_message.handler import (
     handle_send_message,
 )
+from aurora_backend.contexts.conversation.features.send_message.replies import (
+    SAFETY_GUIDE_OFFER_REPLY,
+)
 from aurora_backend.contexts.conversation.services.chat_response.service import (
     ChatResponseService,
 )
@@ -135,7 +138,7 @@ def test_handler_returns_offer_without_knowledge_or_generation() -> None:
     )
 
     assert result.offer is ContentOffer.SAFETY_GUIDE
-    assert result.reply is None
+    assert result.reply == SAFETY_GUIDE_OFFER_REPLY
     assert result.knowledge is None
 
 
@@ -145,7 +148,7 @@ def test_http_offer_guide_and_plan() -> None:
     offer = client.post("/api/chat/messages", json={"message": OFFER_PHRASE}).json()
     assert offer["offer"] == "safety_guide"
     assert offer["knowledge_status"] is None
-    assert offer["reply"] is None
+    assert offer["reply"] == SAFETY_GUIDE_OFFER_REPLY
     risk = client.post("/api/chat/messages", json={"message": "Ele disse que vai me matar"}).json()
     assert risk["offer"] is None
 

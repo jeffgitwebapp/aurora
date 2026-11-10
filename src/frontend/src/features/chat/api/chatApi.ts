@@ -21,6 +21,8 @@ export type ContentOffer = "safety_guide";
 
 export type KnowledgeStatus = "found" | "no_source";
 
+export type ConversationKind = "greeting" | "thanks" | "farewell";
+
 export interface SourceReference {
   id: string;
   title: string;
@@ -39,6 +41,7 @@ export interface ChatApiResult {
   outOfScopeCategory: OutOfScopeCategory | null;
   offer: ContentOffer | null;
   knowledgeStatus: KnowledgeStatus | null;
+  conversation: ConversationKind | null;
   sources: SourceReference[];
   demo: boolean;
 }
@@ -74,6 +77,10 @@ function isOutOfScopeCategory(value: unknown): value is OutOfScopeCategory {
 
 function isKnowledgeStatus(value: unknown): value is KnowledgeStatus {
   return value === "found" || value === "no_source";
+}
+
+function isConversationKind(value: unknown): value is ConversationKind {
+  return value === "greeting" || value === "thanks" || value === "farewell";
 }
 
 function isSourceReference(value: unknown): value is SourceReference {
@@ -140,6 +147,7 @@ export async function sendMessage(
     out_of_scope_category?: unknown;
     offer?: unknown;
     knowledge_status?: unknown;
+    conversation?: unknown;
     sources?: unknown;
     demo?: unknown;
   };
@@ -156,6 +164,11 @@ export async function sendMessage(
     ) ||
     !(result.offer === "safety_guide" || result.offer === null) ||
     !(isKnowledgeStatus(result.knowledge_status) || result.knowledge_status === null) ||
+    !(
+      isConversationKind(result.conversation) ||
+      result.conversation === null ||
+      result.conversation === undefined
+    ) ||
     !Array.isArray(result.sources) ||
     !result.sources.every(isSourceReference) ||
     typeof result.demo !== "boolean"
@@ -163,20 +176,28 @@ export async function sendMessage(
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
   }
 
+  const conversation = isConversationKind(result.conversation) ? result.conversation : null;
   const isAllowed =
     result.scope_status === "allowed" && result.out_of_scope_category === null;
+  const isConversation =
+    isAllowed &&
+    conversation !== null &&
+    result.offer === null &&
+    result.knowledge_status === null &&
+    typeof result.reply === "string" &&
+    result.sources.length === 0;
   const isOffer =
     isAllowed &&
     result.offer !== null &&
     result.knowledge_status === null &&
-    result.reply === null &&
+    typeof result.reply === "string" &&
     result.sources.length === 0;
   const isOutOfScope =
     result.offer === null &&
     result.scope_status === "out_of_scope" &&
     result.out_of_scope_category !== null &&
     result.knowledge_status === null &&
-    result.reply === null &&
+    typeof result.reply === "string" &&
     result.sources.length === 0;
   const isFound =
     isAllowed &&
@@ -188,7 +209,7 @@ export async function sendMessage(
     isAllowed &&
     result.offer === null &&
     result.knowledge_status === "no_source" &&
-    result.reply === null &&
+    typeof result.reply === "string" &&
     result.sources.length === 0;
   const isBlockedByTriage =
     result.offer === null &&
@@ -200,8 +221,10 @@ export async function sendMessage(
     typeof result.guidance === "string";
   if (
     (result.triage_status === "no_acute_signal" &&
-      (result.guidance !== null || !(isOffer || isOutOfScope || isFound || isNoSource))) ||
-    (result.triage_status !== "no_acute_signal" && !isBlockedByTriage)
+      (result.guidance !== null ||
+        !(isConversation || isOffer || isOutOfScope || isFound || isNoSource))) ||
+    (result.triage_status !== "no_acute_signal" && !isBlockedByTriage) ||
+    (conversation !== null && !isConversation)
   ) {
     throw new ChatApiError("A resposta do servidor está em um formato inesperado.");
   }
@@ -215,6 +238,7 @@ export async function sendMessage(
     outOfScopeCategory: result.out_of_scope_category,
     offer: result.offer,
     knowledgeStatus: result.knowledge_status,
+    conversation,
     sources: result.sources,
     demo: result.demo,
   };

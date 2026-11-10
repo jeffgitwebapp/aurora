@@ -33,6 +33,7 @@ class SendMessageResponse(BaseModel):
     scope_status: Literal["allowed", "out_of_scope"] | None
     out_of_scope_category: Literal["diagnosis", "prescription", "individual_legal_opinion"] | None
     offer: Literal["safety_guide"] | None
+    conversation: Literal["greeting", "thanks", "farewell"] | None = None
     knowledge_status: Literal["found", "no_source"] | None
     sources: list[SourceReferenceResponse]
     demo: bool

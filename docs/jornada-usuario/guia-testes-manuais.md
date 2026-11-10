@@ -35,8 +35,8 @@
 | Há uma arma no local agora | Modal de risco; **190** destacado | C-02/C-03 |
 | Ele está me agredindo agora. Há uma arma no local agora. | Modal de risco com dois sinais; **190** destacado | C-02/C-03 |
 | frase incerta | Modal "Não foi possível avaliar esta mensagem." | C-02/C-03 |
-| O que é violência psicológica? | Resposta com citação da Lei Maria da Penha (art. 7º, II) e bloco **Fontes** | C-04 |
-| Violência psicológica é crime? | Resposta com citação do Código Penal (art. 147-B) e bloco **Fontes** | C-04 |
+| O que é violência psicológica? | Resposta com citação da Lei Maria da Penha (art. 7º, II) e link **Fontes (1)** | C-04 |
+| Violência psicológica é crime? | Resposta com citação do Código Penal (art. 147-B) e link **Fontes (1)** | C-04 |
 | Eu tenho depressão? | Bloco **Fora do que eu posso fazer** (diagnóstico) | C-05 |
 | Que remédio devo tomar? | Bloco **Fora do que eu posso fazer** (prescrição) | C-05 |
 | O que acontece no meu caso? | Bloco **Fora do que eu posso fazer** (parecer jurídico individual) | C-05 |
@@ -64,6 +64,7 @@ Marque cada item ao conferir. Anote o que divergir, com o navegador e o tamanho 
 - [ ] Tocar num número só abre o discador do aparelho; nada é ligado ou enviado sozinho.
 - [ ] Campo vazio ou só com espaços não inicia a conversa (**Enviar** desativado).
 - [ ] Texto digitado + **Enviar** abre a conversa com essa mensagem uma única vez.
+- [ ] **Enter** também envia (na tela inicial e na conversa); **Shift+Enter** quebra a linha sem enviar.
 - [ ] Cada uma das três sugestões abre a conversa com o próprio texto.
 - [ ] **Privacidade** abre o aviso: "Esta conversa fica na memória enquanto esta página está aberta. Ao usar a Saída Rápida ou encerrar a página, o Aurora descarta o conteúdo da sessão que mantém. Isso não apaga possíveis registros do navegador, dispositivo, rede ou terceiros." **Fechar** volta ao início.
 - [ ] **Contatos úteis** leva aos canais.
@@ -97,9 +98,11 @@ Use as frases da seção 2.
 
 ### 3.5 Resposta com fontes (C-04)
 
-- [ ] "O que é violência psicológica?" mostra a citação literal da Lei nº 11.340/2006, art. 7º, II, o bloco **Fontes** com link para o Planalto e o aviso de demonstração.
+- [ ] "O que é violência psicológica?" mostra a citação literal da Lei nº 11.340/2006, art. 7º, II, o link **Fontes (1)** e o aviso "Resposta baseada nas fontes indicadas…".
+- [ ] **Fontes (1)** abre um modal com a lista numerada; o marcador `[1]` do texto abre o mesmo modal com a fonte destacada.
+- [ ] **Voltar à conversa** fecha o modal; Esc com o modal aberto aciona a Saída Rápida.
 - [ ] "Violência psicológica é crime?" mostra a citação do Código Penal, art. 147-B.
-- [ ] O link da fonte abre o site do Planalto em outra aba.
+- [ ] O link da fonte, dentro do modal, abre o site do Planalto em outra aba.
 - [ ] A lateral mostra "Toda resposta mostra de onde veio a informação. Se não houver fonte confiável, o Aurora diz que não sabe."
 
 ### 3.6 Limite de escopo (C-05)

@@ -27,6 +27,7 @@ from aurora_backend.contexts.conversation.services.knowledge.port import (
     KnowledgeRetriever,
     KnowledgeUnavailableError,
 )
+from aurora_backend.contexts.conversation.services.small_talk.port import SmallTalkDetector
 from aurora_backend.contexts.conversation.services.triage.port import TriageEvaluator
 
 _SCOPE_STATUS = {
@@ -42,6 +43,7 @@ def create_send_message_router(
     offer_service: ContentOfferProvider,
     knowledge_service: KnowledgeRetriever,
     chat_response_service: ChatResponseGenerator,
+    small_talk_service: SmallTalkDetector | None = None,
 ) -> APIRouter:
     router = APIRouter(prefix="/api/chat", tags=["conversa"])
 
@@ -55,6 +57,7 @@ def create_send_message_router(
                 offer_service=offer_service,
                 knowledge_service=knowledge_service,
                 chat_response_service=chat_response_service,
+                small_talk_service=small_talk_service,
             )
         except EmptyMessageError as exc:
             raise HTTPException(
@@ -85,6 +88,7 @@ def create_send_message_router(
                 else None
             ),
             offer=result.offer.value if result.offer is not None else None,
+            conversation=(result.conversation.value if result.conversation is not None else None),
             knowledge_status=knowledge.status.value if knowledge is not None else None,
             sources=[
                 SourceReferenceResponse(

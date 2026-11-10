@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
 
+import { submitOnEnter } from "../../../shared/forms/submitOnEnter";
+
 interface MessageComposerProps {
   onSendMessage: (message: string) => Promise<void> | void;
   disabled?: boolean;
@@ -39,6 +41,7 @@ export function MessageComposer({
           placeholder="Escreva aqui…"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={submitOnEnter}
           disabled={disabled}
         />
         <button

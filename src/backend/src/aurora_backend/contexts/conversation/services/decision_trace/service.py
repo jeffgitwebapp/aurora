@@ -23,6 +23,8 @@ ALLOWED_FIELDS = frozenset(
         "source_ids",
         "cited_source_ids",
         "segments",
+        "extra_searches",
+        "candidates",
         "input_tokens",
         "output_tokens",
         "cached_input_tokens",

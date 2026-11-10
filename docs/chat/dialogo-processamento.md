@@ -48,6 +48,7 @@ stateDiagram-v2
     Oferta --> GuiaSeguranca: frase-fixture do guia
     Oferta --> Recuperar: sem oferta
     Recuperar --> SemFonte: nenhum chunk ≥ limiar
+    Recuperar --> Acolhimento: nenhum chunk e relato pessoal (U-14)
     Recuperar --> Erro503: base indisponível
     Recuperar --> Gerar: top-k ≥ limiar
     Gerar --> Erro503: recusa / timeout / indisponível
@@ -59,6 +60,7 @@ stateDiagram-v2
     ForaDoEscopo --> [*]
     GuiaSeguranca --> [*]
     SemFonte --> [*]
+    Acolhimento --> [*]
     Erro422 --> [*]
     Erro503 --> [*]
     Informativo --> [*]
@@ -72,12 +74,13 @@ stateDiagram-v2
 | 2 | Limite de escopo | `GuardrailService` (existente, determinístico, U-01) | System prompt com escopo explícito (S1) como reforço, não como substituto | Pedido de diagnóstico, prescrição ou parecer é parado antes de gerar | `scope_status: out_of_scope` + categoria |
 | 3 | Oferta | `ContentOfferService` (existente) | — | Sem mudança | `offer: safety_guide` |
 | 4 | Recuperação | `KnowledgeBaseService` (novo, porta `KnowledgeRetriever`) | "Carregar trechos do documento como contexto" (S2); escalonamento (S6) | BM25 sobre a **versão vigente** (§7) traz até 30 candidatos; o `LanguageModelChunkSelector` escolhe até 5 que respondem à mensagem, ou nenhum (D-12). Sem candidato ou seleção vazia, para | `knowledge_status: no_source`, `reply: null`; falha do seletor → `503` |
+| 4' | Relato sem fonte (U-14) | `DisclosureService` (porta `DisclosureDetector`, determinístico) | — (regra do projeto: acolher sem afirmar fatos) | Só roda quando a recuperação não acha fonte. Padrões sobre o texto normalizado da triagem: agressor + ato ("meu marido… grita", "ele me humilha") ou sentimento ("estou com medo", "não aguento mais"). Troca o "não sei" por um texto de acolhimento (`DISCLOSURE_NO_SOURCE_REPLY`) | `knowledge_status: no_source`, `reply` de acolhimento, `sources: []` |
 | 5 | Geração | `GroundedAnswerService` (novo, porta `ChatResponseGenerator`) | API + system prompt + few-shot de forma (S1); citações; *adaptive thinking* no lugar do CoT explícito (S1) | Uma chamada ao Claude; trechos como `search_result` com citações; resumo e "Atenção" como apoio não citável | — |
 | 5' | (F4) Busca agêntica | idem + tool | ReAct limitado (S3); tool use `strict` (S2) | Até 2–3 buscas só de leitura; cada passo no trace | — |
 | 6 | Marcação de fontes | `GroundedAnswerService` / `ChatResponseService` (U-03) | Resposta com fonte explícita (S4) | Citações → `[n]` na ordem de `sources` | `reply` com `[n]` + `sources` |
 | 7 | Guardrail de saída | `AnswerGuardrailService` (novo) | Verificação separada da geração (S5); checklist → testes (S5) | Regras determinísticas (plano §5.5) | Reprovação/falha → `503` |
 | 8 | Trace | `DecisionTraceService` (novo) | Logging estruturado e trilha de auditoria (S6), sem LangSmith | Versões, ids, scores, tokens, latências; **sem texto** | — |
-| 9 | Exibição | Front `features/chat` (só U-06) | Explicabilidade pela fonte (S6) | Lista Fontes numerada; `[n]` clicável até a fonte | — |
+| 9 | Exibição | Front `features/chat` (U-06, U-13) | Explicabilidade pela fonte (S6) | Link "Fontes (n)" abre o modal com a lista numerada; `[n]` abre o modal com a fonte n destacada | — |
 
 ---
 
@@ -142,9 +145,10 @@ Forma
 3. O guardrail verifica que todo id citado está entre os trechos enviados. Como `sources` traz todos os trechos recuperados (o handler não muda), pode haver fonte listada sem `[n]` no texto.
 4. Nas fixtures, cada citação literal ganha `[n]` ao final: `Lei nº 11.340…, art. 7º, II: “…” [1]`.
 
-**Front (U-06), só apresentação:**
-- o bloco Fontes mostra `[1]`, `[2]`… antes de cada fonte, com âncora;
-- `[n]` no texto vira um link para a âncora, com `aria-label="Fonte n: <título>"`;
+**Front (U-06, revisto pela U-13 em 08/11/2026), só apresentação:**
+- a bolha da resposta mostra só o link **"Fontes (n)"**; ao clicar, abre um modal (`SourcesModal`) com `[1]`, `[2]`… antes de cada fonte, cada uma com link que abre em nova aba;
+- `[n]` no texto é um botão que abre o mesmo modal com a fonte n destacada e focada, com `aria-label="Fonte n: <título>"`;
+- "Voltar à conversa" fecha o modal e devolve o foco ao link "Fontes"; o Esc continua sendo a Saída Rápida;
 - `[n]` sem fonte correspondente aparece como texto simples;
 - `api/chatApi.ts` e o contrato não mudam.
 
@@ -270,6 +274,7 @@ class KnowledgeBaseSnapshot:
 | Data | Alteração |
 |---|---|
 | 07/11/2026 | Criação |
+| 08/11/2026 | U-13: fontes em modal (link "Fontes (n)" e `[n]` abrindo a fonte destacada). U-14: relato pessoal sem fonte recebe acolhimento (`DisclosureService`); prompt `system_v1_2` passa a pedir um segmento inicial de acolhimento quando a mensagem é um relato pessoal |
 | 07/11/2026 | F2: redação pelo LLM (`GroundedAnswerService`), guardrail de saída `answer_guardrail@1`, trace com lista branca, `[n]` clicável no front |
 | 07/11/2026 | D-13: porta de LLM independente de provedor (Gemini na demonstração, Claude por ambiente); resposta em JSON de segmentos |
 | 07/11/2026 | F1: recuperação em duas etapas (BM25 → seleção pelo Claude, D-12) |

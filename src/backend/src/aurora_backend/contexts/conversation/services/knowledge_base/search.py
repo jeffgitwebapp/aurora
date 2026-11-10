@@ -1,7 +1,8 @@
 """Normalização pt-BR e índice BM25 em memória (D-03).
 
 A mesma função `tokenize` é usada no índice e na consulta: sem acentos, sem
-diferença de caixa, pontuação como separador e sem stopwords.
+diferença de caixa, pontuação como separador, sem stopwords e com radical (Snowball),
+para que conjugações e derivações ("ameaçou" × "ameaça") encontrem os mesmos trechos.
 """
 
 import math
@@ -9,6 +10,9 @@ import re
 import unicodedata
 from collections import Counter
 from collections.abc import Iterable, Sequence
+from functools import lru_cache
+
+import snowballstemmer
 
 _TOKEN = re.compile(r"[a-z0-9]+")
 
@@ -33,16 +37,24 @@ def normalize(text: str) -> str:
 STOPWORDS = frozenset(normalize(word) for word in _STOPWORDS_RAW.split())
 
 
-def stem(token: str) -> str:
-    """Redução leve de plural/flexão para o português."""
-    if len(token) <= 3 or token.isdigit():
-        return token
+_SNOWBALL = snowballstemmer.stemmer("portuguese")
+
+
+def _plural(token: str) -> str:
     for suffix, replacement in (("coes", "cao"), ("oes", "ao"), ("aes", "ao"), ("ais", "al")):
         if token.endswith(suffix):
             return token[: -len(suffix)] + replacement
     if token.endswith("s"):
         return token[:-1]
     return token
+
+
+@lru_cache(maxsize=50_000)
+def stem(token: str) -> str:
+    """Plural leve + radical Snowball: "ameaçou", "ameaça" e "ameaçando" viram "ameac"."""
+    if len(token) <= 3 or token.isdigit():
+        return token
+    return _SNOWBALL.stemWord(_plural(token))
 
 
 def tokenize(text: str) -> list[str]:

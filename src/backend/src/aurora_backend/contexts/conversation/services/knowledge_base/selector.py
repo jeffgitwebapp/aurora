@@ -55,7 +55,7 @@ class ChunkSelector(Protocol):
     ) -> tuple[str, ...]: ...
 
 
-def _candidate_block(chunk: KnowledgeChunk) -> str:
+def candidate_block(chunk: KnowledgeChunk) -> str:
     text = chunk.plain_summary or chunk.citable_text
     if len(text) > CANDIDATE_TEXT_CHARS:
         text = text[:CANDIDATE_TEXT_CHARS].rsplit(" ", 1)[0] + "…"
@@ -82,7 +82,7 @@ class LanguageModelChunkSelector:
         candidate_ids = {chunk.id for chunk in candidates}
         prompt = (
             "<trechos_candidatos>\n"
-            + "\n".join(_candidate_block(chunk) for chunk in candidates)
+            + "\n".join(candidate_block(chunk) for chunk in candidates)
             + "\n</trechos_candidatos>\n\n<mensagem_da_usuaria>\n"
             + message
             + "\n</mensagem_da_usuaria>"

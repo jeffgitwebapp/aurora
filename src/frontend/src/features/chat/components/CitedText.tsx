@@ -3,17 +3,13 @@ import type { SourceReference } from "../api/chatApi";
 interface CitedTextProps {
   text: string;
   sources: SourceReference[];
-  anchorPrefix: string;
+  onOpenSource: (index: number) => void;
 }
 
 const CITATION = /\[(\d+)\]/g;
 
-export function sourceAnchorId(anchorPrefix: string, index: number): string {
-  return `${anchorPrefix}-source-${index}`;
-}
-
-/** Texto da resposta com cada marcador [n] ligado à fonte n da lista "Fontes". */
-export function CitedText({ text, sources, anchorPrefix }: CitedTextProps) {
+/** Texto da resposta com cada marcador [n] abrindo a fonte n no modal de fontes. */
+export function CitedText({ text, sources, onOpenSource }: CitedTextProps) {
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
 
@@ -24,14 +20,15 @@ export function CitedText({ text, sources, anchorPrefix }: CitedTextProps) {
     parts.push(text.slice(lastIndex, position));
     if (source) {
       parts.push(
-        <a
+        <button
           key={`${position}-${number}`}
+          type="button"
           className="message-citation"
-          href={`#${sourceAnchorId(anchorPrefix, number)}`}
           aria-label={`Fonte ${number}: ${source.title}`}
+          onClick={() => onOpenSource(number)}
         >
           [{number}]
-        </a>,
+        </button>,
       );
     } else {
       parts.push(match[0]);

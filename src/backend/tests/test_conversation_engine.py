@@ -25,6 +25,9 @@ from aurora_backend.contexts.conversation.services.knowledge.models import (
     SourceReference,
 )
 from aurora_backend.contexts.conversation.services.knowledge.service import KnowledgeService
+from aurora_backend.contexts.conversation.services.knowledge_base.agentic_selector import (
+    LanguageModelAgenticChunkSelector,
+)
 from aurora_backend.contexts.conversation.services.knowledge_base.selector import (
     LanguageModelChunkSelector,
 )
@@ -63,6 +66,34 @@ def test_llm_engine_uses_selector_from_configured_provider() -> None:
     assert isinstance(engine.chat_response_service, GroundedAnswerService)
     assert "gemini/" in engine.description
     assert "teste" not in engine.description
+
+
+LLM_ENV = {"AURORA_CHAT_ENGINE": "llm", "GEMINI_API_KEY": "teste"}
+
+
+@pytest.mark.parametrize("value", ["true", "TRUE", "1"])
+def test_agentic_search_flag_switches_to_agentic_selector(value: str) -> None:
+    engine = build_conversation_engine({**LLM_ENV, "AURORA_AGENTIC_SEARCH": value})
+
+    assert isinstance(engine.knowledge_service, KnowledgeBaseService)
+    assert isinstance(engine.knowledge_service._selector, LanguageModelAgenticChunkSelector)
+    assert "busca reformulada" in engine.description
+
+
+@pytest.mark.parametrize("value", [None, "false", "0", ""])
+def test_agentic_search_is_off_by_default(value: str | None) -> None:
+    env = dict(LLM_ENV) if value is None else {**LLM_ENV, "AURORA_AGENTIC_SEARCH": value}
+
+    engine = build_conversation_engine(env)
+
+    assert isinstance(engine.knowledge_service, KnowledgeBaseService)
+    assert not isinstance(engine.knowledge_service._selector, LanguageModelAgenticChunkSelector)
+    assert "busca reformulada" not in engine.description
+
+
+def test_invalid_agentic_search_flag_fails_at_startup() -> None:
+    with pytest.raises(ChatEngineConfigurationError, match="AURORA_AGENTIC_SEARCH"):
+        build_conversation_engine({**LLM_ENV, "AURORA_AGENTIC_SEARCH": "sim"})
 
 
 def test_llm_engine_without_key_fails_at_startup() -> None:
